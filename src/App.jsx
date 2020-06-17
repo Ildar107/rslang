@@ -6,10 +6,7 @@ import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import Loader from './components/loader/Loader';
-
-const StoreContext = createContext({
-  statistics: [],
-});
+import StoreContext from './app/store';
 
 const App = () => {
   const store = useContext(StoreContext);
