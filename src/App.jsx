@@ -7,6 +7,7 @@ import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import Loader from './components/loader/Loader';
 import StoreContext from './app/store';
+import Savannah from './components/savannah/Savannah';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -20,6 +21,9 @@ const App = () => {
           </Route>
           <Route path={routes.TEAM} exact>
             <TeamPage />
+          </Route>
+          <Route path={routes.SAVANNAH} exact>
+            <Savannah />
           </Route>
           <Route>
             <Redirect to={routes.LANDING} />
