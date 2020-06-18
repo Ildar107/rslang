@@ -29,11 +29,28 @@
 }
 .audio-button {
   position: absolute;
-  top:10px;
-  left:10px;
+  top: 10px;
+  left: 10px;
   width: 50px;
   height: 50px;
 }
-.word-image{
-  width:200px;
+.word-image {
+  width: 200px;
+}
+.current-progress-div {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 80px;
+  height: 45px;
+}
+.empty-letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid blue;
+  border-radius: 10%;
+  margin-right: 20px;
 }
