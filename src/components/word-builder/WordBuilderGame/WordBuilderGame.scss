@@ -7,4 +7,21 @@
   left: calc(50vw - 300px);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid blue;
+}
+.letter-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+.letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid red;
 }
