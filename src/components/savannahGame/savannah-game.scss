@@ -1,0 +1,27 @@
+.translate {
+	text-align: center;
+	animation: pulsing 5s linear;
+	animation-delay: .3s;
+}
+
+.words-block{
+	transform: translateY(40vh);
+}
+
+.word{
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  border: 1px solid;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+@keyframes pulsing {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(50vh);
+  }
+}

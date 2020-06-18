@@ -7,7 +7,7 @@ import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import Loader from './components/loader/Loader';
 import StoreContext from './app/store';
-import Savannah from './components/savannah/Savannah';
+import Savannah from './pages/savannah/Savannah';
 
 const App = () => {
   const store = useContext(StoreContext);
