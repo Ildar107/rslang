@@ -22,20 +22,27 @@ const WordBuilderGame = () => {
         wordTranslate,
       }));
       setWords(wordsArray);
-      console.log(wordsArray);
     }
     fetchData();
   }, []);
-
+  const currentWord = words[currentWordIndex];
   return (
     <div className="word-constructor-wrapper">
-      <button type="button" className="audio-button">PLAY</button>
-      <span className="eng-word">{words[currentWordIndex] && words[currentWordIndex].word}</span>
-      <span className="transcription">{words[currentWordIndex] && words[currentWordIndex].transcription}</span>
+      <button type="button" className="audio-button" onClick={() => new Audio(currentWord.audio).play()}>s</button>
+      <span className="eng-word">{currentWord && currentWord.wordTranslate}</span>
+      <span className="transcription">{currentWord && currentWord.transcription}</span>
       <div className="letter-wrapper">
-        {words[currentWordIndex]
-       && words[currentWordIndex].word.split('').map((letter) => <div className="letter">{letter}</div>)}
+        {currentWord
+       && currentWord.word.split('').map((letter) => <div className="letter">{letter}</div>)}
       </div>
+      <img
+        src={currentWord && currentWord.image}
+        alt={currentWord && currentWord.word}
+        className="word-image"
+      />
+      <span className="context-span">Контекст</span>
+      <span className="text-example-span">{currentWord && currentWord.textExample}</span>
+      <button type="button" className="next-button">Далее</button>
     </div>
   );
 };
