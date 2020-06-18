@@ -1,3 +1,10 @@
 .word-constructor-wrapper {
   font-size: 35px;
+  width: 600px;
+  height: 400px;
+  position: relative;
+  top: calc(50vh - 200px);
+  left: calc(50vw - 300px);
+  display: flex;
+  flex-direction: column;
 }
