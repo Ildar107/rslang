@@ -1,0 +1,156 @@
+//@import "./node_modules/materialize-css/sass/materialize";
+//@import 'fonts';
+
+@mixin media-400 {
+  @media (max-width: 400px) {
+    @content;
+  }
+}
+
+@mixin media-500 {
+  @media (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin media-600 {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin media-700 {
+  @media (max-width: 700px) {
+    @content;
+  }
+}
+
+@mixin media-800 {
+  @media (max-width: 800px) {
+    @content;
+  }
+}
+
+
+html {
+  font-family: AvenirNextCyr;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  color: #000;
+}
+
+
+.drop {
+  position: absolute;
+  top: 420px;
+}
+
+.drop2 {
+  position: absolute;
+}
+
+.container {
+  padding-top: 10px;
+}
+
+.card {
+  max-width: 800px;
+  height: 400px;
+  position: relative;
+  margin: 0 auto;
+  //font-family: PragatiNarrow-Regular;
+  font-size: 2rem;
+  vertical-align: middle;
+  line-height: 35px;
+  @include media-800 {
+    font-size: 2rem;
+  }
+  @include media-700 {
+    font-size: 1.8rem;
+  }
+  @include media-600 {
+    font-size: 1.5rem;
+  }
+  @include media-500 {
+    font-size: 1.2rem;
+  }
+  @include media-400 {
+    font-size: 1rem;
+  }
+
+}
+
+.set-level {
+  display: inline-block;
+  margin-bottom: 5px;
+
+  & a {
+    margin-bottom: 5px;
+  }
+
+}
+
+.input-field {
+  width: 60px;
+  margin-left: 20px;
+  position: relative;
+}
+
+.diff {
+  position: absolute;
+  top: -20px;
+  font-size: 1.5rem;
+}
+
+.go {
+  margin-left: 10px;
+}
+
+.bottom-buttons {
+  margin-top: 70px;
+}
+
+.bottom-buttons-wrapper {
+  height: 35px;
+}
+
+.check {
+  margin-left: 5px;
+}
+
+.translation {
+  font-size: 1.5rem;
+  min-height: 25px;
+}
+
+.game-field-word {
+  display: inline-block;
+  //font-size: 2rem;
+}
+
+.dropdown-trigger {
+  margin-left: 10px;
+}
+
+.set-prompt i {
+  font-size: 2rem;
+}
+
+.tooltipped {
+  margin-right: 5px;
+}
+
+.promts {
+  margin-left: 10px;
+}
+
+.audio-start i {
+  font-size: 2rem;
+}
+
+.audio {
+  height: 45px;
+}
+
+
