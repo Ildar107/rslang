@@ -55,6 +55,7 @@ html {
 }
 
 .card {
+  border: none;
   max-width: 800px;
   width: 100%;
   height: 400px;
@@ -64,7 +65,7 @@ html {
   //font-family: PragatiNarrow-Regular;
   font-size: 2rem;
   vertical-align: middle;
-  line-height: 35px;
+  line-height: 30px;
   @include media-800 {
     font-size: 2rem;
   }
