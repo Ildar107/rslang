@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 import React, { useState, useEffect } from 'react';
 import './savannah-game.scss';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -13,9 +15,9 @@ const getShuffledArr = (arr) => {
 
 const SavannahGame = () => {
   const [words, setWords] = useState([]);
-  const [currentWordIndex] = useState(1);
-  const [currentPage] = useState(0);
-  const [currentGroup] = useState(0);
+  const [currentWordIndex, setWordIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentGroup, setCurrentGroup] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,7 +42,7 @@ const SavannahGame = () => {
   }, []);
   const currentWord = words[currentWordIndex];
   const getWords = () => {
-    const currentWords = words.map((item, index) => {
+    const currentWords = words.sort(() => Math.random() - 0.5).map((item, index) => {
       if (index <= 3) {
         return <Col className="word" sm>{item && item.word}</Col>;
       }
@@ -48,10 +50,18 @@ const SavannahGame = () => {
     return currentWords.sort(() => Math.random() - 0.5);
   };
 
+  const animationStart = () => {
+    console.log('start');
+  };
+
+  const animationEnd = () => {
+    setWordIndex(currentWordIndex + 1);
+  };
+
   return (
     <Container className="savannah">
       <Row className="savannah__translate">
-        <Col className="translate" sm>{currentWord && currentWord.wordTranslate}</Col>
+        <Col onAnimationStart={animationStart} onAnimationIteration={animationEnd} className="translate" sm><span className="translate_span">{currentWord && currentWord.wordTranslate}</span></Col>
       </Row>
       <Row className="words-block">
         {getWords()}
