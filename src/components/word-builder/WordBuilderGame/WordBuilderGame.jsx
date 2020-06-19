@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useMemo, useCallback,
+  useState, useEffect, useMemo,
 } from 'react';
 import './WordBuilderGame.scss';
 
@@ -12,10 +12,6 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
-
-// const handleLetterClick = (e, letter) => {
-//   console.log(letter);
-// };
 
 const WordBuilderGame = () => {
   const [words, setWords] = useState([]);
@@ -51,7 +47,6 @@ const WordBuilderGame = () => {
 
   useEffect(() => {
     const handleLetterKeyPress = ({ key }) => {
-      console.log(key);
       if (currentLetter === key) {
         setGuessedLettersIndexes([...guessedLettersIndexes, shuffledArray
           .findIndex((letter, index) => letter === key && !guessedLettersIndexes.includes(index))]);
@@ -59,8 +54,6 @@ const WordBuilderGame = () => {
       }
     };
     document.addEventListener('keypress', handleLetterKeyPress);
-    console.log(currentLetter);
-
     return () => document.removeEventListener('keypress', handleLetterKeyPress);
   });
 
