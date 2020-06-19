@@ -9,10 +9,13 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
+const handleLetterKeyPress = () => {};
+const handleLetterClick = () => {};
 
 const WordBuilderGame = () => {
   const [words, setWords] = useState([]);
-  const [currentWordIndex] = useState(5);
+  const [currentWordIndex] = useState(0);
+  // const [solved, setSolved] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -47,12 +50,23 @@ const WordBuilderGame = () => {
 
       <div className="letter-wrapper">
         {currentWord
-       && currentWord.word.split('').map(() => <div className="empty-letter">{}</div>)}
+       && currentWord.word.split('')
+         .map((letter) => <div className="empty-letter"><span className="hidden">{letter}</span></div>)}
       </div>
 
       <div className="letter-wrapper">
         {currentWord
-       && getShuffledArr(currentWord.word.split('')).map((letter) => <div className="letter">{letter}</div>)}
+       && getShuffledArr(currentWord.word.split(''))
+         .map((letter) => (
+           <button
+             className="letter"
+             type="button"
+             onClick={(e) => handleLetterClick(e)}
+             onKeyPress={(e) => handleLetterKeyPress(e)}
+           >
+             <span>{letter}</span>
+           </button>
+         ))}
       </div>
       <img
         src={currentWord && currentWord.image}
@@ -65,4 +79,5 @@ const WordBuilderGame = () => {
     </div>
   );
 };
+
 export default WordBuilderGame;
