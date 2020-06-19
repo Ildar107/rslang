@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './WordBuilderGame.scss';
 
 const getShuffledArr = (arr) => {
+  if (!arr) return [];
   const newArr = arr.slice();
   for (let i = newArr.length - 1; i > 0; i -= 1) {
     const rand = Math.floor(Math.random() * (i + 1));
@@ -9,13 +10,21 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
-const handleLetterKeyPress = () => {};
-const handleLetterClick = () => {};
+
+// const handleLetterClick = (e, letter) => {
+//   console.log(letter);
+// };
 
 const WordBuilderGame = () => {
   const [words, setWords] = useState([]);
-  const [currentWordIndex] = useState(0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
+  const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
   // const [solved, setSolved] = useState(false);
+
+  const currentWord = words[currentWordIndex];
+  const currentLetter = currentWord?.word[currentLetterIndex];
+  const shuffledArray = useMemo(() => getShuffledArr(currentWord?.word.split('')), [currentWord]);
 
   useEffect(() => {
     async function fetchData() {
@@ -36,46 +45,76 @@ const WordBuilderGame = () => {
       setWords(wordsArray);
     }
     fetchData();
+    const handleLetterKeyPress = ({ key }) => {
+      console.log(key);
+      if (currentLetter === key) {
+        setGuessedLettersIndexes([...guessedLettersIndexes, currentWord.word.indexOf(key)]);
+      }
+    };
+    document.addEventListener('keypress', handleLetterKeyPress);
+    console.log(currentLetter);
+
+    return () => document.removeEventListener('keypress', handleLetterKeyPress);
   }, []);
-  const currentWord = words[currentWordIndex];
+
   return (
     <div className="word-constructor-wrapper">
       <button type="button" className="audio-button" onClick={() => new Audio(currentWord.audio).play()}>s</button>
       <div className="current-progress-div">{`${currentWordIndex + 1} / 20`}</div>
-      <span className="eng-word">{currentWord && currentWord.wordTranslate}</span>
+      <span className="eng-word">{currentWord?.wordTranslate}</span>
 
       <span className="rules-span">Собери слово из букв</span>
 
-      <span className="transcription">{currentWord && currentWord.transcription}</span>
+      <span className="transcription">{currentWord?.transcription}</span>
 
       <div className="letter-wrapper">
-        {currentWord
-       && currentWord.word.split('')
-         .map((letter) => <div className="empty-letter"><span className="hidden">{letter}</span></div>)}
-      </div>
-
-      <div className="letter-wrapper">
-        {currentWord
-       && getShuffledArr(currentWord.word.split(''))
-         .map((letter) => (
-           <button
-             className="letter"
-             type="button"
-             onClick={(e) => handleLetterClick(e)}
-             onKeyPress={(e) => handleLetterKeyPress(e)}
+        {currentWord?.word.split('')
+         .map((letter, index) => (
+           <div
+             key={`${letter}${index + 1}`}
+             className="empty-letter"
            >
-             <span>{letter}</span>
-           </button>
+             <span className={index >= currentLetterIndex ? 'hidden' : ''}>{letter}</span>
+           </div>
          ))}
       </div>
+
+      <div className="letter-wrapper">
+        {shuffledArray
+          .map((letter, index) => (
+            <button
+              key={`${letter}${index + 1}`}
+              className={`letter ${guessedLettersIndexes.includes(index) ? 'hidden' : ''}`}
+              type="button"
+              onClick={() => {
+                if (letter === currentLetter) {
+                  setGuessedLettersIndexes([...guessedLettersIndexes, index]);
+                  setCurrentLetterIndex(currentLetterIndex + 1);
+                }
+              }}
+            >
+              <span>{letter}</span>
+            </button>
+          ))}
+      </div>
       <img
-        src={currentWord && currentWord.image}
-        alt={currentWord && currentWord.word}
+        src={currentWord?.image}
+        alt={currentWord?.word}
         className="word-image"
       />
       <span className="context-span">Контекст</span>
-      <span className="text-example-span">{currentWord && currentWord.textExample}</span>
-      <button type="button" className="next-button">Далее</button>
+      <span className="text-example-span">{currentWord?.textExample}</span>
+      <button
+        type="button"
+        className="next-button"
+        onClick={() => {
+          setCurrentWordIndex(currentWordIndex + 1);
+          setCurrentLetterIndex(0);
+          setGuessedLettersIndexes([]);
+        }}
+      >
+        Далее
+      </button>
     </div>
   );
 };
