@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, {
+  useState, useEffect, useMemo, useCallback,
+} from 'react';
 import './WordBuilderGame.scss';
 
 const getShuffledArr = (arr) => {
@@ -45,17 +47,22 @@ const WordBuilderGame = () => {
       setWords(wordsArray);
     }
     fetchData();
+  }, []);
+
+  useEffect(() => {
     const handleLetterKeyPress = ({ key }) => {
       console.log(key);
       if (currentLetter === key) {
-        setGuessedLettersIndexes([...guessedLettersIndexes, currentWord.word.indexOf(key)]);
+        setGuessedLettersIndexes([...guessedLettersIndexes, shuffledArray
+          .findIndex((letter, index) => letter === key && !guessedLettersIndexes.includes(index))]);
+        setCurrentLetterIndex(currentLetterIndex + 1);
       }
     };
     document.addEventListener('keypress', handleLetterKeyPress);
     console.log(currentLetter);
 
     return () => document.removeEventListener('keypress', handleLetterKeyPress);
-  }, []);
+  });
 
   return (
     <div className="word-constructor-wrapper">
