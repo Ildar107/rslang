@@ -54,6 +54,15 @@ const WordBuilderGame = () => {
         if (currentLetterIndex === currentWord?.word.length - 1) {
           setSolved(true);
         }
+      } else if (key === 'Enter') {
+        if (solved) {
+          setSolved(false);
+          setCurrentWordIndex(currentWordIndex + 1);
+          setCurrentLetterIndex(0);
+          setGuessedLettersIndexes([]);
+        } else {
+          setSolved(true);
+        }
       }
     };
     document.addEventListener('keypress', handleLetterKeyPress);
@@ -119,12 +128,12 @@ const WordBuilderGame = () => {
       <button
         type="button"
         className="next-button"
-        onClick={() => {
+        onMouseDown={() => {
           if (solved) {
+            setSolved(false);
             setCurrentWordIndex(currentWordIndex + 1);
             setCurrentLetterIndex(0);
             setGuessedLettersIndexes([]);
-            setSolved(false);
           } else {
             setSolved(true);
           }
