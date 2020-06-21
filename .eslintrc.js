@@ -19,7 +19,10 @@ module.exports = {
         "react"
     ],
     "rules": {
-      "react/jsx-props-no-spreading": 0,
-      "no-underscore-dangle": 0
+        "react/jsx-props-no-spreading": 0,
+        "no-underscore-dangle": 0,
+        "react/destructuring-assignment": [0],
+        "no-param-reassign": 0,
+        "react/prop-types": 0
     }
 };
