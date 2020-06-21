@@ -18,7 +18,7 @@ const WordBuilderGame = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
-  // const [solved, setSolved] = useState(false);
+  const [solved, setSolved] = useState(false);
 
   const currentWord = words[currentWordIndex];
   const currentLetter = currentWord?.word[currentLetterIndex];
@@ -51,6 +51,9 @@ const WordBuilderGame = () => {
         setGuessedLettersIndexes([...guessedLettersIndexes, shuffledArray
           .findIndex((letter, index) => letter === key && !guessedLettersIndexes.includes(index))]);
         setCurrentLetterIndex(currentLetterIndex + 1);
+        if (currentLetterIndex === currentWord?.word.length - 1) {
+          setSolved(true);
+        }
       }
     };
     document.addEventListener('keypress', handleLetterKeyPress);
@@ -63,9 +66,9 @@ const WordBuilderGame = () => {
       <div className="current-progress-div">{`${currentWordIndex + 1} / 20`}</div>
       <span className="eng-word">{currentWord?.wordTranslate}</span>
 
-      <span className="rules-span">Собери слово из букв</span>
-
-      <span className="transcription">{currentWord?.transcription}</span>
+      {solved
+        ? <span className="transcription">{currentWord?.transcription}</span>
+        : <span className="rules-span">Собери слово из букв</span>}
 
       <div className="letter-wrapper">
         {currentWord?.word.split('')
@@ -90,6 +93,9 @@ const WordBuilderGame = () => {
                 if (letter === currentLetter) {
                   setGuessedLettersIndexes([...guessedLettersIndexes, index]);
                   setCurrentLetterIndex(currentLetterIndex + 1);
+                  if (currentLetterIndex === currentWord?.word.length - 1) {
+                    setSolved(true);
+                  }
                 }
               }}
             >
@@ -97,23 +103,32 @@ const WordBuilderGame = () => {
             </button>
           ))}
       </div>
+      {solved
+      && (
       <img
         src={currentWord?.image}
         alt={currentWord?.word}
         className="word-image"
       />
-      <span className="context-span">Контекст</span>
-      <span className="text-example-span">{currentWord?.textExample}</span>
+      )}
+      {solved
+      && <span className="context-span">Контекст</span>}
+      {solved
+      && <span className="text-example-span">{currentWord?.textExample}</span>}
+
       <button
         type="button"
         className="next-button"
         onClick={() => {
-          setCurrentWordIndex(currentWordIndex + 1);
-          setCurrentLetterIndex(0);
-          setGuessedLettersIndexes([]);
+          if (solved) {
+            setCurrentWordIndex(currentWordIndex + 1);
+            setCurrentLetterIndex(0);
+            setGuessedLettersIndexes([]);
+            setSolved(false);
+          }
         }}
       >
-        Далее
+        {solved ? 'Далее' : 'Не знаю :('}
       </button>
     </div>
   );
