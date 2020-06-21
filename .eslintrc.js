@@ -27,5 +27,13 @@ module.exports = {
       "react/destructuring-assignment": 0,
       "react/sort-comp": 0,
       "react/no-did-update-set-state":0,
+      'react/no-access-state-in-setstate':0,
+      'react/button-has-type':0,
+        'jsx-a11y/anchor-is-valid':0,
+        'react/no-array-index-key':0,
+        'no-script-url':0,
+        'no-unused-expressions':0,
+        'jsx-a11y/click-events-have-key-events':0,
+        'jsx-a11y/no-static-element-interactions':0,
     }
 };
