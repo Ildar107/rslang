@@ -80,7 +80,7 @@
     position: absolute;
     width: 7px;
     height: 7px;
-    bottom: 43px;
+    bottom: 47px;
     left: 6px;
 }
 
@@ -326,6 +326,10 @@
     .progress__container label {
         margin-bottom: 1.8vw;
     }
+
+    .micro {
+        bottom: 52px;
+    }
 }
 
 
@@ -372,6 +376,10 @@
 
     .game-image-container img {
         width: 100%;
+    }
+
+    .micro {
+        bottom: 42px;
     }
 }
 

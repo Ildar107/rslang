@@ -17,6 +17,10 @@ class GameResults extends Component {
       this.props.restart();
   }
 
+  returnToGame = () => {
+    this.props.continueGame();
+  }
+
   render = () => {
     return (
         <div className="result__container">
@@ -41,6 +45,7 @@ class GameResults extends Component {
                 })}
             </div>
             <div className="result__control">
+                <Link className="btn btn-outline-success btn-lg" onClick={this.returnToGame}>Return</Link>
                 <Link to={routes.SPEAKIT}  className="btn btn-outline-success btn-lg" onClick={this.setNewGame}>New game</Link>
                 <Link to={routes.LANDING}  className="btn btn-outline-success btn-lg">Main page</Link>
                 </div>

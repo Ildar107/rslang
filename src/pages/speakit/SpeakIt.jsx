@@ -126,10 +126,17 @@ class SpeakIt extends Component {
     //this.props.state.updateStats(this.state);
   }
 
-  stop = () => {
+  pause = () => {
     this.setState({
         isSpeakMode: false,
         isGameStopped: true
+    })
+  }
+
+  continue = () => {
+    this.setState({
+        isSpeakMode: true,
+        isGameStopped: false
     })
   }
 
@@ -209,14 +216,14 @@ class SpeakIt extends Component {
                 Start
           </button>
           <button type="button" id="stop" className="btn btn-outline-success btn-lg" 
-            onClick={this.stop}
+            onClick={this.pause}
             disabled={!this.state.isSpeakMode}>
                 Finish
           </button>
         </div>
       </div>
       <div className={this.state.isGameStopped ? 'results results_active' : 'results'}>
-       <GameResults state={this.state} restart={this.restart}/>
+       <GameResults state={this.state} restart={this.restart} continueGame={this.continue}/>
       </div>
       </Container>
     );
