@@ -154,6 +154,9 @@ class SpeakIt extends Component {
   render = () => {
     return (
     <Container fluid>
+      <span className="close__game">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z"></path></svg>
+      </span>
       <div className="game">
         <div className="game__info">
         <div className="game__level">
