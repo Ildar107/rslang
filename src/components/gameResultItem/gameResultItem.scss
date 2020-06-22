@@ -1,0 +1,44 @@
+
+.result__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 15px;
+    width: 30%;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.result__item:hover {
+    box-shadow: 1px 2px 12px 13px #1312120f;
+    border-radius: 10px;
+}
+
+.result__item:active {
+    transform: scale(0.9);
+}
+
+.result__word {
+    width: 20%;
+    margin-right: 50px;
+}
+
+.result__transcription {
+    width: 20%;
+    margin-right: 50px;
+    font-weight: 400;
+}
+
+.result__translate {
+    font-weight: 400;
+}
+
+.result__audio-icon {
+    width: 3vw;
+    height: 2vw;
+}
+
+.result__item p {
+    padding-top: 0.5vw;
+    font-size: 1vw;
+}

@@ -25,15 +25,15 @@ module.exports = {
           use: ['babel-loader'],
           exclude: /node_modules/,
         },
-        {
-          enforce: 'pre',
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          loader: 'eslint-loader',
-          options: {
-            fix: true,
-          },
-        },
+        // {
+        //   enforce: 'pre',
+        //   test: /\.(js|jsx)$/,
+        //   exclude: /node_modules/,
+        //   loader: 'eslint-loader',
+        //   options: {
+        //     fix: true,
+        //   },
+        // },
         {
           test: /\.(css|scss)$/,
           use: ['style-loader', 'css-loader'],

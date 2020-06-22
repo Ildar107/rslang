@@ -1,0 +1,37 @@
+
+.result__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    font-size: 1vw;
+}
+.error__title, .success__title {
+    width: 40%;
+    font-weight: 600;
+}
+
+
+.error__words, .success__words {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+.result__control {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 40%;
+    margin-top: 2vw;
+}
+
+.result__control a {
+    margin-right: 20px;
+    width: 17vw;
+}
