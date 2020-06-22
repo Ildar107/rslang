@@ -1,9 +1,11 @@
+/* eslint-disable no-nested-ternary */
 import React, {
   useState, useEffect, useMemo,
 } from 'react';
 import './WordBuilderMainPage.scss';
 import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 import WordBuilderGamePage from '../word-builder-game/WordBuilderGamePage';
+import WordBuilderDifficultySelectPage from '../word-builder-difficulty-select/WordBuilderDifficultySelectPage';
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -14,7 +16,7 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
-const randomizePage = () => Math.floor(Math.random() * 20);
+const randomizePage = () => Math.floor(Math.random() * 30);
 
 const WordBuilderMainPage = () => {
   const [wordObjects, setWordsObj] = useState([]);
@@ -87,23 +89,24 @@ const WordBuilderMainPage = () => {
   });
   return (
     <div className="word-constructor-wrapper">
-      {finished
-        ? <WordBuilderStatsPage wordObjects={wordObjects} />
-        : (
-          <WordBuilderGamePage
-            currentWordObj={currentWordObj}
-            currentWordIndex={currentWordIndex}
-            solved={solved}
-            currentLetterIndex={currentLetterIndex}
-            shuffledArray={shuffledArray}
-            guessedLettersIndexes={guessedLettersIndexes}
-            currentLetter={currentLetter}
-            setGuessedLettersIndexes={setGuessedLettersIndexes}
-            setCurrentLetterIndex={setCurrentLetterIndex}
-            setSolved={setSolved}
-            nextButtonHandler={nextButtonHandler}
-          />
-        )}
+      {!started ? <WordBuilderDifficultySelectPage />
+        : finished
+          ? <WordBuilderStatsPage wordObjects={wordObjects} />
+          : (
+            <WordBuilderGamePage
+              currentWordObj={currentWordObj}
+              currentWordIndex={currentWordIndex}
+              solved={solved}
+              currentLetterIndex={currentLetterIndex}
+              shuffledArray={shuffledArray}
+              guessedLettersIndexes={guessedLettersIndexes}
+              currentLetter={currentLetter}
+              setGuessedLettersIndexes={setGuessedLettersIndexes}
+              setCurrentLetterIndex={setCurrentLetterIndex}
+              setSolved={setSolved}
+              nextButtonHandler={nextButtonHandler}
+            />
+          )}
     </div>
   );
 };
