@@ -33,6 +33,7 @@ const WordBuilderGame = () => {
       setCurrentLetterIndex(0);
       setGuessedLettersIndexes([]);
     } else if (!solved) {
+      currentWordObj.status = false;
       setSolved(true);
     } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
       setFinished(true);
@@ -72,6 +73,8 @@ const WordBuilderGame = () => {
         }
       } else if (key === 'Enter') {
         nextButtonHandler();
+      } else if (currentLetter !== key) {
+        currentWordObj.status = false;
       }
     };
     document.addEventListener('keypress', handleLetterKeyPress);
@@ -83,59 +86,66 @@ const WordBuilderGame = () => {
 
       {finished ? (
         <div className="stats-wrapper">
-          <h1>INCORRECT</h1>
-          <ul>
-            {wordObjects
-              .filter(({ status }) => !status)
-              .map(({ audio, word, wordTranslate }) => (
-                <li key={`${word} ${wordTranslate}`}>
-                  <div>
-                    <button
-                      type="button"
-                      className="audio-button-stats"
-                      onClick={() => new Audio(audio).play()}
-                    >
-                      s
-                    </button>
-                    <span>
-                      {word}
-                      {' '}
-                      -
-                      {' '}
-                      {wordTranslate}
-                    </span>
-                  </div>
+          <div className="incorrect-wrapper">
+            <h1>INCORRECT</h1>
+            <ul>
+              {wordObjects
+                .filter(({ status }) => !status)
+                .map(({ audio, word, wordTranslate }) => (
+                  <li key={`${word} ${wordTranslate}`}>
+                    <div>
+                      <button
+                        type="button"
+                        className="audio-button-stats"
+                        onClick={() => new Audio(audio).play()}
+                      >
+                        s
+                      </button>
+                      <span>
+                        {word}
+                        {' '}
+                        -
+                        {' '}
+                        {wordTranslate}
+                      </span>
+                    </div>
 
-                </li>
-              ))}
-          </ul>
+                  </li>
+                ))}
+            </ul>
+          </div>
           <br />
-          <h1>CORRECT</h1>
-          <ul>
-            {wordObjects
-              .filter(({ status }) => status)
-              .map(({ audio, word, wordTranslate }) => (
-                <li key={`${word} ${wordTranslate}`}>
-                  <div>
-                    <button
-                      type="button"
-                      className="audio-button-stats"
-                      onClick={() => new Audio(audio).play()}
-                    >
-                      s
-                    </button>
-                    <span>
-                      {word}
-                      {' '}
-                      -
-                      {' '}
-                      {wordTranslate}
-                    </span>
-                  </div>
-                </li>
-              ))}
-          </ul>
+          <div className="correct-wrapper">
+            <h1>CORRECT</h1>
+            <ul>
+              {wordObjects
+                .filter(({ status }) => status)
+                .map(({ audio, word, wordTranslate }) => (
+                  <li key={`${word} ${wordTranslate}`}>
+                    <div>
+                      <button
+                        type="button"
+                        className="audio-button-stats"
+                        onClick={() => new Audio(audio).play()}
+                      >
+                        s
+                      </button>
+                      <span>
+                        {word}
+                        {' '}
+                        -
+                        {' '}
+                        {wordTranslate}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+            <button type="button" className="restart-button">Начать заного</button>
+            <button type="button" className="return-button">Вернуться на главную страницу</button>
+          </div>
         </div>
+
       ) : (
         <>
           <button type="button" className="audio-button" onClick={() => new Audio(currentWordObj.audio).play()}>s</button>
