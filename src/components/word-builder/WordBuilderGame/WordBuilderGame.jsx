@@ -20,7 +20,6 @@ const WordBuilderGame = () => {
   const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
   const [solved, setSolved] = useState(false);
   const [finished, setFinished] = useState(false);
-  // const [currentWordStatus, setCurrentWordStatus] = useState([]);
 
   const currentWordObj = wordObjects[currentWordIndex];
   const currentLetter = currentWordObj?.word[currentLetterIndex];
@@ -87,7 +86,11 @@ const WordBuilderGame = () => {
       {finished ? (
         <div className="stats-wrapper">
           <div className="incorrect-wrapper">
-            <h1>INCORRECT</h1>
+            <h1>
+              {`Ошибок : ${wordObjects
+                .filter(({ status }) => !status).length}
+              `}
+            </h1>
             <ul>
               {wordObjects
                 .filter(({ status }) => !status)
@@ -116,7 +119,11 @@ const WordBuilderGame = () => {
           </div>
           <br />
           <div className="correct-wrapper">
-            <h1>CORRECT</h1>
+            <h1>
+              {`Правильных ответов : ${wordObjects
+                .filter(({ status }) => !status).length}
+              `}
+            </h1>
             <ul>
               {wordObjects
                 .filter(({ status }) => status)
