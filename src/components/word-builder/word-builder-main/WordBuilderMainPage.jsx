@@ -89,7 +89,13 @@ const WordBuilderMainPage = () => {
   });
   return (
     <div className="word-constructor-wrapper">
-      {!started ? <WordBuilderDifficultySelectPage />
+      {!started
+        ? (
+          <WordBuilderDifficultySelectPage
+            setDifficulty={setDifficulty}
+            setStarted={setStarted}
+          />
+        )
         : finished
           ? <WordBuilderStatsPage wordObjects={wordObjects} />
           : (
