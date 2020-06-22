@@ -211,7 +211,7 @@ class SpeakIt extends Component {
           <button type="button" id="stop" className="btn btn-outline-success btn-lg" 
             onClick={this.stop}
             disabled={!this.state.isSpeakMode}>
-                Stop
+                Finish
           </button>
         </div>
       </div>
