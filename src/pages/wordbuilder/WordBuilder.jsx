@@ -1,14 +1,14 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import Header from '../../components/header/Header';
-import WordBuilderGame from '../../components/word-builder/WordBuilderGame/WordBuilderGame';
+import WordBuilderMain from '../../components/word-builder/word-builder-main/WordBuilderMain';
 
 const WordBuilder = () => (
   <>
     <Header />
     <Container fluid>
       <Row>
-        <WordBuilderGame />
+        <WordBuilderMain />
       </Row>
     </Container>
   </>

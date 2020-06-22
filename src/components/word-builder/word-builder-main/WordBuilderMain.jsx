@@ -1,8 +1,8 @@
 import React, {
   useState, useEffect, useMemo,
 } from 'react';
-import './WordBuilderGame.scss';
-import WordBuilderStatsPage from '../../word-builder-stats/WordBuilderStatsPage';
+import './WordBuilderMain.scss';
+import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -15,7 +15,7 @@ const getShuffledArr = (arr) => {
 };
 const randomizePage = () => Math.floor(Math.random() * 20);
 
-const WordBuilderGame = () => {
+const WordBuilderMain = () => {
   const [wordObjects, setWordsObj] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
@@ -158,4 +158,4 @@ const WordBuilderGame = () => {
   );
 };
 
-export default WordBuilderGame;
+export default WordBuilderMain;
