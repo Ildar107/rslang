@@ -14,15 +14,17 @@ const getShuffledArr = (arr) => {
 };
 
 const WordBuilderGame = () => {
-  const [words, setWords] = useState([]);
+  const [wordsObj, setWordsObj] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
   const [solved, setSolved] = useState(false);
+  const [finished, setFinished] = useState(false);
+  // const [currentWordStatus, setCurrentWordStatus] = useState([]);
 
-  const currentWord = words[currentWordIndex];
-  const currentLetter = currentWord?.word[currentLetterIndex];
-  const shuffledArray = useMemo(() => getShuffledArr(currentWord?.word.split('')), [currentWord]);
+  const currentWordObj = wordsObj[currentWordIndex];
+  const currentLetter = currentWordObj?.word[currentLetterIndex];
+  const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
 
   useEffect(() => {
     async function fetchData() {
@@ -39,8 +41,9 @@ const WordBuilderGame = () => {
         transcription,
         word,
         wordTranslate,
+        status: true,
       }));
-      setWords(wordsArray);
+      setWordsObj(wordsArray);
     }
     fetchData();
   }, []);
@@ -51,7 +54,7 @@ const WordBuilderGame = () => {
         setGuessedLettersIndexes([...guessedLettersIndexes, shuffledArray
           .findIndex((letter, index) => letter === key && !guessedLettersIndexes.includes(index))]);
         setCurrentLetterIndex(currentLetterIndex + 1);
-        if (currentLetterIndex === currentWord?.word.length - 1) {
+        if (currentLetterIndex === currentWordObj?.word.length - 1) {
           setSolved(true);
         }
       } else if (key === 'Enter') {
@@ -71,16 +74,28 @@ const WordBuilderGame = () => {
 
   return (
     <div className="word-constructor-wrapper">
-      <button type="button" className="audio-button" onClick={() => new Audio(currentWord.audio).play()}>s</button>
-      <div className="current-progress-div">{`${currentWordIndex + 1} / 20`}</div>
-      <span className="eng-word">{currentWord?.wordTranslate}</span>
 
-      {solved
-        ? <span className="transcription">{currentWord?.transcription}</span>
-        : <span className="rules-span">Собери слово из букв</span>}
+      {finished ? (
+        <div className="stats-wrapper">
+          <ul>
+            {wordsObj.filter((word) => !word.status).map((word) => <li>{word}</li>)}
+          </ul>
+          <ul>
+            {wordsObj.filter((word) => word.status).map((word) => <li>{word}</li>)}
+          </ul>
+        </div>
+      ) : (
+        <>
+          <button type="button" className="audio-button" onClick={() => new Audio(currentWordObj.audio).play()}>s</button>
+          <div className="current-progress-div">{`${currentWordIndex + 1} / 20`}</div>
+          <span className="eng-word">{currentWordObj?.wordTranslate}</span>
 
-      <div className="letter-wrapper">
-        {currentWord?.word.split('')
+          {solved
+            ? <span className="transcription">{currentWordObj?.transcription}</span>
+            : <span className="rules-span">Собери слово из букв</span>}
+
+          <div className="letter-wrapper">
+            {currentWordObj?.word.split('')
          .map((letter, index) => (
            <div
              key={`${letter}${index + 1}`}
@@ -89,58 +104,61 @@ const WordBuilderGame = () => {
              <span className={!solved && index >= currentLetterIndex ? 'hidden' : ''}>{letter}</span>
            </div>
          ))}
-      </div>
+          </div>
 
-      <div className="letter-wrapper">
-        {shuffledArray
-          .map((letter, index) => (
-            <button
-              key={`${letter}${index + 1}`}
-              className={`letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
-              type="button"
-              onClick={() => {
-                if (letter === currentLetter) {
-                  setGuessedLettersIndexes([...guessedLettersIndexes, index]);
-                  setCurrentLetterIndex(currentLetterIndex + 1);
-                  if (currentLetterIndex === currentWord?.word.length - 1) {
-                    setSolved(true);
-                  }
-                }
-              }}
-            >
-              <span>{letter}</span>
-            </button>
-          ))}
-      </div>
-      {solved
+          <div className="letter-wrapper">
+            {shuffledArray
+              .map((letter, index) => (
+                <button
+                  key={`${letter}${index + 1}`}
+                  className={`letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
+                  type="button"
+                  onClick={() => {
+                    if (letter === currentLetter) {
+                      setGuessedLettersIndexes([...guessedLettersIndexes, index]);
+                      setCurrentLetterIndex(currentLetterIndex + 1);
+                      if (currentLetterIndex === currentWordObj?.word.length - 1) {
+                        setSolved(true);
+                      }
+                    }
+                  }}
+                >
+                  <span>{letter}</span>
+                </button>
+              ))}
+          </div>
+          {solved
       && (
       <img
-        src={currentWord?.image}
-        alt={currentWord?.word}
+        src={currentWordObj?.image}
+        alt={currentWordObj?.word}
         className="word-image"
       />
       )}
-      {solved
+          {solved
       && <span className="context-span">Контекст</span>}
-      {solved
-      && <span className="text-example-span">{currentWord?.textExample}</span>}
+          {solved
+      && <span className="text-example-span">{currentWordObj?.textExample}</span>}
 
-      <button
-        type="button"
-        className="next-button"
-        onMouseDown={() => {
-          if (solved) {
-            setSolved(false);
-            setCurrentWordIndex(currentWordIndex + 1);
-            setCurrentLetterIndex(0);
-            setGuessedLettersIndexes([]);
-          } else {
-            setSolved(true);
-          }
-        }}
-      >
-        {solved ? 'Далее' : 'Не знаю :('}
-      </button>
+          <button
+            type="button"
+            className="next-button"
+            onMouseDown={() => {
+              if (solved) {
+                setSolved(false);
+                setCurrentWordIndex(currentWordIndex + 1);
+                setCurrentLetterIndex(0);
+                setGuessedLettersIndexes([]);
+              } else {
+                setSolved(true);
+              }
+            }}
+          >
+            {solved ? 'Далее' : 'Не знаю :('}
+          </button>
+        </>
+      )}
+
     </div>
   );
 };
