@@ -12,6 +12,7 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
+const randomizePage = () => Math.floor(Math.random() * 20);
 
 const WordBuilderGame = () => {
   const [wordObjects, setWordsObj] = useState([]);
@@ -20,6 +21,8 @@ const WordBuilderGame = () => {
   const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
   const [solved, setSolved] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [difficulty, setDifficulty] = useState(0);
 
   const currentWordObj = wordObjects[currentWordIndex];
   const currentLetter = currentWordObj?.word[currentLetterIndex];
@@ -41,7 +44,8 @@ const WordBuilderGame = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const WORDS_URL = 'https://afternoon-falls-25894.herokuapp.com/words?page=0&group=0';
+      const page = randomizePage();
+      const WORDS_URL = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${difficulty}`;
       const data = await fetch(WORDS_URL);
       const res = await data.json();
       const wordsArray = res.map(({
