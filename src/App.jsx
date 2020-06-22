@@ -7,7 +7,8 @@ import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import Loader from './components/loader/Loader';
 import StoreContext from './app/store';
-import Sprint from './pages/sprint/Sprint';
+import SprintStart from './pages/sprint/SprintStart';
+import SprintGame from './pages/sprint/SprintGame';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -22,8 +23,11 @@ const App = () => {
           <Route path={routes.TEAM} exact>
             <TeamPage />
           </Route>
-          <Route path={routes.SPRINT} exact>
-            <Sprint />
+          <Route path={routes.SPRINTSTART} exact>
+            <SprintStart />
+          </Route>
+          <Route path={routes.SPRINTGAME} exact>
+            <SprintGame />
           </Route>
           <Route>
             <Redirect to={routes.LANDING} />

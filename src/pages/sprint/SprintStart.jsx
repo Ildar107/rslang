@@ -2,17 +2,16 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import Header from '../../components/header/Header';
-import SprintGame from '../../components/sprintGame/SprintGame';
-import './sprintGame.scss';
+import SprintStartGame from '../../components/sprintGame/SprintStartGame';
 
-const Sprint = () => (
+const SprintStart = () => (
   <>
     <Header />
     <Container fluid>
       <Row>
-        <SprintGame />
+        <SprintStartGame />
       </Row>
     </Container>
   </>
 );
-export default Sprint;
+export default SprintStart;

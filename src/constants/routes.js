@@ -1,5 +1,8 @@
 const LANDING = '/';
 const TEAM = '/team';
-const SPRINT = '/sprint';
+const SPRINTSTART = '/sprint-start';
+const SPRINTGAME = '/sprint-game';
 
-export default { LANDING, TEAM, SPRINT };
+export default {
+  LANDING, TEAM, SPRINTSTART, SPRINTGAME,
+};

@@ -5,26 +5,20 @@ import React from 'react';
 import {
   Container, Row,
 } from 'react-bootstrap';
+// import routes from '../../constants/routes';
 // import { LinkContainer } from 'react-router-bootstrap';
 // import routes from '../../constants/routes';
+import './sprintGame.scss';
 
-const SprintGameComponent = () => {
-  window.onload = () => {
-    const loaded = sessionStorage.getItem('loaded');
-    if (loaded) {
-      window.location.href = '#/sprint-start';
-    } else {
-      sessionStorage.setItem('loaded', true);
-    }
-  };
-
+const SprintStartGame = () => {
   return (
     <Container className="sprint">
       <Row className="sprint-wrapper">
-        <span>Something write</span>
+        {/* <a href={routes.SPRINTGAME} className="sprint-link">Start Game</a> */}
+        <a href="#/sprint-game" className="sprint-link">Start Game</a>
       </Row>
     </Container>
   );
 };
 
-export default SprintGameComponent;
+export default SprintStartGame;

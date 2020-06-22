@@ -17,7 +17,7 @@ const Header = () => {
         <Nav className="mr-auto">
           {NavLink(routes.LANDING, 'Главная')}
           {NavLink(routes.TEAM, 'О нас')}
-          {NavLink(routes.SPRINT, 'Спринт')}
+          {NavLink(routes.SPRINTSTART, 'Спринт')}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -1,0 +1,31 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: url(../../assets/images/text-on-shelf.jpg) no-repeat 50% fixed;
+  background-size: cover;
+}
+
+.sprint {
+  height: 100%;
+}
+
+
+.sprint-wrapper {
+  margin-top: 200px;
+  justify-content: center;
+}
+
+.sprint-link {
+  border: 1px solid #EB6864;
+  border-radius: 5px;
+  padding: 5px 10px;
+
+}
+
+.sprint-link:hover {
+  border: 1.3px solid red;
+  text-decoration: none;
+}
