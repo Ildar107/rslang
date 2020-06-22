@@ -12,7 +12,9 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
       <ul>
         {wordObjects
           .filter(({ status }) => !status)
-          .map(({ audio, word, wordTranslate }) => (
+          .map(({
+            audio, word, wordTranslate, transcription,
+          }) => (
             <li key={`${word} ${wordTranslate}`}>
               <div>
                 <button
@@ -25,6 +27,7 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
                 <span>
                   {word}
                   {' '}
+                  {transcription}
                   -
                   {' '}
                   {wordTranslate}

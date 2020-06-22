@@ -13,7 +13,6 @@ const WordBuilderDifficultySelectPage = ({ setDifficulty, setStarted }) => (
             type="button"
             onClick={() => {
               setDifficulty(index);
-              console.log(index);
               setStarted(true);
             }}
           >
