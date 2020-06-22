@@ -26,6 +26,19 @@ const WordBuilderGame = () => {
   const currentLetter = currentWordObj?.word[currentLetterIndex];
   const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
 
+  const nextButtonHandler = () => {
+    if (solved && !(currentWordIndex === wordObjects.length - 1)) {
+      setSolved(false);
+      setCurrentWordIndex(currentWordIndex + 1);
+      setCurrentLetterIndex(0);
+      setGuessedLettersIndexes([]);
+    } else if (!solved) {
+      setSolved(true);
+    } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
+      setFinished(true);
+    }
+  };
+
   useEffect(() => {
     async function fetchData() {
       const WORDS_URL = 'https://afternoon-falls-25894.herokuapp.com/words?page=0&group=0';
@@ -58,16 +71,7 @@ const WordBuilderGame = () => {
           setSolved(true);
         }
       } else if (key === 'Enter') {
-        if (solved && !(currentWordIndex === wordObjects.length - 1)) {
-          setSolved(false);
-          setCurrentWordIndex(currentWordIndex + 1);
-          setCurrentLetterIndex(0);
-          setGuessedLettersIndexes([]);
-        } else if (!solved) {
-          setSolved(true);
-        } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
-          setFinished(true);
-        }
+        nextButtonHandler();
       }
     };
     document.addEventListener('keypress', handleLetterKeyPress);
@@ -191,16 +195,7 @@ const WordBuilderGame = () => {
           <button
             type="button"
             className="next-button"
-            onMouseDown={() => {
-              if (solved) {
-                setSolved(false);
-                setCurrentWordIndex(currentWordIndex + 1);
-                setCurrentLetterIndex(0);
-                setGuessedLettersIndexes([]);
-              } else {
-                setSolved(true);
-              }
-            }}
+            onMouseDown={nextButtonHandler}
           >
             {solved ? 'Далее' : 'Не знаю :('}
           </button>
