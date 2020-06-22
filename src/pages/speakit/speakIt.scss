@@ -117,7 +117,7 @@
 
 .game__item {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
     /* padding: 5px 5px 8px 74px; */
@@ -132,14 +132,6 @@
     flex-direction: column;
 }
 
-.game__set .game__item_disabled:hover {
-    color: #626562;
-    border-color: #46e09a;
-    background-color: #fff;
-    cursor: default;
-    box-shadow: -1px 2px 16px 5px #38363645;
-}
-
 .game__set .game__item:hover {
     cursor: pointer;
     box-shadow: -1px 2px 16px 5px #38363645;
@@ -150,6 +142,15 @@
     border-color: #46e09a !important;
     background-color: #fff !important;
 }
+
+.game__set .game__item_disabled:hover {
+    color: #626562 !important;
+    border-color: #46e09a !important;
+    background-color: #fff !important;
+    cursor: default;
+    box-shadow: none;
+}
+
 
 .game__set .game__item_active {
     color: #fff;
@@ -185,7 +186,6 @@
 }
 
 .control .speak_active {
-    opacity: 1;
     cursor: default;
     filter: grayscale(0.4);
 }
@@ -264,7 +264,7 @@
     border-color: #46e09a;
 }
 
-.btn-outline-success:hover {
+.btn-outline-success:not(:disabled):not(.disabled):hover {
     color: #fff;
     background-color: #46e09a;
     border-color: #46e09a;
@@ -278,11 +278,10 @@
 
 .btn-outline-success.disabled, .btn-outline-success:disabled {
     color: #626562 !important;
-    background-color: #46e09a;
     border-color: #46e09a;
 }
 
-.btn-outline-success:focus, .btn-outline-success.focus {
+.btn-outline-success:not(:disabled):not(.disabled):focus, .btn-outline-success:not(:disabled):not(.disabled).focus {
     -webkit-box-shadow: 0 0 0 0.2rem rgba(70, 224, 154, 0.46);
     box-shadow: 0 0 0 0.2rem rgba(70, 224, 154, 0.46);
 }
@@ -310,4 +309,61 @@
 
 .progress-bar {
     background-color: #4ae49e;
+}
+
+@media (max-width: 1080px) {
+
+    .game {
+        width: 100%;
+    }
+
+    .game__info .progress__container {
+        width: 50%;
+        margin-right: 17px;
+    }
+
+    .progress__container label {
+        margin-bottom: 1.8vw;
+    }
+}
+
+
+@media (max-width: 720px) {
+    .game__info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-bottom: 5vw;
+    }
+
+    .game__level p {
+        margin-bottom: 1vw;
+        text-align: center;
+    }
+
+    .game__info .progress__container {
+        width: 100%;
+        margin-right: 17px;
+    }
+
+    .progress__container label {
+        text-align: center;
+        display: block;
+    }
+
+    .game__item {
+        margin: 2vw;
+    }
+}
+
+@media (max-width: 390px) {
+    .game-image-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .game-image-container img {
+        width: 100%;
+    }
 }

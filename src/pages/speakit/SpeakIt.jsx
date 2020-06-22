@@ -156,8 +156,8 @@ class SpeakIt extends Component {
     <Container fluid>
       <div className="game">
         <div className="game__info">
-        <div clasName="game__level">
-            <p>Level </p>
+        <div className="game__level">
+            <p>Level</p>
             <Pagination>
                 {
                     Array.from({length: 6}, (x, i) => i + 1).map((x) => {

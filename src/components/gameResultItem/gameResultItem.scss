@@ -3,8 +3,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    font-size: 15px;
-    width: 30%;
+    font-size: 19px;
+    width: 575px;
     font-weight: 600;
     cursor: pointer;
 }
@@ -34,11 +34,39 @@
 }
 
 .result__audio-icon {
-    width: 3vw;
-    height: 2vw;
+    width: 57px;
+    height: 38px;
 }
 
 .result__item p {
     padding-top: 0.5vw;
-    font-size: 1vw;
+}
+
+@media (max-width: 768px) {
+    
+    .result__item {
+        width: 100%;
+    }
+}
+
+@media (max-width: 608px) {
+    
+    .result__item {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .result__word {
+        width: 100%;
+        margin-right: 0;
+        margin-top: 7vw;
+    }
+    
+    .result__transcription {
+        width: 100%;
+        margin-right: 0;
+    }
 }
