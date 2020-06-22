@@ -2,7 +2,7 @@ import React, {
   useState, useEffect, useMemo,
 } from 'react';
 import './WordBuilderGame.scss';
-import WordBuilderStats from '../../word-builder-stats/WordBuilderStats';
+import WordBuilderStatsPage from '../../word-builder-stats/WordBuilderStatsPage';
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -87,7 +87,7 @@ const WordBuilderGame = () => {
   return (
     <div className="word-constructor-wrapper">
       {finished
-        ? <WordBuilderStats wordObjects={wordObjects} />
+        ? <WordBuilderStatsPage wordObjects={wordObjects} />
         : (
           <>
             <button type="button" className="audio-button" onClick={() => new Audio(currentWordObj.audio).play()}>s</button>

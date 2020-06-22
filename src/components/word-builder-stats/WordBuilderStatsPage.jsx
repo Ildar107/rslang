@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-const WordBuilderStats = ({ wordObjects }) => (
+const WordBuilderStatsPage = ({ wordObjects }) => (
   <div className="stats-wrapper">
     <div className="incorrect-wrapper">
       <h1>
@@ -72,4 +72,4 @@ const WordBuilderStats = ({ wordObjects }) => (
   </div>
 );
 
-export default WordBuilderStats;
+export default WordBuilderStatsPage;
