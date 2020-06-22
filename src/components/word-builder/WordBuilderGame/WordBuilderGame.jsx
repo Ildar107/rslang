@@ -14,7 +14,7 @@ const getShuffledArr = (arr) => {
 };
 
 const WordBuilderGame = () => {
-  const [wordsObj, setWordsObj] = useState([]);
+  const [wordObjects, setWordsObj] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
@@ -22,7 +22,7 @@ const WordBuilderGame = () => {
   const [finished, setFinished] = useState(false);
   // const [currentWordStatus, setCurrentWordStatus] = useState([]);
 
-  const currentWordObj = wordsObj[currentWordIndex];
+  const currentWordObj = wordObjects[currentWordIndex];
   const currentLetter = currentWordObj?.word[currentLetterIndex];
   const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
 
@@ -58,13 +58,15 @@ const WordBuilderGame = () => {
           setSolved(true);
         }
       } else if (key === 'Enter') {
-        if (solved) {
+        if (solved && !(currentWordIndex === wordObjects.length - 1)) {
           setSolved(false);
           setCurrentWordIndex(currentWordIndex + 1);
           setCurrentLetterIndex(0);
           setGuessedLettersIndexes([]);
-        } else {
+        } else if (!solved) {
           setSolved(true);
+        } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
+          setFinished(true);
         }
       }
     };
@@ -77,11 +79,57 @@ const WordBuilderGame = () => {
 
       {finished ? (
         <div className="stats-wrapper">
+          <h1>INCORRECT</h1>
           <ul>
-            {wordsObj.filter((word) => !word.status).map((word) => <li>{word}</li>)}
+            {wordObjects
+              .filter(({ status }) => !status)
+              .map(({ audio, word, wordTranslate }) => (
+                <li key={`${word} ${wordTranslate}`}>
+                  <div>
+                    <button
+                      type="button"
+                      className="audio-button-stats"
+                      onClick={() => new Audio(audio).play()}
+                    >
+                      s
+                    </button>
+                    <span>
+                      {word}
+                      {' '}
+                      -
+                      {' '}
+                      {wordTranslate}
+                    </span>
+                  </div>
+
+                </li>
+              ))}
           </ul>
+          <br />
+          <h1>CORRECT</h1>
           <ul>
-            {wordsObj.filter((word) => word.status).map((word) => <li>{word}</li>)}
+            {wordObjects
+              .filter(({ status }) => status)
+              .map(({ audio, word, wordTranslate }) => (
+                <li key={`${word} ${wordTranslate}`}>
+                  <div>
+                    <button
+                      type="button"
+                      className="audio-button-stats"
+                      onClick={() => new Audio(audio).play()}
+                    >
+                      s
+                    </button>
+                    <span>
+                      {word}
+                      {' '}
+                      -
+                      {' '}
+                      {wordTranslate}
+                    </span>
+                  </div>
+                </li>
+              ))}
           </ul>
         </div>
       ) : (
