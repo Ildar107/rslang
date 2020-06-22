@@ -2,6 +2,7 @@ import React, {
   useState, useEffect, useMemo,
 } from 'react';
 import './WordBuilderGame.scss';
+import WordBuilderStats from '../../word-builder-stats/WordBuilderStats';
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -83,92 +84,22 @@ const WordBuilderGame = () => {
     document.addEventListener('keypress', handleLetterKeyPress);
     return () => document.removeEventListener('keypress', handleLetterKeyPress);
   });
-
   return (
     <div className="word-constructor-wrapper">
+      {finished
+        ? <WordBuilderStats wordObjects={wordObjects} />
+        : (
+          <>
+            <button type="button" className="audio-button" onClick={() => new Audio(currentWordObj.audio).play()}>s</button>
+            <div className="current-progress-div">{`${currentWordIndex + 1} / 20`}</div>
+            <span className="eng-word">{currentWordObj?.wordTranslate}</span>
 
-      {finished ? (
-        <div className="stats-wrapper">
-          <div className="incorrect-wrapper">
-            <h1>
-              {`Ошибок : ${wordObjects
-                .filter(({ status }) => !status).length}
-              `}
-            </h1>
-            <ul>
-              {wordObjects
-                .filter(({ status }) => !status)
-                .map(({ audio, word, wordTranslate }) => (
-                  <li key={`${word} ${wordTranslate}`}>
-                    <div>
-                      <button
-                        type="button"
-                        className="audio-button-stats"
-                        onClick={() => new Audio(audio).play()}
-                      >
-                        s
-                      </button>
-                      <span>
-                        {word}
-                        {' '}
-                        -
-                        {' '}
-                        {wordTranslate}
-                      </span>
-                    </div>
+            {solved
+              ? <span className="transcription">{currentWordObj?.transcription}</span>
+              : <span className="rules-span">Собери слово из букв</span>}
 
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <br />
-          <div className="correct-wrapper">
-            <h1>
-              {`Правильных ответов : ${wordObjects
-                .filter(({ status }) => !status).length}
-              `}
-            </h1>
-            <ul>
-              {wordObjects
-                .filter(({ status }) => status)
-                .map(({ audio, word, wordTranslate }) => (
-                  <li key={`${word} ${wordTranslate}`}>
-                    <div>
-                      <button
-                        type="button"
-                        className="audio-button-stats"
-                        onClick={() => new Audio(audio).play()}
-                      >
-                        s
-                      </button>
-                      <span>
-                        {word}
-                        {' '}
-                        -
-                        {' '}
-                        {wordTranslate}
-                      </span>
-                    </div>
-                  </li>
-                ))}
-            </ul>
-            <button type="button" className="restart-button">Начать заного</button>
-            <button type="button" className="return-button">Вернуться на главную страницу</button>
-          </div>
-        </div>
-
-      ) : (
-        <>
-          <button type="button" className="audio-button" onClick={() => new Audio(currentWordObj.audio).play()}>s</button>
-          <div className="current-progress-div">{`${currentWordIndex + 1} / 20`}</div>
-          <span className="eng-word">{currentWordObj?.wordTranslate}</span>
-
-          {solved
-            ? <span className="transcription">{currentWordObj?.transcription}</span>
-            : <span className="rules-span">Собери слово из букв</span>}
-
-          <div className="letter-wrapper">
-            {currentWordObj?.word.split('')
+            <div className="letter-wrapper">
+              {currentWordObj?.word.split('')
          .map((letter, index) => (
            <div
              key={`${letter}${index + 1}`}
@@ -177,30 +108,30 @@ const WordBuilderGame = () => {
              <span className={!solved && index >= currentLetterIndex ? 'hidden' : ''}>{letter}</span>
            </div>
          ))}
-          </div>
+            </div>
 
-          <div className="letter-wrapper">
-            {shuffledArray
-              .map((letter, index) => (
-                <button
-                  key={`${letter}${index + 1}`}
-                  className={`letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
-                  type="button"
-                  onClick={() => {
-                    if (letter === currentLetter) {
-                      setGuessedLettersIndexes([...guessedLettersIndexes, index]);
-                      setCurrentLetterIndex(currentLetterIndex + 1);
-                      if (currentLetterIndex === currentWordObj?.word.length - 1) {
-                        setSolved(true);
+            <div className="letter-wrapper">
+              {shuffledArray
+                .map((letter, index) => (
+                  <button
+                    key={`${letter}${index + 1}`}
+                    className={`letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
+                    type="button"
+                    onClick={() => {
+                      if (letter === currentLetter) {
+                        setGuessedLettersIndexes([...guessedLettersIndexes, index]);
+                        setCurrentLetterIndex(currentLetterIndex + 1);
+                        if (currentLetterIndex === currentWordObj?.word.length - 1) {
+                          setSolved(true);
+                        }
                       }
-                    }
-                  }}
-                >
-                  <span>{letter}</span>
-                </button>
-              ))}
-          </div>
-          {solved
+                    }}
+                  >
+                    <span>{letter}</span>
+                  </button>
+                ))}
+            </div>
+            {solved
       && (
       <img
         src={currentWordObj?.image}
@@ -208,20 +139,20 @@ const WordBuilderGame = () => {
         className="word-image"
       />
       )}
-          {solved
+            {solved
       && <span className="context-span">Контекст</span>}
-          {solved
+            {solved
       && <span className="text-example-span">{currentWordObj?.textExample}</span>}
 
-          <button
-            type="button"
-            className="next-button"
-            onMouseDown={nextButtonHandler}
-          >
-            {solved ? 'Далее' : 'Не знаю :('}
-          </button>
-        </>
-      )}
+            <button
+              type="button"
+              className="next-button"
+              onMouseDown={nextButtonHandler}
+            >
+              {solved ? 'Далее' : 'Не знаю :('}
+            </button>
+          </>
+        )}
 
     </div>
   );
