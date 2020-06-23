@@ -41,7 +41,7 @@ const WordBuilderGamePage = ({
         .map((letter, index) => (
           <button
             key={`${letter}${index + 1}`}
-            className={`letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
+            className={`btn btn-primary ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
             type="button"
             onClick={() => {
               if (letter === currentLetter) {
