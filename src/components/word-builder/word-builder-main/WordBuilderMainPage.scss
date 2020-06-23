@@ -63,7 +63,9 @@
   height: 50px;
   border: 1px solid blue;
   border-radius: 10%;
-  margin-right: 20px;
+}
+.empty-letter + .empty-letter {
+  margin-left: 20px;
 }
 .removed {
   display: none;

@@ -25,7 +25,6 @@ const WordBuilderMainPage = () => {
   const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
   const [solved, setSolved] = useState(false);
   const [finished, setFinished] = useState(false);
-  // const [started, setStarted] = useState(false);
   const [difficulty, setDifficulty] = useState(0);
 
   const currentWordObj = wordObjects[currentWordIndex];
@@ -109,6 +108,7 @@ const WordBuilderMainPage = () => {
               nextButtonHandler={nextButtonHandler}
               setDifficulty={setDifficulty}
               difficulty={difficulty}
+              setCurrentWordIndex={setCurrentWordIndex}
             />
           )}
       </div>

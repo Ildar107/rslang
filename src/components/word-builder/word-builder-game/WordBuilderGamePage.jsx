@@ -17,18 +17,26 @@ const WordBuilderGamePage = ({
   nextButtonHandler,
   setDifficulty,
   difficulty,
+  setCurrentWordIndex,
 }) => (
   <>
     <div className="difficulty-wrapper">
-      <h1>Выберите сложность</h1>
+      <h4>Выберите сложность</h4>
       <ul className="pagination">
         {difficultyArray.map((level, index) => (
-          <li key={`${level} ${index + 1}`} className={`page-item ${difficulty === index && 'active'}`}>
+          <li
+            key={`${level} ${index + 1}`}
+            className={`page-item ${difficulty === index && 'active'}`}
+          >
             <button
               type="button"
               className="page-link"
               onClick={() => {
                 setDifficulty(index);
+                setGuessedLettersIndexes([]);
+                setCurrentLetterIndex(0);
+                setCurrentWordIndex(0);
+                setSolved(false);
               }}
             >
               {index + 1}
@@ -39,7 +47,11 @@ const WordBuilderGamePage = ({
     </div>
     {solved
     && (
-    <button type="button" className="audio-button-solved btn btn-primary" onClick={() => new Audio(currentWordObj.audio).play()}>
+    <button
+      type="button"
+      className="audio-button-solved btn btn-primary"
+      onClick={() => new Audio(currentWordObj.audio).play()}
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
         <path fill="currentColor" d="M15.788 13.007a3 3 0 110 5.985c.571 3.312 2.064 5.675 3.815 5.675 2.244 0 4.064-3.88 4.064-8.667 0-4.786-1.82-8.667-4.064-8.667-1.751 0-3.244 2.363-3.815 5.674zM19 26c-3.314 0-12-4.144-12-10S15.686 6 19 6s6 4.477 6 10-2.686 10-6 10z" fillRule="evenodd" />
       </svg>
