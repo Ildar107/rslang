@@ -11,6 +11,7 @@ const WordBuilderDifficultySelectPage = ({ setDifficulty, setStarted }) => (
         <li key={`${level} ${index + 1}`}>
           <button
             type="button"
+            // className="btn btn-primary"
             onClick={() => {
               setDifficulty(index);
               setStarted(true);
