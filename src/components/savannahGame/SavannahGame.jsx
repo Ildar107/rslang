@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import './savannah-game.scss';
 import {
-  Container, Row, Col, Spinner, Pagination, Form,
+  Container, Row, Col, Spinner, Pagination, Form, Button,
 } from 'react-bootstrap';
 
 const getShuffledArr = (arr) => {
@@ -32,11 +32,14 @@ class SavannahGame extends Component {
       currentWords: [],
       currentWord: [],
       learnedWordsArr: [],
+      score: 0,
+      animationName: '',
     };
   }
 
   componentDidMount() {
     this.getWords(this.state.page, this.state.group);
+    this.clickAnimation();
   }
 
   getWords(page, group) {
@@ -64,6 +67,20 @@ class SavannahGame extends Component {
       );
   }
 
+  clickAnimation = () => {
+    const styleSheet = document.styleSheets[0];
+    const animationName = `pulsing${Math.round(Math.random() * 100)}`;
+    const keyframes = `@-webkit-keyframes ${animationName} {
+        0% {transform: translateY(10px)}
+        100% {transform: translateY(50vh)}
+    }`;
+    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+    this.setState({
+      animationName,
+    });
+  }
+
   nextWords = () => {
     const itemsCopy = [...this.state.items];
     if (itemsCopy.length > 9) {
@@ -79,22 +96,16 @@ class SavannahGame extends Component {
     }
   }
 
-  restartAnimation = () => {
-    const elem = document.querySelector('.translate');
-    elem.classList.remove('animation');
-    void elem.offsetHeight;
-    elem.classList.add('animation');
-  }
-
   wordIsLearned = () => {
     const copyCurrentWord = this.state.currentWord;
     const arr = [...this.state.learnedWordsArr];
     arr.push(copyCurrentWord);
     this.setState({
       learnedWordsArr: arr,
+      score: this.state.score + 1,
     });
     this.nextWords();
-    this.restartAnimation();
+    this.clickAnimation();
   }
 
   compareWords = (e) => {
@@ -117,19 +128,23 @@ class SavannahGame extends Component {
     });
   };
 
-  handlePageChange = async ({ target: { innerText } }) => {
+  handlePageChange = async (e) => {
     this.setState({
-      page: Number(innerText),
-    });
-  };
-
-  nextPage = async () => {
-    this.setState({
-      page: this.state.page + 1,
+      page: +e.target.value,
     });
   };
 
   render() {
+    const style = {
+      animationName: this.state.animationName,
+      animationTimingFunction: 'linear',
+      animationDuration: '5s',
+      animationDelay: '0.0s',
+      animationDirection: 'normal',
+      animationFillMode: 'forwards',
+      animationIterationCount: 'infinite',
+    };
+
     const { error, isLoaded } = this.state;
     if (error) {
       return (
@@ -144,9 +159,9 @@ class SavannahGame extends Component {
     return (
       <Container className="savannah">
         <Row className="savanna_levels">
-          <Col className="levels__groups">
+          <Col className="levels__groups" sm>
             <p>Page:</p>
-            <Pagination className="pag__group">
+            <Pagination className="levels__pag">
               {
               Array.from({ length: 6 }, (x, i) => i).map((x) => (
                 <Pagination.Item
@@ -160,17 +175,16 @@ class SavannahGame extends Component {
             }
             </Pagination>
           </Col>
-          <Col>
-            <Form>
+          <Col sm>
+            <Form className="savannah__select">
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Level:</Form.Label>
-                <Form.Control as="select">
+                <Form.Control as="select" onChange={this.handlePageChange}>
                   {
                   Array.from({ length: 30 }, (x, i) => i).map((x) => (
                     <option
                       key={x}
                       active={x === (this.state.group)}
-                      onClick={this.handleGroupChange}
                     >
                       {x}
                     </option>
@@ -180,10 +194,17 @@ class SavannahGame extends Component {
               </Form.Group>
             </Form>
           </Col>
+          <Col sm>
+            Score:
+            {' '}
+            {this.state.score}
+            /10
+          </Col>
         </Row>
-        <Row className="savannah__translate">
+        <div className="translate animation" data-set={this.state.currentWord.word} style={style} onAnimationIteration={this.animationEnd}>{this.state.currentWord.wordTranslate}</div>
+        {/* <Row className="savannah__translate">
           <Col className="translate animation" data-set={this.state.currentWord.word} onAnimationIteration={this.animationEnd} sm>{this.state.currentWord.wordTranslate}</Col>
-        </Row>
+        </Row> */}
         <Row className="words-block">
           {
             this.getCurrentWords()

@@ -1,12 +1,28 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+html{
+  min-height: 100%;
+}
+
+body{
+  min-height: 100vh;
+}
+
+.savannah{
+  height: 100vh;
+}
+
 .translate {
 	text-align: center;
 	animation: pulsing 5s linear infinite;
 	animation-delay: .5s;
 }
 
-.animation{
+/* .animation{
   animation: pulsing 5s linear infinite;
-}
+} */
 .words-block{
 	transform: translateY(40vh);
 }
@@ -22,11 +38,20 @@
   color: grey;
 }
 
-@keyframes pulsing {
+/* @keyframes pulsing {
   0% {
     transform: translateY(10px);
   }
   100% {
     transform: translateY(50vh);
   }
+} */
+
+.row{
+  align-items: center;
 }
+
+.savannah__select{
+  width: 150px;
+}
+
