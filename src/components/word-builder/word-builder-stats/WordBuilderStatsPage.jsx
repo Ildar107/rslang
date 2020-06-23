@@ -15,7 +15,7 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
           .map(({
             audio, word, wordTranslate, transcription,
           }) => (
-            <li key={`${word} ${wordTranslate}`}>
+            <li key={`${word} ${wordTranslate}`} className="stats-list">
               <div>
                 <button
                   type="button"
@@ -52,7 +52,7 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
           .map(({
             audio, word, wordTranslate, transcription,
           }) => (
-            <li key={`${word} ${wordTranslate}`}>
+            <li key={`${word} ${wordTranslate}`} className="stats-list">
               <div>
                 <button
                   type="button"
