@@ -159,8 +159,8 @@ class SpeakIt extends Component {
   }
 
   render = () => {
-    return (
-    <Container fluid>
+    return !this.state.isGameStopped ? (
+        <Container fluid>
       <span className="close__game">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z"></path></svg>
       </span>
@@ -222,11 +222,13 @@ class SpeakIt extends Component {
           </button>
         </div>
       </div>
-      <div className={this.state.isGameStopped ? 'results results_active' : 'results'}>
-       <GameResults state={this.state} restart={this.restart} continueGame={this.continue}/>
-      </div>
       </Container>
-    );
+       )
+    : ( 
+        <div className="results results_active">
+            <GameResults state={this.state} restart={this.restart} continueGame={this.continue}/>
+        </div>
+    )
   }
 }
 
