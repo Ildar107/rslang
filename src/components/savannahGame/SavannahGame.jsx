@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import './savannah-game.scss';
 import {
-  Container, Row, Col, Spinner, Pagination,
+  Container, Row, Col, Spinner, Pagination, Form,
 } from 'react-bootstrap';
 
 const getShuffledArr = (arr) => {
@@ -20,7 +20,6 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
-
 class SavannahGame extends Component {
   constructor(props) {
     super(props);
@@ -114,7 +113,19 @@ class SavannahGame extends Component {
 
   handleGroupChange = async ({ target: { innerText } }) => {
     this.setState({
-      group: Number(innerText) - 1,
+      group: Number(innerText),
+    });
+  };
+
+  handlePageChange = async ({ target: { innerText } }) => {
+    this.setState({
+      page: Number(innerText),
+    });
+  };
+
+  nextPage = async () => {
+    this.setState({
+      page: this.state.page + 1,
     });
   };
 
@@ -132,9 +143,11 @@ class SavannahGame extends Component {
     }
     return (
       <Container className="savannah">
-        <div className="savannah_pag">
-          <Pagination className="pag__group">
-            {
+        <Row className="savanna_levels">
+          <Col className="levels__groups">
+            <p>Page:</p>
+            <Pagination className="pag__group">
+              {
               Array.from({ length: 6 }, (x, i) => i).map((x) => (
                 <Pagination.Item
                   key={x}
@@ -145,8 +158,29 @@ class SavannahGame extends Component {
                 </Pagination.Item>
               ))
             }
-          </Pagination>
-        </div>
+            </Pagination>
+          </Col>
+          <Col>
+            <Form>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Level:</Form.Label>
+                <Form.Control as="select">
+                  {
+                  Array.from({ length: 30 }, (x, i) => i).map((x) => (
+                    <option
+                      key={x}
+                      active={x === (this.state.group)}
+                      onClick={this.handleGroupChange}
+                    >
+                      {x}
+                    </option>
+                  ))
+                }
+                </Form.Control>
+              </Form.Group>
+            </Form>
+          </Col>
+        </Row>
         <Row className="savannah__translate">
           <Col className="translate animation" data-set={this.state.currentWord.word} onAnimationIteration={this.animationEnd} sm>{this.state.currentWord.wordTranslate}</Col>
         </Row>
