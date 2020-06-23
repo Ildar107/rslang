@@ -68,7 +68,7 @@ const WordBuilderMainPage = () => {
       setWordsObj(wordsArray);
     }
     fetchData();
-  }, []);
+  }, [difficulty]);
 
   useEffect(() => {
     const handleLetterKeyPress = ({ key }) => {
@@ -108,6 +108,7 @@ const WordBuilderMainPage = () => {
               setSolved={setSolved}
               nextButtonHandler={nextButtonHandler}
               setDifficulty={setDifficulty}
+              difficulty={difficulty}
             />
           )}
       </div>

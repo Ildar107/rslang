@@ -16,16 +16,17 @@ const WordBuilderGamePage = ({
   setSolved,
   nextButtonHandler,
   setDifficulty,
+  difficulty,
 }) => (
   <>
     <div className="difficulty-wrapper">
       <h1>Выберите сложность</h1>
-      <ul>
+      <ul className="pagination">
         {difficultyArray.map((level, index) => (
-          <li key={`${level} ${index + 1}`}>
+          <li key={`${level} ${index + 1}`} className={`page-item ${difficulty === index && 'active'}`}>
             <button
               type="button"
-            // className="btn btn-primary"
+              className="page-link"
               onClick={() => {
                 setDifficulty(index);
               }}
