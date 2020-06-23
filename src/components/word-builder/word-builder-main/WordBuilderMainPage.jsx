@@ -53,18 +53,19 @@ const WordBuilderMainPage = () => {
       const WORDS_URL = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${difficulty}`;
       const data = await fetch(WORDS_URL);
       const res = await data.json();
-      const wordsArray = res.map(({
-        audio, image, audioExample, textExample, transcription, word, wordTranslate,
-      }) => ({
-        audio: `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audio}`,
-        image: `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${image}`,
-        audioExample: `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioExample}`,
-        textExample: textExample.replace('<b>', '').replace('</b>', ''),
-        transcription,
-        word,
-        wordTranslate,
-        status: true,
-      }));
+      const wordsArray = res
+        .map(({
+          audio, image, audioExample, textExample, transcription, word, wordTranslate,
+        }) => ({
+          audio: `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audio}`,
+          image: `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${image}`,
+          audioExample: `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioExample}`,
+          textExample: textExample.replace('<b>', '').replace('</b>', ''),
+          transcription,
+          word,
+          wordTranslate,
+          status: true,
+        })).slice(0, 10);
       setWordsObj(wordsArray);
     }
     fetchData();

@@ -16,7 +16,7 @@ const WordBuilderGamePage = ({
 }) => (
   <>
     <button type="button" className="audio-button" onClick={() => new Audio(currentWordObj.audio).play()}>s</button>
-    <div className="current-progress-div">{`${currentWordIndex + 1} / 20`}</div>
+    <div className="current-progress-div">{`${currentWordIndex + 1} / 10`}</div>
     <span className="eng-word">{currentWordObj?.wordTranslate}</span>
 
     {solved
