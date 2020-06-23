@@ -35,7 +35,7 @@
   border-radius: 10%;
   margin-right: 20px;
 }
-.audio-button {
+.audio-button-solved {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -71,4 +71,22 @@
 }
 .stats-wrapper {
   height: 100%;
+}
+.audio-icon {
+  position: absolute;
+  top: 14px;
+  left: 27px;
+  width: 46px;
+  height: 43px;
+}
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+  width: 40px;
+  position: relative;
+  left: -12px;
+  top: -2px;
+}
+.btn-secondary {
+  width: auto;
 }
