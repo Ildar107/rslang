@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
+const difficultyArray = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
 const WordBuilderGamePage = ({
   currentWordObj,
   currentWordIndex,
@@ -13,8 +15,27 @@ const WordBuilderGamePage = ({
   setCurrentLetterIndex,
   setSolved,
   nextButtonHandler,
+  setDifficulty,
 }) => (
   <>
+    <div className="difficulty-wrapper">
+      <h1>Выберите сложность</h1>
+      <ul>
+        {difficultyArray.map((level, index) => (
+          <li key={`${level} ${index + 1}`}>
+            <button
+              type="button"
+            // className="btn btn-primary"
+              onClick={() => {
+                setDifficulty(index);
+              }}
+            >
+              {index + 1}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
     {solved
     && (
     <button type="button" className="audio-button-solved btn btn-primary" onClick={() => new Audio(currentWordObj.audio).play()}>

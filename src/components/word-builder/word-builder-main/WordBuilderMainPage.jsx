@@ -6,7 +6,6 @@ import './WordBuilderMainPage.scss';
 import { Container } from 'react-bootstrap';
 import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 import WordBuilderGamePage from '../word-builder-game/WordBuilderGamePage';
-import WordBuilderDifficultySelectPage from '../word-builder-difficulty-select/WordBuilderDifficultySelectPage';
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -26,7 +25,7 @@ const WordBuilderMainPage = () => {
   const [guessedLettersIndexes, setGuessedLettersIndexes] = useState([]);
   const [solved, setSolved] = useState(false);
   const [finished, setFinished] = useState(false);
-  const [started, setStarted] = useState(false);
+  // const [started, setStarted] = useState(false);
   const [difficulty, setDifficulty] = useState(0);
 
   const currentWordObj = wordObjects[currentWordIndex];
@@ -93,30 +92,24 @@ const WordBuilderMainPage = () => {
 
     <Container fluid>
       <div className="word-constructor-wrapper">
-        {!started
-          ? (
-            <WordBuilderDifficultySelectPage
+        { finished
+          ? <WordBuilderStatsPage wordObjects={wordObjects} />
+          : (
+            <WordBuilderGamePage
+              currentWordObj={currentWordObj}
+              currentWordIndex={currentWordIndex}
+              solved={solved}
+              currentLetterIndex={currentLetterIndex}
+              shuffledArray={shuffledArray}
+              guessedLettersIndexes={guessedLettersIndexes}
+              currentLetter={currentLetter}
+              setGuessedLettersIndexes={setGuessedLettersIndexes}
+              setCurrentLetterIndex={setCurrentLetterIndex}
+              setSolved={setSolved}
+              nextButtonHandler={nextButtonHandler}
               setDifficulty={setDifficulty}
-              setStarted={setStarted}
             />
-          )
-          : finished
-            ? <WordBuilderStatsPage wordObjects={wordObjects} />
-            : (
-              <WordBuilderGamePage
-                currentWordObj={currentWordObj}
-                currentWordIndex={currentWordIndex}
-                solved={solved}
-                currentLetterIndex={currentLetterIndex}
-                shuffledArray={shuffledArray}
-                guessedLettersIndexes={guessedLettersIndexes}
-                currentLetter={currentLetter}
-                setGuessedLettersIndexes={setGuessedLettersIndexes}
-                setCurrentLetterIndex={setCurrentLetterIndex}
-                setSolved={setSolved}
-                nextButtonHandler={nextButtonHandler}
-              />
-            )}
+          )}
       </div>
     </Container>
   );
