@@ -4,7 +4,9 @@
 	animation-delay: .5s;
 }
 
-
+.animation{
+  animation: pulsing 5s linear infinite;
+}
 .words-block{
 	transform: translateY(40vh);
 }
