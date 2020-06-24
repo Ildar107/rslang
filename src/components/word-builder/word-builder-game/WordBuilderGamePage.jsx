@@ -89,7 +89,9 @@ const WordBuilderGamePage = ({
          .map((letter, index) => (
            <div
              key={`${letter}${index + 1}`}
-             className={`empty-letter btn btn-primary ${!solved && index >= currentLetterIndex && 'disabled'} ${index === currentLetterIndex && 'next-letter'}`}
+             className={`empty-letter btn btn-primary
+             ${!solved && index >= currentLetterIndex && 'disabled'}
+             ${index === currentLetterIndex && 'next-letter'}`}
            >
              <span className={!solved && index >= currentLetterIndex ? 'hidden' : ''}>{letter}</span>
            </div>
@@ -101,7 +103,7 @@ const WordBuilderGamePage = ({
         .map((letter, index) => (
           <button
             key={`${letter}${index + 1}`}
-            className={`btn btn-primary ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
+            className={`btn btn-primary letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
             type="button"
             onClick={() => {
               if (letter === currentLetter) {

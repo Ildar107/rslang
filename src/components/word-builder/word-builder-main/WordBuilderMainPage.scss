@@ -3,8 +3,6 @@
   width: 70%;
   height: 80vh;
   position: relative;
-  /* top: calc(50vh - 300px);
-  left: calc(50vw - 400px); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,21 +17,13 @@
   justify-content: center;
   width: 100%;
 }
-/* .letter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  border: 1px solid red;
-  border-radius: 10%;
-  margin-right: 20px;
-} */
+.letter {
+  margin-top: 10px;
+}
 .btn {
   width: 50px;
   height: 50px;
   border-radius: 10%;
-  /* margin-right: 20px; */
 }
 .btn + .btn {
   margin-left: 20px;
@@ -58,6 +48,7 @@
   width: 50px;
   height: 50px;
   pointer-events: none;
+  margin-top: 10px;
 }
 .empty-letter + .empty-letter {
   margin-left: 20px;
@@ -89,6 +80,7 @@ svg {
 }
 .btn-secondary {
   width: auto;
+  border-radius: 5px;
 }
 li {
   list-style: none;
