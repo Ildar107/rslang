@@ -48,12 +48,17 @@
 .word-image {
   width: 200px;
 }
-.current-progress-div {
+/* .current-progress-div {
   position: absolute;
   top: 10px;
   right: 10px;
   width: 80px;
   height: 45px;
+} */
+.progress-container {
+  width: 25%;
+  color: #eb6864;
+  margin-right: 40px;
 }
 .empty-letter {
   display: flex;
@@ -104,4 +109,12 @@ li {
 .pagination {
   justify-content: center;
   margin-top: 20px;
+}
+.word-builder-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.difficulty-wrapper{
+  margin-left: 40px;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
 import React from 'react';
 
@@ -20,31 +21,47 @@ const WordBuilderGamePage = ({
   setCurrentWordIndex,
 }) => (
   <>
-    <div className="difficulty-wrapper">
-      <h4>Выберите сложность</h4>
-      <ul className="pagination">
-        {difficultyArray.map((level, index) => (
-          <li
-            key={`${level} ${index + 1}`}
-            className={`page-item ${difficulty === index && 'active'}`}
-          >
-            <button
-              type="button"
-              className="page-link"
-              onClick={() => {
-                setDifficulty(index);
-                setGuessedLettersIndexes([]);
-                setCurrentLetterIndex(0);
-                setCurrentWordIndex(0);
-                setSolved(false);
-              }}
+    <div className="word-builder-nav">
+      <div className="difficulty-wrapper">
+        <h4>Выберите сложность</h4>
+        <ul className="pagination">
+          {difficultyArray.map((level, index) => (
+            <li
+              key={`${level} ${index + 1}`}
+              className={`page-item ${difficulty === index && 'active'}`}
             >
-              {index + 1}
-            </button>
-          </li>
-        ))}
-      </ul>
+              <button
+                type="button"
+                className="page-link"
+                onClick={() => {
+                  setDifficulty(index);
+                  setGuessedLettersIndexes([]);
+                  setCurrentLetterIndex(0);
+                  setCurrentWordIndex(0);
+                  setSolved(false);
+                }}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="progress-container">
+        <span>{`${currentWordIndex} / 10`}</span>
+        <div className="progress">
+          <div
+            className="progress-bar"
+            role="progressbar"
+            style={{ width: `${currentWordIndex * 10}%` }}
+            aria-valuenow="25"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          />
+        </div>
+      </div>
     </div>
+
     {solved
     && (
     <button
@@ -57,7 +74,8 @@ const WordBuilderGamePage = ({
       </svg>
     </button>
     )}
-    <div className="current-progress-div">{`${currentWordIndex + 1} / 10`}</div>
+    {/* <div className="current-progress-div">{`${currentWordIndex + 1} / 10`}</div> */}
+
     <span className="eng-word">{currentWordObj?.wordTranslate}</span>
 
     {solved
