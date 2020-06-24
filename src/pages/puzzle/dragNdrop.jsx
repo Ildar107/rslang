@@ -156,7 +156,6 @@ class DragNdrop extends React.Component {
       const arr = this.props.arrayOfMistakes;
       arr.push(this.state.numOfSentence);
       this.props.setArrayOfMistakes(arr);
-      console.log('mistakes', arr);
     }
     if (!this.state.items.length && this.state.selected.length
         && this.props.check && this.checkResult() && !this.props.win) {
@@ -169,7 +168,6 @@ class DragNdrop extends React.Component {
       if (arr.length && arr[arr.length - 1] === this.state.numOfSentence) arr.pop();
       arr.push(this.state.numOfSentence + 100);
       this.props.setArrayOfMistakes(arr);
-      console.log('dont know', arr);
     }
     if (!prevProps.continuer && this.props.continuer && this.state.numOfSentence < 9) {
       this.props.setAllInSelected(false);
