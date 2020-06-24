@@ -19,7 +19,7 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
               <div>
                 <button
                   type="button"
-                  className="audio-button btn btn-primary"
+                  className="audio-button-stats btn btn-primary"
                   onClick={() => new Audio(audio).play()}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -30,6 +30,7 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
                   {word}
                   {' '}
                   {transcription}
+                  {' '}
                   -
                   {' '}
                   {wordTranslate}
@@ -56,7 +57,7 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
               <div>
                 <button
                   type="button"
-                  className="audio-button btn btn-primary"
+                  className="audio-button-stats btn btn-primary"
                   onClick={() => new Audio(audio).play()}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -67,6 +68,7 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
                   {word}
                   {' '}
                   {transcription}
+                  {' '}
                   -
                   {' '}
                   {wordTranslate}
@@ -75,8 +77,8 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
             </li>
           ))}
       </ul>
-      <button type="button" className="restart-button">Начать заного</button>
-      <button type="button" className="return-button">Вернуться на главную страницу</button>
+      <button type="button" className="restart-button btn btn-secondary">Начать заного</button>
+      <button type="button" className="return-button btn btn-secondary">Вернуться на главную страницу</button>
     </div>
   </div>
 );
