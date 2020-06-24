@@ -23,7 +23,7 @@ const WordBuilderGamePage = ({
   <>
     <div className="word-builder-nav">
       <div className="difficulty-wrapper">
-        <h4>Выберите сложность</h4>
+        <h4 className="h4-choose-difficulty">Level</h4>
         <ul className="pagination">
           {difficultyArray.map((level, index) => (
             <li
@@ -48,7 +48,11 @@ const WordBuilderGamePage = ({
         </ul>
       </div>
       <div className="progress-container">
-        <span>{`${currentWordIndex} / 10`}</span>
+        <span>
+          Score
+          {' '}
+          {`${currentWordIndex} / 10`}
+        </span>
         <div className="progress">
           <div
             className="progress-bar"
@@ -74,10 +78,7 @@ const WordBuilderGamePage = ({
       </svg>
     </button>
     )}
-    {/* <div className="current-progress-div">{`${currentWordIndex + 1} / 10`}</div> */}
-
     <span className="eng-word">{currentWordObj?.wordTranslate}</span>
-
     {solved
       ? <span className="transcription">{currentWordObj?.transcription}</span>
       : <span className="rules-span">Собери слово из букв</span>}
@@ -87,7 +88,7 @@ const WordBuilderGamePage = ({
          .map((letter, index) => (
            <div
              key={`${letter}${index + 1}`}
-             className="empty-letter"
+             className={`empty-letter btn btn-primary ${!solved && index >= currentLetterIndex && 'disabled'}`}
            >
              <span className={!solved && index >= currentLetterIndex ? 'hidden' : ''}>{letter}</span>
            </div>

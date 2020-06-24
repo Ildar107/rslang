@@ -38,27 +38,18 @@
 .btn + .btn {
   margin-left: 20px;
 }
-.audio-button-solved {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 50px;
-  height: 50px;
-}
+
 .word-image {
   width: 200px;
 }
-/* .current-progress-div {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 80px;
-  height: 45px;
-} */
+
 .progress-container {
   width: 25%;
   color: #eb6864;
   margin-right: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .empty-letter {
   display: flex;
@@ -66,8 +57,7 @@
   align-items: center;
   width: 50px;
   height: 50px;
-  border: 1px solid blue;
-  border-radius: 10%;
+  pointer-events: none;
 }
 .empty-letter + .empty-letter {
   margin-left: 20px;
@@ -115,9 +105,12 @@ li {
   display: flex;
   justify-content: space-between;
 }
-.difficulty-wrapper{
+.difficulty-wrapper {
   margin-left: 40px;
 }
-.audio-button-stats{
+.audio-button-stats {
   margin-right: 20px;
+}
+.h4-choose-difficulty {
+  color: #eb6864;
 }
