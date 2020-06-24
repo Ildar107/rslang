@@ -98,7 +98,7 @@ class DragNdrop extends React.Component {
 
   setWidth() {
     this.setState({
-      width: window.getComputedStyle(document.querySelector('.drop2'))
+      width: window.getComputedStyle(document.querySelector('.card'))
         .width.split('px')[0],
     });
   }
