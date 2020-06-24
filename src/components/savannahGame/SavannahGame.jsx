@@ -11,6 +11,7 @@ import './savannah-game.scss';
 import {
   Container, Row, Col, Spinner, Pagination, Form, Button,
 } from 'react-bootstrap';
+import ModalWindow from './modal/Modal';
 
 const getShuffledArr = (arr) => {
   const newArr = arr.slice();
@@ -20,6 +21,7 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
+
 class SavannahGame extends Component {
   constructor(props) {
     super(props);
@@ -34,12 +36,13 @@ class SavannahGame extends Component {
       learnedWordsArr: [],
       score: 0,
       animationName: '',
+      modalShow: false,
     };
   }
 
   componentDidMount() {
     this.getWords(this.state.page, this.state.group);
-    this.clickAnimation();
+    this.restartAnimation();
   }
 
   getWords(page, group) {
@@ -67,7 +70,23 @@ class SavannahGame extends Component {
       );
   }
 
-  clickAnimation = () => {
+  active
+
+  restartAnimation = () => {
+    const styleSheet = document.styleSheets[0];
+    const animationName = `pulsing${Math.round(Math.random() * 100)}`;
+    const keyframes = `@-webkit-keyframes ${animationName} {
+        0% {transform: translateY(10px)}
+        100% {transform: translateY(50vh)}
+    }`;
+    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+    this.setState({
+      animationName,
+    });
+  }
+
+  stopAnimation = () => {
     const styleSheet = document.styleSheets[0];
     const animationName = `pulsing${Math.round(Math.random() * 100)}`;
     const keyframes = `@-webkit-keyframes ${animationName} {
@@ -83,7 +102,7 @@ class SavannahGame extends Component {
 
   nextWords = () => {
     const itemsCopy = [...this.state.items];
-    if (itemsCopy.length > 9) {
+    if (itemsCopy.length > 11) {
       itemsCopy.shift();
       const nextWords = getShuffledArr(itemsCopy);
       const currentWordsArr = nextWords.filter((item, index) => item && index <= 3);
@@ -93,6 +112,9 @@ class SavannahGame extends Component {
         currentWord: nextWords[0],
         currentWords: currentWordsArr.sort(() => Math.random() - 0.5),
       });
+    } else {
+      this.showModal();
+      this.nextLevel();
     }
   }
 
@@ -105,7 +127,7 @@ class SavannahGame extends Component {
       score: this.state.score + 1,
     });
     this.nextWords();
-    this.clickAnimation();
+    this.restartAnimation();
   }
 
   compareWords = (e) => {
@@ -133,6 +155,28 @@ class SavannahGame extends Component {
       page: +e.target.value,
     });
   };
+
+  nextLevel = () => {
+    this.setState({
+      group: this.state.group + 1,
+    });
+  }
+
+  onHide = (e) => {
+    e.preventDefault();
+    this.setState({
+      modalShow: false,
+      score: 0,
+    });
+    this.getWords(this.state.page, this.state.group);
+    this.restartAnimation();
+  }
+
+  showModal = () => {
+    this.setState({
+      modalShow: true,
+    });
+  }
 
   render() {
     const style = {
@@ -200,16 +244,19 @@ class SavannahGame extends Component {
             {this.state.score}
             /10
           </Col>
+          <Col>
+            Уровень:
+            {' '}
+            {this.state.group}
+          </Col>
         </Row>
         <div className="translate animation" data-set={this.state.currentWord.word} style={style} onAnimationIteration={this.animationEnd}>{this.state.currentWord.wordTranslate}</div>
-        {/* <Row className="savannah__translate">
-          <Col className="translate animation" data-set={this.state.currentWord.word} onAnimationIteration={this.animationEnd} sm>{this.state.currentWord.wordTranslate}</Col>
-        </Row> */}
         <Row className="words-block">
           {
             this.getCurrentWords()
           }
         </Row>
+        <ModalWindow onHide={this.onHide} show={this.state.modalShow} score={this.state.score} restartAnimation={this.restartAnimation} />
       </Container>
     );
   }
