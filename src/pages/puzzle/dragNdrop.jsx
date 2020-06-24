@@ -79,7 +79,8 @@ class DragNdrop extends React.Component {
 
   checkResult() {
     const sentenceArr = this.state.selected.map((it) => it.content);
-    if (this.state.sentences && sentenceArr.join(' ') === this.state.sentences[this.state.numOfSentence]) return true;
+    if (this.state.sentences
+        && sentenceArr.join(' ') === this.state.sentences[this.state.numOfSentence]) return true;
     return false;
   }
 
@@ -145,12 +146,17 @@ class DragNdrop extends React.Component {
         this.setState({ imgHeight: img.height });
         this.setState({ imgWidth: img.width });
       };
+      this.props.setArrayOfMistakes([]);
     }
     if (!this.state.items.length && this.state.selected.length
         && !this.props.allInSelected) this.props.setAllInSelected(true);
 
-    if (!prevProps.check && this.props.check) {
-      this.checkResult();
+    if (!prevProps.check && this.props.check
+        && !this.checkResult() && !this.props.dontKnow) {
+      const arr = this.props.arrayOfMistakes;
+      arr.push(this.state.numOfSentence);
+      this.props.setArrayOfMistakes(arr);
+      console.log('mistakes', arr);
     }
     if (!this.state.items.length && this.state.selected.length
         && this.props.check && this.checkResult() && !this.props.win) {
@@ -159,6 +165,11 @@ class DragNdrop extends React.Component {
     if (!prevProps.dontKnow && this.props.dontKnow) {
       this.setState({ items: [] });
       this.setState({ selected: this.setRightSentence(this.state.numOfSentence) });
+      const arr = this.props.arrayOfMistakes;
+      if (arr.length && arr[arr.length - 1] === this.state.numOfSentence) arr.pop();
+      arr.push(this.state.numOfSentence + 100);
+      this.props.setArrayOfMistakes(arr);
+      console.log('dont know', arr);
     }
     if (!prevProps.continuer && this.props.continuer && this.state.numOfSentence < 9) {
       this.props.setAllInSelected(false);
@@ -412,8 +423,7 @@ class DragNdrop extends React.Component {
 }
 
 DragNdrop.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  wordsData: PropTypes.array.isRequired,
+  wordsData: PropTypes.isRequired,
   setAllInSelected: PropTypes.func.isRequired,
   allInSelected: PropTypes.bool.isRequired,
   check: PropTypes.bool.isRequired,
@@ -429,6 +439,8 @@ DragNdrop.propTypes = {
   setNext: PropTypes.func.isRequired,
   next: PropTypes.bool.isRequired,
   backgroundPrompt: PropTypes.bool.isRequired,
+  setArrayOfMistakes: PropTypes.func.isRequired,
+  arrayOfMistakes: PropTypes.isRequired,
 };
 
 export default DragNdrop;

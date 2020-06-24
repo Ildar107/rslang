@@ -149,7 +149,7 @@ html {
 
 .go {
   margin-left: 10px;
-  margin-top: -5px;
+  vertical-align: top;
 }
 
 .bottom-buttons {
@@ -176,6 +176,7 @@ html {
 
 .dropdown-trigger {
   margin-left: 10px;
+  margin-bottom: 5px !important;
   &:hover{
     text-decoration: none;
   }
@@ -187,6 +188,7 @@ html {
 
 .tooltipped {
   margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 .promts {
@@ -208,6 +210,23 @@ html {
 .tooltipped{
   color: white !important;
 }
+
+.statistic-trigger{
+  margin-left: 10px;
+  color: white;
+  &:hover{
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.modal-close{
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
+
 
 
 

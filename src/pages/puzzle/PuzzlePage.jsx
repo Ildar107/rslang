@@ -11,6 +11,7 @@ import Translation from './translation';
 import PromptButtons from './promptButtons';
 import Paintings from './paintings';
 import Header from '../../components/header/Header';
+import StatisticModal from './statisticModal';
 
 class PuzzlePage extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class PuzzlePage extends React.Component {
       backgroundPrompt: localStorage.getItem('backgroundPrompt') === 'true',
       audioStart: false,
       playingAudio: null,
-
+      arrayOfMistakes: [],
     };
     this.getWordsData = this.getWordsData.bind(this);
     this.setDifficulty = this.setDifficulty.bind(this);
@@ -55,6 +56,7 @@ class PuzzlePage extends React.Component {
     this.randomInteger = this.randomInteger.bind(this);
     this.onUnload = this.onUnload.bind(this);
     this.audioPlay = this.audioPlay.bind(this);
+    this.setArrayOfMistakes = this.setArrayOfMistakes.bind(this);
   }
 
   randomInteger(min, max) {
@@ -119,6 +121,10 @@ class PuzzlePage extends React.Component {
     this.setState({ pageNumber: page });
     this.setState({ difficulty: diff });
     await this.getWordsData(diff, page);
+  }
+
+  setArrayOfMistakes(arr) {
+    this.setState({ arrayOfMistakes: arr });
   }
 
   setAutoListeningPrompt(bool) {
@@ -271,6 +277,11 @@ class PuzzlePage extends React.Component {
       <>
         <Header />
         <Container>
+          <StatisticModal
+            next={this.state.next}
+            wordsData={this.state.wordsData}
+            arrayOfMistakes={this.state.arrayOfMistakes}
+          />
           <Row>
             <Col xs={12} lg={6} className="set-level center">
               <SetLevel
@@ -331,6 +342,8 @@ class PuzzlePage extends React.Component {
                 next={this.state.next}
                 setNext={this.setNext}
                 backgroundPrompt={this.state.backgroundPrompt}
+                arrayOfMistakes={this.state.arrayOfMistakes}
+                setArrayOfMistakes={this.setArrayOfMistakes}
               />
             </GameField>
           </Row>
