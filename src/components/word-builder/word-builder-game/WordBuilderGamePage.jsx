@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
 import React from 'react';
@@ -88,7 +89,7 @@ const WordBuilderGamePage = ({
          .map((letter, index) => (
            <div
              key={`${letter}${index + 1}`}
-             className={`empty-letter btn btn-primary ${!solved && index >= currentLetterIndex && 'disabled'}`}
+             className={`empty-letter btn btn-primary ${!solved && index >= currentLetterIndex && 'disabled'} ${index === currentLetterIndex && 'next-letter'}`}
            >
              <span className={!solved && index >= currentLetterIndex ? 'hidden' : ''}>{letter}</span>
            </div>
@@ -109,6 +110,8 @@ const WordBuilderGamePage = ({
                 if (currentLetterIndex === currentWordObj?.word.length - 1) {
                   setSolved(true);
                 }
+              } else {
+                currentWordObj.status = false;
               }
             }}
           >
