@@ -1,14 +1,20 @@
-/* eslint-disable no-console */
 import React, { Component } from 'react';
 import {
-  Container, Row, ProgressBar, Button, Col, Spinner, Image,
+  Container,
+  Row,
+  ProgressBar,
+  Col,
+  Spinner,
+  Carousel,
+  Pagination,
 } from 'react-bootstrap';
-import Word from './word/Word';
+import GameCard from './GameCard/GameCard';
 import BG from '../../assets/images/audiocall-bg.svg';
 import './audiocall.scss';
 
+import { chunk } from './GameLogic/processedWords';
+
 const mediaUrl = 'https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/master/';
-const wordsDetailUrl = 'https://dictionary.skyeng.ru/api/public/v1/words/search';
 
 class AudioCall extends Component {
   constructor(props) {
@@ -16,109 +22,48 @@ class AudioCall extends Component {
 
     this.state = {
       progress: 0,
-      words: [],
-      playWords: [],
+      rounds: [],
+      curRound: 1,
+      level: 1,
+      curCard: 0,
     };
   }
 
   componentDidMount() {
-    this.getWordsCollection();
-  }
-
-  getUrlsCollection = (groupNumber = 0) => {
-    const urls = [];
-    for (let i = 0; i < 30; i += 1) {
-      urls.push(`https://afternoon-falls-25894.herokuapp.com/words?group=${groupNumber}&page=${i}`);
-    }
-    return urls;
-  }
-
-  sortAlphabetically = (arr) => arr.sort((a, b) => {
-    const textA = a.word.toUpperCase();
-    const textB = b.word.toUpperCase();
-    if (textA < textB) {
-      return -1;
-    } if (textA > textB) {
-      return 1;
-    }
-    return 0;
-  })
-
-  getWordsCollection = async (groupNumber = 0) => {
-    const urls = this.getUrlsCollection(groupNumber);
-    Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then((data) => {
-      const arrData = this.sortAlphabetically(data.flat(1));
-      this.getAllWordsDetail(arrData);
-    });
-  }
-
-  getAllWordsDetail = (words) => {
-    Promise.all(words.map((word) => fetch(`${wordsDetailUrl}?search=${word.word}&page=1&pageSize=5`).then((resp) => resp.json()))).then((data) => {
-      this.updateWordsDetails(words, data);
-    });
-  }
-
-  updateWordsDetails = (words, details) => {
-    // console.log(words, details);
-    const newWords = words.map((word, i) => this.compareWordsDetails(word, details[i]));
-
-    console.log(newWords);
-  }
-
-  compareWordsDetails = (word, details) => {
-    const wordDetails = details.find((item) => item.text === word.word) || details[0];
-    word.partOfSpeech = wordDetails.meanings[0].partOfSpeechCode;
-    return word;
+    const { level } = this.state;
+    fetch(`https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/groups/data/group${level}.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        const processedData = this.formatMedia(data);
+        this.setState({
+          // levelWords: processedData,
+          rounds: chunk(processedData, 10),
+        });
+      });
   }
 
   formatMedia = (data) => {
-    const newData = data.map((word) => {
-      word.image = mediaUrl + word.image;
-      word.audio = mediaUrl + word.audio;
-      return word;
+    const newData = data.map((words) => {
+      words.map((word) => {
+        word.image = mediaUrl + word.image;
+        word.audio = mediaUrl + word.audio;
+        return word;
+      });
+      return words;
     });
     return newData;
   }
 
-  getRandomLetter = () => {
-    const randomChars = 'abcdefghijklmnopqrstuvwxyz';
-    return randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-  }
+  shuffleRounds = (rounds) => rounds.sort(() => Math.random() - 0.5)
 
-  getRandomPage = () => Math.round(Math.random() * 29 + 1)
+  nextCard = () => {
+    const { curRound } = this.state;
+    const newProgress = curRound * 10;
+    this.setState({
+      progress: newProgress,
+      curRound: curRound + 1,
+    });
 
-  getRandomPlayWords = (length) => {
-    const randomIdx = [];
-    for (let i = 0; i < 6; i += 1) {
-      randomIdx.push((Math.floor(Math.random() * length)));
-    }
-    return randomIdx;
-  }
-
-  getPlayWords = () => {
-    const { words } = this.state;
-    const letter = this.getRandomLetter();
-
-    console.log(words);
-
-    const curPlayWords = words.filter((word) => word.word[0] === letter);
-
-    console.log(curPlayWords);
-
-    if (curPlayWords.length >= 6) {
-      const randomIdx = this.getRandomPlayWords(curPlayWords.length);
-      const playWords = curPlayWords.filter((word, i) => randomIdx.includes(i));
-      const curWord = playWords.shift();
-      return this.setState({ playWords, curWord });
-    }
-
-    return true;
-  }
-
-  clickHandler = () => {
-    const { progress } = this.state;
-    const newProgress = progress + 10;
-    this.setState({ progress: newProgress });
     setTimeout(() => {
       if (newProgress === 100) {
         alert('Complete');
@@ -127,24 +72,73 @@ class AudioCall extends Component {
   }
 
   render() {
-    return this.state.words.length > 0 && this.state.playWords.length > 0 ? (
+    return this.state.rounds.length > 0 ? (
       <Container fluid className="audiocall_wrap">
         <img className="audiocall_bg" src={BG} alt="Background" />
-        <Row className="header_progress-bar">
-          <ProgressBar animated now={this.state.progress} />
-        </Row>
-        <Row>
+        <Row className="audiocall_header">
           <Col>
-            <Button onClick={this.clickHandler}>Click me</Button>
+            <Col>
+              <p>Level</p>
+              <Pagination activeIndex={this.state.level}>
+                <Pagination.Item>{1}</Pagination.Item>
+                <Pagination.Item>{2}</Pagination.Item>
+                <Pagination.Item>{3}</Pagination.Item>
+                <Pagination.Item>{4}</Pagination.Item>
+                <Pagination.Item>{5}</Pagination.Item>
+                <Pagination.Item>{6}</Pagination.Item>
+              </Pagination>
+            </Col>
+            <Col>
+              <p>Round</p>
+              <Pagination>
+                <Pagination.First />
+                <Pagination.Prev />
+                <Pagination.Item>{1}</Pagination.Item>
+                <Pagination.Ellipsis />
+
+                <Pagination.Item>{10}</Pagination.Item>
+                <Pagination.Item>{11}</Pagination.Item>
+                <Pagination.Item>{12}</Pagination.Item>
+                <Pagination.Item>{13}</Pagination.Item>
+                <Pagination.Item>{14}</Pagination.Item>
+
+                <Pagination.Ellipsis />
+                <Pagination.Item>{60}</Pagination.Item>
+                <Pagination.Next />
+                <Pagination.Last />
+              </Pagination>
+            </Col>
+          </Col>
+          <Col className="header_progress-bar">
+            <p>
+              {`Stage - ${this.state.curRound - 1}/10`}
+            </p>
+            <ProgressBar animated now={this.state.progress} />
           </Col>
         </Row>
         <Row>
-          <Col>
-            <Image src={this.state.curWord.image} width={50} height={50} roundedCircle />
+          <Col className="game_cards">
+            <Carousel
+              activeIndex={this.state.curCard}
+              controls={false}
+              indicators={false}
+              interval={null}
+              keyboard={null}
+              touch={false}
+            >
+              {
+                this.state.rounds[this.state.curRound].map((stage) => (
+                  <Carousel.Item key={`${this.state.curRound}_${stage[0].id}`}>
+                    <GameCard
+                      key={stage[0].id}
+                      stage={stage}
+                      nextCard={this.nextCard}
+                    />
+                  </Carousel.Item>
+                ))
+              }
+            </Carousel>
           </Col>
-        </Row>
-        <Row>
-          {this.state.playWords.map((word) => (<Word key={word.id} word={word} />))}
         </Row>
       </Container>
     )

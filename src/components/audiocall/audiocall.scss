@@ -1,13 +1,19 @@
 .audiocall_wrap {
-    height: calc(100vh - 61px);
+    height: 100vh;
     padding: 0;
     position: relative;
     display: flex;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
 
     .row {
         margin: 0;
+        width: 100%;
     }
 
     .audiocall_bg {
@@ -15,23 +21,129 @@
         z-index: -1;
         height: inherit;
         width: 100%;
-        background-color: #8164eb;
+        background-color: #00ff54;
     }
 
-    .header_progress-bar {
+    .audiocall_header {
         position: absolute;
-        top: 0;
-        height: 45px;
-        width: 100%;
-        margin: 0 auto;
+        top: 50px;
 
-        .progress {
-            width: 100%;
-            border-radius: unset;
+        .header_progress-bar {
+            height: 45px;
+            width: 30%;
+            margin: 0 auto;
 
-            .progress-bar {
-                background-color: #8164eb;
+            .progress {
+                width: 100%;
             }
         }
+
+        .pagination {
+            font-size: 16px;
+        }
+    }
+
+    .game_cards {
+        flex: 1 0;
+        max-width: 1500px;
+        margin: 0 auto;
+        min-width: 300px;
+        min-height: 300px;
+        font-family: 'Roboto', sans-serif;
+
+        .carousel {
+            width: 100%;
+            height: 100%;
+
+            .carousel-inner {
+                width: 100%;
+                height: 100%;
+            }
+
+            .carousel-item.active {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                justify-content: center;
+
+                .repeat_voice {
+                    text-align: center;
+                    margin-top: 80px;
+                    padding: 15px;
+                    height: 75px;
+                    width: 75px;
+                    fill: #EB6864;
+                    background-color: rgba(255, 255, 255, 0.25);
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+
+                .right_word {
+                    display: flex;
+                    flex-flow: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    &__description {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 10px;
+
+                        p {
+                            margin: 0;
+                            font-size: 30px;
+                            color: rgba(255, 255, 255, 0.9);
+                        }
+
+                        .repeat_voice {
+                            text-align: center;
+                            margin-top: 0;
+                            padding: 10px;
+                            height: 40px;
+                            width: 40px;
+                            margin-right: 15px;
+                            fill: #EB6864;
+                            background-color: rgba(255, 255, 255, 0.25);
+                            border-radius: 50%;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .words {
+                    margin-top: 30px;
+                    margin-bottom: 45px;
+                    padding: 0;
+                    text-align: center;
+
+                    p {
+                        margin: 0 15px;
+                        padding: 5px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: baseline;
+                        cursor: pointer;
+
+                        span:first-child {
+                            font-size: 14px;
+                            margin-right: 10px;
+                            color: rgba(255, 255, 255, 0.6);
+                        }
+
+                        span:last-child {
+                            text-align: center;
+                        }
+
+                        &:hover {
+                            background-color: rgba(255, 255, 255, 0.3);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
