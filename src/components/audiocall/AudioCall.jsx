@@ -23,24 +23,30 @@ class AudioCall extends Component {
     this.state = {
       progress: 0,
       rounds: [],
-      curRound: 1,
+      curRound: 0,
       level: 1,
       curCard: 0,
+      pages: Array.from({ length: 10 }, (x, i) => i + 1),
     };
   }
 
   componentDidMount() {
     const { level } = this.state;
-    fetch(`https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/groups/data/group${level}.json`)
-      .then((res) => res.json())
-      .then((data) => {
-        const processedData = this.formatMedia(data);
-        this.setState({
-          // levelWords: processedData,
-          rounds: chunk(processedData, 10),
-        });
-      });
+    this.getWords(level);
   }
+
+  getWords = (level) => fetch(`https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/groups/data/group${level}.json`)
+    .then((res) => res.json())
+    .then(async (data) => {
+      const processedData = this.formatMedia(data);
+      await this.setState({
+        rounds: chunk(processedData, 10),
+      });
+      setTimeout(() => {
+        this.setState({ isUpdateCards: false });
+        this.playAudio();
+      }, 500);
+    })
 
   formatMedia = (data) => {
     const newData = data.map((words) => {
@@ -56,19 +62,111 @@ class AudioCall extends Component {
 
   shuffleRounds = (rounds) => rounds.sort(() => Math.random() - 0.5)
 
-  nextCard = () => {
-    const { curRound } = this.state;
-    const newProgress = curRound * 10;
+  playAudio = () => {
+    const { curCard, curRound, rounds } = this.state;
+    const curWords = rounds[curRound][curCard];
+    if (curWords) {
+      const curAudio = new Audio(curWords[0].audio);
+      this.setState({ curAudio });
+      curAudio.play();
+    }
+  }
+
+  repeatAudio = () => {
+    const { curAudio } = this.state;
+    curAudio.play();
+  }
+
+  tryGuess = () => {
+
+  }
+
+  nextCard = async () => {
+    const { curCard } = this.state;
+    const newProgress = (curCard + 1) * 10;
     this.setState({
       progress: newProgress,
-      curRound: curRound + 1,
+      curCard: curCard + 1,
     });
 
-    setTimeout(() => {
-      if (newProgress === 100) {
+    setTimeout(() => this.playAudio(), 600);
+
+    if (newProgress === 100) {
+      this.setState({ isUpdateCards: true });
+      setTimeout(() => {
         alert('Complete');
-      }
-    }, 600);
+        const { curRound } = this.state;
+        this.setState({
+          progress: 0,
+          curRound: curRound + 1,
+          curCard: 0,
+          isUpdateCards: false,
+        });
+        setTimeout(() => this.playAudio(), 600);
+      }, 600);
+    }
+  }
+
+  handleLevelChange = async ({ target: { innerText } }) => {
+    if (Number(innerText)) {
+      this.setState({ isUpdateCards: true });
+      this.getWords(Number(innerText));
+      this.setState({
+        level: Number(innerText),
+        curCard: 0,
+        curRound: 0,
+        progress: 0,
+      });
+    }
+  };
+
+  handleRoundChange = ({ target: { innerText } }) => {
+    if (Number(innerText)) {
+      this.setState({
+        curRound: Number(innerText) - 1,
+        curCard: 0,
+      });
+      setTimeout(() => this.playAudio(), 600);
+    }
+  };
+
+  moveToFirstRound = () => {
+    this.setState({
+      pages: Array.from({ length: 10 }, (x, i) => i + 1),
+      curRound: 0,
+      curCard: 0,
+    });
+    setTimeout(() => this.playAudio(), 600);
+  }
+
+  moveToRight = () => {
+    const { curRound } = this.state;
+    const newRound = Math.floor(curRound / 10 + 1) * 10;
+    this.setState({
+      pages: Array.from({ length: 10 }, (x, i) => i + newRound + 1),
+      curRound: newRound,
+      curCard: 0,
+    });
+    setTimeout(() => this.playAudio(), 600);
+  }
+
+  moveToLeft = () => {
+    const { curRound } = this.state;
+    const newRound = Math.floor(curRound / 10 - 1) * 10;
+    this.setState({
+      pages: Array.from({ length: 10 }, (x, i) => i + newRound + 1),
+      curRound: newRound + 9,
+      curCard: 0,
+    });
+    setTimeout(() => this.playAudio(), 600);
+  }
+
+  moveToLastRound = () => {
+    this.setState({
+      pages: Array.from({ length: 10 }, (x, i) => i + 50 + 1),
+      curRound: 59,
+    });
+    setTimeout(() => this.playAudio(), 600);
   }
 
   render() {
@@ -79,65 +177,85 @@ class AudioCall extends Component {
           <Col>
             <Col>
               <p>Level</p>
-              <Pagination activeIndex={this.state.level}>
-                <Pagination.Item>{1}</Pagination.Item>
-                <Pagination.Item>{2}</Pagination.Item>
-                <Pagination.Item>{3}</Pagination.Item>
-                <Pagination.Item>{4}</Pagination.Item>
-                <Pagination.Item>{5}</Pagination.Item>
-                <Pagination.Item>{6}</Pagination.Item>
+              <Pagination>
+                {
+                  Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
+                    <Pagination.Item
+                      key={x}
+                      active={x === (this.state.level)}
+                      onClick={this.handleLevelChange}
+                    >
+                      {x}
+                    </Pagination.Item>
+                  ))
+                }
               </Pagination>
             </Col>
             <Col>
               <p>Round</p>
               <Pagination>
-                <Pagination.First />
-                <Pagination.Prev />
-                <Pagination.Item>{1}</Pagination.Item>
-                <Pagination.Ellipsis />
-
-                <Pagination.Item>{10}</Pagination.Item>
-                <Pagination.Item>{11}</Pagination.Item>
-                <Pagination.Item>{12}</Pagination.Item>
-                <Pagination.Item>{13}</Pagination.Item>
-                <Pagination.Item>{14}</Pagination.Item>
-
-                <Pagination.Ellipsis />
-                <Pagination.Item>{60}</Pagination.Item>
-                <Pagination.Next />
-                <Pagination.Last />
+                <Pagination.First onClick={this.moveToFirstRound} />
+                <Pagination.Prev
+                  onClick={this.moveToLeft}
+                  disabled={this.state.curRound < 10}
+                />
+                {
+                  this.state.pages.map((x) => (
+                    <Pagination.Item
+                      key={x}
+                      active={x === this.state.curRound + 1}
+                      onClick={this.handleRoundChange}
+                    >
+                      {x}
+                    </Pagination.Item>
+                  ))
+                }
+                <Pagination.Next
+                  onClick={this.moveToRight}
+                  disabled={this.state.curRound > 49}
+                />
+                <Pagination.Last onClick={this.moveToLastRound} />
               </Pagination>
             </Col>
           </Col>
           <Col className="header_progress-bar">
             <p>
-              {`Stage - ${this.state.curRound - 1}/10`}
+              {`Stage - ${this.state.curCard}/10`}
             </p>
             <ProgressBar animated now={this.state.progress} />
           </Col>
         </Row>
         <Row>
           <Col className="game_cards">
-            <Carousel
-              activeIndex={this.state.curCard}
-              controls={false}
-              indicators={false}
-              interval={null}
-              keyboard={null}
-              touch={false}
-            >
-              {
-                this.state.rounds[this.state.curRound].map((stage) => (
-                  <Carousel.Item key={`${this.state.curRound}_${stage[0].id}`}>
-                    <GameCard
-                      key={stage[0].id}
-                      stage={stage}
-                      nextCard={this.nextCard}
-                    />
-                  </Carousel.Item>
-                ))
-              }
-            </Carousel>
+            {
+              this.state.isUpdateCards
+                ? (
+                  <Spinner animation="border" variant="primary" />
+                )
+                : (
+                  <Carousel
+                    activeIndex={this.state.curCard}
+                    controls={false}
+                    indicators={false}
+                    interval={null}
+                    keyboard={null}
+                    touch={false}
+                  >
+                    {
+                      this.state.rounds[this.state.curRound].map((stage) => (
+                        <Carousel.Item key={`${this.state.curRound}_${stage[0].id}`}>
+                          <GameCard
+                            key={stage[0].id}
+                            stage={stage}
+                            nextCard={this.nextCard}
+                            repeatAudio={this.repeatAudio}
+                          />
+                        </Carousel.Item>
+                      ))
+                    }
+                  </Carousel>
+                )
+            }
           </Col>
         </Row>
       </Container>

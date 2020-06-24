@@ -41,13 +41,13 @@ class Word extends Component {
                   alt={this.state.stage[0].word}
                 />
                 <Col className="right_word__description">
-                  <Image src={Voice} alt={Voice} className="repeat_voice" />
+                  <Image onClick={this.props.repeatAudio} src={Voice} alt={Voice} className="repeat_voice" />
                   <p>{this.state.stage[0].word}</p>
                 </Col>
               </Col>
             )
             : (
-              <Image src={Voice} alt={Voice} className="repeat_voice" />
+              <Image onClick={this.props.repeatAudio} src={Voice} alt={Voice} className="repeat_voice" />
             )
         }
         <Row>
