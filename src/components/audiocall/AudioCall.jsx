@@ -60,8 +60,6 @@ class AudioCall extends Component {
     return newData;
   }
 
-  shuffleRounds = (rounds) => rounds.sort(() => Math.random() - 0.5)
-
   playAudio = () => {
     const { curCard, curRound, rounds } = this.state;
     const curWords = rounds[curRound][curCard];
@@ -81,7 +79,8 @@ class AudioCall extends Component {
 
   }
 
-  nextCard = async () => {
+  nextCard = () => {
+    console.log(this.state);
     const { curCard } = this.state;
     const newProgress = (curCard + 1) * 10;
     this.setState({
@@ -122,10 +121,15 @@ class AudioCall extends Component {
 
   handleRoundChange = ({ target: { innerText } }) => {
     if (Number(innerText)) {
-      this.setState({
-        curRound: Number(innerText) - 1,
-        curCard: 0,
-      });
+      this.setState({ isUpdateCards: true });
+      setTimeout(() => {
+        this.setState({
+          curRound: Number(innerText) - 1,
+          curCard: 0,
+          progress: 0,
+          isUpdateCards: false,
+        });
+      }, 0);
       setTimeout(() => this.playAudio(), 600);
     }
   };
@@ -194,7 +198,10 @@ class AudioCall extends Component {
             <Col>
               <p>Round</p>
               <Pagination>
-                <Pagination.First onClick={this.moveToFirstRound} />
+                <Pagination.First
+                  onClick={this.moveToFirstRound}
+                  disabled={this.state.curRound === 0}
+                />
                 <Pagination.Prev
                   onClick={this.moveToLeft}
                   disabled={this.state.curRound < 10}
@@ -214,7 +221,10 @@ class AudioCall extends Component {
                   onClick={this.moveToRight}
                   disabled={this.state.curRound > 49}
                 />
-                <Pagination.Last onClick={this.moveToLastRound} />
+                <Pagination.Last
+                  onClick={this.moveToLastRound}
+                  disabled={this.state.curRound === 59}
+                />
               </Pagination>
             </Col>
           </Col>

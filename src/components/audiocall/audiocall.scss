@@ -135,13 +135,19 @@
                         align-items: baseline;
                         cursor: pointer;
 
-                        span:first-child {
+                        .correct_word {
+                            height: 20px;
+                            width: 20px;
+                            margin-right: 10px;
+                        }
+
+                        .number {
                             font-size: 14px;
                             margin-right: 10px;
                             color: rgba(255, 255, 255, 0.6);
                         }
 
-                        span:last-child {
+                        .translate_word {
                             text-align: center;
                         }
 

@@ -7,6 +7,7 @@ import {
   Row,
 } from 'react-bootstrap';
 import Voice from '../../../assets/images/voice.svg';
+import Correct from '../../../assets/images/correct.svg';
 
 class Word extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Word extends Component {
     this.state = {
       stage: this.props.stage,
       isRight: 0,
+      shuffleWords: JSON.parse(JSON.stringify(this.props.stage)).sort(() => Math.random() - 0.5),
     };
   }
 
@@ -52,11 +54,14 @@ class Word extends Component {
         }
         <Row>
           {
-            this.state.stage.map((word, i) => (
+            this.state.shuffleWords.map((word, i) => (
               <Col key={word.id} className="words">
                 <p>
-                  <span>{i + 1}</span>
-                  <span>{word.wordTranslate}</span>
+                  {this.state.isRight && word.word === this.state.stage[0].word ? (
+                    <Image src={Correct} alt="Correct" className="correct_word" />
+                  ) : ''}
+                  <span className="number">{i + 1}</span>
+                  <span className="translate_word">{word.wordTranslate}</span>
                 </p>
               </Col>
             ))
