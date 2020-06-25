@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, {
   useState, useEffect, useMemo,
 } from 'react';
@@ -27,6 +26,8 @@ const WordBuilderMainPage = () => {
   const [solved, setSolved] = useState(false);
   const [finished, setFinished] = useState(false);
   const [difficulty, setDifficulty] = useState(0);
+  const [restartCounter, setRestartCounter] = useState(0);
+  // const [page, setPage] = useState(0);
 
   const currentWordObj = wordObjects[currentWordIndex];
   const currentLetter = currentWordObj?.word[currentLetterIndex];
@@ -68,7 +69,7 @@ const WordBuilderMainPage = () => {
       setWordsObj(wordsArray);
     }
     fetchData();
-  }, [difficulty]);
+  }, [difficulty, restartCounter]);
 
   useEffect(() => {
     const handleLetterKeyPress = ({ code }) => {
@@ -84,8 +85,8 @@ const WordBuilderMainPage = () => {
       } else if (code === 'Enter' || code === 'NumpadEnter') {
         nextButtonHandler();
       } else if ((currentLetter !== key)
-      && (shuffledArray.indexOf(key) !== -1)
-      && (guessedLettersIndexes.indexOf(shuffledArray.indexOf(key)) === -1)) {
+      && (shuffledArray.includes(key))
+      && (!guessedLettersIndexes.includes(shuffledArray.indexOf(key)))) {
         currentWordObj.status = false;
       }
     };
@@ -102,7 +103,18 @@ const WordBuilderMainPage = () => {
 
       <div className="word-constructor-wrapper">
         { finished
-          ? <WordBuilderStatsPage wordObjects={wordObjects} />
+          ? (
+            <WordBuilderStatsPage
+              wordObjects={wordObjects}
+              setRestartCounter={setRestartCounter}
+              restartCounter={restartCounter}
+              setCurrentWordIndex={setCurrentWordIndex}
+              setCurrentLetterIndex={setCurrentLetterIndex}
+              setGuessedLettersIndexes={setGuessedLettersIndexes}
+              setSolved={setSolved}
+              setFinished={setFinished}
+            />
+          )
           : (
             <WordBuilderGamePage
               currentWordObj={currentWordObj}

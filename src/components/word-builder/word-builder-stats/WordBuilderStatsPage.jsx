@@ -1,7 +1,16 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-const WordBuilderStatsPage = ({ wordObjects }) => (
+const WordBuilderStatsPage = ({
+  wordObjects,
+  restartCounter,
+  setRestartCounter,
+  setCurrentWordIndex,
+  setCurrentLetterIndex,
+  setGuessedLettersIndexes,
+  setSolved,
+  setFinished,
+}) => (
   <div className="stats-wrapper">
     <div className="incorrect-wrapper">
       <h1>
@@ -77,7 +86,20 @@ const WordBuilderStatsPage = ({ wordObjects }) => (
             </li>
           ))}
       </ul>
-      <button type="button" className="restart-button btn btn-secondary">Начать заного</button>
+      <button
+        type="button"
+        className="restart-button btn btn-secondary"
+        onClick={() => {
+          setRestartCounter(restartCounter + 1);
+          setCurrentWordIndex(0);
+          setCurrentLetterIndex(0);
+          setGuessedLettersIndexes([]);
+          setSolved(false);
+          setFinished(false);
+        }}
+      >
+        Начать заного
+      </button>
       <button type="button" className="return-button btn btn-secondary">Вернуться на главную страницу</button>
     </div>
   </div>
