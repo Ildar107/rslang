@@ -71,13 +71,16 @@
   width: 46px;
   height: 43px;
 }
-svg {
+.svg-audio {
   overflow: hidden;
   vertical-align: middle;
   width: 40px;
   position: relative;
   left: -12px;
   top: -2px;
+}
+.svg-cross{
+  width: 20px;
 }
 .btn-secondary {
   width: auto;
@@ -86,9 +89,7 @@ svg {
 li {
   list-style: none;
 }
-.stats-list + .stats-list {
-  margin-top: 10px;
-}
+
 .pagination {
   justify-content: center;
   margin-top: 20px;
@@ -116,4 +117,7 @@ li {
 }
 .next-letter {
   border: 4px solid rgb(0, 162, 255) !important;
+}
+.close-button{
+  width: auto;
 }
