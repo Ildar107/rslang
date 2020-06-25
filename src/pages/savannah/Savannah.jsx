@@ -1,15 +1,13 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import Header from '../../components/header/Header';
 import SavannahGame from '../../components/savannahGame/SavannahGame';
+import './savannah.scss';
 
 const Savannah = () => (
   <>
-    <Header />
-    <Container fluid>
-      <Row>
-        <SavannahGame />
-      </Row>
+    <Container className="savannah_container" fluid>
+      <SavannahGame />
     </Container>
   </>
 );

@@ -53,6 +53,7 @@ class SavannahGame extends Component {
     this.setState({
       isLoaded: false,
     });
+    console.log(page);
     fetch(url)
       .then((res) => res.json())
       .then(
@@ -134,6 +135,7 @@ class SavannahGame extends Component {
       this.resetScore(score);
       this.showModal();
       this.nextLevel();
+      console.log(this.state.page);
       this.getWords(this.state.page, this.state.group);
       this.stopAnimation();
       this.resetProgress();
@@ -244,30 +246,31 @@ class SavannahGame extends Component {
               {
               Array.from({ length: 6 }, (x, i) => i).map((x) => (
                 <Pagination.Item
-                  key={x}
-                  active={x === (this.state.group)}
+                  key={x + 1}
+                  active={(x + 1) === (this.state.group + 1)}
                   onClick={this.handleGroupChange}
                 >
-                  {x}
+                  {x + 1}
                 </Pagination.Item>
               ))
             }
             </Pagination>
           </Col>
-          <Col sm>
+          <Col className="savannah__score" sm>
             Score:
             {' '}
             {this.state.score}
             /10
             <div>
-              <ProgressBar variant="danger" now={this.state.progress} />
+              <ProgressBar animated striped variant="danger" now={this.state.progress} />
             </div>
           </Col>
-          <Col>
+          <Col className="savannah__level">
             Уровень:
             {' '}
-            {this.state.page}
+            {this.state.page + 1}
           </Col>
+          <svg className="close-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
         </Row>
         <div className="translate animation" data-set={this.state.currentWord.word} style={style} onAnimationIteration={this.animationEnd}>{this.state.currentWord.wordTranslate}</div>
         <Row className="words-block">
