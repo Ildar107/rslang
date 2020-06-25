@@ -73,7 +73,6 @@ const WordBuilderMainPage = () => {
 
   useEffect(() => {
     const handleLetterKeyPress = ({ code }) => {
-      console.log(currentWordObj.status);
       const key = convertCodeToLetter(code);
       if (currentLetter === key) {
         setGuessedLettersIndexes([...guessedLettersIndexes, shuffledArray

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react/prop-types */
 import React from 'react';
 
@@ -100,7 +101,20 @@ const WordBuilderStatsPage = ({
       >
         Начать заного
       </button>
-      <button type="button" className="return-button btn btn-secondary">Вернуться на главную страницу</button>
+      <button
+        type="button"
+        className="return-button btn btn-secondary"
+        onClick={() => {
+          setCurrentWordIndex(0);
+          setCurrentLetterIndex(0);
+          setGuessedLettersIndexes([]);
+          setSolved(false);
+          setFinished(false);
+          location.href = '#/';
+        }}
+      >
+        Вернуться на главную страницу
+      </button>
     </div>
   </div>
 );
