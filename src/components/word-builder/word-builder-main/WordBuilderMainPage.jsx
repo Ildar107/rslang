@@ -17,6 +17,7 @@ const getShuffledArr = (arr) => {
   return newArr;
 };
 const randomizePage = () => Math.floor(Math.random() * 30);
+const convertCodeToLetter = (code) => code.includes('Key') && code.slice(-1).toLowerCase();
 
 const WordBuilderMainPage = () => {
   const [wordObjects, setWordsObj] = useState([]);
@@ -60,7 +61,7 @@ const WordBuilderMainPage = () => {
           audioExample: `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioExample}`,
           textExample: textExample.replace('<b>', '').replace('</b>', ''),
           transcription,
-          word,
+          word: word.toLowerCase(),
           wordTranslate,
           status: true,
         })).slice(0, 10);
@@ -70,9 +71,9 @@ const WordBuilderMainPage = () => {
   }, [difficulty]);
 
   useEffect(() => {
-    const handleLetterKeyPress = (e) => {
-      console.log(e.code);
-      const { key } = e;
+    const handleLetterKeyPress = ({ code }) => {
+      console.log(currentWordObj.status);
+      const key = convertCodeToLetter(code);
       if (currentLetter === key) {
         setGuessedLettersIndexes([...guessedLettersIndexes, shuffledArray
           .findIndex((letter, index) => letter === key && !guessedLettersIndexes.includes(index))]);
@@ -80,9 +81,11 @@ const WordBuilderMainPage = () => {
         if (currentLetterIndex === currentWordObj?.word.length - 1) {
           setSolved(true);
         }
-      } else if (key === 'Enter') {
+      } else if (code === 'Enter' || code === 'NumpadEnter') {
         nextButtonHandler();
-      } else if (currentLetter !== key) {
+      } else if ((currentLetter !== key)
+      && (shuffledArray.indexOf(key) !== -1)
+      && (guessedLettersIndexes.indexOf(shuffledArray.indexOf(key)) === -1)) {
         currentWordObj.status = false;
       }
     };
@@ -90,7 +93,6 @@ const WordBuilderMainPage = () => {
     return () => document.removeEventListener('keypress', handleLetterKeyPress);
   });
   return (
-
     <Container fluid>
       <button type="button" className="btn btn-outline-primary close-button">
         <svg className="svg-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
