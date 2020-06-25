@@ -12,6 +12,7 @@ import PromptButtons from './promptButtons';
 import Paintings from './paintings';
 import Header from '../../components/header/Header';
 import StatisticModal from './statisticModal';
+import CloseGameModal from './closeGameModal';
 
 class PuzzlePage extends React.Component {
   constructor(props) {
@@ -277,6 +278,16 @@ class PuzzlePage extends React.Component {
       <>
         <Header />
         <Container>
+          <>
+            <button
+              className="btn-small waves-effect waves-light close-btn
+              blue lighten-2 modal-trigger"
+              href="#modal2"
+            >
+              <i className="close-icon material-icons">close</i>
+            </button>
+            <CloseGameModal />
+          </>
           <StatisticModal
             next={this.state.next}
             wordsData={this.state.wordsData}

@@ -6,6 +6,7 @@ import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import PuzzlePage from './pages/puzzle/PuzzlePage';
+// import StartGamePage from './pages/startGame/startGamePage';
 import Loader from './components/loader/Loader';
 import StoreContext from './app/store';
 
@@ -23,7 +24,7 @@ const App = () => {
             <TeamPage />
           </Route>
           <Route path={routes.PUZZLE} exact>
-            <PuzzlePage />
+            <PuzzlePage game="puzzle" />
           </Route>
           <Route>
             <Redirect to={routes.LANDING} />

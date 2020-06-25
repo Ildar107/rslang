@@ -23,7 +23,7 @@ class SetLevel extends React.Component {
       <div className="set-level">
         <a className="dropdown-trigger btn-small light-blue black-text lighten-5" href="#" data-target="dropdown1">
           ▼ level
-          {`${this.props.difficulty + 1}`}
+          {` ${this.props.difficulty + 1}`}
         </a>
         <ul id="dropdown1" className="dropdown-content">
           <li>
@@ -101,7 +101,7 @@ class SetLevel extends React.Component {
         </ul>
         <a className="dropdown-trigger btn-small light-green black-text lighten-5" href="#" data-target="dropdown2">
           ▼ page
-          {`${this.props.pageNumber + 1}`}
+          {` ${this.props.pageNumber + 1}`}
         </a>
         <ul id="dropdown2" className="dropdown-content">
           {items}
