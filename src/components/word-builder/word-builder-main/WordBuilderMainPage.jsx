@@ -70,7 +70,9 @@ const WordBuilderMainPage = () => {
   }, [difficulty]);
 
   useEffect(() => {
-    const handleLetterKeyPress = ({ key }) => {
+    const handleLetterKeyPress = (e) => {
+      console.log(e.code);
+      const { key } = e;
       if (currentLetter === key) {
         setGuessedLettersIndexes([...guessedLettersIndexes, shuffledArray
           .findIndex((letter, index) => letter === key && !guessedLettersIndexes.includes(index))]);

@@ -91,7 +91,7 @@ const WordBuilderGamePage = ({
              key={`${letter}${index + 1}`}
              className={`empty-letter btn btn-primary
              ${!solved && index >= currentLetterIndex && 'disabled'}
-             ${index === currentLetterIndex && 'next-letter'}`}
+             ${index === currentLetterIndex && !solved && 'next-letter'}`}
            >
              <span className={!solved && index >= currentLetterIndex ? 'hidden' : ''}>{letter}</span>
            </div>
