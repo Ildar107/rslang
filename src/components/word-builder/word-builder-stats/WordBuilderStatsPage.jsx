@@ -14,11 +14,11 @@ const WordBuilderStatsPage = ({
 }) => (
   <div className="stats-wrapper">
     <div className="incorrect-wrapper">
-      <h1>
+      <h4>
         {`Ошибок : ${wordObjects
           .filter(({ status }) => !status).length}
               `}
-      </h1>
+      </h4>
       <ul>
         {wordObjects
           .filter(({ status }) => !status)
@@ -50,13 +50,12 @@ const WordBuilderStatsPage = ({
           ))}
       </ul>
     </div>
-    <br />
     <div className="correct-wrapper">
-      <h1>
-        {`Правильных ответов : ${wordObjects
+      <h4>
+        {`Знаю : ${wordObjects
           .filter(({ status }) => status).length}
               `}
-      </h1>
+      </h4>
       <ul>
         {wordObjects
           .filter(({ status }) => status)
@@ -87,6 +86,8 @@ const WordBuilderStatsPage = ({
             </li>
           ))}
       </ul>
+    </div>
+    <div className="button-container-stats">
       <button
         type="button"
         className="restart-button btn btn-secondary"
@@ -113,9 +114,10 @@ const WordBuilderStatsPage = ({
           location.href = '#/';
         }}
       >
-        Вернуться на главную страницу
+        На главную
       </button>
     </div>
+
   </div>
 );
 

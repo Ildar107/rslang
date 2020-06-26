@@ -24,7 +24,7 @@ const WordBuilderGamePage = ({
   <>
     <div className="word-builder-nav">
       <div className="difficulty-wrapper">
-        <h4 className="h4-choose-difficulty">Level</h4>
+        <h3 className="h3-choose-difficulty">Level</h3>
         <ul className="pagination">
           {difficultyArray.map((level, index) => (
             <li
@@ -98,7 +98,7 @@ const WordBuilderGamePage = ({
          ))}
     </div>
 
-    <div className="letter-wrapper">
+    <div className={`letter-wrapper ${solved && 'removed'}`}>
       {shuffledArray
         .map((letter, index) => (
           <button
