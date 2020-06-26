@@ -9,9 +9,14 @@
 import React, { Component } from 'react';
 import './savannah-game.scss';
 import {
-  Container, Row, Col, Spinner, Pagination, ProgressBar,
+  Container, Row, Col, Pagination, ProgressBar, Spinner,
 } from 'react-bootstrap';
 import ModalWindow from './modal/Modal';
+
+const randomInteger = (min, max) => {
+  const rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+};
 
 const getShuffledArr = (arr) => {
   const newArr = arr.slice();
@@ -21,6 +26,8 @@ const getShuffledArr = (arr) => {
   }
   return newArr;
 };
+const minPage = 0;
+const maxPage = 29;
 
 class SavannahGame extends Component {
   constructor(props) {
@@ -44,7 +51,8 @@ class SavannahGame extends Component {
   }
 
   componentDidMount() {
-    this.getWords(this.state.page, this.state.group);
+    const page = randomInteger(minPage, maxPage);
+    this.getWords(page, this.state.group);
     this.restartAnimation();
   }
 
@@ -53,7 +61,6 @@ class SavannahGame extends Component {
     this.setState({
       isLoaded: false,
     });
-    console.log(page);
     fetch(url)
       .then((res) => res.json())
       .then(
@@ -117,13 +124,14 @@ class SavannahGame extends Component {
   }
 
   nextLevel = async () => {
+    const page = randomInteger(minPage, maxPage);
     const { score } = this.state;
     await this.resetScore(score);
     await this.showModal();
     await this.setState({
       page: this.state.page + 1,
     });
-    await this.getWords(this.state.page, this.state.group);
+    await this.getWords(page, this.state.group);
     await this.stopAnimation();
     await this.resetProgress();
   }
@@ -198,6 +206,7 @@ class SavannahGame extends Component {
         progress: 0,
       });
       await this.getWords(this.state.page, this.state.group);
+      await this.restartAnimation();
     }
   };
 
@@ -237,6 +246,7 @@ class SavannahGame extends Component {
     } if (!isLoaded) {
       return <div><Spinner animation="grow" /></div>;
     }
+
     return (
       <Container className="savannah">
         <Row className="savanna_levels">
@@ -282,7 +292,6 @@ class SavannahGame extends Component {
           onHide={this.onHide}
           show={this.state.modalShow}
           score={this.state.totalScore}
-          restartAnimation={this.restartAnimation}
         />
       </Container>
     );
