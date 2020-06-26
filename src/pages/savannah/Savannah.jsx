@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import Header from '../../components/header/Header';
 import SavannahGame from '../../components/savannahGame/SavannahGame';
 import './savannah.scss';
 

@@ -116,6 +116,18 @@ class SavannahGame extends Component {
     });
   }
 
+  nextLevel = async () => {
+    const { score } = this.state;
+    await this.resetScore(score);
+    await this.showModal();
+    await this.setState({
+      page: this.state.page + 1,
+    });
+    await this.getWords(this.state.page, this.state.group);
+    await this.stopAnimation();
+    await this.resetProgress();
+  }
+
   nextWords = () => {
     const itemsCopy = [...this.state.items];
     if (itemsCopy.length > 11) {
@@ -131,14 +143,7 @@ class SavannahGame extends Component {
       });
       this.restartAnimation();
     } else {
-      const { score } = this.state;
-      this.resetScore(score);
-      this.showModal();
       this.nextLevel();
-      console.log(this.state.page);
-      this.getWords(this.state.page, this.state.group);
-      this.stopAnimation();
-      this.resetProgress();
     }
   }
 
@@ -184,22 +189,17 @@ class SavannahGame extends Component {
   }
 
   handleGroupChange = async ({ target: { innerText } }) => {
-    this.setState({
-      group: Number(innerText),
-    });
+    console.log(Number(innerText));
+    if (Number(innerText)) {
+      await this.setState({
+        group: Number(innerText) - 1,
+        score: 0,
+        page: 0,
+        progress: 0,
+      });
+      await this.getWords(this.state.page, this.state.group);
+    }
   };
-
-  handlePageChange = async (e) => {
-    this.setState({
-      page: +e.target.value,
-    });
-  };
-
-  nextLevel = () => {
-    this.setState({
-      page: this.state.page + 1,
-    });
-  }
 
   onHide = (e) => {
     e.preventDefault();
@@ -244,13 +244,13 @@ class SavannahGame extends Component {
             <p>Page:</p>
             <Pagination className="levels__pag">
               {
-              Array.from({ length: 6 }, (x, i) => i).map((x) => (
+              Array.from([1, 2, 3, 4, 5, 6], (x) => x).map((x) => (
                 <Pagination.Item
-                  key={x + 1}
-                  active={(x + 1) === (this.state.group + 1)}
+                  key={x}
+                  active={x === (this.state.group + 1)}
                   onClick={this.handleGroupChange}
                 >
-                  {x + 1}
+                  {x}
                 </Pagination.Item>
               ))
             }
@@ -278,7 +278,12 @@ class SavannahGame extends Component {
             this.getCurrentWords()
           }
         </Row>
-        <ModalWindow onHide={this.onHide} show={this.state.modalShow} score={this.state.totalScore} restartAnimation={this.restartAnimation} />
+        <ModalWindow
+          onHide={this.onHide}
+          show={this.state.modalShow}
+          score={this.state.totalScore}
+          restartAnimation={this.restartAnimation}
+        />
       </Container>
     );
   }
