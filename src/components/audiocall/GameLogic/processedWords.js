@@ -1,7 +1,6 @@
+/* eslint-disable no-console */
 const wordsDetailUrl = 'https://dictionary.skyeng.ru/api/public/v1/words/search';
-const alphabet = [
-  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-];
+const alphabet = ['а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'];
 const partOfSpeech = [
   'n',
   'v',
@@ -20,6 +19,8 @@ const partOfSpeech = [
   'ph',
   'phi',
 ];
+
+let playWords = [];
 
 const removeDuplicates = (arr, key) => [...new Map(arr.map((item) => [item[key], item])).values()];
 
@@ -61,8 +62,8 @@ const getUrlsCollection = (groupNumber = 0) => {
 };
 
 const sortAlphabetically = (arr) => arr.sort((a, b) => {
-  const textA = a.word.toUpperCase();
-  const textB = b.word.toUpperCase();
+  const textA = a.wordTranslate.toUpperCase();
+  const textB = b.wordTranslate.toUpperCase();
   if (textA < textB) {
     return -1;
   } if (textA > textB) {
@@ -71,122 +72,43 @@ const sortAlphabetically = (arr) => arr.sort((a, b) => {
   return 0;
 });
 
-const getAllWordsDetail = (words) => {
-  Promise.all(words.map((word) => fetch(`${wordsDetailUrl}?search=${word.word}&page=1&pageSize=5`).then((resp) => resp.json()))).then((data) => {
-    this.updateWordsDetails(words, data);
-  });
-};
-
-const updateWordsDetails = (words, details) => {
-  const newWords = words.map((word, i) => this.compareWordsDetails(word, details[i]));
-  const newPlayWords = this.generatePlayWords(newWords);
-  this.setState({ playWords: newPlayWords });
-  this.generateRounds(newWords);
-};
-
-const compareWordsDetails = (word, details) => {
-  const wordDetails = details.find((item) => item.text === word.word) || details[0];
-  word.partOfSpeech = wordDetails.meanings[0].partOfSpeechCode;
-  return word;
-};
-
-const generatePlayWords = (words) => {
-  const playWords = [];
-  alphabet.forEach((l) => {
-    const sameLetterWords = words.filter((item) => item.word[0].toLowerCase() === l);
-    partOfSpeech.forEach((pS) => {
-      const part = sameLetterWords.filter((item) => item.partOfSpeech === pS);
-      if (part.length > 0) {
-        playWords.push({
-          partOfSpeech: pS,
-          letter: l,
-          words: part,
-        });
-      }
-    });
-  });
-
-  return playWords;
-};
-
-const generateRounds = (words) => {
-  const stages = this.generateStages(words);
-  return chunk(stages, 10);
-  // console.log(stages);
-  // console.log(JSON.stringify(stages));
-};
-
-const generateStages = (words) => {
-  const copyPlayWords = JSON.parse(JSON.stringify(this.state.playWords));
-  const stages = words.map((word) => {
-    let stageWords = [word];
-    for (let i = 0; i < copyPlayWords.length; i += 1) {
-      const similarWords = copyPlayWords[i].words;
-      if (
-        copyPlayWords[i].letter.toLowerCase() === word.word[0].toLowerCase()
-        && copyPlayWords[i].partOfSpeech === word.partOfSpeech
-      ) {
-        const randomWords = this.getRandom(similarWords, 4, stageWords[0]);
-        const preStageWords = [...stageWords, ...randomWords];
-        stageWords = this.removeDuplicates(preStageWords, 'id');
-        return stageWords;
-      }
-      if (
-        copyPlayWords[i].letter.toLowerCase() === word.word[0].toLowerCase()
-      ) {
-        const randomWords = this.getRandom(similarWords, 4, stageWords[0]);
-        const preStageWords = [...stageWords, ...randomWords];
-        stageWords = this.removeDuplicates(preStageWords, 'id');
-        return stageWords;
-      }
-    }
-
-    return stageWords;
-  });
-
-  if (this.checkStages(stages)) {
-    return this.regenerateStages(stages);
-  }
-  return stages;
-};
-
 const regenerateStages = (stages, counter = 0) => {
-  if (counter > 60) {
+  if (counter > 65) {
     return stages;
   }
 
   const clearStages = stages.filter((item) => item.length === 5);
   const badStages = stages.filter((item) => item.length !== 5);
-  const copyPlayWords = JSON.parse(JSON.stringify(this.state.playWords));
+  const copyPlayWords = JSON.parse(JSON.stringify(playWords));
 
   const regenStages = badStages.map((words) => {
     let stageWords = [...words];
     for (let i = 0; i < copyPlayWords.length; i += 1) {
       const similarWords = copyPlayWords[i].words;
       if (
-        copyPlayWords[i].letter.toLowerCase() === words[0].word[0].toLowerCase()
+        copyPlayWords[i].letter.toLowerCase() === words[0].wordTranslate[0].toLowerCase()
         && copyPlayWords[i].partOfSpeech === words[0].partOfSpeech
       ) {
-        const randomWords = this.getRandom(similarWords, 5 - words.length, stageWords[0]);
+        const randomWords = getRandom(similarWords, 5 - words.length, stageWords[0]);
         const preStageWords = [...stageWords, ...randomWords];
-        stageWords = this.removeDuplicates(preStageWords, 'id');
+        stageWords = removeDuplicates(preStageWords, 'id');
         if (randomWords.length) return stageWords;
       }
       if (
-        copyPlayWords[i].letter.toLowerCase() === words[0].word[0].toLowerCase()
+        copyPlayWords[i].letter.toLowerCase() === words[0].wordTranslate[0].toLowerCase()
       ) {
-        const randomWords = this.getRandom(similarWords, 5 - words.length, stageWords[0]);
+        const randomWords = getRandom(similarWords, 5 - words.length, stageWords[0]);
         const preStageWords = [...stageWords, ...randomWords];
-        stageWords = this.removeDuplicates(preStageWords, 'id');
+        stageWords = removeDuplicates(preStageWords, 'id');
         if (randomWords.length) return stageWords;
       }
       if (counter > 53) {
         if (
           copyPlayWords[i].partOfSpeech === words[0].partOfSpeech
         ) {
-          const randomWords = this.getRandom(similarWords, 5 - words.length, stageWords[0]);
+          const randomWords = getRandom(similarWords, 5 - words.length, stageWords[0]);
           const preStageWords = [...stageWords, ...randomWords];
-          stageWords = this.removeDuplicates(preStageWords, 'id');
+          stageWords = removeDuplicates(preStageWords, 'id');
           if (randomWords.length) return stageWords;
         }
       }
@@ -197,17 +119,95 @@ const regenerateStages = (stages, counter = 0) => {
 
   const newStages = [...clearStages, ...regenStages];
 
-  if (this.checkStages(newStages)) {
-    return this.regenerateStages(newStages, counter + 1);
+  if (checkStages(newStages)) {
+    return regenerateStages(newStages, counter + 1);
   }
   return newStages;
 };
 
+const generateStages = (words) => {
+  const copyPlayWords = JSON.parse(JSON.stringify(playWords));
+  const stages = words.map((word) => {
+    let stageWords = [word];
+    for (let i = 0; i < copyPlayWords.length; i += 1) {
+      const similarWords = copyPlayWords[i].words;
+      if (
+        copyPlayWords[i].letter.toLowerCase() === word.wordTranslate[0].toLowerCase()
+        && copyPlayWords[i].partOfSpeech === word.partOfSpeech
+      ) {
+        const randomWords = getRandom(similarWords, 4, stageWords[0]);
+        const preStageWords = [...stageWords, ...randomWords];
+        stageWords = removeDuplicates(preStageWords, 'id');
+        return stageWords;
+      }
+      if (
+        copyPlayWords[i].letter.toLowerCase() === word.wordTranslate[0].toLowerCase()
+      ) {
+        const randomWords = getRandom(similarWords, 4, stageWords[0]);
+        const preStageWords = [...stageWords, ...randomWords];
+        stageWords = removeDuplicates(preStageWords, 'id');
+        return stageWords;
+      }
+    }
+
+    return stageWords;
+  });
+
+  if (checkStages(stages)) {
+    return regenerateStages(stages);
+  }
+  return stages;
+};
+
+const generateRounds = (words) => {
+  const stages = generateStages(words);
+  // return chunk(stages, 10);
+  console.log(stages);
+  console.log(JSON.stringify(stages));
+};
+
+const compareWordsDetails = (word, details) => {
+  const wordDetails = details.find((item) => item.text === word.word) || details[0];
+  word.partOfSpeech = wordDetails.meanings[0].partOfSpeechCode;
+  return word;
+};
+
+const generatePlayWords = (words) => {
+  const genPlayWords = [];
+  alphabet.forEach((l) => {
+    const sameLetterWords = words.filter((item) => item.wordTranslate[0].toLowerCase() === l);
+    partOfSpeech.forEach((pS) => {
+      const part = sameLetterWords.filter((item) => item.partOfSpeech === pS);
+      if (part.length > 0) {
+        genPlayWords.push({
+          partOfSpeech: pS,
+          letter: l,
+          words: part,
+        });
+      }
+    });
+  });
+
+  return genPlayWords;
+};
+const updateWordsDetails = (words, details) => {
+  const newWords = words.map((word, i) => compareWordsDetails(word, details[i]));
+  const newPlayWords = generatePlayWords(newWords);
+  playWords = newPlayWords;
+  generateRounds(newWords);
+};
+
+const getAllWordsDetail = (words) => {
+  Promise.all(words.map((word) => fetch(`${wordsDetailUrl}?search=${word.word}&page=1&pageSize=5`).then((resp) => resp.json()))).then((data) => {
+    updateWordsDetails(words, data);
+  });
+};
+
 const getWordsCollection = async (groupNumber = 0) => {
-  const urls = this.getUrlsCollection(groupNumber);
+  const urls = getUrlsCollection(groupNumber);
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then((data) => {
-    const arrData = this.sortAlphabetically(data.flat(1));
-    this.getAllWordsDetail(arrData);
+    const arrData = sortAlphabetically(data.flat(1));
+    getAllWordsDetail(arrData);
   });
 };
 

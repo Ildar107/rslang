@@ -1,168 +1,213 @@
 .audiocall_wrap {
-    height: 100vh;
-    padding: 0;
-    position: relative;
+  height: 100vh;
+  padding: 0;
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+
+  .row {
+    margin: 0;
+    width: 100%;
+  }
+
+  .audiocall_bg {
+    position: absolute;
+    z-index: -1;
+    height: inherit;
+    width: 100%;
+    background-color: #00ff54;
+  }
+
+  .audiocall_header {
+    position: absolute;
+    top: 50px;
+
+    .header_progress-bar {
+      height: 45px;
+      width: 30%;
+      margin: 0 auto;
+
+      .progress {
+        width: 100%;
+      }
+    }
+
+    .pagination {
+      font-size: 16px;
+    }
+  }
+
+  .game_cards {
     display: flex;
-    flex-flow: column;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
-    font-size: 24px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.75);
+    max-width: 1500px;
+    margin: 0 auto;
+    min-width: 300px;
+    min-height: 300px;
+    font-family: 'Roboto', sans-serif;
 
-    .row {
-        margin: 0;
+    .carousel {
+      width: 100%;
+      height: 100%;
+
+      .carousel-inner {
         width: 100%;
-    }
+        height: 100%;
+      }
 
-    .audiocall_bg {
-        position: absolute;
-        z-index: -1;
-        height: inherit;
-        width: 100%;
-        background-color: #00ff54;
-    }
-
-    .audiocall_header {
-        position: absolute;
-        top: 50px;
-
-        .header_progress-bar {
-            height: 45px;
-            width: 30%;
-            margin: 0 auto;
-
-            .progress {
-                width: 100%;
-            }
-        }
-
-        .pagination {
-            font-size: 16px;
-        }
-    }
-
-    .game_cards {
+      .carousel-item.active {
         display: flex;
-        justify-content: center;
+        opacity: 1;
+      }
+
+      .carousel-item {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        flex-flow: column;
         align-items: center;
-        max-width: 1500px;
-        margin: 0 auto;
-        min-width: 300px;
-        min-height: 300px;
-        font-family: 'Roboto', sans-serif;
+        justify-content: center;
+        transition: all 0.5s ease-out;
 
-        .carousel {
-            width: 100%;
-            height: 100%;
-
-            .carousel-inner {
-                width: 100%;
-                height: 100%;
-            }
-
-            .carousel-item.active {
-                display: flex;
-                opacity: 1;
-            }
-
-            .carousel-item {
-                width: 100%;
-                height: 100%;
-                opacity: 0;
-                flex-flow: column;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.5s ease-out;
-
-                .repeat_voice {
-                    text-align: center;
-                    margin-top: 80px;
-                    padding: 15px;
-                    height: 75px;
-                    width: 75px;
-                    fill: #EB6864;
-                    background-color: rgba(255, 255, 255, 0.25);
-                    border-radius: 50%;
-                    cursor: pointer;
-                }
-
-                .right_word {
-                    display: flex;
-                    flex-flow: column;
-                    align-items: center;
-                    justify-content: center;
-
-                    &__description {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        margin-top: 10px;
-
-                        p {
-                            margin: 0;
-                            font-size: 30px;
-                            color: rgba(255, 255, 255, 0.9);
-                        }
-
-                        .repeat_voice {
-                            text-align: center;
-                            margin-top: 0;
-                            padding: 10px;
-                            height: 40px;
-                            width: 40px;
-                            margin-right: 15px;
-                            fill: #EB6864;
-                            background-color: rgba(255, 255, 255, 0.25);
-                            border-radius: 50%;
-                            cursor: pointer;
-                        }
-                    }
-                }
-
-                .words {
-                    margin-top: 30px;
-                    margin-bottom: 45px;
-                    padding: 0;
-                    text-align: center;
-
-                    p {
-                        margin: 0 15px;
-                        padding: 5px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: baseline;
-                        cursor: pointer;
-
-                        .correct_word {
-                            height: 20px;
-                            width: 20px;
-                            margin-right: 10px;
-                        }
-
-                        .number {
-                            font-size: 14px;
-                            margin-right: 10px;
-                            color: rgba(255, 255, 255, 0.6);
-                        }
-
-                        .translate_word {
-                            text-align: center;
-                        }
-
-                        &:hover {
-                            background-color: rgba(255, 255, 255, 0.3);
-                        }
-                    }
-                }
-
-                button {
-                    font-size: 26px;
-                    font-weight: 400;
-                }
-            }
+        .repeat_voice {
+          text-align: center;
+          margin-top: 80px;
+          padding: 15px;
+          height: 75px;
+          width: 75px;
+          fill: #EB6864;
+          background-color: rgba(255, 255, 255, 0.25);
+          border-radius: 50%;
+          cursor: pointer;
         }
 
+        .right_word {
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+          justify-content: center;
+
+          &__description {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+
+            p {
+              margin: 0;
+              font-size: 30px;
+              color: rgba(255, 255, 255, 0.9);
+            }
+
+            .repeat_voice {
+              text-align: center;
+              margin-top: 0;
+              padding: 10px;
+              height: 40px;
+              width: 40px;
+              margin-right: 15px;
+              fill: #EB6864;
+              background-color: rgba(255, 255, 255, 0.25);
+              border-radius: 50%;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .words-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .words {
+          width: 250px;
+          margin-top: 30px;
+          margin-bottom: 45px;
+          padding: 0;
+          text-align: center;
+          background: unset;
+          border-radius: unset;
+          border: unset;
+          outline: none;
+
+
+          &:focus {
+            box-shadow: unset;
+          }
+
+          p {
+            margin: 0 15px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            cursor: pointer;
+
+            &.wrong-word {
+              text-decoration: line-through;
+              color: rgba(255, 255, 255, 0.5);
+            }
+
+            &.normal-word {
+              color: rgba(255, 255, 255, 0.5);
+            }
+
+            &.show-correct-word {
+              color: rgba(255, 255, 255, 0.9);
+            }
+
+            &.correct-word {
+              color: rgba(255, 255, 255, 0.9);
+
+              .icon-correct-word {
+                display: inline-block;
+                height: 20px;
+                width: 20px;
+                margin-right: 10px;
+              }
+            }
+
+            .icon-correct-word {
+              display: none;
+              height: 20px;
+              width: 20px;
+              margin-right: 10px;
+            }
+
+            .number {
+              font-size: 14px;
+              margin-right: 10px;
+              color: rgba(255, 255, 255, 0.6);
+            }
+
+            .translate_word {
+              text-align: center;
+            }
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.3);
+              border: unset;
+              outline: none;
+            }
+
+
+          }
+        }
+
+        button {
+          font-size: 26px;
+          font-weight: 400;
+        }
+      }
     }
+
+  }
 }

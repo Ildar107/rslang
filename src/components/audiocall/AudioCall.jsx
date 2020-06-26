@@ -7,6 +7,8 @@ import {
   Spinner,
   Carousel,
   Pagination,
+  Form,
+  Button,
 } from 'react-bootstrap';
 import GameCard from './GameCard/GameCard';
 import BG from '../../assets/images/audiocall-bg.svg';
@@ -26,6 +28,7 @@ class AudioCall extends Component {
       curRound: 0,
       level: 1,
       curCard: 0,
+      volume: 0.5,
       pages: Array.from({ length: 10 }, (x, i) => i + 1),
     };
   }
@@ -61,26 +64,34 @@ class AudioCall extends Component {
   }
 
   playAudio = () => {
-    const { curCard, curRound, rounds } = this.state;
+    const {
+      curCard, curRound, rounds, volume,
+    } = this.state;
     const curWords = rounds[curRound][curCard];
     if (curWords) {
       const curAudio = new Audio(curWords[0].audio);
       this.setState({ curAudio });
+      curAudio.volume = volume;
       curAudio.play();
     }
   }
 
   repeatAudio = () => {
-    const { curAudio } = this.state;
+    const { curAudio, volume } = this.state;
+    curAudio.volume = volume;
     curAudio.play();
   }
 
-  tryGuess = () => {
+  changeVolume = (e) => {
+    this.setState({ volume: e.target.value / 20 });
+  }
 
+  activeCard = () => {
+    const { curCard } = this.state;
+    return curCard;
   }
 
   nextCard = () => {
-    console.log(this.state);
     const { curCard } = this.state;
     const newProgress = (curCard + 1) * 10;
     this.setState({
@@ -94,10 +105,11 @@ class AudioCall extends Component {
       this.setState({ isUpdateCards: true });
       setTimeout(() => {
         alert('Complete');
-        const { curRound } = this.state;
+        const { curRound, level } = this.state;
         this.setState({
           progress: 0,
-          curRound: curRound + 1,
+          curRound: (curRound + 1) > 59 ? 0 : curRound + 1,
+          level: (curRound + 1) > 59 ? level + 1 : level,
           curCard: 0,
           isUpdateCards: false,
         });
@@ -139,6 +151,7 @@ class AudioCall extends Component {
       pages: Array.from({ length: 10 }, (x, i) => i + 1),
       curRound: 0,
       curCard: 0,
+      progress: 0,
     });
     setTimeout(() => this.playAudio(), 600);
   }
@@ -150,6 +163,7 @@ class AudioCall extends Component {
       pages: Array.from({ length: 10 }, (x, i) => i + newRound + 1),
       curRound: newRound,
       curCard: 0,
+      progress: 0,
     });
     setTimeout(() => this.playAudio(), 600);
   }
@@ -161,6 +175,7 @@ class AudioCall extends Component {
       pages: Array.from({ length: 10 }, (x, i) => i + newRound + 1),
       curRound: newRound + 9,
       curCard: 0,
+      progress: 0,
     });
     setTimeout(() => this.playAudio(), 600);
   }
@@ -173,109 +188,120 @@ class AudioCall extends Component {
     setTimeout(() => this.playAudio(), 600);
   }
 
-  render() {
-    return this.state.rounds.length > 0 ? (
-      <Container fluid className="audiocall_wrap">
-        <img className="audiocall_bg" src={BG} alt="Background" />
-        <Row className="audiocall_header">
+  render = () => (this.state.rounds.length > 0 ? (
+    <Container fluid className="audiocall_wrap">
+      <img className="audiocall_bg" src={BG} alt="Background" />
+      <Row className="audiocall_header">
+        <Col>
           <Col>
-            <Col>
-              <p>Level</p>
-              <Pagination>
-                {
-                  Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
-                    <Pagination.Item
-                      key={x}
-                      active={x === (this.state.level)}
-                      onClick={this.handleLevelChange}
-                    >
-                      {x}
-                    </Pagination.Item>
-                  ))
-                }
-              </Pagination>
-            </Col>
-            <Col>
-              <p>Round</p>
-              <Pagination>
-                <Pagination.First
-                  onClick={this.moveToFirstRound}
-                  disabled={this.state.curRound === 0}
-                />
-                <Pagination.Prev
-                  onClick={this.moveToLeft}
-                  disabled={this.state.curRound < 10}
-                />
-                {
-                  this.state.pages.map((x) => (
-                    <Pagination.Item
-                      key={x}
-                      active={x === this.state.curRound + 1}
-                      onClick={this.handleRoundChange}
-                    >
-                      {x}
-                    </Pagination.Item>
-                  ))
-                }
-                <Pagination.Next
-                  onClick={this.moveToRight}
-                  disabled={this.state.curRound > 49}
-                />
-                <Pagination.Last
-                  onClick={this.moveToLastRound}
-                  disabled={this.state.curRound === 59}
-                />
-              </Pagination>
-            </Col>
-          </Col>
-          <Col className="header_progress-bar">
-            <p>
-              {`Stage - ${this.state.curCard}/10`}
-            </p>
-            <ProgressBar animated now={this.state.progress} />
-          </Col>
-        </Row>
-        <Row>
-          <Col className="game_cards">
-            {
-              this.state.isUpdateCards
-                ? (
-                  <Spinner animation="border" variant="primary" />
-                )
-                : (
-                  <Carousel
-                    activeIndex={this.state.curCard}
-                    controls={false}
-                    indicators={false}
-                    interval={null}
-                    keyboard={null}
-                    touch={false}
+            <p>Level</p>
+            <Pagination>
+              {
+                Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
+                  <Pagination.Item
+                    key={x}
+                    active={x === (this.state.level)}
+                    onClick={this.handleLevelChange}
                   >
-                    {
-                      this.state.rounds[this.state.curRound].map((stage) => (
-                        <Carousel.Item key={`${this.state.curRound}_${stage[0].id}`}>
-                          <GameCard
-                            key={stage[0].id}
-                            stage={stage}
-                            nextCard={this.nextCard}
-                            repeatAudio={this.repeatAudio}
-                          />
-                        </Carousel.Item>
-                      ))
-                    }
-                  </Carousel>
-                )
-            }
+                    {x}
+                  </Pagination.Item>
+                ))
+              }
+            </Pagination>
           </Col>
-        </Row>
+          <Col>
+            <p>Round</p>
+            <Pagination>
+              <Pagination.First
+                onClick={this.moveToFirstRound}
+                disabled={this.state.curRound === 0}
+              />
+              <Pagination.Prev
+                onClick={this.moveToLeft}
+                disabled={this.state.curRound < 10}
+              />
+              {
+                this.state.pages.map((x) => (
+                  <Pagination.Item
+                    key={x}
+                    active={x === this.state.curRound + 1}
+                    onClick={this.handleRoundChange}
+                  >
+                    {x}
+                  </Pagination.Item>
+                ))
+              }
+              <Pagination.Next
+                onClick={this.moveToRight}
+                disabled={this.state.curRound > 49}
+              />
+              <Pagination.Last
+                onClick={this.moveToLastRound}
+                disabled={this.state.curRound === 59}
+              />
+            </Pagination>
+          </Col>
+        </Col>
+        <Col className="header_progress-bar">
+          <p>
+            {`Stage - ${this.state.curCard}/10`}
+          </p>
+          <ProgressBar animated now={this.state.progress} />
+        </Col>
+      </Row>
+      <Row>
+        <Col className="game_cards">
+          {
+            this.state.isUpdateCards
+              ? (
+                <Spinner animation="border" variant="primary" />
+              )
+              : (
+                <Carousel
+                  activeIndex={this.state.curCard}
+                  controls={false}
+                  indicators={false}
+                  interval={null}
+                  keyboard={null}
+                  touch={false}
+                >
+                  {
+                    this.state.rounds[this.state.curRound].map((stage, i) => (
+                      <Carousel.Item key={`${this.state.curRound}_${stage[0].id}`}>
+                        <GameCard
+                          key={stage[0].id}
+                          stage={stage}
+                          cardNumber={i}
+                          activeCard={this.activeCard}
+                          nextCard={this.nextCard}
+                          repeatAudio={this.repeatAudio}
+                        />
+                      </Carousel.Item>
+                    ))
+                  }
+                </Carousel>
+              )
+          }
+        </Col>
+      </Row>
+      <Row>
+        <Form>
+          <Form.Group controlId="formBasicRange">
+            <Form.Label>Volume</Form.Label>
+            <Form.Control type="range" onChange={this.changeVolume} min={0} max={20} />
+          </Form.Group>
+        </Form>
+        <Button>
+          HELP
+        </Button>
+      </Row>
+    </Container>
+  )
+    : (
+      <Container fluid className="audiocall_wrap">
+        <Spinner animation="border" variant="primary" />
       </Container>
-    )
-      : (
-        <Container fluid className="audiocall_wrap">
-          <Spinner animation="border" variant="primary" />
-        </Container>
-      );
-  }
+    ))
 }
 
 export default AudioCall;

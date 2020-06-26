@@ -6,8 +6,11 @@ import {
   Button,
   Row,
 } from 'react-bootstrap';
+import classNames from 'classnames';
 import Voice from '../../../assets/images/voice.svg';
 import Correct from '../../../assets/images/correct.svg';
+
+const keyBinds = ['1', '2', '3', '4', '5'];
 
 class Word extends Component {
   constructor(props) {
@@ -15,24 +18,72 @@ class Word extends Component {
 
     this.state = {
       stage: this.props.stage,
-      isRight: 0,
+      cardNumber: this.props.cardNumber,
+      isAnswer: 0,
       shuffleWords: JSON.parse(JSON.stringify(this.props.stage)).sort(() => Math.random() - 0.5),
     };
   }
 
+  componentDidMount() {
+    document.addEventListener('keypress', this.onKeyPressed);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keypress', this.onKeyPressed);
+  }
+
   next = () => {
-    if (this.state.isRight) {
+    if (this.state.isAnswer) {
       this.props.nextCard();
     } else {
-      this.setState({ isRight: 1 });
+      this.setState({ isAnswer: 1 });
     }
   }
+
+  tryGuess = (i) => {
+    if (!this.state.isAnswer && !this.state.isError) {
+      const { shuffleWords, stage } = this.state;
+
+      this.setState({
+        selectedWord: shuffleWords[i],
+      });
+
+      if (shuffleWords[i].word === stage[0].word) {
+        this.setState({ isAnswer: 1, isError: 0, rightWord: shuffleWords[i] });
+      } else {
+        this.setState({ isAnswer: 1, isError: 1, rightWord: stage[0] });
+      }
+    }
+  }
+
+  onKeyPressed = (e) => {
+    if (keyBinds.includes(e.key) && this.isActive()) {
+      const i = Number(e.key) - 1;
+      this.tryGuess(i);
+    }
+    if (e.key === 'Enter' && this.isActive()) {
+      setTimeout(() => {
+        if (this.state.isAnswer) {
+          this.props.nextCard();
+          this.setState({
+            isAnswer: 0,
+          });
+        } else {
+          this.setState({
+            isAnswer: 1,
+          });
+        }
+      }, 0);
+    }
+  }
+
+  isActive = () => this.props.activeCard() === this.state.cardNumber
 
   render() {
     return (
       <>
         {
-          this.state.isRight
+          this.state.isAnswer && this.isActive()
             ? (
               <Col className="right_word">
                 <Image
@@ -52,23 +103,37 @@ class Word extends Component {
               <Image onClick={this.props.repeatAudio} src={Voice} alt={Voice} className="repeat_voice" />
             )
         }
-        <Row>
+        <Row className="words-row">
           {
             this.state.shuffleWords.map((word, i) => (
-              <Col key={word.id} className="words">
-                <p>
-                  {this.state.isRight && word.word === this.state.stage[0].word ? (
-                    <Image src={Correct} alt="Correct" className="correct_word" />
-                  ) : ''}
+              <Button onClick={() => this.tryGuess(i)} onKeyPress={(e) => this.onKeyPressed(e)} key={word.id} className="words">
+                <p
+                  className={
+                    classNames({
+                      'wrong-word': this.state.isError && this.isActive() && this.state.selectedWord?.word === word.word,
+                      'correct-word': !this.state.isError && this.isActive() && this.state.rightWord?.word === word.word,
+                      'show-correct-word': this.state.isError && this.isActive() && this.state.rightWord?.word === word.word,
+                      'normal-word': this.state.isAnswer
+                        && this.isActive()
+                        && this.state.rightWord?.word !== word.word
+                        && this.state.selectedWord?.word !== word.word,
+                    })
+                  }
+                >
+                  <Image src={Correct} alt="Correct" className="icon-correct-word" />
                   <span className="number">{i + 1}</span>
                   <span className="translate_word">{word.wordTranslate}</span>
                 </p>
-              </Col>
+              </Button>
             ))
           }
         </Row>
-        <Button onClick={this.next}>
-          {this.state.isRight ? 'Далее' : 'Не знаю'}
+        <Button
+          onClick={this.next}
+          onKeyPress={this.onKeyPressed}
+          tabIndex={0}
+        >
+          {this.state.isAnswer && this.isActive() ? 'Далее' : 'Не знаю'}
         </Button>
       </>
 
