@@ -25,7 +25,7 @@ const App = () => {
             <TeamPage />
           </Route>
           <Route path={routes.PUZZLE} exact>
-            <PuzzlePage />
+            <PuzzlePage game="puzzle" />
           </Route>
           <Route path={routes.SPEAKIT} exact>
             <SpeakIt />
