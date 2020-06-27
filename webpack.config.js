@@ -47,27 +47,62 @@ module.exports = {
       ],
     },
 
-    plugins: [
-        new HtmlWebpackPlugin({
-          template: './src/index.html',
-        }),
-        new CopyWebpackPlugin({
-          patterns: [
-            {
-            from: './src/assets/images/',
-            to: './images'
-            }    
-        ]
-      })
-    ],
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    publicPath: '/',
+  },
 
-    devServer: {
-      contentBase: '/',
-      port: 8181,
-      historyApiFallback: true,
-      inline: true,
-      hot: true,
-      open: true,
-    },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)?$/,
+        use: ['babel-loader'],
+        exclude: /node_modules/,
+      },
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          fix: true,
+        },
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          'file-loader',
+        ],
+      },
+    ],
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: './src/assets/images/',
+          to: './images'
+        }
+      ]
+    })
+  ],
+
+  devServer: {
+    contentBase: '/',
+    port: 8181,
+    //historyApiFallback: true,
+    inline: true,
+    hot: true,
+    open: true,
+  },
 };
-    
+

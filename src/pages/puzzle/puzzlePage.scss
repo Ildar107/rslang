@@ -1,0 +1,213 @@
+//@import "./node_modules/materialize-css/sass/materialize";
+//@import 'fonts';
+
+@mixin media-400 {
+  @media (max-width: 400px) {
+    @content;
+  }
+}
+
+@mixin media-500 {
+  @media (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin media-600 {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin media-700 {
+  @media (max-width: 700px) {
+    @content;
+  }
+}
+
+@mixin media-800 {
+  @media (max-width: 800px) {
+    @content;
+  }
+}
+
+@font-face {
+  font-family: "PragatiNarrow-Regular";
+  src: url("PragatiNarrow-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url('MaterialIcons-Regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+
+html {
+ // font-family: AvenirNextCyr;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  color: #000;
+}
+
+
+.drop {
+  position: absolute;
+  top: 420px;
+}
+
+.drop2 {
+  position: absolute;
+}
+
+.container {
+  padding-top: 10px;
+}
+
+.card {
+  border: none;
+  max-width: 800px;
+  width: 100%;
+  height: 400px;
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+  font-family: PragatiNarrow-Regular;
+  font-size: 2rem;
+  vertical-align: middle;
+  line-height: 35px;
+  @include media-800 {
+    font-size: 2rem;
+  }
+  @include media-700 {
+    font-size: 1.8rem;
+  }
+  @include media-600 {
+    font-size: 1.5rem;
+  }
+  @include media-500 {
+    font-size: 1.2rem;
+  }
+  @include media-400 {
+    font-size: 1rem;
+  }
+
+}
+
+.set-level {
+  display: inline-block;
+  margin-bottom: 5px;
+
+  & a {
+    margin-bottom: 5px;
+  }
+
+}
+
+.input-field {
+  width: 60px;
+  margin-left: 20px;
+  position: relative;
+}
+
+.diff {
+  position: absolute;
+  top: -20px;
+  font-size: 1.5rem;
+}
+
+.go {
+  margin-left: 10px;
+  margin-top: -5px;
+}
+
+.bottom-buttons {
+  margin-top: 55px;
+}
+
+.bottom-buttons-wrapper {
+  height: 35px;
+}
+
+.check {
+  margin-left: 5px;
+}
+
+.translation {
+  font-size: 1.5rem;
+  min-height: 25px;
+}
+
+.game-field-word {
+  display: inline-block;
+  //font-size: 2rem;
+}
+
+.dropdown-trigger {
+  margin-left: 10px;
+  &:hover{
+    text-decoration: none;
+  }
+}
+
+.set-prompt i {
+  font-size: 2rem;
+}
+
+.tooltipped {
+  margin-right: 5px;
+}
+
+.promts {
+  margin-left: 10px;
+}
+
+.audio-start i {
+  font-size: 2rem;
+}
+
+.audio-start{
+  color: white;
+}
+
+.audio {
+  height: 45px;
+}
+
+.tooltipped{
+  color: white !important;
+}
+
+
+
