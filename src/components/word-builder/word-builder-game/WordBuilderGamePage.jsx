@@ -71,7 +71,7 @@ const WordBuilderGamePage = ({
     && (
     <button
       type="button"
-      className="audio-button-solved btn btn-primary"
+      className="audio-button-solved btn word-builder-btn btn-primary "
       onClick={() => new Audio(currentWordObj.audio).play()}
     >
       <svg className="svg-audio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -89,7 +89,7 @@ const WordBuilderGamePage = ({
          .map((letter, index) => (
            <div
              key={`${letter}${index + 1}`}
-             className={`empty-letter btn btn-primary
+             className={`empty-letter btn word-builder-btn btn-primary 
              ${!solved && index >= currentLetterIndex && 'disabled'}
              ${index === currentLetterIndex && !solved && 'next-letter'}`}
            >
@@ -103,7 +103,7 @@ const WordBuilderGamePage = ({
         .map((letter, index) => (
           <button
             key={`${letter}${index + 1}`}
-            className={`btn btn-primary letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
+            className={`btn word-builder-btn btn-primary  letter ${guessedLettersIndexes.includes(index) || solved ? 'hidden' : ''}`}
             type="button"
             onClick={() => {
               if (letter === currentLetter) {
@@ -136,7 +136,7 @@ const WordBuilderGamePage = ({
 
     <button
       type="button"
-      className={`next-button btn btn-secondary ${solved && 'btn-success'}`}
+      className={`next-button btn word-builder-btn btn-secondary word-builder-btn-secondary ${solved && 'btn-success'}`}
       onMouseDown={nextButtonHandler}
     >
       {solved ? 'Далее' : 'Не знаю :('}

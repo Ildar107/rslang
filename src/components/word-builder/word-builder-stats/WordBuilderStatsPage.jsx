@@ -29,7 +29,7 @@ const WordBuilderStatsPage = ({
               <div>
                 <button
                   type="button"
-                  className="audio-button-stats btn btn-primary"
+                  className="audio-button-stats btn btn-primary word-builder-btn"
                   onClick={() => new Audio(audio).play()}
                 >
                   <svg className="svg-audio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -66,7 +66,7 @@ const WordBuilderStatsPage = ({
               <div>
                 <button
                   type="button"
-                  className="audio-button-stats btn btn-primary"
+                  className="audio-button-stats btn btn-primary word-builder-btn"
                   onClick={() => new Audio(audio).play()}
                 >
                   <svg className="svg-audio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -90,7 +90,7 @@ const WordBuilderStatsPage = ({
     <div className="button-container-stats">
       <button
         type="button"
-        className="restart-button btn btn-secondary"
+        className="restart-button btn word-builder-btn btn-secondary word-builder-btn-secondary"
         onClick={() => {
           setRestartCounter(restartCounter + 1);
           setCurrentWordIndex(0);
@@ -104,7 +104,7 @@ const WordBuilderStatsPage = ({
       </button>
       <button
         type="button"
-        className="return-button btn btn-secondary"
+        className="return-button btn word-builder-btn btn-secondary word-builder-btn-secondary"
         onClick={() => {
           setCurrentWordIndex(0);
           setCurrentLetterIndex(0);
