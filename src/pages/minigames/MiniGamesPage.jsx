@@ -3,13 +3,38 @@ import { Container } from 'react-bootstrap';
 import Header from '../../components/header/Header';
 import MiniGame from '../../components/minigame/MiniGame';
 
-const miniGamesData = [1, 2, 3, 4, 5, 6];
+const miniGamesData = [{
+  name: 'SpeakIt', description: '', image: '', infoImage: '',
+}, {
+  name: 'English Puzzle', description: '', image: '', infoImage: '',
+}, {
+  name: 'Саванна', description: '', image: '', infoImage: '',
+}, {
+  name: 'Аудиовызов', description: '', image: '', infoImage: '',
+}, {
+  name: 'Спринт', description: '', image: '', infoImage: '',
+}, {
+  name: 'Конструктор Слов', description: '', image: '', infoImage: '',
+}];
 
 const MiniGamesPage = () => (
   <>
     <Header />
-    <Container fluid>
-      {miniGamesData.map((minigame) => <MiniGame data={minigame} />)}
+    <Container fluid className="mini-games">
+      <ul>
+        {miniGamesData.map(({
+          name, description, image, infoImage,
+        }) => (
+          <li>
+            <MiniGame
+              name={name}
+              description={description}
+              image={image}
+              infoImage={infoImage}
+            />
+          </li>
+        ))}
+      </ul>
     </Container>
   </>
 );
