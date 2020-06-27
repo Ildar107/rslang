@@ -1,78 +1,85 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class BottomButtons extends React.Component {
-  render() {
-    return (
-      <div className="bottom-buttons-wrapper">
-        {this.props.allInSelected && !this.props.win && this.props.buttons && !this.props.next
+
+const BottomButtons = (props) => (
+  <div className="bottom-buttons-wrapper">
+    {props.allInSelected && !props.win && props.buttons && !props.next
           && (
           <button
             className="btn-small waves-effect waves-light red check"
-            onClick={() => this.props.setCheck(true)}
+            onClick={() => props.setCheck(true)}
           >
             check
           </button>
           )}
-        {!this.props.win && this.props.buttons && !this.props.next
+
+    {!props.win && props.buttons && !props.next
           && (
           <button
             className="btn-small waves-effect waves-light orange check"
             onClick={() => {
-              this.props.setDontKnow(true);
-              this.props.setCheck(true);
+              props.setDontKnow(true);
+              props.setCheck(true);
             }}
           >
             i dont know
           </button>
           )}
-        {this.props.win && this.props.buttons && !this.props.next
+    {props.win && props.buttons && !props.next
           && (
           <button
             className="btn-small waves-effect waves-light blue check"
             onClick={() => {
-              this.props.setDontKnow(false);
-              this.props.setCheck(false);
-              this.props.setContinue(true);
+              props.setDontKnow(false);
+              props.setCheck(false);
+              props.setContinue(true);
             }}
           >
             continue
           </button>
           )}
-        {this.props.next
+    {props.next
           && (
-          <div>
-            <button
-              className="btn-small waves-effect waves-light pink check"
-              onClick={() => {
-                this.props.setNext(false);
-              }}
-            >
-              continue
-            </button>
-            <a
+          <button
+            className="btn-small waves-effect waves-light pink check"
+            onClick={() => {
+              props.setNext(false);
+            }}
+          >
+            continue
+          </button>
+             <a
               className="waves-effect waves-light btn-small orange modal-trigger statistic-trigger"
               href="#modal1"
             >
               statistic
             </a>
-          </div>
           )}
-      </div>
+  </div>
 
-    );
-  }
-}
+);
 
 BottomButtons.propTypes = {
-  allInSelected: PropTypes.bool.isRequired,
-  setCheck: PropTypes.func.isRequired,
-  setDontKnow: PropTypes.func.isRequired,
-  win: PropTypes.bool.isRequired,
-  setContinue: PropTypes.func.isRequired,
-  buttons: PropTypes.bool.isRequired,
-  setNext: PropTypes.func.isRequired,
-  next: PropTypes.bool.isRequired,
+  allInSelected: PropTypes.bool,
+  setCheck: PropTypes.func,
+  setDontKnow: PropTypes.func,
+  win: PropTypes.bool,
+  setContinue: PropTypes.func,
+  buttons: PropTypes.bool,
+  setNext: PropTypes.func,
+  next: PropTypes.bool,
+};
+
+BottomButtons.defaultProps = {
+  allInSelected: false,
+  setCheck: () => {},
+  setDontKnow: () => {},
+  win: false,
+  setContinue: () => {},
+  buttons: false,
+  setNext: () => {},
+  next: false,
 };
 
 export default BottomButtons;
