@@ -33,11 +33,18 @@ class Word extends Component {
   }
 
   next = () => {
-    if (this.state.isAnswer) {
-      this.props.nextCard();
-    } else {
-      this.setState({ isAnswer: 1 });
-    }
+    setTimeout(() => {
+      const { stage } = this.state;
+      if (this.state.isAnswer) {
+        this.props.nextCard();
+      } else {
+        this.setState({
+          isAnswer: 1,
+          isError: 1,
+          rightWord: stage[0],
+        });
+      }
+    }, 100);
   }
 
   tryGuess = (i) => {
@@ -62,18 +69,7 @@ class Word extends Component {
       this.tryGuess(i);
     }
     if (e.key === 'Enter' && this.isActive()) {
-      setTimeout(() => {
-        if (this.state.isAnswer) {
-          this.props.nextCard();
-          this.setState({
-            isAnswer: 0,
-          });
-        } else {
-          this.setState({
-            isAnswer: 1,
-          });
-        }
-      }, 0);
+      this.next();
     }
   }
 

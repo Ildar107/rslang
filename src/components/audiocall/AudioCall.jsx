@@ -284,15 +284,15 @@ class AudioCall extends Component {
           }
         </Col>
       </Row>
-      <Row>
+      <Row className="game-footer">
         <Form>
           <Form.Group controlId="formBasicRange">
             <Form.Label>Volume</Form.Label>
             <Form.Control type="range" onChange={this.changeVolume} min={0} max={20} />
           </Form.Group>
         </Form>
-        <Button>
-          HELP
+        <Button className="help">
+          ?
         </Button>
       </Row>
     </Container>
