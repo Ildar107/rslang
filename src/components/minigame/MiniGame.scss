@@ -1,4 +1,24 @@
 .mini-games {
-  
+  font-size: 20px;
 
+  .card {
+    width: 500px;
+    height: 250px;
+    margin: 15px
+  }
+  li {
+    list-style-type: none;
+  }
+  img {
+    opacity: 60%;
+    height: 100%;
+  }
+  ul {
+    display: flex;
+    /* flex-direction: column; */
+    /* align-items: baseline; */
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 50px;
+  }
 }
