@@ -1,8 +1,8 @@
 import React from 'react';
-import M from 'materialize-css/dist/js/materialize.min';
-import 'materialize-css/sass/materialize.scss';
 import './puzzlePage.scss';
-import { Container, Row, Col } from 'react-bootstrap';
+import {
+  Container, Row, Col, Button,
+} from 'react-bootstrap';
 import DragNdrop from './dragNdrop';
 import GameField from './gameField';
 import SetLevel from './setLevel';
@@ -12,7 +12,8 @@ import PromptButtons from './promptButtons';
 import Paintings from './paintings';
 import Header from '../../components/header/Header';
 import StatisticModal from './statisticModal';
-import CloseGameModal from './closeGameModal';
+import EndGameModal from '../../components/endGameModal/endGameModal';
+// import CloseGameModal from './closeGameModal';
 
 class PuzzlePage extends React.Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class PuzzlePage extends React.Component {
       audioStart: false,
       playingAudio: null,
       arrayOfMistakes: [],
+      modalShow: false,
     };
     this.getWordsData = this.getWordsData.bind(this);
     this.setDifficulty = this.setDifficulty.bind(this);
@@ -58,6 +60,7 @@ class PuzzlePage extends React.Component {
     this.onUnload = this.onUnload.bind(this);
     this.audioPlay = this.audioPlay.bind(this);
     this.setArrayOfMistakes = this.setArrayOfMistakes.bind(this);
+    this.setModalShow = this.setModalShow.bind(this);
   }
 
   randomInteger(min, max) {
@@ -122,6 +125,10 @@ class PuzzlePage extends React.Component {
     this.setState({ pageNumber: page });
     this.setState({ difficulty: diff });
     await this.getWordsData(diff, page);
+  }
+
+  setModalShow(bool) {
+    this.setState({ modalShow: bool });
   }
 
   setArrayOfMistakes(arr) {
@@ -189,7 +196,6 @@ class PuzzlePage extends React.Component {
     const pageNumber = +localStorage.getItem('pageNumber') || 0;
     this.setState({ difficulty });
     this.setState({ pageNumber });
-    M.AutoInit();
     await this.getWordsData(difficulty, pageNumber);
     window.addEventListener('beforeunload', this.onUnload);
   }
@@ -248,19 +254,19 @@ class PuzzlePage extends React.Component {
     let audio;
     if (this.state.listeningPrompt && this.state.audioStart) {
       audio = (
-        <button className="btn-small brown lighten-4 waves-effect waves-light audio-start">
+        <Button className="audio-start">
           <i
             className="material-icons "
           >
             volume_up
           </i>
-        </button>
+        </Button>
       );
     }
     if (this.state.listeningPrompt && !this.state.audioStart) {
       audio = (
-        <button
-          className="btn-small brown lighten-4 waves-effect waves-light audio-start "
+        <Button
+          className=" audio-start "
           onClick={() => {
             this.audioPlay();
           }}
@@ -270,7 +276,7 @@ class PuzzlePage extends React.Component {
           >
             volume_mute
           </i>
-        </button>
+        </Button>
       );
     }
 
@@ -279,14 +285,15 @@ class PuzzlePage extends React.Component {
         <Header />
         <Container>
           <>
-            <button
-              className="btn-small waves-effect waves-light close-btn
-              blue lighten-2 modal-trigger"
-              href="#modal2"
+            <Button
+              onClick={() => this.setModalShow(true)}
             >
               <i className="close-icon material-icons">close</i>
-            </button>
-            <CloseGameModal />
+            </Button>
+            <EndGameModal
+              show={this.state.modalShow}
+              onHide={() => this.setModalShow(false)}
+            />
           </>
           <StatisticModal
             next={this.state.next}
