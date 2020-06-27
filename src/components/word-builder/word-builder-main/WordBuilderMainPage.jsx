@@ -93,7 +93,7 @@ const WordBuilderMainPage = () => {
     return () => document.removeEventListener('keypress', handleLetterKeyPress);
   });
   return (
-    <Container fluid>
+    <Container fluid className="word-builder">
       <button type="button" className="btn btn-outline-primary close-button word-builder-btn">
         <svg className="svg-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
           <path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" />
