@@ -34,9 +34,9 @@ class Word extends Component {
 
   next = () => {
     setTimeout(() => {
-      const { stage } = this.state;
-      if (this.state.isAnswer) {
-        this.props.nextCard();
+      const { stage, isAnswer, isError } = this.state;
+      if (isAnswer) {
+        this.props.nextCard(isAnswer && !isError);
       } else {
         this.setState({
           isAnswer: 1,
@@ -125,7 +125,7 @@ class Word extends Component {
           }
         </Row>
         <Button
-          onClick={this.next}
+          onClick={(e) => { this.next(); e.target.blur(); }}
           onKeyPress={this.onKeyPressed}
           tabIndex={0}
         >

@@ -8,9 +8,10 @@ import {
   Carousel,
   Pagination,
   Form,
-  Button,
 } from 'react-bootstrap';
 import GameCard from './GameCard/GameCard';
+import HelpModal from './GameModals/HelpModal/HelpModal';
+import StatsModal from './GameModals/StatsModal/StatsModal';
 import BG from '../../assets/images/audiocall-bg.svg';
 import './audiocall.scss';
 
@@ -29,6 +30,12 @@ class AudioCall extends Component {
       level: 1,
       curCard: 0,
       volume: 0.5,
+      stats: {
+        score: 0,
+        guessedWords: [],
+        round: 0,
+        showStats: false,
+      },
       pages: Array.from({ length: 10 }, (x, i) => i + 1),
     };
   }
@@ -91,31 +98,54 @@ class AudioCall extends Component {
     return curCard;
   }
 
-  nextCard = () => {
-    const { curCard } = this.state;
+  nextCard = async (answer) => {
+    const {
+      curCard, stats, curRound, rounds,
+    } = this.state;
     const newProgress = (curCard + 1) * 10;
+    // eslint-disable-next-line no-debugger
+    debugger;
+
+    if (answer) {
+      const { score, guessedWords } = stats;
+      await this.setState({
+        stats: {
+          showStats: false,
+          round: curRound,
+          score: score + 1,
+          guessedWords: [
+            ...guessedWords, rounds[curRound][curCard][0],
+          ],
+        },
+      });
+    }
+
     this.setState({
       progress: newProgress,
       curCard: curCard + 1,
     });
 
-    setTimeout(() => this.playAudio(), 600);
-
     if (newProgress === 100) {
+      const newStats = this.state.stats;
       this.setState({ isUpdateCards: true });
-      setTimeout(() => {
-        alert('Complete');
-        const { curRound, level } = this.state;
-        this.setState({
-          progress: 0,
-          curRound: (curRound + 1) > 59 ? 0 : curRound + 1,
-          level: (curRound + 1) > 59 ? level + 1 : level,
-          curCard: 0,
-          isUpdateCards: false,
-        });
-        setTimeout(() => this.playAudio(), 600);
-      }, 600);
+      this.setState({ stats: { ...newStats, showStats: true } });
+    } else {
+      setTimeout(() => this.playAudio(), 600);
     }
+  }
+
+  nextGenRound = () => {
+    setTimeout(() => {
+      const { curRound, level } = this.state;
+      this.setState({
+        progress: 0,
+        curRound: (curRound + 1) > 59 ? 0 : curRound + 1,
+        level: (curRound + 1) > 59 ? level + 1 : level,
+        curCard: 0,
+        isUpdateCards: false,
+      });
+      setTimeout(() => this.playAudio(), 600);
+    }, 600);
   }
 
   handleLevelChange = async ({ target: { innerText } }) => {
@@ -275,6 +305,7 @@ class AudioCall extends Component {
                           activeCard={this.activeCard}
                           nextCard={this.nextCard}
                           repeatAudio={this.repeatAudio}
+                          logStats={this.logStats}
                         />
                       </Carousel.Item>
                     ))
@@ -291,10 +322,9 @@ class AudioCall extends Component {
             <Form.Control type="range" onChange={this.changeVolume} min={0} max={20} />
           </Form.Group>
         </Form>
-        <Button className="help">
-          ?
-        </Button>
+        <HelpModal />
       </Row>
+      <StatsModal stats={this.state.stats} />
     </Container>
   )
     : (
