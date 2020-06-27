@@ -18,7 +18,7 @@ class GameResults extends Component {
   }
 
   render = () => (
-    <div className="result__container">
+    <div className="result__container speak-it">
       <div className="error__title">
         <p>
           Ошибок

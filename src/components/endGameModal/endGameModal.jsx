@@ -31,7 +31,7 @@ function EndGameModal(props) {
 
 EndGameModal.propTypes = {
   onHide: PropTypes.func.isRequired,
-  show: PropTypes.bool.isRequired
+  show: PropTypes.bool.isRequired,
 };
 
 export default EndGameModal;
