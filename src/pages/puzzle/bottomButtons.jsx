@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 const BottomButtons = (props) => (
   <div className="bottom-buttons-wrapper">
     {props.allInSelected && !props.win && props.buttons && !props.next
@@ -41,20 +40,22 @@ const BottomButtons = (props) => (
           )}
     {props.next
           && (
-          <button
-            className="btn-small waves-effect waves-light pink check"
-            onClick={() => {
-              props.setNext(false);
-            }}
-          >
-            continue
-          </button>
-             <a
+          <>
+            <button
+              className="btn-small waves-effect waves-light pink check"
+              onClick={() => {
+                props.setNext(false);
+              }}
+            >
+              continue
+            </button>
+            <a
               className="waves-effect waves-light btn-small orange modal-trigger statistic-trigger"
               href="#modal1"
             >
               statistic
             </a>
+          </>
           )}
   </div>
 
