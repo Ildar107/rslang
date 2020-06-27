@@ -4,17 +4,17 @@ import Header from '../../components/header/Header';
 import MiniGame from '../../components/minigame/MiniGame';
 
 const miniGamesData = [{
-  name: 'SpeakIt', description: '', image: '', infoImage: '',
+  name: 'SpeakIt', description: '', imageSrc: '/images/mini-igri-images/speakit.jpg', infoImageSrc: '',
 }, {
-  name: 'English Puzzle', description: '', image: '', infoImage: '',
+  name: 'English Puzzle', description: '', imageSrc: '/images/mini-igri-images/engpuzzle.jpg', infoImageSrc: '',
 }, {
-  name: 'Саванна', description: '', image: '', infoImage: '',
+  name: 'Саванна', description: '', imageSrc: '/images/mini-igri-images/savannah.jpg', infoImageSrc: '',
 }, {
-  name: 'Аудиовызов', description: '', image: '', infoImage: '',
+  name: 'Аудиовызов', description: '', imageSrc: '/images/mini-igri-images/audiovizov.jpg', infoImageSrc: '',
 }, {
-  name: 'Спринт', description: '', image: '', infoImage: '',
+  name: 'Спринт', description: '', imageSrc: '/images/mini-igri-images/sprint.jpg', infoImageSrc: '',
 }, {
-  name: 'Конструктор Слов', description: '', image: '', infoImage: '',
+  name: 'Конструктор Слов', description: '', imageSrc: '/images/mini-igri-images/wordbuilder.jpg', infoImageSrc: '',
 }];
 
 const MiniGamesPage = () => (
@@ -23,14 +23,14 @@ const MiniGamesPage = () => (
     <Container fluid className="mini-games">
       <ul>
         {miniGamesData.map(({
-          name, description, image, infoImage,
+          name, description, imageSrc, infoImageSrc,
         }) => (
           <li>
             <MiniGame
               name={name}
               description={description}
-              image={image}
-              infoImage={infoImage}
+              imageSrc={imageSrc}
+              infoImageSrc={infoImageSrc}
             />
           </li>
         ))}

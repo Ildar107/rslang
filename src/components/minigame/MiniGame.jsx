@@ -2,13 +2,13 @@ import React from 'react';
 import './MiniGame.scss';
 
 const MiniGame = ({
-  name, description, image, infoImage,
+  name, description, imageSrc, infoImageSrc,
 }) => (
   <div className="mini-game-wrapper">
     {name}
     {description}
-    {image}
-    {infoImage}
+    <img src={imageSrc} alt="" />
+    {infoImageSrc}
   </div>
 );
 export default MiniGame;
