@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "build": "webpack --mode production",
-    "fix": "eslint ./src/app/components --fix"
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",

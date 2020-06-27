@@ -19,7 +19,7 @@
 }
 
 .words-block{
-	transform: translateY(40vh);
+	transform: translateY(30vh);
 }
 
 .word{
@@ -31,12 +31,12 @@
   font-size: 20px;
   padding-bottom: 3px;
   height: 60px;
-  width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background .2s ease;
   border-radius: 10px;
+  margin-top: 10px;
 }
 
 .word:hover{
@@ -68,5 +68,20 @@
 
 .close-btn:hover{
   color: rgb(138, 138, 138);
+}
+
+.col-sm {
+  min-width: auto;
+}
+
+@media screen and (max-width: 575px) {
+  .words-block{
+    transform: translateY(27vh);
+  }
+
+  .word{
+    margin-top: 10px;
+  }
+
 }
 

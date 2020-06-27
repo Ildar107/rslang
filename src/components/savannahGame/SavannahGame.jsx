@@ -11,7 +11,7 @@ import './savannah-game.scss';
 import {
   Container, Row, Col, Pagination, ProgressBar, Spinner,
 } from 'react-bootstrap';
-import ModalWindow from './modal/Modal';
+import ResultModal from './savannahResult/ResultModal';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -89,7 +89,7 @@ class SavannahGame extends Component {
     const animationName = `pulsing${Math.round(Math.random() * 100)}`;
     const keyframes = `@-webkit-keyframes ${animationName} {
         0% {transform: translateY(10px)}
-        100% {transform: translateY(50vh)}
+        100% {transform: translateY(25vh)}
     }`;
     styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
 
@@ -288,7 +288,7 @@ class SavannahGame extends Component {
             this.getCurrentWords()
           }
         </Row>
-        <ModalWindow
+        <ResultModal
           onHide={this.onHide}
           show={this.state.modalShow}
           score={this.state.totalScore}

@@ -9,8 +9,10 @@
 /* eslint-disable consistent-return */
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import routes from '../../../constants/routes';
 
-const ModalWindow = (props) => (
+const ResultModal = (props) => (
   <Modal
     {...props}
     size="lg"
@@ -40,9 +42,9 @@ const ModalWindow = (props) => (
     </Modal.Body>
     <Modal.Footer>
       <Button onClick={props.onHide}>Продолжить тренировку</Button>
-      <a href="#">К списку Тренировок</a>
+      <Link to={routes.LANDING} className="btn btn-outline-success btn-lg">К списку тренировок</Link>
     </Modal.Footer>
   </Modal>
 );
 
-export default ModalWindow;
+export default ResultModal;

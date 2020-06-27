@@ -55,8 +55,12 @@ module.exports = {
           patterns: [
             {
             from: './src/assets/images/',
-            to: './images'
-            }    
+            to: './images',
+            },
+            {
+              from: './src/assets/audio',
+              to: './auidio',
+            },
         ]
       })
     ],
