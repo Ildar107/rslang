@@ -61,9 +61,9 @@
   opacity: 0;
   pointer-events: none;
 }
-.stats-wrapper {
+/*.stats-wrapper {
   height: 100%;
-}
+}*/
 .audio-icon {
   position: absolute;
   top: 14px;
@@ -169,10 +169,7 @@ h4 {
   .eng-word {
     font-size: 30px;
   }
-  .word-builder-nav {
-    flex-direction: column;
-    align-items: center;
-  }
+
   .progress-container {
     margin-right: 0;
     width: 200px;
@@ -182,6 +179,10 @@ h4 {
   }
   .close-button {
     right: 3%;
+  }
+  .word-builder-nav {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -199,6 +200,7 @@ h4 {
   .rules-span {
     font-size: 12px;
   }
+
   /*  .restart-button,
   .return-button {
     width: 50% !important;
