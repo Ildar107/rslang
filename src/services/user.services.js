@@ -12,11 +12,16 @@ async function getData(params) {
       },
       body: params.body ? JSON.stringify(params.body) : null,
     });
+    if (response.status !== 200) {
+      const errorMessage = await response.text();
+      console.error(`Ошибка: ${errorMessage}, Код: ${response.status}`);
+      return ({ error: errorMessage });
+    }
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (e) {
-    return null;
+    console.error(`Ошибка: ${e.message}`);
+    return { error: 'Data request error' };
   }
 }
 

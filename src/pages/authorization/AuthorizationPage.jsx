@@ -7,6 +7,7 @@ import userServices from '../../services/user.services';
 import StoreContext from '../../app/store';
 import routes from '../../constants/routes';
 import Loader from '../../components/loader/Loader';
+import ErrorModal from '../../components/errorModal/ErrorModal';
 import './authorizationPage.scss';
 
 const SYMBOLS_REGEX = /[-+_@$!%*?&#.,;:[\]{}]/;
@@ -14,6 +15,11 @@ const SYMBOLS_REGEX = /[-+_@$!%*?&#.,;:[\]{}]/;
 const AuthorizationPage = () => {
   const [isRegistration, setIsRegistration] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [isRestError, setIsRestError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isErorrShowModal, setIsErorrShowModal] = useState(false);
+
   const context = useContext(StoreContext);
   const history = useHistory();
   const { isAuthenticated, jwt, userId } = context;
@@ -36,13 +42,30 @@ const AuthorizationPage = () => {
     history.push(routes.LANDING);
   };
 
+  const handleFetchError = (error) => {
+    setIsRestError(true);
+    setErrorMessage(error);
+    setIsErorrShowModal(true);
+  };
+
+  const callService = async (func, ...args) => {
+    const data = await func(...args);
+    if (data.error) {
+      handleFetchError(data.error);
+      setIsLoading(false);
+      return null;
+    }
+    return data;
+  };
+
   const onSingInSubmit = (e) => {
     e.preventDefault();
     const password = e.target.password.value;
     const email = e.target.emailaddress.value;
     (async () => {
       try {
-        const signInData = await userServices.signIn(email, password);
+        const signInData = await callService(userServices.signIn, email, password);
+        if (!signInData) return;
         saveInStorage(signInData?.userId, email, signInData?.token);
         context.isAuthenticated = true;
         redirectToMain();
@@ -60,8 +83,10 @@ const AuthorizationPage = () => {
     const email = e.target.emailaddress.value;
     (async () => {
       try {
-        const user = await userServices.createUser(email, password);
-        const signInData = await userServices.signIn(email, password);
+        const user = await callService(userServices.createUser, email, password);
+        if (!user) return;
+        const signInData = await callService(userServices.signIn, email, password);
+        if (!signInData) return;
         saveInStorage(user?.id, email, signInData?.token);
         context.isAuthenticated = true;
         redirectToMain();
@@ -111,9 +136,16 @@ const AuthorizationPage = () => {
 
   return (
     <>
-      <>
-        { isLoading ? <Loader /> : '' }
-      </>
+      {isRestError
+        ? (
+          <ErrorModal
+            show={isErorrShowModal}
+            onHide={() => { setIsErorrShowModal(false); }}
+            errorMessage={errorMessage}
+          />
+        )
+        : ''}
+      { isLoading ? <Loader /> : '' }
       <div className="authorize__container">
         <Container>
           <Row className="justify-content-center">
