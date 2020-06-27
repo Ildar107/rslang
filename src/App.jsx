@@ -5,6 +5,7 @@ import {
 import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
+import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
 import StoreContext from './app/store';
 
@@ -20,6 +21,9 @@ const App = () => {
           </Route>
           <Route path={routes.TEAM} exact>
             <TeamPage />
+          </Route>
+          <Route path={routes.WORD_BUILDER} exact>
+            <WordBuilder />
           </Route>
           <Route>
             <Redirect to={routes.LANDING} />

@@ -1,4 +1,6 @@
 const LANDING = '/';
 const TEAM = '/team';
 
-export default { LANDING, TEAM };
+const WORD_BUILDER = '/word-builder';
+
+export default { LANDING, TEAM, WORD_BUILDER };
