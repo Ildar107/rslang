@@ -171,6 +171,7 @@
     .audio-icon {
         width: 46px;
         height: 43px;
+        position: inherit;
     }
 
     .control {
@@ -312,8 +313,10 @@
     .progress__container .progress-bar {
         background-color: #4ae49e;
     }
+}
 
-    @media (max-width: 1080px) {
+@media (max-width: 1080px) {
+    .speak-it {
 
         .game {
             width: 100%;
@@ -332,9 +335,12 @@
             bottom: 52px;
         }
     }
+}
 
 
-    @media (max-width: 720px) {
+@media (max-width: 720px) {
+    .speak-it {
+
         .game__info {
             display: flex;
             align-items: center;
@@ -361,9 +367,11 @@
         .game__item {
             margin: 2vw;
         }
-    }
+    }   
+}
 
-    @media (max-width: 390px) {
+@media (max-width: 390px) {
+    .speak-it {
 
         .close__game {
             right: 5px;
@@ -383,5 +391,6 @@
             bottom: 42px;
         }
     }
-
 }
+
+
