@@ -1,4 +1,6 @@
-import React, { Suspense, useContext } from 'react';
+import React, {
+  Suspense, useContext,
+} from 'react';
 import {
   Route, Switch, Redirect,
 } from 'react-router-dom';
@@ -7,6 +9,8 @@ import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import Loader from './components/loader/Loader';
 import StoreContext from './app/store';
+import AuthorizationPage from './pages/authorization/AuthorizationPage';
+import PrivateRoute from './components/privateRoute/PrivateRoute';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -15,14 +19,17 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <StoreContext.Provider value={store}>
         <Switch>
-          <Route path={routes.LANDING} exact>
+          <Route path={routes.AUTHORIZE} exact>
+            <AuthorizationPage />
+          </Route>
+          <PrivateRoute path={routes.LANDING}>
             <MainPage />
-          </Route>
-          <Route path={routes.TEAM} exact>
+          </PrivateRoute>
+          <PrivateRoute path={routes.TEAM}>
             <TeamPage />
-          </Route>
+          </PrivateRoute>
           <Route>
-            <Redirect to={routes.LANDING} />
+            <Redirect to={routes.AUTHORIZE} />
           </Route>
         </Switch>
       </StoreContext.Provider>
