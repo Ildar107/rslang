@@ -4,17 +4,29 @@ import Header from '../../components/header/Header';
 import MiniGame from '../../components/minigame/MiniGame';
 
 const miniGamesData = [{
-  name: 'SpeakIt', description: '', imageSrc: '/images/mini-igri-images/speakit.jpg', infoImageSrc: '',
+  name: 'SpeakIt',
+  description: 'Улучшает восприятие английской речи на слух и произношение',
+  imageSrc: '/images/mini-igri-images/speakit.jpg',
 }, {
-  name: 'English Puzzle', description: '', imageSrc: '/images/mini-igri-images/engpuzzle.jpg', infoImageSrc: '',
+  name: 'English Puzzle',
+  description: 'Развивает восприятие английской речи на слух',
+  imageSrc: '/images/mini-igri-images/engpuzzle.jpg',
 }, {
-  name: 'Саванна', description: '', imageSrc: '/images/mini-igri-images/savannah.jpg', infoImageSrc: '',
+  name: 'Саванна',
+  description: 'Оттачивает понимание английской речи и быстрого перевода слов, помогает не забыть выученные слова',
+  imageSrc: '/images/mini-igri-images/savannah.jpg',
 }, {
-  name: 'Аудиовызов', description: '', imageSrc: '/images/mini-igri-images/audiovizov.jpg', infoImageSrc: '',
+  name: 'Аудиовызов',
+  description: 'Улучшает восприятие английской речи на слух',
+  imageSrc: '/images/mini-igri-images/audiovizov.jpg',
 }, {
-  name: 'Спринт', description: '', imageSrc: '/images/mini-igri-images/sprint.jpg', infoImageSrc: '',
+  name: 'Спринт',
+  description: 'Учит быстро переводить с английского на русский язык',
+  imageSrc: '/images/mini-igri-images/sprint.jpg',
 }, {
-  name: 'Конструктор Слов', description: '', imageSrc: '/images/mini-igri-images/wordbuilder.jpg', infoImageSrc: '',
+  name: 'Конструктор Слов',
+  description: 'Формирует навыки обратного перевода и написания английских слов',
+  imageSrc: '/images/mini-igri-images/wordbuilder.jpg',
 }];
 
 const MiniGamesPage = () => (
@@ -23,14 +35,13 @@ const MiniGamesPage = () => (
     <Container fluid className="mini-games">
       <ul>
         {miniGamesData.map(({
-          name, description, imageSrc, infoImageSrc,
+          name, description, imageSrc,
         }) => (
-          <li>
+          <li key={name}>
             <MiniGame
               name={name}
               description={description}
               imageSrc={imageSrc}
-              infoImageSrc={infoImageSrc}
             />
           </li>
         ))}
