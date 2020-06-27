@@ -10,6 +10,7 @@ import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
+import MiniGamesPage from './pages/minigames/MiniGamesPage';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -32,6 +33,9 @@ const App = () => {
           </Route>
           <Route path={routes.WORD_BUILDER} exact>
             <WordBuilder />
+          </Route>
+          <Route path={routes.MINI_GAMES} exact>
+            <MiniGamesPage />
           </Route>
           <Route>
             <Redirect to={routes.LANDING} />

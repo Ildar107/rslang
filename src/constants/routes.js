@@ -3,7 +3,13 @@ const TEAM = '/team';
 const PUZZLE = '/puzzle';
 const SPEAKIT = '/speakit';
 const WORD_BUILDER = '/word-builder';
+const MINI_GAMES = '/mini-games';
 
 export default {
-  LANDING, TEAM, SPEAKIT, WORD_BUILDER, PUZZLE,
+  LANDING,
+  TEAM,
+  SPEAKIT,
+  WORD_BUILDER,
+  PUZZLE,
+  MINI_GAMES,
 };
