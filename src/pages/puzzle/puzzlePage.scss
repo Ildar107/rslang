@@ -93,6 +93,7 @@ html {
 
 .container {
   padding-top: 10px;
+  position: relative;
 }
 
 .card {
@@ -149,7 +150,7 @@ html {
 
 .go {
   margin-left: 10px;
-  margin-top: -5px;
+  vertical-align: top;
 }
 
 .bottom-buttons {
@@ -176,6 +177,7 @@ html {
 
 .dropdown-trigger {
   margin-left: 10px;
+  margin-bottom: 5px !important;
   &:hover{
     text-decoration: none;
   }
@@ -187,6 +189,7 @@ html {
 
 .tooltipped {
   margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 .promts {
@@ -208,6 +211,82 @@ html {
 .tooltipped{
   color: white !important;
 }
+
+.statistic-trigger{
+  margin-left: 10px;
+  color: white;
+  &:hover{
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.modal-close{
+}
+
+.modal{
+  padding: 10px;
+  font-size: 1.5rem;
+  & p{
+    display: inline-block;
+  }
+  & svg{
+    width: 20px !important;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  & .divider{
+    margin-bottom: 5px;
+  }
+}
+
+.badge{
+  font-size: 1.5rem !important;
+}
+
+.modal-head{
+  font-size: 1.7rem;
+}
+
+.modal-sentence{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+
+}
+
+.modal-sentence-translate{
+  margin-left: 20px;
+  margin-top: -10px;
+}
+
+.close-btn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+
+}
+
+.close-icon{
+  font-size: 2rem !important;
+  margin-top: -5px;
+}
+
+.close-game-modal{
+  width: 300px;
+  height: 170px;
+  & .end-modal-head{
+    font-weight: 600;
+  }
+  & button{
+    margin-right: 10px;
+  }
+}
+
 
 
 
