@@ -18,6 +18,8 @@ const PrivateRoute = ({ children, ...rest }) => {
           const isValid = await store.isValidToken();
           if (isValid) {
             store.isAuthenticated = true;
+          } else {
+            store.clearAuthParams();
           }
           setState('rendering');
         }

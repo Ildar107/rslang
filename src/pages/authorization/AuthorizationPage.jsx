@@ -22,12 +22,14 @@ const AuthorizationPage = () => {
   };
 
   const saveInStorage = (userid, userEmail, token) => {
-    localStorage.setItem('userId', userid);
-    localStorage.setItem('userEmail', userEmail);
-    localStorage.setItem('JWT', token);
-    context.jwt = token;
-    context.userId = userid;
-    context.userEmail = userEmail;
+    if (userid && userEmail && token) {
+      localStorage.setItem('userId', userid);
+      localStorage.setItem('userEmail', userEmail);
+      localStorage.setItem('JWT', token);
+      context.jwt = token;
+      context.userId = userid;
+      context.userEmail = userEmail;
+    }
   };
 
   const redirectToMain = () => {

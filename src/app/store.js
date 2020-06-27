@@ -10,7 +10,15 @@ const StoreContext = createContext({
   async isValidToken() {
     const user = await userServices.getUser(this.jwt, this.userId);
     console.log(`user: ${JSON.stringify(user)}`);
-    return !!user;
+    return !!user?.id;
+  },
+  clearAuthParams() {
+    localStorage.removeItem('JWT');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userEmail');
+    this.jwt = null;
+    this.userId = null;
+    this.userEmail = null;
   },
   isAuthenticated: false,
   jwt,

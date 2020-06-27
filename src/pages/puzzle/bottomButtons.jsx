@@ -12,6 +12,7 @@ const BottomButtons = (props) => (
             check
           </button>
           )}
+
     {!props.win && props.buttons && !props.next
           && (
           <button
@@ -39,14 +40,22 @@ const BottomButtons = (props) => (
           )}
     {props.next
           && (
-          <button
-            className="btn-small waves-effect waves-light pink check"
-            onClick={() => {
-              props.setNext(false);
-            }}
-          >
-            continue
-          </button>
+          <>
+            <button
+              className="btn-small waves-effect waves-light pink check"
+              onClick={() => {
+                props.setNext(false);
+              }}
+            >
+              continue
+            </button>
+            <a
+              className="waves-effect waves-light btn-small orange modal-trigger statistic-trigger"
+              href="#modal1"
+            >
+              statistic
+            </a>
+          </>
           )}
   </div>
 

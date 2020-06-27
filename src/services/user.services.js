@@ -13,6 +13,7 @@ async function getData(params) {
       body: params.body ? JSON.stringify(params.body) : null,
     });
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (e) {
     return null;

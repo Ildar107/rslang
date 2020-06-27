@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ResultWordItem from '../gameResultItem/GameResultItem';
-import routes from '../../constants/routes';
+import routes from '../../../constants/routes';
 import './gameResults.scss';
 
 class GameResults extends Component {
@@ -18,7 +18,7 @@ class GameResults extends Component {
   }
 
   render = () => (
-    <div className="result__container">
+    <div className="result__container speak-it">
       <div className="error__title">
         <p>
           Ошибок

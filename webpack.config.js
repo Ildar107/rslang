@@ -99,7 +99,7 @@ module.exports = {
   devServer: {
     contentBase: '/',
     port: 8181,
-    //historyApiFallback: true,
+    historyApiFallback: true,
     inline: true,
     hot: true,
     open: true,
