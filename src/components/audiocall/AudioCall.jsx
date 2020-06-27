@@ -103,15 +103,13 @@ class AudioCall extends Component {
       curCard, stats, curRound, rounds,
     } = this.state;
     const newProgress = (curCard + 1) * 10;
-    // eslint-disable-next-line no-debugger
-    debugger;
 
     if (answer) {
       const { score, guessedWords } = stats;
       await this.setState({
         stats: {
           showStats: false,
-          round: curRound,
+          round: curRound + 1,
           score: score + 1,
           guessedWords: [
             ...guessedWords, rounds[curRound][curCard][0],
@@ -134,7 +132,7 @@ class AudioCall extends Component {
     }
   }
 
-  nextGenRound = () => {
+  nextRound = () => {
     setTimeout(() => {
       const { curRound, level } = this.state;
       this.setState({
@@ -146,6 +144,31 @@ class AudioCall extends Component {
       });
       setTimeout(() => this.playAudio(), 600);
     }, 600);
+  }
+
+  restartRound = () => {
+    setTimeout(() => {
+      const { curRound, level } = this.state;
+      this.setState({
+        progress: 0,
+        curRound,
+        level,
+        curCard: 0,
+        isUpdateCards: false,
+      });
+      setTimeout(() => this.playAudio(), 600);
+    }, 600);
+  }
+
+  closeModalStats = () => {
+    this.setState({
+      stats: {
+        score: 0,
+        guessedWords: [],
+        round: 0,
+        showStats: false,
+      },
+    });
   }
 
   handleLevelChange = async ({ target: { innerText } }) => {
@@ -324,7 +347,12 @@ class AudioCall extends Component {
         </Form>
         <HelpModal />
       </Row>
-      <StatsModal stats={this.state.stats} />
+      <StatsModal
+        stats={this.state.stats}
+        closeModalStats={this.closeModalStats}
+        nextRound={this.nextRound}
+        restartRound={this.restartRound}
+      />
     </Container>
   )
     : (
