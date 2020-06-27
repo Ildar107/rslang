@@ -13,6 +13,12 @@
   }
 }
 
+@mixin media-575 {
+  @media (max-width: 575px) {
+    @content;
+  }
+}
+
 @mixin media-600 {
   @media (max-width: 600px) {
     @content;
@@ -72,13 +78,68 @@
   font-feature-settings: 'liga';
 }
 
+.puzzle {
+  padding-top: 15px;
+  position: relative;
+}
 
-html {
- // font-family: AvenirNextCyr;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 10px;
-  color: #000;
+.puzzle-set-level{
+  display: flex;
+  flex-wrap: wrap;
+  // flex-direction: column;
+  align-items: center;
+  & p{
+    margin-bottom: 5px;
+  }
+  & ul{
+    margin-right: 10px;
+  }
+  & button{
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+}
+
+.puzzle-set-prompt{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 27px;
+  padding-bottom: 10px;
+  & button{
+    margin-right: 10px;
+  }
+}
+
+.puzzle-disable-btn{
+  opacity: 0.5;
+}
+
+.puzzle-close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+
+}
+
+.puzzle-audio{
+  display: flex;
+  justify-content: center;
+  height: 43px;
+}
+
+.puzzle-translation{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  & p{
+    margin: 0;
+  }
 }
 
 
@@ -91,12 +152,7 @@ html {
   position: absolute;
 }
 
-.container {
-  padding-top: 10px;
-  position: relative;
-}
-
-.card {
+.puzzle-card {
   border: none;
   max-width: 800px;
   width: 100%;
@@ -105,36 +161,55 @@ html {
   margin: 0 auto;
   padding: 0;
   font-family: PragatiNarrow-Regular;
-  font-size: 2rem;
+  font-size: 20px;
   vertical-align: middle;
   line-height: 35px;
+  background-color: #f5f5f5 !important;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
   @include media-800 {
-    font-size: 2rem;
+    font-size: 20px;
   }
   @include media-700 {
-    font-size: 1.8rem;
+    font-size: 18px;
   }
   @include media-600 {
-    font-size: 1.5rem;
+    font-size: 15px;
+  }
+  @include media-575{
+    margin-right: 10px;
+    margin-left: 10px;
   }
   @include media-500 {
-    font-size: 1.2rem;
+    font-size: 12px;
   }
   @include media-400 {
-    font-size: 1rem;
+    font-size: 10px;
   }
 
 }
 
-.set-level {
-  display: inline-block;
-  margin-bottom: 5px;
-
-  & a {
-    margin-bottom: 5px;
+.puzzle-bottom-buttons{
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  & button{
+    margin-right: 10px;
   }
-
+  & .puzzle-pink-btn{
+    background-color: lightpink;
+  }
+  & .puzzle-red-btn{
+    background-color: lightsalmon;
+  }
+  & .puzzle-blue-btn{
+    background-color: lightblue;
+  }
+  & .puzzle-orange-btn{
+    background-color: orange;
+  }
 }
+
 
 .input-field {
   width: 60px;
@@ -146,11 +221,6 @@ html {
   position: absolute;
   top: -20px;
   font-size: 1.5rem;
-}
-
-.go {
-  margin-left: 10px;
-  vertical-align: top;
 }
 
 .bottom-buttons {
@@ -183,22 +253,9 @@ html {
   }
 }
 
-.set-prompt i {
-  font-size: 2rem;
-}
 
-.tooltipped {
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
 
-.promts {
-  margin-left: 10px;
-}
 
-.audio-start i {
-  font-size: 2rem;
-}
 
 .audio-start{
   color: white;
@@ -260,32 +317,7 @@ html {
   margin-top: -10px;
 }
 
-.close-btn{
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
-  width: 20px;
-  height: 20px;
-  padding: 0;
 
-}
-
-.close-icon{
-  font-size: 2rem !important;
-  margin-top: -5px;
-}
-
-.close-game-modal{
-  width: 300px;
-  height: 170px;
-  & .end-modal-head{
-    font-weight: 600;
-  }
-  & button{
-    margin-right: 10px;
-  }
-}
 
 
 

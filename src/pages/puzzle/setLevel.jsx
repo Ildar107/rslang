@@ -11,56 +11,81 @@ class SetLevel extends React.Component {
         <Pagination.Item
           onClick={() => this.props.setDifficulty(number - 1)}
           key={number}
-          active={number === active}
+          active={number === active + 1}
         >
           {number}
         </Pagination.Item>,
       );
     }
 
-    const activePage = this.props.pageNumber;
+    const activePage = this.props.pageNumber + 1;
     const paginationPageItems = [];
-    for (let number = 1; number <= 4; number += 1) {
-      paginationPageItems.push(
-        <Pagination.Item
-          onClick={() => this.props.setPageNumber(number - 1)}
-          key={number}
-          active={number === active}
-        >
-          {number}
-        </Pagination.Item>,
-      );
+    if (activePage <= 2) {
+      for (let number = 1; number <= 3; number += 1) {
+        paginationPageItems.push(
+          <Pagination.Item
+            onClick={() => this.props.setPageNumber(number - 1)}
+            key={number}
+            active={number === activePage}
+          >
+            {number}
+          </Pagination.Item>,
+        );
+      }
+    }
+    if (activePage >= 29) {
+      for (let number = 28; number <= 30; number += 1) {
+        paginationPageItems.push(
+          <Pagination.Item
+            onClick={() => this.props.setPageNumber(number - 1)}
+            key={number}
+            active={number === activePage}
+          >
+            {number}
+          </Pagination.Item>,
+        );
+      }
+    }
+    if (activePage < 29 && activePage > 2) {
+      for (let number = activePage - 1; number <= activePage + 1; number += 1) {
+        paginationPageItems.push(
+          <Pagination.Item
+            onClick={() => this.props.setPageNumber(number - 1)}
+            key={number}
+            active={number === activePage}
+          >
+            {number}
+          </Pagination.Item>,
+        );
+      }
     }
 
     return (
       <div className="puzzle-set-level">
-        <Pagination>{paginationItems}</Pagination>
-        <br />
-        <Pagination>
-          <Pagination.First
-            onClick={() => this.props.setPageNumber(0)}
-          />
-          <Pagination.Prev
-            onClick={() => this.props.setPageNumber(this.props.pageNumber === 0
-              ? 0 : this.props.pageNumber - 1)}
-          />
-          {paginationPageItems}
-          <Pagination.Next
-            onClick={() => this.props.setPageNumber(this.props.pageNumber === 29
-              ? 29 : this.props.pageNumber + 1)}
-          />
-          <Pagination.Last
-            onClick={() => this.props.setPageNumber(29)}
-          />
-        </Pagination>
+        <div>
+          <p>Level</p>
+          <Pagination>{paginationItems}</Pagination>
+        </div>
+        <div>
+          <p>Page</p>
+          <Pagination>
+            <Pagination.First
+              onClick={() => this.props.setPageNumber(0)}
+            />
+            {paginationPageItems}
+            <Pagination.Last
+              onClick={() => this.props.setPageNumber(29)}
+            />
+          </Pagination>
+        </div>
         <Button
-          className="puzzle-go"
+          className="puzzle-go btn btn-info"
           onClick={() => {
             this.props.getWordsData(this.props.difficulty, this.props.pageNumber);
             this.props.setNext(false);
           }}
         >
-          go!
+          GO!
         </Button>
       </div>
     );

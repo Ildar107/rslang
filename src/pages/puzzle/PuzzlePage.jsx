@@ -39,6 +39,7 @@ class PuzzlePage extends React.Component {
       playingAudio: null,
       arrayOfMistakes: [],
       modalShow: false,
+      statisticModalShow: false,
     };
     this.getWordsData = this.getWordsData.bind(this);
     this.setDifficulty = this.setDifficulty.bind(this);
@@ -61,6 +62,7 @@ class PuzzlePage extends React.Component {
     this.audioPlay = this.audioPlay.bind(this);
     this.setArrayOfMistakes = this.setArrayOfMistakes.bind(this);
     this.setModalShow = this.setModalShow.bind(this);
+    this.setStatisticModalShow = this.setStatisticModalShow.bind(this);
   }
 
   randomInteger(min, max) {
@@ -125,6 +127,10 @@ class PuzzlePage extends React.Component {
     this.setState({ pageNumber: page });
     this.setState({ difficulty: diff });
     await this.getWordsData(diff, page);
+  }
+
+  setStatisticModalShow(bool) {
+    this.setState({ statisticModalShow: bool });
   }
 
   setModalShow(bool) {
@@ -254,7 +260,9 @@ class PuzzlePage extends React.Component {
     let audio;
     if (this.state.listeningPrompt && this.state.audioStart) {
       audio = (
-        <Button className="audio-start">
+        <Button
+          size="sm"
+        >
           <i
             className="material-icons "
           >
@@ -266,7 +274,7 @@ class PuzzlePage extends React.Component {
     if (this.state.listeningPrompt && !this.state.audioStart) {
       audio = (
         <Button
-          className=" audio-start "
+          size="sm"
           onClick={() => {
             this.audioPlay();
           }}
@@ -283,12 +291,13 @@ class PuzzlePage extends React.Component {
     return (
       <>
         <Header />
-        <Container>
+        <Container className="puzzle">
           <>
             <Button
+              className="puzzle-close"
               onClick={() => this.setModalShow(true)}
             >
-              <i className="close-icon material-icons">close</i>
+              <i className="material-icons">close</i>
             </Button>
             <EndGameModal
               show={this.state.modalShow}
@@ -299,9 +308,11 @@ class PuzzlePage extends React.Component {
             next={this.state.next}
             wordsData={this.state.wordsData}
             arrayOfMistakes={this.state.arrayOfMistakes}
+            show={this.state.statisticModalShow}
+            onHide={() => this.setStatisticModalShow(false)}
           />
           <Row>
-            <Col xs={12} lg={6} className="set-level center">
+            <Col xs={12} lg={6} className="puzzle-set-level">
               <SetLevel
                 setDifficulty={this.setDifficulty}
                 setPageNumber={this.setPageNumber}
@@ -311,7 +322,7 @@ class PuzzlePage extends React.Component {
                 setNext={this.setNext}
               />
             </Col>
-            <Col xs={12} lg={6} className="set-prompt">
+            <Col xs={12} lg={6} className="puzzle-set-prompt">
               <PromptButtons
                 translationPrompt={this.state.translationPrompt}
                 listeningPrompt={this.state.listeningPrompt}
@@ -326,10 +337,10 @@ class PuzzlePage extends React.Component {
 
           </Row>
           <Row>
-            <Col xs={12} className="audio center">
+            <Col xs={12} className="puzzle-audio">
               {audio}
             </Col>
-            <Col xs={12} className="translation">
+            <Col xs={12} className="puzzle-translation">
               <Translation
                 translation={this.state.translation}
               />
@@ -366,7 +377,7 @@ class PuzzlePage extends React.Component {
             </GameField>
           </Row>
           <Row>
-            <Col className="bottom-buttons center">
+            <Col className="puzzle-bottom-buttons">
               <BottomButtons
                 allInSelected={this.state.allInSelected}
                 setCheck={this.setCheck}
@@ -376,6 +387,7 @@ class PuzzlePage extends React.Component {
                 buttons={this.state.buttons}
                 next={this.state.next}
                 setNext={this.setNext}
+                setStatisticModalShow={this.setStatisticModalShow}
               />
             </Col>
           </Row>

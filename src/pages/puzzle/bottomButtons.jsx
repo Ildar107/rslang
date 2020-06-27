@@ -1,60 +1,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 
 const BottomButtons = (props) => (
-  <div className="bottom-buttons-wrapper">
+  <div>
     {props.allInSelected && !props.win && props.buttons && !props.next
           && (
-          <button
-            className="btn-small waves-effect waves-light red check"
+          <Button
+            className="puzzle-red-btn"
             onClick={() => props.setCheck(true)}
           >
-            check
-          </button>
+            CHECK
+          </Button>
           )}
 
     {!props.win && props.buttons && !props.next
           && (
-          <button
-            className="btn-small waves-effect waves-light orange check"
+          <Button
+            size="sm"
+            className="puzzle-orange-btn"
             onClick={() => {
               props.setDontKnow(true);
               props.setCheck(true);
             }}
           >
-            i dont know
-          </button>
+            I DONT KNOW
+          </Button>
           )}
     {props.win && props.buttons && !props.next
           && (
-          <button
-            className="btn-small waves-effect waves-light blue check"
+          <Button
+            size="sm"
+            className="puzzle-blue-btn"
             onClick={() => {
               props.setDontKnow(false);
               props.setCheck(false);
               props.setContinue(true);
             }}
           >
-            continue
-          </button>
+            CONTINUE
+          </Button>
           )}
     {props.next
           && (
           <>
-            <button
-              className="btn-small waves-effect waves-light pink check"
+            <Button
+              size="sm"
+              className="puzzle-pink-btn"
               onClick={() => {
                 props.setNext(false);
               }}
             >
-              continue
-            </button>
-            <a
-              className="waves-effect waves-light btn-small orange modal-trigger statistic-trigger"
-              href="#modal1"
+              CONTINUE
+            </Button>
+            <Button
+              onClick={() => props.setStatisticModalShow(true)}
+              size="sm"
+              className="puzzle-orange-btn"
             >
-              statistic
-            </a>
+              STATISTIC
+            </Button>
           </>
           )}
   </div>
