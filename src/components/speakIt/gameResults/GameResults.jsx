@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ResultWordItem from '../gameResultItem/GameResultItem';
-import routes from '../../constants/routes';
+import routes from '../../../constants/routes';
 import './gameResults.scss';
 
 class GameResults extends Component {

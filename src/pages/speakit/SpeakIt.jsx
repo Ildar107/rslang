@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Pagination } from 'react-bootstrap';
 
-import WordsSet from '../../components/wordsSet/WordsSet';
-import GameResults from '../../components/gameResults/GameResults';
+import WordsSet from '../../components/speakIt/wordsSet/WordsSet';
+import GameResults from '../../components/speakIt/gameResults/GameResults';
 import StoreContext from '../../app/store';
 import getRandomInt from '../../helper/randomValue';
 import './speakIt.scss';
@@ -154,7 +154,7 @@ class SpeakIt extends Component {
   }
 
   render = () => (!this.state.isGameStopped ? (
-    <Container fluid>
+    <Container fluid className="speak-it">
       <span className="close__game">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
       </span>
