@@ -26,8 +26,10 @@ const App = () => {
           </Route>
           <Route path={routes.PUZZLE} exact>
             <PuzzlePage />
+          </Route>
           <Route path={routes.SPEAKIT} exact>
             <SpeakIt />
+          </Route>
           <Route path={routes.WORD_BUILDER} exact>
             <WordBuilder />
           </Route>

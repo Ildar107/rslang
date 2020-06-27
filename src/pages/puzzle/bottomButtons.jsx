@@ -1,41 +1,56 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class BottomButtons extends React.Component {
-  render() {
-    return (
-        <div className='bottom-buttons-wrapper'>
-          {this.props.allInSelected && !this.props.win && this.props.buttons && !this.props.next &&
-          <button className='btn-small waves-effect waves-light red check'
-                  onClick={() => this.props.setCheck(true)}
-          >check</button>
-          }
-          {!this.props.win && this.props.buttons && !this.props.next &&
-          <button className='btn-small waves-effect waves-light orange check'
-                  onClick={() => {
-                    this.props.setDontKnow(true)
-                    this.props.setCheck(true)
-                  }}
-          >i dont know</button>}
-          {this.props.win && this.props.buttons && !this.props.next &&
-          <button className='btn-small waves-effect waves-light blue check'
-                  onClick={() => {
-                    this.props.setDontKnow(false)
-                    this.props.setCheck(false)
-                    this.props.setContinue(true)
-                  }}
-          >continue</button>}
-          {this.props.next &&
-          <button className='btn-small waves-effect waves-light pink check'
-                  onClick={() => {
-                    this.props.setNext(false)
-                  }}
-          >continue</button>}
-        </div>
+const BottomButtons = (props) => (
+  <div className="bottom-buttons-wrapper">
+    {props.allInSelected && !props.win && props.buttons && !props.next
+          && (
+          <button
+            className="btn-small waves-effect waves-light red check"
+            onClick={() => props.setCheck(true)}
+          >
+            check
+          </button>
+          )}
+    {!props.win && props.buttons && !props.next
+          && (
+          <button
+            className="btn-small waves-effect waves-light orange check"
+            onClick={() => {
+              props.setDontKnow(true);
+              props.setCheck(true);
+            }}
+          >
+            i dont know
+          </button>
+          )}
+    {props.win && props.buttons && !props.next
+          && (
+          <button
+            className="btn-small waves-effect waves-light blue check"
+            onClick={() => {
+              props.setDontKnow(false);
+              props.setCheck(false);
+              props.setContinue(true);
+            }}
+          >
+            continue
+          </button>
+          )}
+    {props.next
+          && (
+          <button
+            className="btn-small waves-effect waves-light pink check"
+            onClick={() => {
+              props.setNext(false);
+            }}
+          >
+            continue
+          </button>
+          )}
+  </div>
 
-    )
-  }
-}
+);
 
 BottomButtons.propTypes = {
   allInSelected: PropTypes.bool,
@@ -45,7 +60,18 @@ BottomButtons.propTypes = {
   setContinue: PropTypes.func,
   buttons: PropTypes.bool,
   setNext: PropTypes.func,
-  next: PropTypes.bool
-}
+  next: PropTypes.bool,
+};
 
-export default BottomButtons
+BottomButtons.defaultProps = {
+  allInSelected: false,
+  setCheck: () => {},
+  setDontKnow: () => {},
+  win: false,
+  setContinue: () => {},
+  buttons: false,
+  setNext: () => {},
+  next: false,
+};
+
+export default BottomButtons;
