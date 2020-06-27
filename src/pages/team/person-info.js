@@ -1,0 +1,58 @@
+const personsInfo = [
+  {
+    firstname: 'firstname',
+    lastname: 'last name',
+    photo: 'link',
+    description: 'description of person',
+    githubLink: 'githubLink',
+		codewarsLink: 'codewarsLink',
+		googleLink: 'googleLink',
+  },
+  {
+    firstname: 'firstname',
+    lastname: 'last name',
+    photo: 'link',
+    description: 'description of person',
+    githubLink: 'githubLink',
+		codewarsLink: 'codewarsLink',
+		googleLink: 'googleLink',
+  },
+  {
+    firstname: 'firstname',
+    lastname: 'last name',
+    photo: 'link',
+    description: 'description of person',
+    githubLink: 'githubLink',
+		codewarsLink: 'codewarsLink',
+		googleLink: 'googleLink',
+  },
+  {
+    firstname: 'firstname',
+    lastname: 'last name',
+    photo: 'link',
+    description: 'description of person',
+    githubLink: 'githubLink',
+		codewarsLink: 'codewarsLink',
+		googleLink: 'googleLink',
+  },
+  {
+    firstname: 'firstname',
+    lastname: 'last name',
+    photo: 'link',
+    description: 'description of person',
+    githubLink: 'githubLink',
+		codewarsLink: 'codewarsLink',
+		googleLink: 'googleLink',
+  },
+  {
+    firstname: 'firstname',
+    lastname: 'last name',
+    photo: 'link',
+    description: 'description of person',
+    githubLink: 'githubLink',
+		codewarsLink: 'codewarsLink',
+		googleLink: 'googleLink',
+  },
+];
+
+export default personsInfo;
