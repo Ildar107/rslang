@@ -6,7 +6,9 @@ import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import PuzzlePage from './pages/puzzle/PuzzlePage';
+import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
+import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
 
 const App = () => {
@@ -24,6 +26,10 @@ const App = () => {
           </Route>
           <Route path={routes.PUZZLE} exact>
             <PuzzlePage />
+          <Route path={routes.SPEAKIT} exact>
+            <SpeakIt />
+          <Route path={routes.WORD_BUILDER} exact>
+            <WordBuilder />
           </Route>
           <Route>
             <Redirect to={routes.LANDING} />
