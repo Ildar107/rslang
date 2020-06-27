@@ -9,6 +9,7 @@ function EndGameModal(props) {
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      show={props.show}
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
