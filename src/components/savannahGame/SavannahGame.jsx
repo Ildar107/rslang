@@ -228,7 +228,7 @@ class SavannahGame extends Component {
     const style = {
       animationName: this.state.animationName,
       animationTimingFunction: 'linear',
-      animationDuration: '5s',
+      animationDuration: '4s',
       animationDelay: '0.0s',
       animationDirection: 'normal',
       animationFillMode: 'forwards',
