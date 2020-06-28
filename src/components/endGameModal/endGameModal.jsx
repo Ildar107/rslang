@@ -9,6 +9,7 @@ function EndGameModal(props) {
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      show={props.show}
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -30,6 +31,7 @@ function EndGameModal(props) {
 
 EndGameModal.propTypes = {
   onHide: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
 };
 
 export default EndGameModal;

@@ -1,0 +1,18 @@
+.error-message__modal {
+    .error-message__container {
+        display: flex;
+        align-items: center;
+
+        & div {
+            margin-left: 10px;
+            width: 30%
+        }
+
+        & p {
+            width: 60%;
+            margin-bottom: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

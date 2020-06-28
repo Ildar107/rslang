@@ -17,6 +17,10 @@
     margin: 20px;
 }
 
+.error__title span, .success__title span {
+    margin-left: 5px;
+}
+
 .error__words, .success__words {
     display: flex;
     flex-direction: column;
