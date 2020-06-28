@@ -1,12 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-void */
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/sort-comp */
-/* eslint-disable no-console */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';

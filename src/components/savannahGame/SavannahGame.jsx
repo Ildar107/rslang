@@ -1,11 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/sort-comp */
-/* eslint-disable no-console */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
 import React, { Component } from 'react';
 import './savannah-game.scss';
 import {
@@ -28,6 +20,8 @@ const getShuffledArr = (arr) => {
 };
 const minPage = 0;
 const maxPage = 29;
+const minLengthArray = 11;
+const quantityWords = 3;
 
 class SavannahGame extends Component {
   constructor(props) {
@@ -73,7 +67,6 @@ class SavannahGame extends Component {
             currentWord: res[0],
             currentWords: currentWordsArr.sort(() => Math.random() - 0.5),
           });
-          console.log(this.state);
         },
         (error) => {
           this.setState({
@@ -138,10 +131,10 @@ class SavannahGame extends Component {
 
   nextWords = () => {
     const itemsCopy = [...this.state.items];
-    if (itemsCopy.length > 11) {
+    if (itemsCopy.length > minLengthArray) {
       itemsCopy.shift();
       const nextWords = getShuffledArr(itemsCopy);
-      const currentWordsArr = nextWords.filter((item, index) => item && index <= 3);
+      const currentWordsArr = nextWords.filter((item, index) => item && index <= quantityWords);
       this.setState({
         isLoaded: true,
         items: nextWords,
@@ -182,7 +175,17 @@ class SavannahGame extends Component {
   };
 
   getCurrentWords() {
-    const words = this.state.currentWords.map((item) => <Col onClick={this.compareWords} data-set={item.word} key={item.word} className="word" sm>{item.word}</Col>);
+    const words = this.state.currentWords.map((item) => (
+      <Col
+        onClick={this.compareWords}
+        data-set={item.word}
+        key={item.word}
+        className="word"
+        sm
+      >
+        {item.word}
+      </Col>
+    ));
     return words;
   }
 
@@ -197,7 +200,6 @@ class SavannahGame extends Component {
   }
 
   handleGroupChange = async ({ target: { innerText } }) => {
-    console.log(Number(innerText));
     if (Number(innerText)) {
       await this.setState({
         group: Number(innerText) - 1,
@@ -282,7 +284,14 @@ class SavannahGame extends Component {
           </Col>
           <svg className="close-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
         </Row>
-        <div className="translate animation" data-set={this.state.currentWord.word} style={style} onAnimationIteration={this.animationEnd}>{this.state.currentWord.wordTranslate}</div>
+        <div
+          className="translate animation"
+          data-set={this.state.currentWord.word}
+          style={style}
+          onAnimationIteration={this.animationEnd}
+        >
+          {this.state.currentWord.wordTranslate}
+        </div>
         <Row className="words-block">
           {
             this.getCurrentWords()
