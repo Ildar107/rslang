@@ -17,16 +17,20 @@ const TeamItem = (props) => (
         </Card.Text>
       </Card.Body>
       <Card.Footer className="card__footer">
-        <a>
-          <i className="fa fa-phone" aria-hidden="true" />
+        <a className="card__social-link" href="#">
+          <i className=" card__social-icon fab fa-github" aria-hidden="true" />
           {' '}
         </a>
-        <a>
-          <i className="fa fa-phone" aria-hidden="true" />
+        <a className="card__social-link" href="#">
+          <i className=" card__social-icon fab fa-telegram-plane" aria-hidden="true" />
           {' '}
         </a>
-        <a>
-          <i className="fa fa-phone" aria-hidden="true" />
+        <a className="card__social-link" href="#">
+          <i className=" card__social-icon fab fa-linkedin" aria-hidden="true" />
+          {' '}
+        </a>
+        <a className="card__social-link" href="#">
+          <i className=" card__social-icon fab fa-google" aria-hidden="true" />
           {' '}
         </a>
       </Card.Footer>

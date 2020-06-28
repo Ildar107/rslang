@@ -1,3 +1,23 @@
 .team__card{
 	margin-top: 40px;
 }
+
+.card__social-icon{
+	margin-left: 5px;
+	font-size: 20px;
+	color: grey;
+	transition: color .25s ease;
+	text-decoration: none;
+}
+
+.card__social-link{
+	text-decoration: none;
+}
+
+.card__social-link:hover{
+	text-decoration: none;
+}
+
+.card__social-icon:hover{
+	color: rgb(41, 41, 41);
+}
