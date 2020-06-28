@@ -1,5 +1,3 @@
-//@import "./node_modules/materialize-css/sass/materialize";
-//@import 'fonts';
 
 @mixin media-400 {
   @media (max-width: 400px) {
@@ -83,39 +81,42 @@
   position: relative;
 }
 
-.puzzle-set-level{
+.puzzle-set-level {
   display: flex;
   flex-wrap: wrap;
-  // flex-direction: column;
   align-items: center;
-  & p{
+
+  & p {
     margin-bottom: 5px;
   }
-  & ul{
+
+  & ul {
     margin-right: 10px;
   }
-  & button{
+
+  & button {
     margin-top: 10px;
     margin-right: 10px;
   }
 }
 
-.puzzle-set-prompt{
+.puzzle-set-prompt {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding-top: 27px;
   padding-bottom: 10px;
-  & button{
+
+  & button {
     margin-right: 10px;
   }
 }
 
-.puzzle-disable-btn{
+.puzzle-disable-btn {
   opacity: 0.5;
 }
 
-.puzzle-close{
+.puzzle-close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -126,22 +127,22 @@
 
 }
 
-.puzzle-audio{
+.puzzle-audio {
   display: flex;
   justify-content: center;
   height: 43px;
 }
 
-.puzzle-translation{
+.puzzle-translation {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  & p{
+  min-height: 50px;
+
+  & p {
     margin: 0;
   }
 }
-
 
 .drop {
   position: absolute;
@@ -166,7 +167,7 @@
   line-height: 35px;
   background-color: #f5f5f5 !important;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
   @include media-800 {
     font-size: 20px;
   }
@@ -176,7 +177,7 @@
   @include media-600 {
     font-size: 15px;
   }
-  @include media-575{
+  @include media-575 {
     margin-right: 10px;
     margin-left: 10px;
   }
@@ -189,133 +190,71 @@
 
 }
 
-.puzzle-bottom-buttons{
+.puzzle-bottom-buttons {
   margin-top: 70px;
   display: flex;
   justify-content: center;
-  & button{
+
+  & button {
     margin-right: 10px;
   }
-  & .puzzle-pink-btn{
+
+  & .puzzle-pink-btn {
     background-color: lightpink;
   }
-  & .puzzle-red-btn{
+
+  & .puzzle-red-btn {
     background-color: lightsalmon;
   }
-  & .puzzle-blue-btn{
+
+  & .puzzle-blue-btn {
     background-color: lightblue;
   }
-  & .puzzle-orange-btn{
+
+  & .puzzle-orange-btn {
     background-color: orange;
   }
 }
 
+.puzzle-statistic-modal {
+  & .puzzle-modal-sentence {
+    display: flex;
+    flex-wrap: nowrap;
 
-.input-field {
-  width: 60px;
-  margin-left: 20px;
-  position: relative;
-}
+    & i {
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
 
-.diff {
-  position: absolute;
-  top: -20px;
-  font-size: 1.5rem;
-}
+  & .puzzle-modal-sentence-translate {
+    margin-left: 25px;
+    margin-top: -15px;
+  }
 
-.bottom-buttons {
-  margin-top: 55px;
-}
+  & p {
+    font-size: 15px;
+  }
 
-.bottom-buttons-wrapper {
-  height: 35px;
-}
+  & .puzzle-modal-green {
+    color: green;
+  }
 
-.check {
-  margin-left: 5px;
-}
+  & .puzzle-modal-red {
+    color: red;
+  }
 
-.translation {
-  font-size: 1.5rem;
-  min-height: 25px;
+  & .puzzle-modal-yellow {
+    color: yellow;
+  }
 }
 
 .game-field-word {
   display: inline-block;
-  //font-size: 2rem;
-}
-
-.dropdown-trigger {
-  margin-left: 10px;
-  margin-bottom: 5px !important;
-  &:hover{
-    text-decoration: none;
-  }
 }
 
 
 
-
-
-.audio-start{
-  color: white;
-}
-
-.audio {
-  height: 45px;
-}
-
-.tooltipped{
-  color: white !important;
-}
-
-.statistic-trigger{
-  margin-left: 10px;
-  color: white;
-  &:hover{
-    color: white;
-    text-decoration: none;
-  }
-}
-
-.modal-close{
-}
-
-.modal{
-  padding: 10px;
-  font-size: 1.5rem;
-  & p{
-    display: inline-block;
-  }
-  & svg{
-    width: 20px !important;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  & .divider{
-    margin-bottom: 5px;
-  }
-}
-
-.badge{
-  font-size: 1.5rem !important;
-}
-
-.modal-head{
-  font-size: 1.7rem;
-}
-
-.modal-sentence{
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-
-}
-
-.modal-sentence-translate{
-  margin-left: 20px;
-  margin-top: -10px;
-}
 
 
 

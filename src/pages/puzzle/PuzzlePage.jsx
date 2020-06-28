@@ -305,6 +305,7 @@ class PuzzlePage extends React.Component {
             />
           </>
           <StatisticModal
+            className="puzzle-statistic-modal"
             next={this.state.next}
             wordsData={this.state.wordsData}
             arrayOfMistakes={this.state.arrayOfMistakes}

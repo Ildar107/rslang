@@ -7,6 +7,7 @@ const BottomButtons = (props) => (
     {props.allInSelected && !props.win && props.buttons && !props.next
           && (
           <Button
+            size="sm"
             className="puzzle-red-btn"
             onClick={() => props.setCheck(true)}
           >

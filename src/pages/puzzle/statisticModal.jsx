@@ -37,48 +37,48 @@ function StatisticModal(props) {
 
     rightSentenses = right.map((item) => (
       <>
-        <div className="modal-sentence">
+        <div className="puzzle-modal-sentence">
           <i
             onClick={() => audioPlay(item)}
-            className="material-icons "
+            className="material-icons puzzle-modal-green "
           >
             volume_up
           </i>
           <p>{props.wordsData[item].textExample}</p>
         </div>
-        <div className="modal-sentence-translate">
+        <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
       </>
     ));
     mistakeSentenses = mistakes.map((item) => (
       <>
-        <div className="modal-sentence">
+        <div className="puzzle-modal-sentence">
           <i
             onClick={() => audioPlay(item)}
-            className="material-icons "
+            className="material-icons puzzle-modal-yellow"
           >
             volume_up
           </i>
           <p>{props.wordsData[item].textExample}</p>
         </div>
-        <div className="modal-sentence-translate">
+        <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
       </>
     ));
     dontKnowSentenses = dontKnow.map((item) => (
       <>
-        <div className="modal-sentence">
+        <div className="puzzle-modal-sentence">
           <i
             onClick={() => audioPlay(item)}
-            className="material-icons "
+            className="material-icons puzzle-modal-red"
           >
             volume_up
           </i>
           <p>{props.wordsData[item].textExample}</p>
         </div>
-        <div className="modal-sentence-translate">
+        <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
       </>
@@ -92,30 +92,25 @@ function StatisticModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Статистика игры.
-        </Modal.Title>
-      </Modal.Header>
       <Modal.Body>
-        <h4>
-          Составили правильно с первой попытки
+        <h5>
+          Составили правильно с первой попытки:&nbsp;
           <Badge variant="success">{right.length}</Badge>
-        </h4>
+        </h5>
         {rightSentenses}
       </Modal.Body>
       <Modal.Body>
-        <h4>
-          Составили правильно не с первой попытки
+        <h5>
+          Составили правильно не с первой попытки:&nbsp;
           <Badge variant="warning">{mistakes.length}</Badge>
-        </h4>
+        </h5>
         {mistakeSentenses}
       </Modal.Body>
       <Modal.Body>
-        <h4>
-          Не смогли составить правильно
+        <h5>
+          Не смогли составить правильно:&nbsp;
           <Badge variant="danger">{dontKnow.length}</Badge>
-        </h4>
+        </h5>
         {dontKnowSentenses}
       </Modal.Body>
       <Modal.Footer>
