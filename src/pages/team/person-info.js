@@ -5,8 +5,8 @@ const personsInfo = [
     photo: 'link',
     description: 'description of person',
     githubLink: 'githubLink',
-		codewarsLink: 'codewarsLink',
-		googleLink: 'googleLink',
+    codewarsLink: 'codewarsLink',
+    googleLink: 'googleLink',
   },
   {
     firstname: 'firstname',
@@ -14,8 +14,8 @@ const personsInfo = [
     photo: 'link',
     description: 'description of person',
     githubLink: 'githubLink',
-		codewarsLink: 'codewarsLink',
-		googleLink: 'googleLink',
+    codewarsLink: 'codewarsLink',
+    googleLink: 'googleLink',
   },
   {
     firstname: 'firstname',
@@ -23,8 +23,8 @@ const personsInfo = [
     photo: 'link',
     description: 'description of person',
     githubLink: 'githubLink',
-		codewarsLink: 'codewarsLink',
-		googleLink: 'googleLink',
+    codewarsLink: 'codewarsLink',
+    googleLink: 'googleLink',
   },
   {
     firstname: 'firstname',
@@ -32,8 +32,8 @@ const personsInfo = [
     photo: 'link',
     description: 'description of person',
     githubLink: 'githubLink',
-		codewarsLink: 'codewarsLink',
-		googleLink: 'googleLink',
+    codewarsLink: 'codewarsLink',
+    googleLink: 'googleLink',
   },
   {
     firstname: 'firstname',
@@ -41,8 +41,8 @@ const personsInfo = [
     photo: 'link',
     description: 'description of person',
     githubLink: 'githubLink',
-		codewarsLink: 'codewarsLink',
-		googleLink: 'googleLink',
+    codewarsLink: 'codewarsLink',
+    googleLink: 'googleLink',
   },
   {
     firstname: 'firstname',
@@ -50,8 +50,8 @@ const personsInfo = [
     photo: 'link',
     description: 'description of person',
     githubLink: 'githubLink',
-		codewarsLink: 'codewarsLink',
-		googleLink: 'googleLink',
+    codewarsLink: 'codewarsLink',
+    googleLink: 'googleLink',
   },
 ];
 

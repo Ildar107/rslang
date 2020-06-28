@@ -4,18 +4,18 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-const TeamPage = (props) => (
+const TeamItem = (props) => (
   <>
     <Card>
       <Card.Img variant="top" src="holder.js/100px160" />
       <Card.Body>
         <Card.Title>
-          {props.firstname}
+          {props.info.firstname}
           {' '}
-          {props.lastname}
+          {props.info.lastname}
         </Card.Title>
         <Card.Text>
-          {props.description}
+          {props.info.description}
         </Card.Text>
       </Card.Body>
       <Card.Footer>
@@ -27,4 +27,4 @@ const TeamPage = (props) => (
   </>
 );
 
-export default TeamPage;
+export default TeamItem;
