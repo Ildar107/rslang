@@ -1,8 +1,8 @@
 import React from 'react';
-// import M from 'materialize-css/dist/js/materialize.min';
-// import 'materialize-css/sass/materialize.scss';
 import './puzzlePage.scss';
-import { Container, Row, Col } from 'react-bootstrap';
+import {
+  Container, Row, Col, Button,
+} from 'react-bootstrap';
 import DragNdrop from './dragNdrop';
 import GameField from './gameField';
 import SetLevel from './setLevel';
@@ -12,7 +12,8 @@ import PromptButtons from './promptButtons';
 import Paintings from './paintings';
 import Header from '../../components/header/Header';
 import StatisticModal from './statisticModal';
-import CloseGameModal from './closeGameModal';
+import EndGameModal from '../../components/endGameModal/endGameModal';
+// import CloseGameModal from './closeGameModal';
 
 class PuzzlePage extends React.Component {
   constructor(props) {
@@ -37,6 +38,8 @@ class PuzzlePage extends React.Component {
       audioStart: false,
       playingAudio: null,
       arrayOfMistakes: [],
+      modalShow: false,
+      statisticModalShow: false,
     };
     this.getWordsData = this.getWordsData.bind(this);
     this.setDifficulty = this.setDifficulty.bind(this);
@@ -58,6 +61,8 @@ class PuzzlePage extends React.Component {
     this.onUnload = this.onUnload.bind(this);
     this.audioPlay = this.audioPlay.bind(this);
     this.setArrayOfMistakes = this.setArrayOfMistakes.bind(this);
+    this.setModalShow = this.setModalShow.bind(this);
+    this.setStatisticModalShow = this.setStatisticModalShow.bind(this);
   }
 
   randomInteger(min, max) {
@@ -122,6 +127,14 @@ class PuzzlePage extends React.Component {
     this.setState({ pageNumber: page });
     this.setState({ difficulty: diff });
     await this.getWordsData(diff, page);
+  }
+
+  setStatisticModalShow(bool) {
+    this.setState({ statisticModalShow: bool });
+  }
+
+  setModalShow(bool) {
+    this.setState({ modalShow: bool });
   }
 
   setArrayOfMistakes(arr) {
@@ -189,7 +202,6 @@ class PuzzlePage extends React.Component {
     const pageNumber = +localStorage.getItem('pageNumber') || 0;
     this.setState({ difficulty });
     this.setState({ pageNumber });
-    // M.AutoInit();
     await this.getWordsData(difficulty, pageNumber);
     window.addEventListener('beforeunload', this.onUnload);
   }
@@ -248,19 +260,21 @@ class PuzzlePage extends React.Component {
     let audio;
     if (this.state.listeningPrompt && this.state.audioStart) {
       audio = (
-        <button className="btn-small brown lighten-4 waves-effect waves-light audio-start">
+        <Button
+          size="sm"
+        >
           <i
             className="material-icons "
           >
             volume_up
           </i>
-        </button>
+        </Button>
       );
     }
     if (this.state.listeningPrompt && !this.state.audioStart) {
       audio = (
-        <button
-          className="btn-small brown lighten-4 waves-effect waves-light audio-start "
+        <Button
+          size="sm"
           onClick={() => {
             this.audioPlay();
           }}
@@ -270,31 +284,36 @@ class PuzzlePage extends React.Component {
           >
             volume_mute
           </i>
-        </button>
+        </Button>
       );
     }
 
     return (
       <>
         <Header />
-        <Container>
+        <Container className="puzzle">
           <>
-            <button
-              className="btn-small waves-effect waves-light close-btn
-              blue lighten-2 modal-trigger"
-              href="#modal2"
+            <Button
+              className="puzzle-close"
+              onClick={() => this.setModalShow(true)}
             >
-              <i className="close-icon material-icons">close</i>
-            </button>
-            <CloseGameModal />
+              <i className="material-icons">close</i>
+            </Button>
+            <EndGameModal
+              show={this.state.modalShow}
+              onHide={() => this.setModalShow(false)}
+            />
           </>
           <StatisticModal
+            className="puzzle-statistic-modal"
             next={this.state.next}
             wordsData={this.state.wordsData}
             arrayOfMistakes={this.state.arrayOfMistakes}
+            show={this.state.statisticModalShow}
+            onHide={() => this.setStatisticModalShow(false)}
           />
           <Row>
-            <Col xs={12} lg={6} className="set-level center">
+            <Col xs={12} lg={6} className="puzzle-set-level">
               <SetLevel
                 setDifficulty={this.setDifficulty}
                 setPageNumber={this.setPageNumber}
@@ -304,7 +323,7 @@ class PuzzlePage extends React.Component {
                 setNext={this.setNext}
               />
             </Col>
-            <Col xs={12} lg={6} className="set-prompt">
+            <Col xs={12} lg={6} className="puzzle-set-prompt">
               <PromptButtons
                 translationPrompt={this.state.translationPrompt}
                 listeningPrompt={this.state.listeningPrompt}
@@ -319,10 +338,10 @@ class PuzzlePage extends React.Component {
 
           </Row>
           <Row>
-            <Col xs={12} className="audio center">
+            <Col xs={12} className="puzzle-audio">
               {audio}
             </Col>
-            <Col xs={12} className="translation">
+            <Col xs={12} className="puzzle-translation">
               <Translation
                 translation={this.state.translation}
               />
@@ -359,7 +378,7 @@ class PuzzlePage extends React.Component {
             </GameField>
           </Row>
           <Row>
-            <Col className="bottom-buttons center">
+            <Col className="puzzle-bottom-buttons">
               <BottomButtons
                 allInSelected={this.state.allInSelected}
                 setCheck={this.setCheck}
@@ -369,6 +388,7 @@ class PuzzlePage extends React.Component {
                 buttons={this.state.buttons}
                 next={this.state.next}
                 setNext={this.setNext}
+                setStatisticModalShow={this.setStatisticModalShow}
               />
             </Col>
           </Row>

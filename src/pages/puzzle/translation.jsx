@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 class Translation extends React.Component {
   render() {
     return (
-      <div className="center-align translation">
-        {this.props.translation}
+      <div>
+        <p>{this.props.translation}</p>
       </div>
     );
   }

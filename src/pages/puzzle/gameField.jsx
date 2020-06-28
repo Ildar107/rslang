@@ -18,7 +18,7 @@ class GameField extends React.Component {
 
   setWidth() {
     this.setState({
-      width: window.getComputedStyle(document.querySelector('.card'))
+      width: window.getComputedStyle(document.querySelector('.puzzle-card'))
         .width.split('px')[0],
     });
   }
@@ -161,7 +161,7 @@ class GameField extends React.Component {
     }
 
     return (
-      <div className="card grey lighten-4">
+      <div className="puzzle-card">
         {this.props.next ? <div style={this.getFullBackgroundStyle()}> </div> : items}
         {this.props.children}
       </div>

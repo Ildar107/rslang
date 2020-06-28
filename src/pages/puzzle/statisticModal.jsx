@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Modal, Button, Badge } from 'react-bootstrap';
 
 function StatisticModal(props) {
   const right = [];
@@ -36,51 +37,48 @@ function StatisticModal(props) {
 
     rightSentenses = right.map((item) => (
       <>
-        <div className="modal-sentence">
-          <svg
+        <div className="puzzle-modal-sentence">
+          <i
             onClick={() => audioPlay(item)}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 32 32"
+            className="material-icons puzzle-modal-green "
           >
-            <path fill="currentColor" d="M15.788 13.007a3 3 0 110 5.985c.571 3.312 2.064 5.675 3.815 5.675 2.244 0 4.064-3.88 4.064-8.667 0-4.786-1.82-8.667-4.064-8.667-1.751 0-3.244 2.363-3.815 5.674zM19 26c-3.314 0-12-4.144-12-10S15.686 6 19 6s6 4.477 6 10-2.686 10-6 10z" fillRule="evenodd" />
-          </svg>
+            volume_up
+          </i>
           <p>{props.wordsData[item].textExample}</p>
         </div>
-        <div className="modal-sentence-translate">
+        <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
       </>
     ));
     mistakeSentenses = mistakes.map((item) => (
       <>
-        <div className="modal-sentence">
-          <svg
+        <div className="puzzle-modal-sentence">
+          <i
             onClick={() => audioPlay(item)}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 32 32"
+            className="material-icons puzzle-modal-yellow"
           >
-            <path fill="currentColor" d="M15.788 13.007a3 3 0 110 5.985c.571 3.312 2.064 5.675 3.815 5.675 2.244 0 4.064-3.88 4.064-8.667 0-4.786-1.82-8.667-4.064-8.667-1.751 0-3.244 2.363-3.815 5.674zM19 26c-3.314 0-12-4.144-12-10S15.686 6 19 6s6 4.477 6 10-2.686 10-6 10z" fillRule="evenodd" />
-          </svg>
+            volume_up
+          </i>
           <p>{props.wordsData[item].textExample}</p>
         </div>
-        <div className="modal-sentence-translate">
+        <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
       </>
     ));
     dontKnowSentenses = dontKnow.map((item) => (
       <>
-        <div className="modal-sentence">
-          <svg
+        <div className="puzzle-modal-sentence">
+          <i
             onClick={() => audioPlay(item)}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 32 32"
+            className="material-icons puzzle-modal-red"
           >
-            <path fill="currentColor" d="M15.788 13.007a3 3 0 110 5.985c.571 3.312 2.064 5.675 3.815 5.675 2.244 0 4.064-3.88 4.064-8.667 0-4.786-1.82-8.667-4.064-8.667-1.751 0-3.244 2.363-3.815 5.674zM19 26c-3.314 0-12-4.144-12-10S15.686 6 19 6s6 4.477 6 10-2.686 10-6 10z" fillRule="evenodd" />
-          </svg>
+            volume_up
+          </i>
           <p>{props.wordsData[item].textExample}</p>
         </div>
-        <div className="modal-sentence-translate">
+        <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
       </>
@@ -88,51 +86,41 @@ function StatisticModal(props) {
   }
 
   return (
-    <>
-      <div id="modal1" className="modal">
-        <p className="modal-head">
-          Составили правильно с первой попытки
-          <span
-            className="new badge"
-            data-badge-caption=""
-          >
-            {right.length}
-          </span>
-        </p>
-        <br />
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Body>
+        <h5>
+          Составили правильно с первой попытки:&nbsp;
+          <Badge variant="success">{right.length}</Badge>
+        </h5>
         {rightSentenses}
-        <div className="divider"> </div>
-        <p className="modal-head">
-          Составили правильно не с первой попытки
-          <span
-            className="new badge orange"
-            data-badge-caption=""
-          >
-            {mistakes.length}
-          </span>
-        </p>
-        <br />
+      </Modal.Body>
+      <Modal.Body>
+        <h5>
+          Составили правильно не с первой попытки:&nbsp;
+          <Badge variant="warning">{mistakes.length}</Badge>
+        </h5>
         {mistakeSentenses}
-        <div className="divider"> </div>
-        <p className="modal-head">
-          Не смогли составить правильно
-          <span
-            className="new badge red"
-            data-badge-caption=""
-          >
-            {dontKnow.length}
-          </span>
-        </p>
+      </Modal.Body>
+      <Modal.Body>
+        <h5>
+          Не смогли составить правильно:&nbsp;
+          <Badge variant="danger">{dontKnow.length}</Badge>
+        </h5>
         {dontKnowSentenses}
-        <div className="divider"> </div>
-        <button
-          className="modal-close waves-effect waves-green btn-flat"
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          onClick={() => props.onHide(false)}
         >
-          Close
-        </button>
-
-      </div>
-    </>
+          CLOSE
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 

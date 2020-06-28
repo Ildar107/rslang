@@ -31,7 +31,7 @@ const getListStyle = (isDraggingOver) => ({
   display: 'flex',
   height: '40px',
   padding: grid,
-  overflow: 'auto',
+  overflow: 'hidden',
   width: '100%',
 });
 
@@ -90,7 +90,7 @@ class DragNdrop extends React.Component {
       display: 'flex',
       height: '40px',
       padding: grid,
-      overflow: 'auto',
+      overflow: 'hidden',
       width: '100%',
       top: `${this.state.numOfSentence * 40}px`,
     };
@@ -98,7 +98,7 @@ class DragNdrop extends React.Component {
 
   setWidth() {
     this.setState({
-      width: window.getComputedStyle(document.querySelector('.card'))
+      width: window.getComputedStyle(document.querySelector('.puzzle-card'))
         .width.split('px')[0],
     });
   }
