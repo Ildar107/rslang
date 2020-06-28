@@ -1,5 +1,6 @@
 const LANDING = '/';
 const TEAM = '/team';
+const AUTHORIZE = '/login';
 const PUZZLE = '/puzzle';
 const SPEAKIT = '/speakit';
 const WORD_BUILDER = '/word-builder';
@@ -12,4 +13,5 @@ export default {
   WORD_BUILDER,
   PUZZLE,
   MINI_GAMES,
+  AUTHORIZE,
 };

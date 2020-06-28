@@ -1,6 +1,6 @@
 import React from 'react';
-import M from 'materialize-css/dist/js/materialize.min';
-import 'materialize-css/sass/materialize.scss';
+// import M from 'materialize-css/dist/js/materialize.min';
+// import 'materialize-css/sass/materialize.scss';
 import './puzzlePage.scss';
 import { Container, Row, Col } from 'react-bootstrap';
 import DragNdrop from './dragNdrop';
@@ -189,7 +189,7 @@ class PuzzlePage extends React.Component {
     const pageNumber = +localStorage.getItem('pageNumber') || 0;
     this.setState({ difficulty });
     this.setState({ pageNumber });
-    M.AutoInit();
+    // M.AutoInit();
     await this.getWordsData(difficulty, pageNumber);
     window.addEventListener('beforeunload', this.onUnload);
   }

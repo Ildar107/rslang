@@ -1,6 +1,8 @@
-import React, { Suspense, useContext } from 'react';
+import React, {
+  Suspense, useContext, Redirect,
+} from 'react';
 import {
-  Route, Switch, Redirect,
+  Route, Switch,
 } from 'react-router-dom';
 import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
@@ -11,6 +13,8 @@ import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
 import MiniGamesPage from './pages/minigames/MiniGamesPage';
+import AuthorizationPage from './pages/authorization/AuthorizationPage';
+import PrivateRoute from './components/privateRoute/PrivateRoute';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -19,26 +23,29 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <StoreContext.Provider value={store}>
         <Switch>
-          <Route path={routes.LANDING} exact>
+          <Route path={routes.AUTHORIZE} exact>
+            <AuthorizationPage />
+          </Route>
+          <PrivateRoute path={routes.LANDING} exact>
             <MainPage />
-          </Route>
-          <Route path={routes.TEAM} exact>
+          </PrivateRoute>
+          <PrivateRoute path={routes.TEAM} exact>
             <TeamPage />
-          </Route>
-          {/* <Route path={routes.PUZZLE} exact>
+          </PrivateRoute>
+          {/* <PrivateRoute path={routes.PUZZLE} exact>
             <PuzzlePage game="puzzle" />
-          </Route> */}
-          <Route path={routes.SPEAKIT} exact>
+          </PrivateRoute> */}
+          <PrivateRoute path={routes.SPEAKIT} exact>
             <SpeakIt />
-          </Route>
-          <Route path={routes.WORD_BUILDER} exact>
+          </PrivateRoute>
+          <PrivateRoute path={routes.WORD_BUILDER} exact>
             <WordBuilder />
-          </Route>
-          <Route path={routes.MINI_GAMES} exact>
+          </PrivateRoute>
+          <PrivateRoute path={routes.MINI_GAMES} exact>
             <MiniGamesPage />
-          </Route>
+          </PrivateRoute>
           <Route>
-            <Redirect to={routes.LANDING} />
+            <Redirect to={routes.AUTHORIZE} />
           </Route>
         </Switch>
       </StoreContext.Provider>
