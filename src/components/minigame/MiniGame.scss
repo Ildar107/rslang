@@ -4,21 +4,38 @@
   .card {
     width: 500px;
     height: 250px;
-    margin: 15px
+    margin: 15px;
   }
   li {
     list-style-type: none;
   }
   img {
-    opacity: 60%;
     height: 100%;
+    border-radius: 50px;
   }
   ul {
     display: flex;
-    /* flex-direction: column; */
+    // flex-direction: column;
     /* align-items: baseline; */
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-top: 50px;
+    padding-inline-start: 0;
+  }
+  .card-img-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border-radius: 50px;
+  }
+  .card:hover {
+    cursor: pointer;
+    opacity: 75%;
+  }
+  @media (max-width: 550px) {
+    font-size: 14px;
+    .card {
+      width: 300px;
+      height: 150px;
+    }
   }
 }

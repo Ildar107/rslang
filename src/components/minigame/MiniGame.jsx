@@ -6,6 +6,7 @@ const MiniGame = ({
 }) => (
   <div className="card">
     <img className="card-img" src={imageSrc} alt="" />
+    {/* <div className="card-img-overlay" /> */}
     <div className="card-img-overlay">
       <h5 className="card-title">
         {' '}

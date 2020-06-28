@@ -13,7 +13,7 @@ import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
 import MiniGamesPage from './pages/minigames/MiniGamesPage';
-import AuthorizationPage from './pages/authorization/AuthorizationPage';
+// import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 
 const App = () => {
@@ -23,8 +23,10 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <StoreContext.Provider value={store}>
         <Switch>
+          {/* <Route path={routes.AUTHORIZE} exact>
+           */}
           <Route path={routes.AUTHORIZE} exact>
-            <AuthorizationPage />
+            <MiniGamesPage />
           </Route>
           <PrivateRoute path={routes.LANDING} exact>
             <MainPage />
@@ -45,7 +47,8 @@ const App = () => {
             <MiniGamesPage />
           </PrivateRoute>
           <Route>
-            <Redirect to={routes.AUTHORIZE} />
+            {/* <Redirect to={routes.AUTHORIZE} /> */}
+            <Redirect to={routes.MINI_GAMES} />
           </Route>
         </Switch>
       </StoreContext.Provider>
