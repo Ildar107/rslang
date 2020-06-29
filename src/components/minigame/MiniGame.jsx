@@ -6,12 +6,11 @@ const MiniGame = ({
 }) => (
   <div className="card">
     <img className="card-img" src={imageSrc} alt="" />
-    {/* <div className="card-img-overlay" /> */}
     <div className="card-img-overlay">
-      <h5 className="card-title">
+      <h3 className="card-title">
         {' '}
         {name}
-      </h5>
+      </h3>
       <p className="card-text">
         {' '}
         {description}
