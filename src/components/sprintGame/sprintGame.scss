@@ -9,14 +9,28 @@ body {
 }
 
 .sprint {
-  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
 }
-
 
 .sprint-wrapper {
-  margin-top: 200px;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px 0 35px;
 }
+
+.sprint__game-wrapper {
+  width: 300px;
+  height: 320px;
+  border: 1px solid #EB6864;
+  border-radius: 5px;
+  padding: 0 25px;
+}
+
 
 .sprint-link {
   border: 1px solid #EB6864;
@@ -28,4 +42,117 @@ body {
 .sprint-link:hover {
   border: 1.3px solid red;
   text-decoration: none;
+}
+
+.sprint__card-header {
+  width: 100%;
+  height: 50px;
+}
+
+
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sprint__doubling {
+  height: 60px;
+}
+
+.card__word {
+  margin: 5px 0;
+}
+
+.card__translate {
+  margin: 5px 0 80px;
+}
+
+.sprint__btn-wrap {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.sprint__btn {
+  width: 110px;
+  border: none;
+  outline: none;
+  user-select: none;
+  border-radius: 3px;
+  color: #ffffff;
+  padding: 5px 0;
+  margin-bottom: 10px;
+}
+
+.sprint__btn:active {
+  border: none;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+
+
+.page-link {
+  line-height: 1;
+}
+
+.statistics {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+  height: 300px;
+  background-color: #fff;
+  opacity: 0.9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+}
+
+.sprint__close {
+  position: absolute;
+  width: 20px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.statistics__title {
+  margin: 15px 0;
+}
+
+.statistics__points {
+  margin: 60px 0;
+}
+
+.stat__btn-wrap {
+  margin: 30px 0 0;
+  padding: 0 30px;
+}
+
+.sprint__modal {
+  position: absolute;
+  display: none;
+  width: 300px;
+  height: 200px;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
