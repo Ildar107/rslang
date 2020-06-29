@@ -106,7 +106,7 @@ const AuthorizationPage = () => {
     const password = document.querySelector('#password');
     const passwordRepeat = document.querySelector('#password_repeat');
     let passswordValid = false;
-    if (password.value.length <= 8 && SYMBOLS_REGEX.test(password.value) && /[0-9]/.test(password.value) && /[A-Z]/.test(password.value) && /[a-z]/.test(password.value)) {
+    if (password.value.length >= 8 && SYMBOLS_REGEX.test(password.value) && /[0-9]/.test(password.value) && /[A-Z]/.test(password.value) && /[a-z]/.test(password.value)) {
       passswordValid = true;
     }
     const emptyString = password.value
