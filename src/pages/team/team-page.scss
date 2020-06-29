@@ -1,6 +1,38 @@
 .team{
-	padding-top: 40px;
-	justify-content: space-around;
-	padding-right: 50px;
-	padding-left: 50px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+.team__header{
+	text-align: center;
+}
+
+.team__wrap{
+	display: grid;
+	grid-template-columns: repeat(3, 370px);
+	justify-content: center;
+	margin-bottom: 40px;
+}
+
+@media screen and (max-width: 1135px){
+	.team__wrap{
+		grid-template-columns: repeat(2, 370px);
+	}
+}
+@media screen and (max-width: 760px){
+	.team{
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+
+	.team__wrap{
+		grid-template-columns: repeat(1, 340px);
+	}
+}
+
+@media screen and (max-width: 420px){
+	.team__wrap{
+		grid-template-columns: repeat(1, 300px);
+	}
 }

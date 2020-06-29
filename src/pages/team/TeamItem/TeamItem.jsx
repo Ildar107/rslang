@@ -5,7 +5,7 @@ import './team-item.scss';
 const TeamItem = (props) => (
   <>
     <Card className="team__card">
-      <Card.Img variant="top" src="holder.js/100px160" />
+      <Card.Img className="card__img" variant="top" />
       <Card.Body>
         <Card.Title>
           {props.info.firstname}

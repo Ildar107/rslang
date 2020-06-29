@@ -1,5 +1,6 @@
 .team__card{
-	margin-top: 40px;
+	margin-top: 20px;
+	max-width: 370px;
 }
 
 .card__social-icon{
@@ -20,4 +21,18 @@
 
 .card__social-icon:hover{
 	color: rgb(41, 41, 41);
+}
+
+.card__img{
+	background-image: url('https://cdn2.vectorstock.com/i/1000x1000/87/86/man-guy-boy-person-suit-tie-face-head-vector-10308786.jpg');
+	background-size: cover;
+	height: 300px;
+	outline: none;;
+
+}
+
+@media screen and (max-width: 420px){
+	.card__img{
+		height: 250px;
+	}
 }
