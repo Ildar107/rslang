@@ -19,6 +19,7 @@ const Header = () => {
           {NavLink(routes.TEAM, 'О нас')}
           {NavLink(routes.PUZZLE, 'Игра паззл')}
           {NavLink(routes.WORD_BUILDER, 'Word Builder')}
+          {NavLink(routes.SAVANNAH, 'Саванна')}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

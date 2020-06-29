@@ -41,6 +41,9 @@ const App = () => {
           <PrivateRoute path={routes.WORD_BUILDER} exact>
             <WordBuilder />
           </PrivateRoute>
+          <PrivateRoute path={routes.SAVANNAH} exact>
+            <Savannah />
+          </PrivateRoute>
           <Route>
             <Redirect to={routes.AUTHORIZE} />
           </Route>

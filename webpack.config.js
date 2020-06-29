@@ -3,51 +3,50 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './src/main.jsx',
-    context: path.resolve(__dirname),
-    devtool: 'eval-source-map',
-  
-    resolve: {
-      extensions: ['.jsx', '.js'],
-      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-    },
-  
-    output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: '[name].js',
-      publicPath: '/',
-    },
-  
-    module: {
-      rules: [
-        {
-          test: /\.(js|jsx)?$/,
-          use: ['babel-loader'],
-          exclude: /node_modules/,
-        },
-        {
-          enforce: 'pre',
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          loader: 'eslint-loader',
-          options: {
-            fix: true,
-          },
-        },
-        {
-          test: /\.(css|scss)$/,
-          use: ['style-loader', 'css-loader', 'sass-loader'],
-        },
-        {
-          test: /\.(woff|woff2|eot|ttf|otf|jpg|png)$/,
-          use: [
-            'file-loader',
-          ],
-        },
-      ],
-    },
+  entry: './src/main.jsx',
+  context: path.resolve(__dirname),
+  devtool: 'eval-source-map',
 
-<<<<<<< HEAD
+  resolve: {
+    extensions: ['.jsx', '.js'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+  },
+
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    publicPath: '/',
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)?$/,
+        use: ['babel-loader'],
+        exclude: /node_modules/,
+      },
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          fix: true,
+        },
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|jpg|png)$/,
+        use: [
+          'file-loader',
+        ],
+      },
+    ],
+  },
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -80,24 +79,6 @@ module.exports = {
           'file-loader',
         ],
       },
-=======
-    plugins: [
-        new HtmlWebpackPlugin({
-          template: './src/index.html',
-        }),
-        new CopyWebpackPlugin({
-          patterns: [
-            {
-            from: './src/assets/images/',
-            to: './images',
-            },
-            {
-              from: './src/assets/audio',
-              to: './auidio',
-            },
-        ]
-      })
->>>>>>> 1601c6d8ebcc267212211a2cca540d9e69800d1a
     ],
   },
 
@@ -109,10 +90,10 @@ module.exports = {
       patterns: [
         {
           from: './src/assets/images/',
-          to: './images'
-        }
-      ]
-    })
+          to: './images',
+        },
+      ],
+    }),
   ],
 
   devServer: {
@@ -124,4 +105,3 @@ module.exports = {
     open: true,
   },
 };
-
