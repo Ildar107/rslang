@@ -8,7 +8,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import './timer.scss';
 
-const Timer = (props) => {
+const Timer = () => {
   const [counter, setCounter] = React.useState(30);
 
   React.useEffect(() => {

@@ -1,0 +1,263 @@
+
+@mixin media-400 {
+  @media (max-width: 400px) {
+    @content;
+  }
+}
+
+@mixin media-500 {
+  @media (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin media-575 {
+  @media (max-width: 575px) {
+    @content;
+  }
+}
+
+@mixin media-600 {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin media-700 {
+  @media (max-width: 700px) {
+    @content;
+  }
+}
+
+@mixin media-800 {
+  @media (max-width: 800px) {
+    @content;
+  }
+}
+
+@font-face {
+  font-family: "PragatiNarrow-Regular";
+  src: url("PragatiNarrow-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url('MaterialIcons-Regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.puzzle {
+  padding-top: 15px;
+  position: relative;
+}
+
+.puzzle-set-level {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  & p {
+    margin-bottom: 5px;
+  }
+
+  & ul {
+    margin-right: 10px;
+  }
+
+  & button {
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+}
+
+.puzzle-set-prompt {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 27px;
+  padding-bottom: 10px;
+
+  & button {
+    margin-right: 10px;
+  }
+}
+
+.puzzle-disable-btn {
+  opacity: 0.5;
+}
+
+.puzzle-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+
+}
+
+.puzzle-audio {
+  display: flex;
+  justify-content: center;
+  height: 43px;
+}
+
+.puzzle-translation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+
+  & p {
+    margin: 0;
+  }
+}
+
+.drop {
+  position: absolute;
+  top: 420px;
+}
+
+.drop2 {
+  position: absolute;
+}
+
+.puzzle-card {
+  border: none;
+  max-width: 800px;
+  width: 100%;
+  height: 400px;
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+  font-family: PragatiNarrow-Regular;
+  font-size: 20px;
+  vertical-align: middle;
+  line-height: 35px;
+  background-color: #f5f5f5 !important;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  @include media-800 {
+    font-size: 20px;
+  }
+  @include media-700 {
+    font-size: 18px;
+  }
+  @include media-600 {
+    font-size: 15px;
+  }
+  @include media-575 {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  @include media-500 {
+    font-size: 12px;
+  }
+  @include media-400 {
+    font-size: 10px;
+  }
+
+}
+
+.puzzle-bottom-buttons {
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+
+  & button {
+    margin-right: 10px;
+  }
+
+  & .puzzle-pink-btn {
+    background-color: lightpink;
+  }
+
+  & .puzzle-red-btn {
+    background-color: lightsalmon;
+  }
+
+  & .puzzle-blue-btn {
+    background-color: lightblue;
+  }
+
+  & .puzzle-orange-btn {
+    background-color: orange;
+  }
+}
+
+.puzzle-statistic-modal {
+  & .puzzle-modal-sentence {
+    display: flex;
+    flex-wrap: nowrap;
+
+    & i {
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+
+  & .puzzle-modal-sentence-translate {
+    margin-left: 25px;
+    margin-top: -15px;
+  }
+
+  & p {
+    font-size: 15px;
+  }
+
+  & .puzzle-modal-green {
+    color: green;
+  }
+
+  & .puzzle-modal-red {
+    color: red;
+  }
+
+  & .puzzle-modal-yellow {
+    color: yellow;
+  }
+}
+
+.game-field-word {
+  display: inline-block;
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,220 @@
+.word-builder {
+  .word-constructor-wrapper {
+    font-size: 24px;
+    width: 90%;
+    height: 93vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid #e6e9ee;
+    overflow: auto;
+    margin: 0 auto;
+  }
+  .letter-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .word-builder-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+    margin: 10px;
+  }
+
+  .word-image {
+    width: 200px;
+  }
+
+  .progress-container {
+    width: 25%;
+    color: #eb6864;
+    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .empty-letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    margin-top: 10px;
+  }
+  /* .empty-letter + .empty-letter {
+  margin-left: 20px;
+} */
+  .removed {
+    display: none;
+  }
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  /*.stats-wrapper {
+  height: 100%;
+}*/
+  .audio-icon {
+    position: absolute;
+    top: 14px;
+    left: 27px;
+    width: 46px;
+    height: 43px;
+  }
+  .svg-audio {
+    overflow: hidden;
+    vertical-align: middle;
+    width: 40px;
+    position: relative;
+    left: -11px;
+    top: 0;
+  }
+  .svg-cross {
+    width: 20px;
+  }
+  /* .btn-secondary {
+  width: auto !important;
+  border-radius: 5px;
+} */
+
+  .word-builder-btn-secondary {
+    width: auto !important;
+    border-radius: 5px;
+  }
+  li {
+    list-style: none;
+  }
+
+  .pagination {
+    justify-content: center;
+  }
+  .word-builder-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .difficulty-wrapper {
+    margin-left: 40px;
+  }
+  .audio-button-stats {
+    margin-right: 20px;
+  }
+  .h3-choose-difficulty {
+    color: #eb6864;
+  }
+  .rules-span {
+    font-style: italic;
+    font-size: 16px;
+  }
+  .eng-word {
+    font-size: 40px;
+  }
+  .next-letter {
+    border: 4px solid rgb(0, 162, 255) !important;
+  }
+  .close-button {
+    width: auto;
+    position: absolute;
+    right: 7%;
+    z-index: 10;
+  }
+  .incorrect-wrapper {
+    margin-top: 10px;
+  }
+  .text-example-span {
+    width: 80%;
+    text-align: center;
+  }
+  h4 {
+    text-align: center;
+  }
+  .button-container-stats {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .word-builder {
+    .word-constructor-wrapper {
+      font-size: 16px;
+    }
+    /* .btn */
+    .word-builder-btn {
+      width: 40px;
+      height: 40px;
+    }
+    .svg-audio {
+      left: -14px;
+      top: -1px;
+      width: 35px;
+    }
+    .h3-choose-difficulty {
+      font-size: 18px;
+    }
+    .svg-cross {
+      position: relative;
+      left: -6px;
+      top: -1px;
+    }
+    .restart-button,
+    .return-button {
+      font-size: 12px;
+    }
+  }
+}
+@media (max-width: 620px) {
+  .word-builder {
+    .word-constructor-wrapper {
+      width: 100%;
+    }
+    .eng-word {
+      font-size: 30px;
+    }
+
+    .progress-container {
+      margin-right: 0;
+      width: 200px;
+    }
+    .difficulty-wrapper {
+      margin-left: 0;
+    }
+    .close-button {
+      right: 3%;
+    }
+    .word-builder-nav {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .word-builder {
+    .word-constructor-wrapper {
+      font-size: 12px;
+    }
+    .progress-container {
+      margin-right: 0;
+      width: 190px;
+    }
+    .eng-word {
+      font-size: 20px;
+    }
+    .rules-span {
+      font-size: 12px;
+    }
+
+    /*  .restart-button,
+  .return-button {
+    width: 50% !important;
+    height: 50px;
+  } */
+  }
+}
