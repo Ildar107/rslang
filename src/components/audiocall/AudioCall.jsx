@@ -16,6 +16,7 @@ import BG from '../../assets/images/audiocall-bg.svg';
 import './audiocall.scss';
 
 import { chunk } from './GameLogic/processedWords';
+import { AUDIOCALL_HELP } from '../../constants/gamesHelp';
 
 const mediaUrl = 'https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/master/';
 
@@ -158,6 +159,14 @@ class AudioCall extends Component {
       });
       setTimeout(() => this.playAudio(), 600);
     }, 600);
+  }
+
+  getRoundWords = () => {
+    const {
+      curRound, rounds,
+    } = this.state;
+    const curWords = rounds[curRound];
+    return curWords.map((stage) => stage[0]);
   }
 
   closeModalStats = () => {
@@ -345,13 +354,14 @@ class AudioCall extends Component {
             <Form.Control type="range" onChange={this.changeVolume} min={0} max={20} />
           </Form.Group>
         </Form>
-        <HelpModal />
+        <HelpModal messages={AUDIOCALL_HELP} />
       </Row>
       <StatsModal
         stats={this.state.stats}
         closeModalStats={this.closeModalStats}
         nextRound={this.nextRound}
         restartRound={this.restartRound}
+        allWords={this.getRoundWords()}
       />
     </Container>
   )

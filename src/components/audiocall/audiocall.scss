@@ -267,7 +267,7 @@
   }
 }
 
-.stats {
+.audiocall-stats {
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -288,6 +288,10 @@
       background-color: rgba($color: #E74742, $alpha: .2);
       border-radius: 50%;
       cursor: pointer;
+    }
+
+    .guessed-word {
+      text-decoration: line-through;
     }
 
     p {

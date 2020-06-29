@@ -7,6 +7,7 @@ import {
   Nav,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import classNames from 'classnames';
 import Voice from '../../../../assets/images/voice.svg';
 import routes from '../../../../constants/routes';
 
@@ -15,7 +16,9 @@ const StatsModal = (props) => {
     score, guessedWords, round, showStats,
   } = props.stats;
 
-  const { closeModalStats, restartRound, nextRound } = props;
+  const {
+    closeModalStats, restartRound, nextRound, allWords,
+  } = props;
 
   const NavLink = (link, text) => (
     <LinkContainer to={link} exact>
@@ -35,14 +38,18 @@ const StatsModal = (props) => {
 
   const repeatAudio = (audio) => (new Audio(audio)).play();
 
+  const checkWord = (word) => guessedWords.find((item) => item.id === word.id) || 0;
+
+  console.log(allWords);
+
   return (
     <>
       <Modal
         show={showStats}
-        onHide={closeModalStats}
+        onHide={next}
         backdrop="static"
         keyboard={false}
-        className="stats"
+        className="audiocall-stats"
       >
         <Modal.Header closeButton>
           <Modal.Title>Stats</Modal.Title>
@@ -55,7 +62,7 @@ const StatsModal = (props) => {
             {`Round - ${round}`}
           </p>
           {
-            guessedWords?.map((word) => (
+            allWords.map((word) => (
               <Row className="row-word" key={word.id}>
                 <Image
                   onClick={() => repeatAudio(word.audio)}
@@ -63,7 +70,15 @@ const StatsModal = (props) => {
                   alt={Voice}
                   className="stats-voice-repeat"
                 />
-                <p>{`- ${word.word} - ${word.wordTranslate}`}</p>
+                <p
+                  className={
+                    classNames({
+                      'guessed-word': checkWord(word),
+                    })
+                  }
+                >
+                  {`- ${word.word} - ${word.wordTranslate}`}
+                </p>
               </Row>
             ))
           }
