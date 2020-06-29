@@ -14,6 +14,7 @@ import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
+import Savannah from './pages/savannah/Savannah';
 
 const App = () => {
   const store = useContext(StoreContext);

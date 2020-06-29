@@ -47,6 +47,7 @@ module.exports = {
       ],
     },
 
+<<<<<<< HEAD
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -79,6 +80,24 @@ module.exports = {
           'file-loader',
         ],
       },
+=======
+    plugins: [
+        new HtmlWebpackPlugin({
+          template: './src/index.html',
+        }),
+        new CopyWebpackPlugin({
+          patterns: [
+            {
+            from: './src/assets/images/',
+            to: './images',
+            },
+            {
+              from: './src/assets/audio',
+              to: './auidio',
+            },
+        ]
+      })
+>>>>>>> 1601c6d8ebcc267212211a2cca540d9e69800d1a
     ],
   },
 
