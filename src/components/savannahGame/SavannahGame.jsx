@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './savannah-game.scss';
 import {
-  Container, Row, Col, Pagination, ProgressBar, Spinner,
+  Container, Row, Col, Pagination, ProgressBar,
 } from 'react-bootstrap';
 import ResultModal from './savannahResult/ResultModal';
+import EndGameModal from '../endGameModal/endGameModal';
+import Loader from '../loader/Loader';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -41,6 +43,7 @@ class SavannahGame extends Component {
       animationName: '',
       modalShow: false,
       progress: 0,
+      endGameModal: false,
     };
   }
 
@@ -220,10 +223,26 @@ class SavannahGame extends Component {
     this.restartAnimation();
   }
 
+  onHideEngGame = () => {
+    this.setState({
+      endGameModal: false,
+    });
+    this.restartAnimation();
+  }
+
   showModal = () => {
     this.setState({
       modalShow: true,
     });
+  }
+
+  showEndGameModal = () => {
+    this.setState({
+      endGameModal: true,
+    });
+
+    this.restartAnimation();
+    this.stopAnimation();
   }
 
   render() {
@@ -246,14 +265,14 @@ class SavannahGame extends Component {
         </div>
       );
     } if (!isLoaded) {
-      return <div><Spinner animation="grow" /></div>;
+      return <Loader />;
     }
 
     return (
       <Container className="savannah">
         <Row className="savanna_levels">
           <Col className="levels__groups" sm>
-            <p>Page:</p>
+            <p>Страница:</p>
             <Pagination className="levels__pag">
               {
               Array.from([1, 2, 3, 4, 5, 6], (x) => x).map((x) => (
@@ -269,7 +288,7 @@ class SavannahGame extends Component {
             </Pagination>
           </Col>
           <Col className="savannah__score" sm>
-            Score:
+            Угаданные слова:
             {' '}
             {this.state.score}
             /10
@@ -282,7 +301,9 @@ class SavannahGame extends Component {
             {' '}
             {this.state.page + 1}
           </Col>
-          <svg className="close-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
+          <div className="close-btn__wrap">
+            <svg onClick={this.showEndGameModal} className="close-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
+          </div>
         </Row>
         <div
           className="translate animation"
@@ -302,6 +323,7 @@ class SavannahGame extends Component {
           show={this.state.modalShow}
           score={this.state.totalScore}
         />
+        <EndGameModal onHide={this.onHideEngGame} show={this.state.endGameModal} />
       </Container>
     );
   }
