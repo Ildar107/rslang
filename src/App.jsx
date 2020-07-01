@@ -1,5 +1,5 @@
 import React, {
-  Suspense, useContext, Redirect,
+  Suspense, useContext, useState,
 } from 'react';
 import {
   Route, Switch,
@@ -12,39 +12,48 @@ import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
+import ThemeContext from './app/theme';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 
 const App = () => {
   const store = useContext(StoreContext);
+  const themeContext = useContext(ThemeContext);
+  const [theme, setTheme] = useState(themeContext.theme);
+
+  if (theme !== document.body.getAttribute('data-theme')) {
+    document.body.setAttribute('data-theme', theme);
+  }
 
   return (
     <Suspense fallback={<Loader />}>
-      <StoreContext.Provider value={store}>
-        <Switch>
-          <Route path={routes.AUTHORIZE} exact>
-            <AuthorizationPage />
-          </Route>
-          <PrivateRoute path={routes.LANDING} exact>
-            <MainPage />
-          </PrivateRoute>
-          <PrivateRoute path={routes.TEAM} exact>
-            <TeamPage />
-          </PrivateRoute>
-          <PrivateRoute path={routes.PUZZLE} exact>
-            <PuzzlePage game="puzzle" />
-          </PrivateRoute>
-          <PrivateRoute path={routes.SPEAKIT} exact>
-            <SpeakIt />
-          </PrivateRoute>
-          <PrivateRoute path={routes.WORD_BUILDER} exact>
-            <WordBuilder />
-          </PrivateRoute>
-          <Route>
+      <ThemeContext.Provider value={{ theme, toggleTheme: setTheme }}>
+        <StoreContext.Provider value={store}>
+          <Switch>
+            <Route path={routes.AUTHORIZE} exact>
+              <AuthorizationPage />
+            </Route>
+            <Route path={routes.LANDING} exact>
+              <MainPage />
+            </Route>
+            <Route path={routes.TEAM} exact>
+              <TeamPage />
+            </Route>
+            <PrivateRoute path={routes.PUZZLE} exact>
+              <PuzzlePage game="puzzle" />
+            </PrivateRoute>
+            <PrivateRoute path={routes.SPEAKIT} exact>
+              <SpeakIt />
+            </PrivateRoute>
+            <PrivateRoute path={routes.WORD_BUILDER} exact>
+              <WordBuilder />
+            </PrivateRoute>
+            {/* <Route>
             <Redirect to={routes.AUTHORIZE} />
-          </Route>
-        </Switch>
-      </StoreContext.Provider>
+          </Route> */}
+          </Switch>
+        </StoreContext.Provider>
+      </ThemeContext.Provider>
     </Suspense>
   );
 };

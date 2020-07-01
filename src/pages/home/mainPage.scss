@@ -1,0 +1,113 @@
+
+body[data-theme=light] .main-page  {
+
+    .card {
+        color: #6c757d;
+        background-color: #fafbfe;
+    }
+
+    .progress {
+        background: #e8eaef;
+    }
+    
+}
+
+
+body[data-theme=dark] .main-page  {
+
+    .card {
+       color: #aab8c5;
+       background: #3a444e;
+   }
+
+   .progress {
+        background: #343a40;
+    }
+   
+}
+
+.main-page {
+
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+    }
+ 
+    .h3, h3 {
+        font-size: 1.3rem;
+    }
+
+    .h5, h5 {
+        font-size: .9375rem;
+    }
+
+    .h2, h2 {
+        font-size: 1.875rem;
+    }
+
+
+    .tilebox-one {
+        margin-bottom: 20px;
+    }
+
+    .tilebox-one i {
+        position: absolute;
+        right: 1.5rem;
+        font-size: 2rem;
+        opacity: .3;
+    }
+
+    .progress-w-percent {
+        min-height: 20px;
+        margin: 30px 10px;
+        display: flex;
+        justify-content: flex-start;
+
+        h5 {
+            width: 100px;
+        }
+
+    }
+
+    .progress-sm {
+        height: 5px;
+        margin: 0 10px;
+    }
+
+    .progress-w-percent .progress-value {
+        width: 40px;
+        float: right;
+        text-align: right;
+        line-height: 20px;
+    }
+
+    .progress-w-percent .progress {
+        width: 50%;
+        float: left;
+        margin-top: 8px;
+    }
+
+    .bg-success {
+        background-color: #46e09a!important;
+    }
+
+
+   
+}
+
+@media (max-width: 512px) {
+    .main-page {
+        h6, .h6 {
+            font-size: 0.8rem;
+        }
+
+        h2, .h2 {
+            font-size: 1.675rem;
+        }
+
+        .tilebox-one .h6, .tilebox-one h6 {
+            padding-right: 10px;
+            line-height: 21px;
+        }
+    }
+}
