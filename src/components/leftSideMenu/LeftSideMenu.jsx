@@ -46,6 +46,13 @@ const LeftSideMenu = () => {
         </li>
 
         <li className="side-nav-item">
+          <Link to={routes.LEARNSETTINGS} className="side-nav-link">
+            <i className="uil-bright" />
+            <span> Настройка обучения </span>
+          </Link>
+        </li>
+
+        <li className="side-nav-item">
           <Link to={routes.LANDING} className="side-nav-link">
             <i className="uil-dice-three" />
             <span> Мини-игры </span>
