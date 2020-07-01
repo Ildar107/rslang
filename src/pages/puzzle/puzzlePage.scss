@@ -177,10 +177,10 @@
   @include media-600 {
     font-size: 15px;
   }
-  @include media-575 {
-    margin-right: 10px;
-    margin-left: 10px;
-  }
+  //@include media-575 {
+  //  margin-right: 10px;
+  //  margin-left: 10px;
+  //}
   @include media-500 {
     font-size: 12px;
   }

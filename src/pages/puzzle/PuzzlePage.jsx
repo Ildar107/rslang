@@ -1,7 +1,7 @@
 import React from 'react';
 import './puzzlePage.scss';
 import {
-  Container, Row, Col, Button,
+  Row, Col, Button,
 } from 'react-bootstrap';
 import DragNdrop from './dragNdrop';
 import GameField from './gameField';
@@ -10,10 +10,10 @@ import BottomButtons from './bottomButtons';
 import Translation from './translation';
 import PromptButtons from './promptButtons';
 import Paintings from './paintings';
-import Header from '../../components/header/Header';
+// import Header from '../../components/header/Header';
 import StatisticModal from './statisticModal';
 import EndGameModal from '../../components/endGameModal/endGameModal';
-// import CloseGameModal from './closeGameModal';
+import Skeleton from '../../components/skeleton/Skeleton';
 
 class PuzzlePage extends React.Component {
   constructor(props) {
@@ -289,9 +289,8 @@ class PuzzlePage extends React.Component {
     }
 
     return (
-      <>
-        <Header />
-        <Container className="puzzle">
+      <Skeleton wrapperClass="puzzle" title="Паззл">
+        <div className="puzzle">
           <>
             <Button
               className="puzzle-close"
@@ -392,8 +391,8 @@ class PuzzlePage extends React.Component {
               />
             </Col>
           </Row>
-        </Container>
-      </>
+        </div>
+      </Skeleton>
     );
   }
 }

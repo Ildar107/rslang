@@ -17,6 +17,7 @@ import ThemeContext from './app/theme';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
+import StartGamePage from './pages/startGame/startGamePage';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -42,7 +43,10 @@ const App = () => {
               <TeamPage />
             </Route>
             <PrivateRoute path={routes.PUZZLE} exact>
-              <PuzzlePage game="puzzle" />
+              <PuzzlePage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.START_GAME} exact>
+              <StartGamePage />
             </PrivateRoute>
             <PrivateRoute path={routes.SPEAKIT} exact>
               <SpeakIt />
