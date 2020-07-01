@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import StoreContext from '../../app/store';
@@ -6,6 +6,17 @@ import './leftSideMenu.scss';
 
 const LeftSideMenu = () => {
   const context = useContext(StoreContext);
+
+  const { hash } = document.location;
+  useEffect(() => {
+    if (hash) {
+      const activeElem = document.querySelector(`.side-nav-item a[href='${hash}']`);
+      document.querySelectorAll('.side-nav-item a').forEach((elem) => {
+        elem.classList.remove('active');
+      });
+      activeElem.classList.add('active');
+    }
+  });
 
   return (
     <div className="left-side-menu mm-active">
