@@ -37,7 +37,7 @@
 
 @font-face {
   font-family: "PragatiNarrow-Regular";
-  src: url("PragatiNarrow-Regular.ttf") format("truetype");
+  src: url("../../../src/assets/fonts/PragatiNarrow-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -48,7 +48,7 @@
   font-weight: 400;
   src: local('Material Icons'),
   local('MaterialIcons-Regular'),
-  url('MaterialIcons-Regular.ttf') format('truetype');
+  url('../../../src/assets/fonts/MaterialIcons-Regular.ttf') format('truetype');
 }
 
 .material-icons {
@@ -177,10 +177,10 @@
   @include media-600 {
     font-size: 15px;
   }
-  //@include media-575 {
-  //  margin-right: 10px;
-  //  margin-left: 10px;
-  //}
+  @include media-575 {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
   @include media-500 {
     font-size: 12px;
   }

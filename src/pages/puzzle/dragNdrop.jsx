@@ -129,6 +129,10 @@ class DragNdrop extends React.Component {
     window.addEventListener('resize', this.setWidth);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setWidth);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.wordsData !== prevProps.wordsData) {
       const sent = this.props.wordsData.map((it) => it.textExample);
@@ -421,7 +425,7 @@ class DragNdrop extends React.Component {
 }
 
 DragNdrop.propTypes = {
-  wordsData: PropTypes.isRequired,
+  wordsData: PropTypes.PropTypes.arrayOf(PropTypes.any),
   setAllInSelected: PropTypes.func.isRequired,
   allInSelected: PropTypes.bool.isRequired,
   check: PropTypes.bool.isRequired,
@@ -438,7 +442,12 @@ DragNdrop.propTypes = {
   next: PropTypes.bool.isRequired,
   backgroundPrompt: PropTypes.bool.isRequired,
   setArrayOfMistakes: PropTypes.func.isRequired,
-  arrayOfMistakes: PropTypes.isRequired,
+  arrayOfMistakes: PropTypes.PropTypes.arrayOf(PropTypes.any),
+};
+
+DragNdrop.defaultProps = {
+  wordsData: null,
+  arrayOfMistakes: null,
 };
 
 export default DragNdrop;
