@@ -14,7 +14,7 @@ const LeftSideMenu = () => {
       document.querySelectorAll('.side-nav-item a').forEach((elem) => {
         elem.classList.remove('active');
       });
-      activeElem.classList.add('active');
+      activeElem?.classList.add('active');
     }
   });
 
