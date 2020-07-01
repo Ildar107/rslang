@@ -15,6 +15,19 @@ const SpeechRecognition = window.SpeechRecognition
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 recognition.lang = 'en-US';
+let recognizing = false;
+
+recognition.onstart = () => {
+  recognizing = true;
+};
+
+recognition.onend = () => {
+  recognizing = false;
+};
+
+recognition.onerror = () => {
+  recognizing = false;
+};
 
 class SpeakIt extends Component {
   constructor(props, context) {
@@ -135,6 +148,9 @@ class SpeakIt extends Component {
       isSpeakMode: true,
       isGameStopped: false,
     });
+    if (!recognizing) {
+      this.state.recognition.start();
+    }
   }
 
   onGetResults = () => {
@@ -239,7 +255,7 @@ class SpeakIt extends Component {
             onClick={this.pause}
             disabled={!this.state.isSpeakMode}
           >
-            Finish
+            Results
           </button>
         </div>
       </div>

@@ -1,16 +1,15 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
-import Header from '../../components/header/Header';
+import { Row, Col } from 'react-bootstrap';
+import Skeleton from '../../components/skeleton/Skeleton';
 
 const TeamPage = () => (
-  <>
-    <Header />
-    <Container fluid>
-      <Row>
-        <span>О нас!</span>
-      </Row>
-    </Container>
-  </>
+  <Skeleton wrapperClass="main-page" title="О нас">
+    <Row>
+      <Col xl={6} lg={5}>
+        O нас
+      </Col>
+    </Row>
+  </Skeleton>
 );
 
 export default TeamPage;
