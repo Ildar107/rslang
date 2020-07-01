@@ -12,11 +12,11 @@ import {
 import GameCard from './GameCard/GameCard';
 import HelpModal from './GameModals/HelpModal/HelpModal';
 import StatsModal from './GameModals/StatsModal/StatsModal';
+import EndGameModal from '../endGameModal/endGameModal';
 import BG from '../../assets/images/audiocall-bg.svg';
-import './audiocall.scss';
-
 import { chunk } from './GameLogic/processedWords';
 import { AUDIOCALL_HELP } from '../../constants/gamesHelp';
+import './audiocall.scss';
 
 const mediaUrl = 'https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/master/';
 
@@ -37,6 +37,7 @@ class AudioCall extends Component {
         round: 0,
         showStats: false,
       },
+      isShowModal: false,
       pages: Array.from({ length: 10 }, (x, i) => i + 1),
     };
   }
@@ -262,6 +263,10 @@ class AudioCall extends Component {
     setTimeout(() => this.playAudio(), 600);
   }
 
+  setShowModal = () => {
+    this.setState({ isShowModal: true });
+  }
+
   render = () => (this.state.rounds.length > 0 ? (
     <Container fluid className="audiocall_wrap">
       <img className="audiocall_bg" src={BG} alt="Background" />
@@ -375,6 +380,13 @@ class AudioCall extends Component {
         restartRound={this.restartRound}
         allWords={this.getRoundWords()}
       />
+      <EndGameModal
+        onHide={() => { this.setState({ isShowModal: false }); }}
+        show={this.state.isShowModal}
+      />
+      <span className="close__game" onClick={this.setShowModal}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
+      </span>
     </Container>
   )
     : (

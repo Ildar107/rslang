@@ -12,7 +12,7 @@ const HelpModal = ({ messages }) => {
 
   return (
     <>
-      <Button variant="primary" className="help" onClick={handleShow}>
+      <Button variant="primary" className="help-btn" onClick={handleShow}>
         ?
       </Button>
 
@@ -27,8 +27,8 @@ const HelpModal = ({ messages }) => {
         </Modal.Header>
         <Modal.Body>
           <ol>
-            {messages.map((item) => (
-              <li>
+            {messages.map((item, i) => (
+              <li key={`point-${i}`}>
                 <p>
                   {item}
                 </p>
