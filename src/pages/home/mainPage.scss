@@ -32,6 +32,9 @@ body[data-theme=dark] .main-page  {
         margin-top: 0;
         margin-bottom: 1.5rem;
     }
+    h5, .h5, h6, .h6 {
+        font-size: 0.8rem;
+    }
  
     .h3, h3 {
         font-size: 1.3rem;
@@ -50,6 +53,9 @@ body[data-theme=dark] .main-page  {
         margin-bottom: 20px;
     }
 
+    .tilebox-one {
+        border: 0px;
+    }
     .tilebox-one i {
         position: absolute;
         right: 1.5rem;
@@ -97,9 +103,6 @@ body[data-theme=dark] .main-page  {
 
 @media (max-width: 512px) {
     .main-page {
-        h6, .h6 {
-            font-size: 0.8rem;
-        }
 
         h2, .h2 {
             font-size: 1.675rem;
