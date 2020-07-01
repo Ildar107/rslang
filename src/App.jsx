@@ -2,7 +2,7 @@ import React, {
   Suspense, useContext, useState,
 } from 'react';
 import {
-  Route, Switch,
+  Route, Switch, Redirect,
 } from 'react-router-dom';
 import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
@@ -15,6 +15,7 @@ import StoreContext from './app/store';
 import ThemeContext from './app/theme';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
+import Savannah from './pages/savannah/Savannah';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -48,9 +49,12 @@ const App = () => {
             <PrivateRoute path={routes.WORD_BUILDER} exact>
               <WordBuilder />
             </PrivateRoute>
-            {/* <Route>
-            <Redirect to={routes.AUTHORIZE} />
-          </Route> */}
+            <PrivateRoute path={routes.SAVANNAH} exact>
+              <Savannah />
+            </PrivateRoute>
+            <Route>
+              <Redirect to={routes.AUTHORIZE} />
+            </Route>
           </Switch>
         </StoreContext.Provider>
       </ThemeContext.Provider>

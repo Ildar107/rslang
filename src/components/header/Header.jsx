@@ -113,9 +113,3 @@ const Header = () => {
   );
 };
 export default Header;
-
-// const NavLink = (link, text) => (
-//   <LinkContainer to={link} exact>
-//     <Nav.Link eventKey={link}>{text}</Nav.Link>
-//   </LinkContainer>
-// );
