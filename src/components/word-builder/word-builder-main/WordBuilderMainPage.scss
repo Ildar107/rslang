@@ -2,7 +2,7 @@
   .word-constructor-wrapper {
     font-size: 24px;
     width: 90%;
-    height: 90vh;
+    height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -121,7 +121,8 @@
   .close-button {
     width: auto;
     position: absolute;
-    right: 7%;
+    right: 20px;
+    top: 20px;
     z-index: 10;
   }
   .incorrect-wrapper {
