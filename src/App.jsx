@@ -56,6 +56,9 @@ const App = () => {
             <PrivateRoute path={routes.AUDIOCALL} exact>
               <AudiocallPage />
             </PrivateRoute>
+            <PrivateRoute path={routes.LEARNSETTINGS} exact>
+              <MainPage />
+            </PrivateRoute>
             <Route>
               <Redirect to={routes.AUTHORIZE} />
             </Route>
