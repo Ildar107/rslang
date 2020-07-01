@@ -10,8 +10,8 @@ import {
   Form,
 } from 'react-bootstrap';
 import GameCard from './GameCard/GameCard';
-import HelpModal from './GameModals/HelpModal/HelpModal';
-import StatsModal from './GameModals/StatsModal/StatsModal';
+import HelpModal from '../HelpModal/HelpModal';
+import StatsModal from './StatsModal/StatsModal';
 import EndGameModal from '../endGameModal/endGameModal';
 import BG from '../../assets/images/audiocall-bg.svg';
 import { chunk } from './GameLogic/processedWords';

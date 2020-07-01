@@ -3,6 +3,7 @@ import {
   Button,
   Modal,
 } from 'react-bootstrap';
+import './helpModal.scss';
 
 const HelpModal = ({ messages }) => {
   const [show, setShow] = useState(false);

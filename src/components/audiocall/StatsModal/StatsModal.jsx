@@ -8,8 +8,8 @@ import {
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import classNames from 'classnames';
-import Voice from '../../../../assets/images/voice.svg';
-import routes from '../../../../constants/routes';
+import Voice from '../../../assets/images/voice.svg';
+import routes from '../../../constants/routes';
 
 const StatsModal = (props) => {
   const {
