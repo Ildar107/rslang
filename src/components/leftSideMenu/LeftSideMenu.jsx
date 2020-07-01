@@ -14,7 +14,7 @@ const LeftSideMenu = () => {
       document.querySelectorAll('.side-nav-item a').forEach((elem) => {
         elem.classList.remove('active');
       });
-      activeElem.classList.add('active');
+      activeElem?.classList.add('active');
     }
   });
 
@@ -42,6 +42,13 @@ const LeftSideMenu = () => {
           <Link to={routes.LANDING} className="side-nav-link">
             <i className="uil-graduation-hat" />
             <span> Учить слова </span>
+          </Link>
+        </li>
+
+        <li className="side-nav-item">
+          <Link to={routes.LEARNSETTINGS} className="side-nav-link">
+            <i className="uil-bright" />
+            <span> Настройка обучения </span>
           </Link>
         </li>
 

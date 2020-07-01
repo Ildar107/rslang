@@ -18,6 +18,7 @@ import ThemeContext from './app/theme';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
+import LearnSettings from './pages/learnSettings/LearnSettings';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -59,6 +60,9 @@ const App = () => {
             </PrivateRoute>
             <PrivateRoute path={routes.MINI_GAMES} exact>
               <MiniGamesPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.LEARNSETTINGS} exact>
+              <LearnSettings />
             </PrivateRoute>
             <Route>
               <Redirect to={routes.AUTHORIZE} />

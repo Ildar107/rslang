@@ -7,6 +7,7 @@ const SPEAKIT = '/speakit';
 const WORD_BUILDER = '/word-builder';
 const MINI_GAMES = '/mini-games';
 const SAVANNAH = '/savannah';
+const LEARNSETTINGS = '/learn-settings';
 
 export default {
   LANDING,
@@ -14,8 +15,9 @@ export default {
   SPEAKIT,
   WORD_BUILDER,
   PUZZLE,
-  MINI_GAMES,
   AUTHORIZE,
-  AUDIOCALL,
   SAVANNAH,
+  AUDIOCALL,
+  LEARNSETTINGS,
+  MINI_GAMES,
 };
