@@ -9,7 +9,6 @@ const HelpModal = ({ messages }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(messages);
 
   return (
     <>

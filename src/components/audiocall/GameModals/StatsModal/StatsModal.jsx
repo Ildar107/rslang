@@ -40,8 +40,6 @@ const StatsModal = (props) => {
 
   const checkWord = (word) => guessedWords.find((item) => item.id === word.id) || 0;
 
-  console.log(allWords);
-
   return (
     <>
       <Modal

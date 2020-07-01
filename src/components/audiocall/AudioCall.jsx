@@ -135,11 +135,23 @@ class AudioCall extends Component {
 
   nextRound = () => {
     setTimeout(() => {
-      const { curRound, level } = this.state;
+      const { curRound, level, pages } = this.state;
+      let levelPages; let
+        newLevel;
+      let skip = Math.floor(curRound / 10 + 1) * 10;
+      const newPages = Array.from({ length: 10 }, (x, i) => i + skip + 1);
+      if ((curRound + 1) > 59) {
+        skip = Math.floor(0 / 10) * 10;
+        levelPages = Array.from({ length: 10 }, (x, i) => i + skip + 1);
+      }
+      if (level === 6) {
+        newLevel = 1;
+      }
       this.setState({
+        pages: (curRound + 1) === skip && curRound < 59 ? newPages : levelPages || pages,
         progress: 0,
         curRound: (curRound + 1) > 59 ? 0 : curRound + 1,
-        level: (curRound + 1) > 59 ? level + 1 : level,
+        level: (curRound + 1) > 59 && level !== 6 ? level + 1 : newLevel || level,
         curCard: 0,
         isUpdateCards: false,
       });
