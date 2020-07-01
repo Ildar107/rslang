@@ -5,6 +5,7 @@ import { HashRouter } from 'react-router-dom';
 import App from './App';
 import routes from './constants/routes';
 import './assets/styles/style.scss';
+import './assets/styles/icons.min.css';
 
 ReactDOM.render(
   <HashRouter basename={routes.LANDING}>

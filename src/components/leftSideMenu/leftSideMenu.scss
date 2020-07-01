@@ -1,0 +1,215 @@
+
+
+body[data-theme=light] .left-side-menu {
+    color: #6c757d;
+    background-color: #fafbfe;
+}
+
+body[data-theme=dark] {
+    
+    .left-side-menu {
+        color: #aab8c5;
+        background: #3a444e;
+        box-shadow: 0 0 35px 0 rgba(49,57,66,.5);
+    }
+
+    .leftbar-user .leftbar-user-name { 
+        color: #f1f1f1;
+    }
+
+    .left-side-menu .side-nav .side-nav-link {
+        color: #8391a2;
+    }
+}
+
+
+.left-side-menu {
+    position: relative;
+    width: 260px;
+    background: #fff;
+    min-width: 260px;
+    max-width: 260px;
+    -webkit-box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+    box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+    margin-top: 30px;
+    padding-top: 0;
+    z-index: 1001;
+    bottom: 0;
+    transition: all .2s ease-out;
+    top: 0;
+    font-family: "Nunito", sans-serif;
+}
+
+.leftbar-user {
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0px 1px 0.5px 0px #8080804d;
+}
+
+.leftbar-user .leftbar-user-name {
+    font-weight: 700;
+    color: #323a46;
+    margin-left: 12px;
+    margin-top: 8px;
+    display: block;
+}
+
+.leftbar-user a:hover, .leftbar-user a:active {
+    text-decoration: none;
+}
+
+.left-side-menu .side-nav .side-nav-title {
+    color: #6c757d;
+}
+
+.side-nav .side-nav-title {
+    padding: 12px 30px;
+    letter-spacing: .05em;
+    pointer-events: none;
+    cursor: default;
+    font-size: .6875rem;
+    text-transform: uppercase;
+    color: #cedce4;
+    font-weight: 700;
+}
+
+.metismenu {
+    padding-left: 20px;
+}
+
+.metismenu li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.left-side-menu .side-nav .side-nav-link:hover {
+    color: #eb6864!important;
+}
+
+.side-nav .side-nav-link:active, .side-nav .side-nav-link:focus, .side-nav .side-nav-link:hover {
+    color: #eb6864;
+    text-decoration: none;
+    outline: 0;
+}
+
+.side-nav .side-nav-link {
+    color: #969a9c;
+    display: block;
+    padding: 10px 30px;
+    font-size: .9375rem;
+    position: relative;
+    -webkit-transition: all .4s;
+    transition: all .4s;
+}
+
+.side-nav .side-nav-link i {
+    display: inline-block;
+    line-height: 1.0625rem;
+    margin: 0 10px 0 0;
+    font-size: 25px;
+    vertical-align: middle;
+    width: 20px;
+}
+
+
+@media (max-width: 1024px) {
+
+    .left-side-menu {
+        max-width: 70px;
+        min-width: 70px;
+    }
+
+    .leftbar-user {
+        display: none;
+    }
+
+    .side-nav .side-nav-item {
+        position: relative;
+        white-space: nowrap;
+    }
+
+    .side-nav .side-nav-item {
+        position: relative;
+        white-space: nowrap;
+    }
+
+    .side-nav .side-nav-item .side-nav-link {
+        padding: 15px 20px;
+        min-height: 56px;
+        -webkit-transition: none;
+        transition: none;
+    }
+
+    .side-nav .side-nav-item .side-nav-link i {
+        font-size: 1.125rem;
+        margin-right: 20px;
+        margin-left: 6px;
+    }
+
+    .side-nav .side-nav-item .side-nav-link span {
+        display: none;
+        padding-left: 10px;
+    }
+
+    .side-nav .side-nav-item:hover .side-nav-link span {
+        display: inline;
+    }
+
+    .side-nav .side-nav-item:hover .side-nav-link {
+        background: #eb6864;
+        color: #fff!important;
+        -webkit-transition: none;
+        transition: none;
+    }
+
+    .side-nav .side-nav-item:hover .side-nav-link {
+        position: relative;
+        width: 260px;
+        color: #fff;
+        background: linear-gradient(135deg,#eb6864 0,#e75c57 60%);
+    }
+
+    .metismenu {
+        padding-left: 0;
+    }
+
+    .side-nav .side-nav-title {
+        padding: 3px 30px;
+    }
+
+}
+
+
+@media (max-width: 512px) {
+
+    .left-side-menu {
+        margin-top: 0px;
+        position: absolute;
+        top: 71px;
+        left: -260px;
+        max-width: 260px;
+        min-width: 260px;
+        transition: 0.5s ease-in-out;
+    }
+
+    .show {
+        left: 0px;
+    }
+
+    .side-nav .side-nav-item .side-nav-link {
+        width: 260px;
+    }
+
+    .side-nav .side-nav-item .side-nav-link span {
+        display: inline;
+        padding-left: 0px;
+    }
+
+    .side-nav .side-nav-item:hover .side-nav-link {
+        position: relative;
+        width: 260px;
+        color: #eb6864!important;
+        background: transparent;
+    }
+
+}

@@ -13,7 +13,8 @@ class GameResults extends Component {
     this.props.restart();
   }
 
-  returnToGame = () => {
+  returnToGame = (e) => {
+    e.preventDefault();
     this.props.continueGame();
   }
 
@@ -61,7 +62,7 @@ class GameResults extends Component {
         ))}
       </div>
       <div className="result__control">
-        <Link className="btn btn-outline-success btn-lg" onClick={this.returnToGame}>Return</Link>
+        <a href="" className="btn btn-outline-success btn-lg" onClick={this.returnToGame}>Return</a>
         <Link to={routes.SPEAKIT} className="btn btn-outline-success btn-lg" onClick={this.setNewGame}>New game</Link>
         <Link to={routes.LANDING} className="btn btn-outline-success btn-lg">Main page</Link>
       </div>
