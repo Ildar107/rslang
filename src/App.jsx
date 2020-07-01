@@ -7,6 +7,7 @@ import {
 import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
+import AudiocallPage from './pages/audiocall/AudiocallPage';
 import PuzzlePage from './pages/puzzle/PuzzlePage';
 import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
@@ -34,9 +35,9 @@ const App = () => {
             <Route path={routes.AUTHORIZE} exact>
               <AuthorizationPage />
             </Route>
-            <Route path={routes.LANDING} exact>
+            <PrivateRoute path={routes.LANDING} exact>
               <MainPage />
-            </Route>
+            </PrivateRoute>
             <Route path={routes.TEAM} exact>
               <TeamPage />
             </Route>

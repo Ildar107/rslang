@@ -1,7 +1,16 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2020": true
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -17,7 +26,10 @@ module.exports = {
     },
     "plugins": [
         "react"
-    ],
+      ],
+    "ecmaVersion": 11,
+    "sourceType": "module"
+    },
     "rules": {
       "react/jsx-props-no-spreading": 0,
       "no-underscore-dangle": 0,
