@@ -17,15 +17,15 @@ recognition.interimResults = true;
 recognition.lang = 'en-US';
 let recognizing = false;
 
-recognition.onstart = function () {
+recognition.onstart = () => {
   recognizing = true;
 };
 
-recognition.onend = function () {
+recognition.onend = () => {
   recognizing = false;
 };
 
-recognition.onerror = function () {
+recognition.onerror = () => {
   recognizing = false;
 };
 

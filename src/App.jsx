@@ -53,6 +53,9 @@ const App = () => {
             <PrivateRoute path={routes.SAVANNAH} exact>
               <Savannah />
             </PrivateRoute>
+            <PrivateRoute path={routes.AUDIOCALL} exact>
+              <AudiocallPage />
+            </PrivateRoute>
             <Route>
               <Redirect to={routes.AUTHORIZE} />
             </Route>
