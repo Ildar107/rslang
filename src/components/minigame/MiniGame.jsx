@@ -3,15 +3,15 @@ import React from 'react';
 import './MiniGame.scss';
 
 const MiniGame = ({
-  name, description, imageSrc, ref,
+  name, description, imageSrc, linkToGame,
 }) => (
   <div
     className="card"
     onClick={() => {
-      location.href = ref;
+      location.href = `#${linkToGame}`;
     }}
   >
-    <img className="card-img" src={imageSrc} alt="" />
+    <img className="card-img" src={imageSrc} alt={name} />
     <div className="card-img-overlay">
       <h3 className="card-title">
         {' '}
