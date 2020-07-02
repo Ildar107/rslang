@@ -1,11 +1,12 @@
 .team__card{
 	margin-top: 20px;
 	max-width: 370px;
+	font-family: 'Roboto', sans-serif;
 }
 
 .card__social-icon{
 	margin-left: 5px;
-	font-size: 20px;
+	font-size: 24px;
 	color: grey;
 	transition: color .25s ease;
 	text-decoration: none;
@@ -24,11 +25,17 @@
 }
 
 .card__img{
-	background-image: url('https://cdn2.vectorstock.com/i/1000x1000/87/86/man-guy-boy-person-suit-tie-face-head-vector-10308786.jpg');
 	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
 	height: 300px;
-	outline: none;;
+	transition: all .3s ease;
+	border-radius: 3px 3px 0px 0px;
+	
+}
 
+.card__button:hover{
+	color: white;
 }
 
 @media screen and (max-width: 420px){
