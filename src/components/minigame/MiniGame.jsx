@@ -1,15 +1,14 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react';
 import './MiniGame.scss';
+import { Link } from 'react-router-dom';
 
 const MiniGame = ({
   name, description, imageSrc, linkToGame,
 }) => (
-  <div
+  <Link
     className="card"
-    onClick={() => {
-      location.href = `#${linkToGame}`;
-    }}
+    to={linkToGame}
   >
     <img className="card-img" src={imageSrc} alt={name} />
     <div className="card-img-overlay">
@@ -23,6 +22,6 @@ const MiniGame = ({
       </p>
     </div>
 
-  </div>
+  </Link>
 );
 export default MiniGame;
