@@ -13,11 +13,12 @@ import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
+import MiniGamesPage from './pages/minigames/MiniGamesPage';
 import ThemeContext from './app/theme';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
-import StartGamePage from './pages/startGame/startGamePage';
+import LearnSettings from './pages/learnSettings/LearnSettings';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -43,10 +44,7 @@ const App = () => {
               <TeamPage />
             </Route>
             <PrivateRoute path={routes.PUZZLE} exact>
-              <PuzzlePage />
-            </PrivateRoute>
-            <PrivateRoute path={routes.START_GAME} exact>
-              <StartGamePage />
+              <PuzzlePage game="puzzle" />
             </PrivateRoute>
             <PrivateRoute path={routes.SPEAKIT} exact>
               <SpeakIt />
@@ -59,6 +57,12 @@ const App = () => {
             </PrivateRoute>
             <PrivateRoute path={routes.AUDIOCALL} exact>
               <AudiocallPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.MINI_GAMES} exact>
+              <MiniGamesPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.LEARNSETTINGS} exact>
+              <LearnSettings />
             </PrivateRoute>
             <Route>
               <Redirect to={routes.AUTHORIZE} />

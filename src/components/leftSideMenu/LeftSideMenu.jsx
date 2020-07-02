@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import StoreContext from '../../app/store';
@@ -6,6 +6,17 @@ import './leftSideMenu.scss';
 
 const LeftSideMenu = () => {
   const context = useContext(StoreContext);
+
+  const { hash } = document.location;
+  useEffect(() => {
+    if (hash) {
+      const activeElem = document.querySelector(`.side-nav-item a[href='${hash}']`);
+      document.querySelectorAll('.side-nav-item a').forEach((elem) => {
+        elem.classList.remove('active');
+      });
+      activeElem?.classList.add('active');
+    }
+  });
 
   return (
     <div className="left-side-menu mm-active">
@@ -35,14 +46,21 @@ const LeftSideMenu = () => {
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.START_GAME} className="side-nav-link">
+          <Link to={routes.LEARNSETTINGS} className="side-nav-link">
+            <i className="uil-bright" />
+            <span> Настройка обучения </span>
+          </Link>
+        </li>
+
+        <li className="side-nav-item">
+          <Link to={routes.MINI_GAMES} className="side-nav-link">
             <i className="uil-dice-three" />
             <span> Мини-игры </span>
           </Link>
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.PUZZLE} className="side-nav-link">
+          <Link to={routes.LANDING} className="side-nav-link">
             <i className="uil-book-alt" />
             <span> Словарь </span>
           </Link>

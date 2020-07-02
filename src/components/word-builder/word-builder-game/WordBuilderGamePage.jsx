@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import HelpModal from '../../HelpModal/HelpModal';
+import { WORD_BUILDER_HELP } from '../../../constants/gamesHelp';
 
 const difficultyArray = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -141,6 +143,7 @@ const WordBuilderGamePage = ({
     >
       {solved ? 'Далее' : 'Не знаю :('}
     </button>
+    <HelpModal messages={WORD_BUILDER_HELP} />
   </>
 );
 

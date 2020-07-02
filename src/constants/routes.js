@@ -5,9 +5,19 @@ const AUTHORIZE = '/login';
 const PUZZLE = '/puzzle';
 const SPEAKIT = '/speakit';
 const WORD_BUILDER = '/word-builder';
+const MINI_GAMES = '/mini-games';
 const SAVANNAH = '/savannah';
-const START_GAME = '/startGame';
+const LEARNSETTINGS = '/learn-settings';
 
 export default {
-  START_GAME, LANDING, TEAM, SPEAKIT, WORD_BUILDER, PUZZLE, AUTHORIZE, SAVANNAH, AUDIOCALL,
+  LANDING,
+  TEAM,
+  SPEAKIT,
+  WORD_BUILDER,
+  PUZZLE,
+  AUTHORIZE,
+  SAVANNAH,
+  AUDIOCALL,
+  LEARNSETTINGS,
+  MINI_GAMES,
 };
