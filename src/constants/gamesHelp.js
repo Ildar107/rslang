@@ -22,4 +22,12 @@ const SPEAKIT_HELP = [
 
 ];
 
-export { AUDIOCALL_HELP, SPRINT_HELP, SPEAKIT_HELP };
+const WORD_BUILDER_HELP = [
+  'Суть игры - составление оригинального слова по переводу',
+  'Кликайте по буквам в нужном порядке, чтобы собрать оригинальное слово',
+  'Можно использовать клавиатуру вместо мышки, чтобы ввести буквы',
+];
+
+export {
+  AUDIOCALL_HELP, SPRINT_HELP, SPEAKIT_HELP, WORD_BUILDER_HELP,
+};

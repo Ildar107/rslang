@@ -72,8 +72,8 @@
     vertical-align: middle;
     width: 40px;
     position: relative;
-    left: -11px;
-    top: 0;
+    left: -12px;
+    top: -1px;
   }
   .svg-cross {
     width: 20px;
@@ -124,6 +124,11 @@
     right: 20px;
     top: 20px;
     z-index: 10;
+    color: white;
+    border-color: white;
+  }
+  .close-button:focus {
+    box-shadow: none;
   }
   .incorrect-wrapper {
     margin-top: 10px;
@@ -139,6 +144,21 @@
     display: flex;
     justify-content: center;
   }
+  .help-btn:hover {
+    color: #fff;
+    background-color: #eb6864;
+    border-color: #fff;
+  }
+  .help-btn:focus {
+    color: #fff;
+    border-color: #fff;
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .help-btn:active {
+    background-color: #eb6864 !important;
+    border-color: #eb6864 !important;
+  }
 }
 
 @media (max-width: 900px) {
@@ -153,7 +173,7 @@
     }
     .svg-audio {
       left: -14px;
-      top: -1px;
+      top: -4px;
       width: 35px;
     }
     .h3-choose-difficulty {
@@ -211,7 +231,11 @@
     .rules-span {
       font-size: 12px;
     }
-
+    .help-btn {
+      width: 50px;
+      height: 50px;
+      font-size: 35px;
+    }
     /*  .restart-button,
   .return-button {
     width: 50% !important;
