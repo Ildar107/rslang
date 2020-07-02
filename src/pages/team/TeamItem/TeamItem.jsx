@@ -62,7 +62,11 @@ class TeamItem extends Component {
               {' '}
             </a>
           </Card.Footer>
-          <TeamModal onHide={this.onHide} show={this.state.showModal} works={this.props.info.works} />
+          <TeamModal
+            onHide={this.onHide}
+            show={this.state.showModal}
+            works={this.props.info.works}
+          />
         </Card>
       </>
     );
