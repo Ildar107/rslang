@@ -5,6 +5,7 @@ import './WordBuilderMainPage.scss';
 import { Container } from 'react-bootstrap';
 import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 import WordBuilderGamePage from '../word-builder-game/WordBuilderGamePage';
+import EndGameModal from '../../endGameModal/endGameModal';
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -27,7 +28,7 @@ const WordBuilderMainPage = () => {
   const [finished, setFinished] = useState(false);
   const [difficulty, setDifficulty] = useState(0);
   const [restartCounter, setRestartCounter] = useState(0);
-  // const [page, setPage] = useState(0);
+  const [isShowModal, setShowModal] = useState(false);
 
   const currentWordObj = wordObjects[currentWordIndex];
   const currentLetter = currentWordObj?.word[currentLetterIndex];
@@ -94,7 +95,11 @@ const WordBuilderMainPage = () => {
   });
   return (
     <Container fluid className="word-builder">
-      <button type="button" className="btn btn-outline-primary close-button word-builder-btn">
+      <EndGameModal
+        onHide={() => setShowModal(false)}
+        show={isShowModal}
+      />
+      <button type="button" className="btn btn-outline-primary close-button word-builder-btn" onClick={() => setShowModal(true)}>
         <svg className="svg-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
           <path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" />
         </svg>

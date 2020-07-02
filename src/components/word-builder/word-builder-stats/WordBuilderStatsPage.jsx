@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const WordBuilderStatsPage = ({
   wordObjects,
@@ -102,20 +103,22 @@ const WordBuilderStatsPage = ({
       >
         Начать заного
       </button>
-      <button
-        type="button"
-        className="return-button btn word-builder-btn btn-secondary word-builder-btn-secondary"
-        onClick={() => {
-          setCurrentWordIndex(0);
-          setCurrentLetterIndex(0);
-          setGuessedLettersIndexes([]);
-          setSolved(false);
-          setFinished(false);
-          location.href = '#/';
-        }}
-      >
-        На главную
-      </button>
+      <Link to="/">
+        <button
+          type="button"
+          className="return-button btn word-builder-btn btn-secondary word-builder-btn-secondary"
+          onClick={() => {
+            setCurrentWordIndex(0);
+            setCurrentLetterIndex(0);
+            setGuessedLettersIndexes([]);
+            setSolved(false);
+            setFinished(false);
+          // location.href = '#/';
+          }}
+        >
+          На главную
+        </button>
+      </Link>
     </div>
 
   </div>
