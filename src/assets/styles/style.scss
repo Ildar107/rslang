@@ -1,0 +1,58 @@
+body[data-theme=light] {
+    color: #6c757d;
+    background-color: #e8eaef;
+}
+
+body[data-theme=dark] {
+    color: #aab8c5;
+    background: #343a40;
+}
+
+#root {
+    position: relative;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../assets/fonts/Nunito-Regular.woff');
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../../assets/fonts/Nunito-Bold.woff');
+}
+
+.wrapper-page {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: inherit;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+
+.content-page {
+    margin-left: 0;
+    overflow: hidden;
+    padding: 0 15px 5px 30px;
+    position: relative;
+    width: 100%;
+    font-family: "Nunito", sans-serif;
+    min-height: calc(100vh - 79px);
+}
+
+.page-title-box .page-title {
+    font-size: 18px;
+    margin: 0;
+    line-height: 75px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: inherit;
+}
