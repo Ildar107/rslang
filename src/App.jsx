@@ -20,6 +20,7 @@ import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
 import LearnSettings from './pages/learnSettings/LearnSettings';
+import DictionaryPage from './pages/dictionary/DictionaryPage';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -44,6 +45,9 @@ const App = () => {
             <Route path={routes.TEAM} exact>
               <TeamPage />
             </Route>
+            <PrivateRoute path={routes.DICTIONARY} exact>
+              <DictionaryPage />
+            </PrivateRoute>
             <PrivateRoute path={routes.PUZZLE} exact>
               <PuzzlePage />
             </PrivateRoute>
