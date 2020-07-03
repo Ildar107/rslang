@@ -22,11 +22,15 @@ const description = {
   },
   SAVANNAH: {
     name: 'SAVANNAH',
-    info: '',
+    info: 'бла бла бла',
   },
   AUDIOCALL: {
     name: 'AUDIOCALL',
-    info: '',
+    info: 'бла бла бла',
+  },
+  WORD_BUILDER: {
+    name: 'WORD BUILDER',
+    info: 'бла бла бла',
   },
 };
 
