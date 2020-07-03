@@ -122,6 +122,10 @@ class GameField extends React.Component {
     window.addEventListener('resize', this.setWidth);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setWidth);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.continuer !== prevProps.continuer) {
       const sent = this.props.wordsData.map((it) => it.textExample);
@@ -173,11 +177,15 @@ GameField.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   children: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  wordsData: PropTypes.array.isRequired,
+  wordsData: PropTypes.PropTypes.arrayOf(PropTypes.any),
   continuer: PropTypes.bool.isRequired,
   numOfSentence: PropTypes.number.isRequired,
   next: PropTypes.bool.isRequired,
   backgroundPrompt: PropTypes.bool.isRequired,
+};
+
+GameField.defaultProps = {
+  wordsData: null,
 };
 
 export default GameField;
