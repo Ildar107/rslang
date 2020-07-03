@@ -22,7 +22,8 @@ const description = {
   },
   SAVANNAH: {
     name: 'SAVANNAH',
-    info: 'бла бла бла',
+    info: 'Тренировка Саванна развивает словарный запас.'
+        + 'Чем больше слов ты знаешь, тем больше очков опыта получишь.',
   },
   AUDIOCALL: {
     name: 'AUDIOCALL',
