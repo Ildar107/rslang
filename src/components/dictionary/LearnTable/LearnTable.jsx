@@ -505,7 +505,7 @@ const LearnTable = () => {
     <MDBDataTable
       striped
       bordered
-      small
+      sortable
       data={data}
     />
   );
