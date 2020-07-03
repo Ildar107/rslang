@@ -14,13 +14,13 @@ async function getData(params) {
     });
     if (response.status !== 200) {
       const errorMessage = await response.text();
-      console.error(`Ошибка: ${errorMessage}, Код: ${response.status}`);
+      // console.error(`Ошибка: ${errorMessage}, Код: ${response.status}`);
       return ({ error: errorMessage });
     }
     const data = await response.json();
     return data;
   } catch (e) {
-    console.error(`Ошибка: ${e.message}`);
+    // console.error(`Ошибка: ${e.message}`);
     return { error: 'Data request error' };
   }
 }

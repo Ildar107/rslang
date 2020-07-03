@@ -50,7 +50,7 @@ class SpeakIt extends Component {
     const res = await fetch(url);
     const json = await res.json();
     this.setState({ currentTranslate: json.text[0] });
-    console.log(JSON.stringify(json));
+    // console.log(JSON.stringify(json));
   }
 
   onTrainingClick= (e) => {
@@ -76,7 +76,7 @@ class SpeakIt extends Component {
       .map((result) => result.transcript)
       .join('')
       .toLowerCase();
-    console.log(transcript);
+    // console.log(transcript);
     const wordMatch = this.state.words.find((x) => x.word.toLowerCase() === transcript
       && !this.state.knownWords.includes(x));
     if (wordMatch) {

@@ -70,7 +70,7 @@ const AuthorizationPage = () => {
         context.isAuthenticated = true;
         redirectToMain();
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
       setIsLoading(false);
     })();
@@ -91,7 +91,7 @@ const AuthorizationPage = () => {
         context.isAuthenticated = true;
         redirectToMain();
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
       setIsLoading(false);
     })();

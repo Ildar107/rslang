@@ -8,15 +8,30 @@ body {
   background-size: cover;
 }
 
+.sprint__wrap {
+  height: 100%;
+  min-height: 100vh;
+  background-color: #0d3848;
+  background-image: url(../../assets/images/sprint/bgc-sprint-main.svg);
+  // background-image: url(../../assets/images/sprint/bgc-sprint-header.svg);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: 100%, auto, auto;
+}
+
 .sprint {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  height: 100%;
+  min-height: 85vh;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
 }
 
-.sprint-wrapper {
+.sprint__btn-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,17 +46,21 @@ body {
   padding: 0 25px;
 }
 
-
 .sprint-link {
+  background-color: #ffffff;
   border: 1px solid #EB6864;
   border-radius: 5px;
   padding: 5px 10px;
-
+  color: #EB6864;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .sprint-link:hover {
-  border: 1.3px solid red;
+  background-color: #EB6864;
+  border: 1px solid #EB6864;
   text-decoration: none;
+  color: #ffffff;
 }
 
 .sprint__card-header {
@@ -84,6 +103,7 @@ body {
   color: #ffffff;
   padding: 5px 0;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .sprint__btn:active {
@@ -97,13 +117,28 @@ body {
 }
 
 .green {
+  border: 1px solid green;
+  background-color: #ffffff;
+  color: green;
+}
+
+.green:hover {
+  border: 1px solid green;
   background-color: green;
+  color: #ffffff;
 }
 
 .red {
-  background-color: red;
+  border: 1px solid red;
+  background-color: #ffffff;
+  color: red;
 }
 
+.red:hover {
+  border: 1px solid red;
+  background-color: red;
+  color: #ffffff;
+}
 
 
 .page-link {
@@ -118,17 +153,18 @@ body {
   width: 450px;
   height: 300px;
   background-color: #fff;
-  opacity: 0.9;
+  // opacity: 0.9;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: 1px solid #000000;
   border-radius: 5px;
 }
 
 .sprint__close {
   position: absolute;
   width: 20px;
-  top: 0;
+  top: 15px;
   right: 0;
   cursor: pointer;
 }
@@ -149,10 +185,17 @@ body {
 .sprint__modal {
   position: absolute;
   display: none;
-  width: 300px;
+  text-align: center;
+  width: 350px;
   height: 200px;
   background-color: #fff;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+
+.sprint__modal-title {
+  margin-top: 15px;
 }
