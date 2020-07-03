@@ -29,6 +29,14 @@
   border: none;
 }
 
-.start-game-start-btn{
+.start-game-description{
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  left: calc(50% - 150px);
+  width: 300px;
+  & .start-game-start-btn{
 
+  }
 }
+
