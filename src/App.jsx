@@ -69,7 +69,7 @@ const App = () => {
               <LearnSettings />
             </PrivateRoute>
             <Route>
-              <Redirect to={routes.AUTHORIZE} />
+              <Redirect to={routes.MainPage} />
             </Route>
           </Switch>
         </StoreContext.Provider>
