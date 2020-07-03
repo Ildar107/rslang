@@ -1,0 +1,54 @@
+.team__card{
+	margin-top: 20px;
+	max-width: 370px;
+	font-family: 'Roboto', sans-serif;
+}
+
+.card__social-icon{
+	margin-left: 5px;
+	font-size: 24px;
+	color: grey;
+	transition: color .25s ease;
+	text-decoration: none;
+}
+
+.card__social-link{
+	text-decoration: none;
+}
+
+.card__social-link:hover{
+	text-decoration: none;
+}
+
+.card__social-icon:hover{
+	color: rgb(214, 214, 214);
+}
+
+.card__img{
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 300px;
+	transition: all .3s ease;
+	border-radius: 3px 3px 0px 0px;
+	
+}
+.card__button{
+	border: none;
+}
+
+.card__button:hover{
+	color: white;
+	background-color: grey;
+}
+
+.card__button:focus{
+	color: white;
+	box-shadow: none;
+}
+
+@media screen and (max-width: 420px){
+	.card__img{
+		height: 250px;
+	}
+}
