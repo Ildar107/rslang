@@ -6,14 +6,10 @@ import './team-page.scss';
 import Skeleton from '../../components/skeleton/Skeleton';
 
 const TeamPage = () => (
-  <Skeleton wrapperClass="main-page" title="О нас">
-    <Row>
-      <Col xl={6} lg={5}>
-        <h1 className="team__header">Над приложением работали:</h1>
-        <div className="team__wrap">
-          {personsInfo.map((item, i) => <Col key={i}><TeamItem info={item} /></Col>)}
-        </div>
-      </Col>
+  <Skeleton wrapperClass="main-page">
+    <h1 className="team__header">Над приложением работали:</h1>
+    <Row className="team__wrap">
+      {personsInfo.map((item, i) => <Col key={i}><TeamItem info={item} /></Col>)}
     </Row>
   </Skeleton>
 );

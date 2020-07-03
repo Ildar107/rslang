@@ -11,24 +11,24 @@
 
 .team__wrap{
 	display: grid;
-	grid-template-columns: repeat(3, 370px);
+	grid-template-columns: repeat(3, 30%);
 	justify-content: center;
 	margin-bottom: 40px;
 }
 
-@media screen and (max-width: 1135px){
+@media screen and (max-width: 1250px){
 	.team__wrap{
 		grid-template-columns: repeat(2, 370px);
 	}
 }
-@media screen and (max-width: 760px){
+@media screen and (max-width: 800px){
 	.team{
 		padding-right: 5px;
 		padding-left: 5px;
 	}
 
 	.team__wrap{
-		grid-template-columns: repeat(1, 340px);
+		grid-template-columns: repeat(1, 370px);
 	}
 }
 

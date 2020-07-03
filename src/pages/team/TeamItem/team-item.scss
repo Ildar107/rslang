@@ -21,7 +21,7 @@
 }
 
 .card__social-icon:hover{
-	color: rgb(41, 41, 41);
+	color: rgb(214, 214, 214);
 }
 
 .card__img{
@@ -33,9 +33,18 @@
 	border-radius: 3px 3px 0px 0px;
 	
 }
+.card__button{
+	border: none;
+}
 
 .card__button:hover{
 	color: white;
+	background-color: grey;
+}
+
+.card__button:focus{
+	color: white;
+	box-shadow: none;
 }
 
 @media screen and (max-width: 420px){
