@@ -15,7 +15,7 @@ async function getData(params) {
     if (response.status !== 200) {
       const errorMessage = await response.text();
       console.error(`Ошибка: ${errorMessage}, Код: ${response.status}`);
-      return ({ error: errorMessage });
+      return { error: errorMessage };
     }
     const data = await response.json();
     return data;
@@ -49,4 +49,6 @@ async function signIn(email, password) {
   return data;
 }
 
-export default { getUser, createUser, signIn };
+export default {
+  getUser, createUser, signIn, getData,
+};

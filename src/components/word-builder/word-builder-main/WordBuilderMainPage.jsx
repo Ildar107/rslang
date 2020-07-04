@@ -6,6 +6,9 @@ import { Container } from 'react-bootstrap';
 import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 import WordBuilderGamePage from '../word-builder-game/WordBuilderGamePage';
 import EndGameModal from '../../endGameModal/endGameModal';
+import userServices from '../../../services/user.services';
+
+const { getData } = userServices;
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -21,7 +24,13 @@ const convertCodeToLetter = (code) => code.includes('Key') && code.slice(-1).toL
 
 const sendStatistics = async () => {
   const { userId, JWT } = localStorage;
-  console.log('id', userId, 'jwt', JWT);
+  const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
+  const data = await getData({
+    url,
+    jwt: JWT,
+  });
+
+  console.log(data.error);
 };
 
 const WordBuilderMainPage = () => {
@@ -53,7 +62,7 @@ const WordBuilderMainPage = () => {
       right,
       wrong,
     };
-    console.log(JSON.stringify(stats));
+    // console.log(JSON.stringify(stats));
     return JSON.stringify(stats);
   };
 
