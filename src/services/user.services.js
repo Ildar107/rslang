@@ -15,7 +15,7 @@ async function getData(params) {
     if (response.status !== 200) {
       const errorMessage = await response.text();
       console.error(`Ошибка: ${errorMessage}, Код: ${response.status}`);
-      return { error: errorMessage };
+      return { error: errorMessage, code: response.status };
     }
     const data = await response.json();
     return data;

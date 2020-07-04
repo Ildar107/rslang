@@ -22,17 +22,6 @@ const getShuffledArr = (arr) => {
 const randomizePage = () => Math.floor(Math.random() * 30);
 const convertCodeToLetter = (code) => code.includes('Key') && code.slice(-1).toLowerCase();
 
-const sendStatistics = async () => {
-  const { userId, JWT } = localStorage;
-  const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
-  const data = await getData({
-    url,
-    jwt: JWT,
-  });
-
-  console.log(data.error);
-};
-
 const WordBuilderMainPage = () => {
   const [wordObjects, setWordsObj] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -63,7 +52,35 @@ const WordBuilderMainPage = () => {
       wrong,
     };
     // console.log(JSON.stringify(stats));
-    return JSON.stringify(stats);
+    return stats;
+  };
+  const sendStatistics = async () => {
+    const { userId, JWT: jwt } = localStorage;
+    const stats = formStatistics(nameOfTheGame, difficulty, wordObjects);
+    const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
+    const data = await getData({
+      url,
+      jwt,
+    });
+    console.log(data);
+    if (data.code === 404) {
+      const dataIfError = await getData({
+        url,
+        jwt,
+        method: 'PUT',
+        body: { learnedWords: 0, optional: { 0: stats } },
+      });
+      console.log(dataIfError);
+    }
+    // const { optional } = data;
+    // const lengthOfOptional = Object.keys(optional).length;
+    // const dataIfError = await getData({
+    //   url,
+    //   jwt,
+    //   method: 'PUT',
+    //   body: { optional: { 0: 'lol' } },
+    // });
+    // console.log(dataIfError);
   };
 
   const nextButtonHandler = () => {
@@ -77,7 +94,7 @@ const WordBuilderMainPage = () => {
       setSolved(true);
     } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
       setFinished(true);
-      formStatistics(nameOfTheGame, difficulty, wordObjects);
+      // formStatistics(nameOfTheGame, difficulty, wordObjects);
       sendStatistics();
     }
   };
