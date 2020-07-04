@@ -19,6 +19,11 @@ const getShuffledArr = (arr) => {
 const randomizePage = () => Math.floor(Math.random() * 30);
 const convertCodeToLetter = (code) => code.includes('Key') && code.slice(-1).toLowerCase();
 
+const sendStatistics = async () => {
+  const { userId, JWT } = localStorage;
+  console.log('id', userId, 'jwt', JWT);
+};
+
 const WordBuilderMainPage = () => {
   const [wordObjects, setWordsObj] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -30,9 +35,18 @@ const WordBuilderMainPage = () => {
   const [restartCounter, setRestartCounter] = useState(0);
   const [isShowModal, setShowModal] = useState(false);
 
+  const nameOfTheGame = 'Word-Builder';
+
   const currentWordObj = wordObjects[currentWordIndex];
   const currentLetter = currentWordObj?.word[currentLetterIndex];
   const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
+
+  const formStatistics = (gameName, level, wordObjs) => {
+    const todayDate = new Date().toLocaleDateString();
+    const rightAnswers = wordObjs.filter(({ status }) => status).length;
+    const wrongAnswers = wordObjs.filter(({ status }) => !status).length;
+    console.log(todayDate, rightAnswers, wrongAnswers);
+  };
 
   const nextButtonHandler = () => {
     if (solved && !(currentWordIndex === wordObjects.length - 1)) {
@@ -45,6 +59,8 @@ const WordBuilderMainPage = () => {
       setSolved(true);
     } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
       setFinished(true);
+      formStatistics(nameOfTheGame, difficulty, wordObjects);
+      sendStatistics();
     }
   };
 
