@@ -41,11 +41,20 @@ const WordBuilderMainPage = () => {
   const currentLetter = currentWordObj?.word[currentLetterIndex];
   const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
 
-  const formStatistics = (gameName, level, wordObjs) => {
-    const todayDate = new Date().toLocaleDateString();
-    const rightAnswers = wordObjs.filter(({ status }) => status).length;
-    const wrongAnswers = wordObjs.filter(({ status }) => !status).length;
-    console.log(todayDate, rightAnswers, wrongAnswers);
+  const formStatistics = (name, level, wordObjs) => {
+    const date = new Date().toLocaleDateString();
+    const right = wordObjs.filter(({ status }) => status).length;
+    const wrong = wordObjs.filter(({ status }) => !status).length;
+
+    const stats = {
+      name,
+      date,
+      level,
+      right,
+      wrong,
+    };
+    console.log(JSON.stringify(stats));
+    return JSON.stringify(stats);
   };
 
   const nextButtonHandler = () => {
