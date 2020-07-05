@@ -45,7 +45,7 @@ class SprintGame extends Component {
   }
 
   componentDidMount = () => {
-    this.nextWordIndex();
+    this.setWordIndex();
     const page = randomInteger(minPage, maxPage);
     this.getWords(page, this.state.group)
       .then(() => {
@@ -53,30 +53,43 @@ class SprintGame extends Component {
       });
   }
 
+  setArrayOfWords = (arr) => {
+    this.setState({
+      words: arr,
+    });
+  }
+
   getWords = async (page, group) => {
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
     const res = await fetch(url);
     const json = await res.json();
-    await this.setState({
-      words: getShuffledArr(json),
-    });
-
-    // console.log(this.state.words);
+    const shuffeledWords = await getShuffledArr(json);
+    await this.setArrayOfWords(shuffeledWords);
   };
 
-  nextWordIndex = () => {
+  setWordIndex = () => {
     const currentIndexTranslate = randomInteger(falseTranslate, trueTranslate);
     this.setState({
       indexTranslate: currentIndexTranslate,
     });
   }
 
+  nextWord = () => {
+    const currentWordArr = [...this.state.words];
+    currentWordArr.pop();
+    this.setArrayOfWords(currentWordArr);
+    this.setWordIndex();
+    this.getCoupleOfWords();
+  }
+
   getTrueAnswer = () => {
     console.log('true answer');
+    this.nextWord();
   }
 
   getFalseAnswer = () => {
     console.log('false answer');
+    this.nextWord();
   }
 
   getAnswerByTrueBtn = () => {
@@ -140,6 +153,16 @@ class SprintGame extends Component {
     this.setState({ isStartGame: true });
   }
 
+  getCurrentWord = () => {
+    const currnetCouple = [...this.state.currentCoupleOfWords];
+    return currnetCouple[0];
+  }
+
+  getCurrentWordTranslate = () => {
+    const currnetCouple = [...this.state.currentCoupleOfWords];
+    return currnetCouple[1];
+  }
+
   render = () => (
     <div className="sprint__wrap">
       <Header />
@@ -172,6 +195,8 @@ class SprintGame extends Component {
             words={this.state.words}
             getAnswerByTrueBtn={this.getAnswerByTrueBtn}
             getAnswerByFalseBtn={this.getAnswerByFalseBtn}
+            getWord={this.getCurrentWord}
+            getTranslate={this.getCurrentWordTranslate}
           />
         </Row>
 

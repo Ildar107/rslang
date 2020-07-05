@@ -40,9 +40,8 @@ class SprintField extends Component {
             <span className="sprint__audio" />
           </div>
           <div className="card__content">
-            <div className="sprint__doubling">х1</div>
-            <div className="card__word">Слово</div>
-            <div className="card__translate">Перевод</div>
+            <div className="card__word">{this.props.getWord()}</div>
+            <div className="card__translate">{this.props.getTranslate()}</div>
           </div>
           <div className="sprint__btn-wrap">
             <div className="wrapper">
