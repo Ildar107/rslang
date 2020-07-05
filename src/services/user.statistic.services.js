@@ -1,6 +1,4 @@
-import userServices from './user.services';
-
-const { getData } = userServices;
+import getData from '../helper/fetchData';
 
 const formStatistics = (game, level, wordObjs) => {
   const date = new Date().toLocaleDateString();

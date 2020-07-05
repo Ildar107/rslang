@@ -26,5 +26,7 @@ async function signIn(email, password) {
 }
 
 export default {
-  getUser, createUser, signIn, getData,
+  getUser,
+  createUser,
+  signIn,
 };
