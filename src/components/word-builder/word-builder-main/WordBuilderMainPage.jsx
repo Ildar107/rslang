@@ -6,9 +6,12 @@ import { Container } from 'react-bootstrap';
 import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 import WordBuilderGamePage from '../word-builder-game/WordBuilderGamePage';
 import EndGameModal from '../../endGameModal/endGameModal';
-import userServices from '../../../services/user.services';
+import userStatsServices from '../../../services/user.statistic.services';
 
-const { getData } = userServices;
+const {
+  formStatistics,
+  sendStatistics,
+} = userStatsServices;
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -39,70 +42,6 @@ const WordBuilderMainPage = () => {
   const currentLetter = currentWordObj?.word[currentLetterIndex];
   const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
 
-  const formStatistics = (game, level, wordObjs) => {
-    const date = new Date().toLocaleDateString();
-    const right = wordObjs.filter(({ status }) => status).length;
-    const wrong = wordObjs.filter(({ status }) => !status).length;
-
-    const stats = {
-      g: game,
-      d: date,
-      l: level,
-      r: right,
-      w: wrong,
-    };
-    return stats;
-  };
-  const sendStatistics = async () => {
-    const { userId, JWT: jwt } = localStorage;
-    const stats = formStatistics(nameOfTheGame, difficulty, wordObjects);
-    const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
-    const data = await getData({
-      url,
-      jwt,
-    });
-    if (data.code === 404) {
-      const dataIfError = await getData({
-        url,
-        jwt,
-        method: 'PUT',
-        body: { learnedWords: 0, optional: { 0: stats } },
-      });
-      console.log(dataIfError);
-      return;
-    }
-    // await getData({
-    //   url,
-    //   jwt,
-    //   method: 'PUT',
-    //   body: { optional: { 0: stats } },
-    // });
-
-    const { optional } = data;
-    const lengthOfOptional = Object.keys(optional).length;
-    if (lengthOfOptional < 20) {
-      const sentStats = await getData({
-        url,
-        jwt,
-        method: 'PUT',
-        body: { optional: { ...optional, [lengthOfOptional]: stats } },
-      });
-      console.log('sentStats if length < 20', sentStats, 'length', lengthOfOptional);
-      return;
-    }
-    if (lengthOfOptional >= 20) {
-      const propToDelete = Object.keys(optional)[0];
-      delete optional[propToDelete];
-      const sentStats = await getData({
-        url,
-        jwt,
-        method: 'PUT',
-        body: { optional: { ...optional, [`${Number(propToDelete) + 20}`]: stats } },
-      });
-      console.log('sentstats if length >= 20', sentStats, 'length', lengthOfOptional);
-    }
-  };
-
   const nextButtonHandler = () => {
     if (solved && !(currentWordIndex === wordObjects.length - 1)) {
       setSolved(false);
@@ -114,7 +53,8 @@ const WordBuilderMainPage = () => {
       setSolved(true);
     } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
       setFinished(true);
-      sendStatistics();
+      const stats = formStatistics(nameOfTheGame, difficulty, wordObjects);
+      sendStatistics(stats);
     }
   };
 
