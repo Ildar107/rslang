@@ -1,9 +1,11 @@
 import { createContext } from 'react';
 import userServices from '../services/user.services';
+import USERSETTINGS from '../constants/userSettings';
 
 const jwt = localStorage.getItem('JWT');
 const userId = localStorage.getItem('userId');
 const userEmail = localStorage.getItem('userEmail');
+const userSettings = localStorage.getItem('userSettings');
 
 const StoreContext = createContext({
   statistics: [],
@@ -24,6 +26,7 @@ const StoreContext = createContext({
   jwt,
   userId,
   userEmail,
+  userSettings: userSettings ? JSON.parse(userSettings) : USERSETTINGS,
   speakItGameState: {
     currentTranslate: '',
     currentTranscript: '',

@@ -126,8 +126,13 @@ function StatisticModal(props) {
 
 StatisticModal.propTypes = {
   next: PropTypes.bool.isRequired,
-  wordsData: PropTypes.isRequired,
-  arrayOfMistakes: PropTypes.isRequired,
+  wordsData: PropTypes.PropTypes.arrayOf(PropTypes.any),
+  arrayOfMistakes: PropTypes.PropTypes.arrayOf(PropTypes.any),
+};
+
+StatisticModal.defaultProps = {
+  wordsData: null,
+  arrayOfMistakes: null,
 };
 
 export default StatisticModal;

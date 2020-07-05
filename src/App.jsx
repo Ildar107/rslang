@@ -9,6 +9,7 @@ import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
 import AudiocallPage from './pages/audiocall/AudiocallPage';
 import PuzzlePage from './pages/puzzle/PuzzlePage';
+import StartGamePage from './pages/startGame/startGamePage';
 import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
@@ -44,7 +45,10 @@ const App = () => {
               <TeamPage />
             </Route>
             <PrivateRoute path={routes.PUZZLE} exact>
-              <PuzzlePage game="puzzle" />
+              <PuzzlePage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.START_GAME_PAGE} exact>
+              <StartGamePage />
             </PrivateRoute>
             <PrivateRoute path={routes.SPEAKIT} exact>
               <SpeakIt />
@@ -65,7 +69,7 @@ const App = () => {
               <LearnSettings />
             </PrivateRoute>
             <Route>
-              <Redirect to={routes.AUTHORIZE} />
+              <Redirect to={routes.MainPage} />
             </Route>
           </Switch>
         </StoreContext.Provider>

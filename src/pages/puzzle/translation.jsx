@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import StatisticModal from "./statisticModal";
 
 class Translation extends React.Component {
   render() {
@@ -12,7 +13,11 @@ class Translation extends React.Component {
 }
 
 Translation.propTypes = {
-  translation: PropTypes.string.isRequired,
+  translation: PropTypes.string,
+};
+
+Translation.defaultProps = {
+  translation: null,
 };
 
 export default Translation;
