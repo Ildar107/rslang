@@ -14,13 +14,23 @@ const formStatistics = (game, level, wordObjs) => {
   };
   return stats;
 };
-const sendStatistics = async (stats) => {
-  const { userId, JWT: jwt } = localStorage;
-  const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
+
+const getStatistics = async (jwt, url) => {
   const data = await getData({
     url,
     jwt,
   });
+  return data;
+};
+
+const sendStatistics = async (stats) => {
+  const { userId, JWT: jwt } = localStorage;
+  const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
+  // const data = await getData({
+  //   url,
+  //   jwt,
+  // });
+  const data = await getStatistics(jwt, url);
   if (data.code === 404) {
     const dataIfError = await getData({
       url,
@@ -65,4 +75,5 @@ const sendStatistics = async (stats) => {
 export default {
   formStatistics,
   sendStatistics,
+  getStatistics,
 };
