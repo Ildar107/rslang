@@ -18,7 +18,6 @@ const formStatistics = (game, level, wordObjs) => {
 };
 const sendStatistics = async (stats) => {
   const { userId, JWT: jwt } = localStorage;
-  // const stats = formStatistics(nameOfTheGame, difficulty, wordObjects);
   const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
   const data = await getData({
     url,
