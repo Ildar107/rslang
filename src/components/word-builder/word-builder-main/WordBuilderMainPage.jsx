@@ -32,6 +32,7 @@ const WordBuilderMainPage = () => {
   const [difficulty, setDifficulty] = useState(0);
   const [restartCounter, setRestartCounter] = useState(0);
   const [isShowModal, setShowModal] = useState(false);
+  // const [currentIndexOptional, setCurrentIndexOptional] = useState(0);
 
   const nameOfTheGame = 'Word-Builder';
 
@@ -39,17 +40,17 @@ const WordBuilderMainPage = () => {
   const currentLetter = currentWordObj?.word[currentLetterIndex];
   const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
 
-  const formStatistics = (name, level, wordObjs) => {
+  const formStatistics = (game, level, wordObjs) => {
     const date = new Date().toLocaleDateString();
     const right = wordObjs.filter(({ status }) => status).length;
     const wrong = wordObjs.filter(({ status }) => !status).length;
 
     const stats = {
-      name,
-      date,
-      level,
-      right,
-      wrong,
+      g: game,
+      d: date,
+      l: level,
+      r: right,
+      w: wrong,
     };
     // console.log(JSON.stringify(stats));
     return stats;
@@ -62,7 +63,9 @@ const WordBuilderMainPage = () => {
       url,
       jwt,
     });
-    console.log(data);
+
+    // setCurrentIndexOptional(lengthOfOptional);
+    // console.log('current', currentIndexOptional, 'data', lengthOfOptional);
     if (data.code === 404) {
       const dataIfError = await getData({
         url,
@@ -70,17 +73,45 @@ const WordBuilderMainPage = () => {
         method: 'PUT',
         body: { learnedWords: 0, optional: { 0: stats } },
       });
+      // setCurrentIndexOptional(currentIndexOptional + 1);
       console.log(dataIfError);
+      return;
     }
-    // const { optional } = data;
-    // const lengthOfOptional = Object.keys(optional).length;
-    // const dataIfError = await getData({
+    // await getData({
     //   url,
     //   jwt,
     //   method: 'PUT',
-    //   body: { optional: { 0: 'lol' } },
+    //   body: { optional: { 0: stats } },
     // });
-    // console.log(dataIfError);
+
+    const { optional } = data;
+    const lengthOfOptional = Object.keys(optional).length;
+    if (lengthOfOptional < 20) {
+      const sentStats = await getData({
+        url,
+        jwt,
+        method: 'PUT',
+        body: { optional: { ...optional, [lengthOfOptional]: stats } },
+      });
+      console.log('sentStats if length < 20', sentStats, 'length', lengthOfOptional);
+      return;
+    }
+    if (lengthOfOptional >= 20) {
+      const propToDelete = Object.keys(optional)[0];
+      delete optional[propToDelete];
+      const sentStats = await getData({
+        url,
+        jwt,
+        method: 'PUT',
+        body: { optional: { ...optional, [`${Number(propToDelete) + 20}`]: stats } },
+      });
+      console.log('sentstats if length >= 20', sentStats, 'length', lengthOfOptional);
+    }
+
+    // setCurrentIndexOptional(currentIndexOptional + 1);
+    // console.log(lengthOfOptional, sentStats, JSON.stringify(optional).length);
+
+    // console.log(lengthOfOptional, sentStats, JSON.stringify(optional).length);
   };
 
   const nextButtonHandler = () => {
