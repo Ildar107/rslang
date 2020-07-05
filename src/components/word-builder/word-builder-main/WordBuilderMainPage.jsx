@@ -6,6 +6,12 @@ import { Container } from 'react-bootstrap';
 import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 import WordBuilderGamePage from '../word-builder-game/WordBuilderGamePage';
 import EndGameModal from '../../endGameModal/endGameModal';
+import userStatsServices from '../../../services/user.statistic.services';
+
+const {
+  formStatistics,
+  sendStatistics,
+} = userStatsServices;
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -30,6 +36,8 @@ const WordBuilderMainPage = () => {
   const [restartCounter, setRestartCounter] = useState(0);
   const [isShowModal, setShowModal] = useState(false);
 
+  const nameOfTheGame = 'Word-Builder';
+
   const currentWordObj = wordObjects[currentWordIndex];
   const currentLetter = currentWordObj?.word[currentLetterIndex];
   const shuffledArray = useMemo(() => getShuffledArr(currentWordObj?.word.split('')), [currentWordObj]);
@@ -45,6 +53,8 @@ const WordBuilderMainPage = () => {
       setSolved(true);
     } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
       setFinished(true);
+      const stats = formStatistics(nameOfTheGame, difficulty, wordObjects);
+      sendStatistics(stats);
     }
   };
 
