@@ -19,7 +19,7 @@ const Timer = () => {
 
   if (counter > 0) {
     return (
-      <div className="App">
+      <div className="timer">
         <div className="progress-bar">
           <CircularProgressbar maxValue={60} value={counter} text={`${counter}`}>
             {counter}
@@ -29,7 +29,7 @@ const Timer = () => {
     );
   }
   return (
-    <div className="App">
+    <div className="timer">
       <div className="statistics">
         <h2 className="statistics__title">Результаты тренировки</h2>
         <span className="statistics__points">0 очков</span>

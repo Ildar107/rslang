@@ -12,7 +12,7 @@ import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
-import SprintGame from './pages/sprint/SprintGame';
+import Sprint from './pages/sprint/Sprint';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 
@@ -36,7 +36,7 @@ const App = () => {
             <PuzzlePage game="puzzle" />
           </PrivateRoute> */}
           <Route path={routes.SPRINTGAME} exact>
-            <SprintGame />
+            <Sprint />
           </Route>
           <PrivateRoute path={routes.SPEAKIT} exact>
             <SpeakIt />

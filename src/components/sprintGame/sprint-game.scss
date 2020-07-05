@@ -1,0 +1,29 @@
+.sprint{
+	margin-right: 0;
+	margin-left: 0;
+	width: 100%;
+	max-width: 100%;
+}
+
+.sprint__header{
+	width: 100%;
+	margin-top: 20px;
+}
+
+.close-btn{
+  color: whitesmoke;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  transition: color .3s ease;
+}
+
+.close-btn:hover{
+  color: rgb(138, 138, 138);
+}
+
+.timer{
+	margin-right: 40px;
+}
