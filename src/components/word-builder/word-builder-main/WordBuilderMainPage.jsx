@@ -32,7 +32,6 @@ const WordBuilderMainPage = () => {
   const [difficulty, setDifficulty] = useState(0);
   const [restartCounter, setRestartCounter] = useState(0);
   const [isShowModal, setShowModal] = useState(false);
-  // const [currentIndexOptional, setCurrentIndexOptional] = useState(0);
 
   const nameOfTheGame = 'Word-Builder';
 
@@ -52,7 +51,6 @@ const WordBuilderMainPage = () => {
       r: right,
       w: wrong,
     };
-    // console.log(JSON.stringify(stats));
     return stats;
   };
   const sendStatistics = async () => {
@@ -63,9 +61,6 @@ const WordBuilderMainPage = () => {
       url,
       jwt,
     });
-
-    // setCurrentIndexOptional(lengthOfOptional);
-    // console.log('current', currentIndexOptional, 'data', lengthOfOptional);
     if (data.code === 404) {
       const dataIfError = await getData({
         url,
@@ -73,7 +68,6 @@ const WordBuilderMainPage = () => {
         method: 'PUT',
         body: { learnedWords: 0, optional: { 0: stats } },
       });
-      // setCurrentIndexOptional(currentIndexOptional + 1);
       console.log(dataIfError);
       return;
     }
@@ -107,11 +101,6 @@ const WordBuilderMainPage = () => {
       });
       console.log('sentstats if length >= 20', sentStats, 'length', lengthOfOptional);
     }
-
-    // setCurrentIndexOptional(currentIndexOptional + 1);
-    // console.log(lengthOfOptional, sentStats, JSON.stringify(optional).length);
-
-    // console.log(lengthOfOptional, sentStats, JSON.stringify(optional).length);
   };
 
   const nextButtonHandler = () => {
@@ -125,7 +114,6 @@ const WordBuilderMainPage = () => {
       setSolved(true);
     } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
       setFinished(true);
-      // formStatistics(nameOfTheGame, difficulty, wordObjects);
       sendStatistics();
     }
   };
