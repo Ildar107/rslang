@@ -41,7 +41,11 @@ const MainPage = () => (
             <WeekProgress day="Суббота" value={100} />
             <WeekProgress day="Воскресенье" value={100} />
           </Card.Body>
-          <MinigamesStats />
+        </Card>
+        <Card>
+          <Card.Body>
+            <MinigamesStats />
+          </Card.Body>
         </Card>
       </Col>
     </Row>
