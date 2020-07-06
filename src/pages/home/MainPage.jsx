@@ -5,6 +5,7 @@ import {
 import Skeleton from '../../components/skeleton/Skeleton';
 import Tilebox from '../../components/mainPage/Tilebox';
 import WeekProgress from '../../components/mainPage/WeekProgress';
+import MinigamesStats from '../../components/minigamesStats/MinigamesStats';
 import './mainPage.scss';
 
 const MainPage = () => (
@@ -39,7 +40,11 @@ const MainPage = () => (
             <WeekProgress day="Пятница" value={20} />
             <WeekProgress day="Суббота" value={100} />
             <WeekProgress day="Воскресенье" value={100} />
-
+          </Card.Body>
+        </Card>
+        <Card>
+          <Card.Body>
+            <MinigamesStats />
           </Card.Body>
         </Card>
       </Col>

@@ -1,5 +1,26 @@
+
+.results-speak {
+    min-height: 100vh;
+    background-color: #fff;
+    color: #6c757d;
+}
+
 .speak-it {
+
+    background-color: #fff;
+    min-height: 100vh;
     
+    .help-btn {
+        color: #c1c0c0;
+        position: absolute;
+        bottom: 30px;
+        right: 31px;
+    }
+
+    .help-btn:active, .help-btn:hover, .help-btn:focus {
+        color: #fff;
+    }
+
     .preview {
         align-self: center;
         display: flex;
@@ -32,6 +53,7 @@
         width: 70%;
         height: 100%;
         margin: 0 auto;
+        padding-bottom: 78px;
     }
 
     .game__info {
@@ -334,6 +356,10 @@
         .micro {
             bottom: 52px;
         }
+
+        .help-btn {
+            bottom: 15px;
+        }
     }
 }
 
@@ -367,6 +393,16 @@
         .game__item {
             margin: 2vw;
         }
+
+        
+        .game-image-container img {
+            width: 100%;
+        }
+
+        .speak-it .help-btn {
+            bottom: 5px;
+            right: 11px;
+        }
     }   
 }
 
@@ -383,9 +419,6 @@
             height: 100%;
         }
 
-        .game-image-container img {
-            width: 100%;
-        }
 
         .micro {
             bottom: 42px;
