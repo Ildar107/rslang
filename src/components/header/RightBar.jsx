@@ -24,7 +24,7 @@ const RightBar = (props) => {
         >
           <div className={`right-bar ${props.showRightBar ? 'right-bar-enabled' : ''}`}>
             <div className="rightbar-title">
-              <a href="#" className="right-bar-toggle float-right" onClick={props.hide}>
+              <a href="" className="right-bar-toggle float-right" onClick={(e) => { e.preventDefault(); props.hide(); }}>
                 <i className="dripicons-cross noti-icon" />
               </a>
               <h5 className="m-0">Settings</h5>
