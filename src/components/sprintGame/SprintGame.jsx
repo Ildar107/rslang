@@ -27,7 +27,6 @@ const maxPage = 29;
 const falseTranslate = 0;
 const trueTranslate = 1;
 const minWordIndex = 0;
-const maxWordIndex = 19;
 
 class SprintGame extends Component {
   constructor(props) {
@@ -51,6 +50,13 @@ class SprintGame extends Component {
       .then(() => {
         this.getCoupleOfWords();
       });
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.words.length !== this.state.words.length) {
+      this.setWordIndex();
+      this.getCoupleOfWords();
+    }
   }
 
   setArrayOfWords = (arr) => {
@@ -78,8 +84,6 @@ class SprintGame extends Component {
     const currentWordArr = [...this.state.words];
     currentWordArr.pop();
     this.setArrayOfWords(currentWordArr);
-    this.setWordIndex();
-    this.getCoupleOfWords();
   }
 
   getTrueAnswer = () => {
@@ -117,8 +121,8 @@ class SprintGame extends Component {
   }
 
   getFalseCoupleOfWords = () => {
-    const currentIndex = randomInteger(minWordIndex, maxWordIndex);
     const lastItem = this.state.words.length - 1;
+    const currentIndex = randomInteger(minWordIndex, lastItem);
     const currentCouple = [
       this.state.words[lastItem].word,
       this.state.words[currentIndex].wordTranslate,
@@ -126,7 +130,6 @@ class SprintGame extends Component {
     this.setState({
       currentCoupleOfWords: currentCouple,
     });
-    console.log(this.state.currentCoupleOfWords);
   }
 
   getCoupleOfWords = () => {
