@@ -3,7 +3,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
 import {
-  Container,
+  Container, Button,
 } from 'react-bootstrap';
 // import SprintCard from './sprint-card';
 import './sprint-field.scss';
@@ -33,7 +33,7 @@ class SprintField extends Component {
   render() {
     return (
       <Container className="sprint">
-        <span className="sprint__point">Points: 0</span>
+        <span className="sprint__point">{this.props.score}</span>
         <div className="sprint-wrapper sprint__game-wrapper">
           <div className="sprint__card-header">
             <span className="sprint__checkpoint" />
@@ -44,12 +44,8 @@ class SprintField extends Component {
             <div className="card__translate">{this.props.getTranslate()}</div>
           </div>
           <div className="sprint__btn-wrap">
-            <div className="wrapper">
-              <span onClick={this.props.getAnswerByFalseBtn} className="sprint__btn red" type="button">Неверно</span>
-            </div>
-            <div className="wrapper">
-              <span onClick={this.props.getAnswerByTrueBtn} className="sprint__btn green" type="button">Верно</span>
-            </div>
+            <Button onClick={this.props.getAnswerByFalseBtn} className="sprint__btn red">Неверно</Button>
+            <Button onClick={this.props.getAnswerByTrueBtn} className="sprint__btn green">Верно</Button>
           </div>
         </div>
       </Container>

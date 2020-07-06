@@ -6,7 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import './timer.scss';
 
 const Timer = () => {
-  const [counter, setCounter] = React.useState(60);
+  const [counter, setCounter] = React.useState(20);
 
   React.useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
@@ -21,7 +21,7 @@ const Timer = () => {
     return (
       <div className="timer">
         <div className="progress-bar">
-          <CircularProgressbar maxValue={60} value={counter} text={`${counter}`}>
+          <CircularProgressbar maxValue={20} value={counter} text={`${counter}`}>
             {counter}
           </CircularProgressbar>
         </div>
@@ -29,18 +29,17 @@ const Timer = () => {
     );
   }
   return (
-    <div className="timer">
+  /*  <div className="timer">
       <div className="statistics">
         <h2 className="statistics__title">Результаты тренировки</h2>
         <span className="statistics__points">0 очков</span>
         <div className="sprint__btn-wrap stat__btn-wrap">
-          {/* <a href="#/sprint-game" className="sprint-link">Начать заново</a> */}
-          {/* <a href="#/" className="sprint-link">На главную</a> */}
           <Link className="sprint-link green" to={routes.SPRINTGAME}>Начать заново</Link>
           <Link className="sprint-link red" to={routes.LANDING}>На главную</Link>
         </div>
       </div>
-    </div>
+    </div> */
+    <h1>Game over</h1>
   );
 };
 

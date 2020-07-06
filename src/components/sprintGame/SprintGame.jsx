@@ -10,7 +10,7 @@ import './sprint-game.scss';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
-  return Math.round(rand);
+  return Math.abs(Math.round(rand));
 };
 
 const getShuffledArr = (arr) => {
@@ -44,20 +44,21 @@ class SprintGame extends Component {
   }
 
   componentDidMount = () => {
-    this.setWordIndex();
     const page = randomInteger(minPage, maxPage);
-    this.getWords(page, this.state.group)
+    this.getWords(0, 0)
+      .then(() => {
+        this.setWordIndex();
+      })
       .then(() => {
         this.getCoupleOfWords();
       });
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
+  /* componentDidUpdate = (prevProps, prevState) => {
     if (prevState.words.length !== this.state.words.length) {
-      this.setWordIndex();
-      this.getCoupleOfWords();
+
     }
-  }
+  } */
 
   setArrayOfWords = (arr) => {
     this.setState({
@@ -80,19 +81,23 @@ class SprintGame extends Component {
     });
   }
 
-  nextWord = () => {
-    const currentWordArr = [...this.state.words];
-    currentWordArr.pop();
-    this.setArrayOfWords(currentWordArr);
+  nextWord = async () => {
+    const currentWordArr = await [...this.state.words];
+    await currentWordArr.pop();
+    const newShuffeledArr = await getShuffledArr(currentWordArr);
+    await this.setWordIndex();
+    await this.setArrayOfWords(newShuffeledArr);
+    await this.getCoupleOfWords();
   }
 
   getTrueAnswer = () => {
-    console.log('true answer');
+    this.setState({
+      score: this.state.score + 1,
+    });
     this.nextWord();
   }
 
   getFalseAnswer = () => {
-    console.log('false answer');
     this.nextWord();
   }
 
@@ -100,12 +105,16 @@ class SprintGame extends Component {
     this.state.indexTranslate
       ? this.getTrueAnswer()
       : this.getFalseAnswer();
+    console.log(this.state.indexTranslate);
+    console.log(this.state.currentCoupleOfWords);
   }
 
   getAnswerByFalseBtn = () => {
     !this.state.indexTranslate
       ? this.getTrueAnswer()
       : this.getFalseAnswer();
+    console.log(this.state.indexTranslate);
+    console.log(this.state.currentCoupleOfWords);
   }
 
   getTrueCoupleOfWords = () => {
@@ -117,11 +126,10 @@ class SprintGame extends Component {
     this.setState({
       currentCoupleOfWords: currentCouple,
     });
-    console.log(this.state.currentCoupleOfWords);
   }
 
   getFalseCoupleOfWords = () => {
-    const lastItem = this.state.words.length - 1;
+    const lastItem = this.state.words.length - 2;
     const currentIndex = randomInteger(minWordIndex, lastItem);
     const currentCouple = [
       this.state.words[lastItem].word,
@@ -200,6 +208,7 @@ class SprintGame extends Component {
             getAnswerByFalseBtn={this.getAnswerByFalseBtn}
             getWord={this.getCurrentWord}
             getTranslate={this.getCurrentWordTranslate}
+            score={this.state.score}
           />
         </Row>
 
