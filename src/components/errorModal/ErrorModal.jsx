@@ -1,12 +1,11 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-
 import './errorModal.scss';
 
 const ErrorModal = (props) => (
   <Modal
-    {...props}
+    onHide={props.onHide}
     size="md"
     aria-labelledby="contained-modal-title-vcenter"
     centered

@@ -13,7 +13,7 @@ const WordItem = (props) => (
     </span>
     <audio src={`https://raw.githubusercontent.com/Ildar107/rslang-data/master/data/${props.audio.replace('files/', '')}`} crossOrigin="anonymous" />
     <p>
-      <span className="word">
+      <span className="word-speak">
         {' '}
         {props.word}
       </span>
