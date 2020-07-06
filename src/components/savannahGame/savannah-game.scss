@@ -80,6 +80,14 @@
   min-width: auto;
 }
 
+.savannah__help{
+  width: 75px;
+  height: 75px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
 @media screen and (max-width: 575px) {
   .words-block{
     transform: translateY(27vh);

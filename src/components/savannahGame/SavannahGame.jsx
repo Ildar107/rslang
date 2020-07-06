@@ -6,6 +6,8 @@ import {
 import ResultModal from './savannahResult/ResultModal';
 import EndGameModal from '../endGameModal/endGameModal';
 import Loader from '../loader/Loader';
+import HelpModal from '../HelpModal/HelpModal';
+import { SAVANNAH_HELP } from '../../constants/gamesHelp';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -318,6 +320,12 @@ class SavannahGame extends Component {
             this.getCurrentWords()
           }
         </Row>
+        <div className="savannah__help">
+          <HelpModal
+            messages={SAVANNAH_HELP}
+          />
+        </div>
+
         <ResultModal
           onHide={this.onHide}
           show={this.state.modalShow}
