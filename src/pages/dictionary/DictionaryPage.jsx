@@ -4,6 +4,7 @@ import {
 } from 'mdbreact';
 import Skeleton from '../../components/skeleton/Skeleton';
 import LearnTable from '../../components/dictionary/LearnTable/LearnTable';
+import './dictionaryPage.scss';
 
 class DictionaryPage extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class DictionaryPage extends Component {
     return (
       <Skeleton wrapperClass="main-page">
         <h1 className="team__header">Словарь</h1>
-        <MDBContainer>
+        <MDBContainer className="dictionary-page">
           <MDBNav tabs className="nav-justified" color="indigo">
             <MDBNavItem>
               <MDBNavLink link to="#" active={this.state.activeItemJustified === '1'} onClick={this.toggleJustified('1')} role="tab">
