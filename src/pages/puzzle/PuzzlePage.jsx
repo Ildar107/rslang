@@ -12,6 +12,8 @@ import PromptButtons from './promptButtons';
 import Paintings from './paintings';
 import StatisticModal from './statisticModal';
 import EndGameModal from '../../components/endGameModal/endGameModal';
+import HelpModal from '../../components/HelpModal/HelpModal';
+import { PUZZLE_HELP } from '../../constants/gamesHelp';
 
 class PuzzlePage extends React.Component {
   constructor(props) {
@@ -298,6 +300,9 @@ class PuzzlePage extends React.Component {
           <EndGameModal
             show={this.state.modalShow}
             onHide={() => this.setModalShow(false)}
+          />
+          <HelpModal
+            messages={PUZZLE_HELP}
           />
         </>
         <StatisticModal

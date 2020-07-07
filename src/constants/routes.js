@@ -9,6 +9,7 @@ const MINI_GAMES = '/mini-games';
 const SAVANNAH = '/savannah';
 const LEARNSETTINGS = '/learn-settings';
 const START_GAME_PAGE = '/startGame';
+const STATISTIC_LONG_TERM = '/statisticLongTerm';
 const LEARNWORDS = '/leran-words';
 
 export default {
@@ -23,6 +24,6 @@ export default {
   LEARNSETTINGS,
   MINI_GAMES,
   START_GAME_PAGE,
+  STATISTIC_LONG_TERM,
   LEARNWORDS,
-
 };

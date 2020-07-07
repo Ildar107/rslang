@@ -67,7 +67,7 @@ const LeftSideMenu = () => {
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.LANDING} className="side-nav-link">
+          <Link to={routes.STATISTIC_LONG_TERM} className="side-nav-link">
             <i className="uil-chart" />
             <span> Статистика </span>
           </Link>

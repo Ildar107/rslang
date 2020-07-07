@@ -20,7 +20,9 @@ import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
 import LearnSettings from './pages/learnSettings/LearnSettings';
+import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
 import LearnWords from './pages/learnWords/LearnWords';
+
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -47,6 +49,9 @@ const App = () => {
             </Route>
             <PrivateRoute path={routes.PUZZLE} exact>
               <PuzzlePage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.STATISTIC_LONG_TERM} exact>
+              <StatisticLongTerm />
             </PrivateRoute>
             <PrivateRoute path={routes.START_GAME_PAGE} exact>
               <StartGamePage />

@@ -79,6 +79,18 @@
 .puzzle {
   padding-top: 15px;
   position: relative;
+  & .help-btn{
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    z-index: 1;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    font-size: 15px;
+    background-color: aquamarine;
+    color: blue;
+  }
 }
 
 .puzzle-set-level {
