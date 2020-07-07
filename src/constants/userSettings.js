@@ -1,6 +1,6 @@
 const USERSETTINGS = {
   wordsPerDay: 20,
-  cardsPerDay: 20,
+  cardsPerDay: 50,
   translate: true,
   explain: true,
   example: true,

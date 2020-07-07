@@ -27,6 +27,7 @@ const StoreContext = createContext({
   userId,
   userEmail,
   userSettings: userSettings ? JSON.parse(userSettings) : USERSETTINGS,
+  isExistNewWords: false,
   speakItGameState: {
     currentTranslate: '',
     currentTranscript: '',

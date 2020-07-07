@@ -39,7 +39,6 @@ const MainPage = () => (
             <WeekProgress day="Пятница" value={20} />
             <WeekProgress day="Суббота" value={100} />
             <WeekProgress day="Воскресенье" value={100} />
-
           </Card.Body>
         </Card>
       </Col>

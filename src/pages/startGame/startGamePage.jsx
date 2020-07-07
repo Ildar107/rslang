@@ -31,7 +31,7 @@ const description = {
   },
   WORD_BUILDER: {
     name: 'WORD BUILDER',
-    info: 'бла бла бла',
+    info: 'Составь слово из букв, зная перевод',
   },
 };
 

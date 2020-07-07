@@ -1,0 +1,107 @@
+.learn-words-page {
+    .card {
+        margin-top: 20px;
+        border: 0px;
+    }
+
+    .word__container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .word__block {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .word_img {
+        margin-right: 55px;
+    }
+
+    .word_img img {
+        width: 350px;
+        height: 250px;
+    }
+
+    .words__control {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .words__control button {
+        margin: 0px 10px;
+    }
+
+    .repeat__container button{
+        margin: 10px 10px;
+        margin-top: 20px;
+    }
+
+    .repeat__container button i{
+        padding-right: 5px;
+    }
+
+    .unknown__word {
+        display: inline-block;
+    }
+
+    .input__container {
+        display: inline-block;
+        position: relative;
+        padding: 0;
+        margin: .25rem 0;
+        font-size: 20px;
+    }
+
+    .answer-input {
+        display: inline;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        color: #338c99;
+        margin: 0;
+        padding: 0 .25em;
+        border: 0;
+    }
+
+    .answer-input-entered {
+        background: transparent;
+        color: transparent;
+    }
+
+    .answer-input-right {
+        display: none;
+    }
+
+    .answer-input:focus {
+        outline: 0;
+    }
+
+    .word__background {
+        display: inline-block;
+        padding: 0.20px 4.6px;
+    }
+}
+
+body[data-theme=light] .learn-words-page {
+
+    .card {
+        color: #6c757d;
+        background-color: #fafbfe;
+
+    }
+}
+
+
+body[data-theme=dark] .learn-words-page {
+
+    .card {
+        color: #aab8c5;
+        background: #3a444e;
+    }
+}
+

@@ -21,6 +21,8 @@ import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
 import LearnSettings from './pages/learnSettings/LearnSettings';
 import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
+import LearnWords from './pages/learnWords/LearnWords';
+
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -71,6 +73,9 @@ const App = () => {
             </PrivateRoute>
             <PrivateRoute path={routes.LEARNSETTINGS} exact>
               <LearnSettings />
+            </PrivateRoute>
+            <PrivateRoute path={routes.LEARNWORDS} exact>
+              <LearnWords />
             </PrivateRoute>
             <Route>
               <Redirect to={routes.MainPage} />

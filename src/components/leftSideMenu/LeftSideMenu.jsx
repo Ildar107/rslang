@@ -39,7 +39,7 @@ const LeftSideMenu = () => {
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.LANDING} className="side-nav-link">
+          <Link to={routes.LEARNWORDS} className="side-nav-link">
             <i className="uil-graduation-hat" />
             <span> Учить слова </span>
           </Link>
