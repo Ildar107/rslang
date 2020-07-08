@@ -13,7 +13,7 @@ import './learnWords.scss';
 const LearnWords = () => {
   // const context = useContext(StoreContext);
 
-  const word = 'explain';
+  const word = 'qqqq';
   const explainSent = 'Something that give you understanding.';
   const exampleSent = 'I want explain you how it works.';
   const translatedWord = 'explain';
@@ -85,7 +85,7 @@ const LearnWords = () => {
                       <span className="input__container">
                         <span className="word__background" />
                         <input
-                          style={{ width: `${word.length * 14}px` }}
+                          style={{ width: `${word.length * 13 + 10}px` }}
                           maxLength={word.length}
                           ref={inputEl}
                           type="text"
