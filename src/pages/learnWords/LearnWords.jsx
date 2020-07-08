@@ -27,8 +27,13 @@ const LearnWords = () => {
   // const [isWordEntered, setIsWordEntered] = useState(false);
 
   const [typedWord, setTypedWord] = useState('');
-  const [checkedWord, setCheckedWord] = useState('');
+  const [mask, setMask] = useState(null);
   const [showMask, setShowMask] = useState(false);
+  const [readyForNext, setReadyForNext] = useState(false);
+  const [difficulty, setDifficulty] = useState('easy');
+  // const [isDifficult, setIsDifficult] = useState(false);
+  // const [isRepeat, setIsRepeat] = useState(false);
+  // const [isDelete, setIsDelete] = useState(false);
 
   const inputEl = useRef();
 
@@ -52,29 +57,33 @@ const LearnWords = () => {
     inputEl.current.focus();
   };
 
-  const checkIsTypedWordRight = () => {
-    if (typedWord === word) {
-      console.log(inputEl.current, '+');
+  const getMask = (maskWord) => {
+    const wordArr = maskWord.toLowerCase().split('');
+    while (wordArr.length < word.length) {
+      wordArr.push('?');
+    }
+    return wordArr.map((it, num) => {
+      const res = it === word[num] ? <span key={`${it}${num}`} className="true">{it}</span> : <span key={`${it}${num}`} className="false">{it}</span>;
+      return res;
+    });
+  };
+
+  const checkIsTypedWordRight = (curWord) => {
+    setMask(getMask(curWord));
+    inputEl.current.value = '';
+    setShowMask(true);
+    if (curWord === word) {
+      setReadyForNext(true);
     } else {
       inputFocus();
-      setCheckedWord(typedWord);
-      inputEl.current.value = '';
-      setShowMask(true);
     }
   };
 
   const onEnterWord = (e) => {
     if (e.key === 'Enter') {
-      checkIsTypedWordRight();
+      checkIsTypedWordRight(typedWord);
+      console.log('-> ', difficulty);
     }
-  };
-
-  const getMask = () => {
-    const wordArr = checkedWord.toLowerCase().split('');
-    return wordArr.map((it, num) => {
-      const res = it === word[num] ? <span className="true">{it}</span> : <span className="false">{it}</span>;
-      return res;
-    });
   };
 
   return (
@@ -104,7 +113,7 @@ const LearnWords = () => {
                         onClick={inputFocus}
                         className="word__mask"
                       >
-                        {getMask()}
+                        {mask}
                       </span>
                       )}
                       <input
@@ -122,32 +131,34 @@ const LearnWords = () => {
 
                     </div>
                     <Button
+                      key="check"
                       onClick={() => {
-                        checkIsTypedWordRight();
+                        checkIsTypedWordRight(typedWord);
                       }}
-                      variant="info"
+                      variant="success"
                       type="button"
                       size="sm"
                     >
-                      Дальше
+                      Проверить
                     </Button>
-                    <div className="explain__sentense">{explainSent}</div>
-                    <div className="example__sentense">{exampleSent}</div>
-                    <div className="translated__word">{translatedWord}</div>
-                    <div className="translated__explain__sentense">{translatedExplainSentense}</div>
-                    <div className="translated__example__sentense">{translatedExampleSSentense}</div>
-                    <div className="repeat__container">
-                      <Button variant="info" type="button" size="sm">
-                        <i className="uil-repeat" />
-                        Повторить
-                      </Button>
-                      <Button variant="info" type="button" size="sm">
-                        Хорошо
-                      </Button>
-                      <Button variant="info" type="button" size="sm">
-                        Легко
-                      </Button>
-                    </div>
+                    <Button
+                      key="dn"
+                      variant="danger"
+                      type="button"
+                      size="sm"
+                      onClick={() => {
+                        checkIsTypedWordRight(word);
+                        setDifficulty('hard');
+                      }}
+                    >
+                      Не знаю
+                    </Button>
+                    <div key="expl" className="explain__sentense">{explainSent}</div>
+                    <div key="ex" className="example__sentense">{exampleSent}</div>
+                    <div key="trans" className="translated__word">{translatedWord}</div>
+                    <div key="tranex" className="translated__explain__sentense">{translatedExplainSentense}</div>
+                    <div key="trexsent" className="translated__example__sentense">{translatedExampleSSentense}</div>
+                    <div key="cont" className="repeat__container" />
                   </div>
                 </div>
               </Card.Body>
@@ -158,16 +169,47 @@ const LearnWords = () => {
           <Col md={8}>
             <Card>
               <Card.Body>
+                <p>Перед переходом к следующему слову выберите категории для текущего</p>
                 <div className="words__control">
-                  <Button variant="primary" type="button">
-                    Показать слово
+                  <Button
+                    // className={isDelete ? '' : 'disabled'}
+                    // onClick={setIsDelete(!isDelete)}
+                    key="del"
+                    variant="primary"
+                    type="button"
+                  >
+                    Удалить
                   </Button>
-                  <Button variant="primary" type="button">
-                    Удалить слово
+                  <Button
+                    // className={isRepeat ? '' : 'disabled'}
+                    // onClick={setIsRepeat(!isRepeat)}
+                    key="rep"
+                    variant="primary"
+                    type="button"
+                  >
+                    Повторять чаще
                   </Button>
-                  <Button variant="primary" type="button">
-                    Сложные
+                  <Button
+                    // className={isDifficult ? '' : 'disabled'}
+                    // onClick={setIsDifficult(!isDifficult)}
+                    key="dif"
+                    variant="primary"
+                    type="button"
+                  >
+                    Сложное
                   </Button>
+                </div>
+                <div className="next-word">
+                  {readyForNext && (
+                  <Button
+                    key="next"
+                    variant="success"
+                    type="button"
+                    size="sm"
+                  >
+                    Перейти к следующему
+                  </Button>
+                  )}
                 </div>
               </Card.Body>
             </Card>
