@@ -31,9 +31,9 @@ const LearnWords = () => {
   const [showMask, setShowMask] = useState(false);
   const [readyForNext, setReadyForNext] = useState(false);
   const [difficulty, setDifficulty] = useState('easy');
-  // const [isDifficult, setIsDifficult] = useState(false);
-  // const [isRepeat, setIsRepeat] = useState(false);
-  // const [isDelete, setIsDelete] = useState(false);
+  const [isDifficult, setIsDifficult] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
 
   const inputEl = useRef();
 
@@ -172,8 +172,11 @@ const LearnWords = () => {
                 <p>Перед переходом к следующему слову выберите категории для текущего</p>
                 <div className="words__control">
                   <Button
-                    // className={isDelete ? '' : 'disabled'}
-                    // onClick={setIsDelete(!isDelete)}
+                    className={isDelete ? '' : 'disabled'}
+                    onClick={() => {
+                      if (!isDelete) setIsRepeat(false);
+                      setIsDelete(!isDelete);
+                    }}
                     key="del"
                     variant="primary"
                     type="button"
@@ -181,8 +184,11 @@ const LearnWords = () => {
                     Удалить
                   </Button>
                   <Button
-                    // className={isRepeat ? '' : 'disabled'}
-                    // onClick={setIsRepeat(!isRepeat)}
+                    className={isRepeat ? '' : 'disabled'}
+                    onClick={() => {
+                      if (!isRepeat) setIsDelete(false);
+                      setIsRepeat(!isRepeat);
+                    }}
                     key="rep"
                     variant="primary"
                     type="button"
@@ -190,8 +196,8 @@ const LearnWords = () => {
                     Повторять чаще
                   </Button>
                   <Button
-                    // className={isDifficult ? '' : 'disabled'}
-                    // onClick={setIsDifficult(!isDifficult)}
+                    className={isDifficult ? '' : 'disabled'}
+                    onClick={() => setIsDifficult(!isDifficult)}
                     key="dif"
                     variant="primary"
                     type="button"
