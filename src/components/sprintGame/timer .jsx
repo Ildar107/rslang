@@ -1,27 +1,26 @@
 import * as React from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
-import { Link } from 'react-router-dom';
-import routes from '../../constants/routes';
+import ResultModal from './resultModal';
 import 'react-circular-progressbar/dist/styles.css';
 import './timer.scss';
 
-const Timer = () => {
-  const [counter, setCounter] = React.useState(20);
+const Timer = (props) => {
+  const [counter, setCounter] = React.useState(30);
+  const [timer, setTimer] = React.useState(true);
+  const [modal, setStatusModal] = React.useState(true);
 
   React.useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    counter > 0 && timer && setTimeout(() => setCounter(counter - 1), 1000);
   }, [counter]);
 
-  // const isClickHandler = () => {
-  //   props.setState({ isStartGame: false });
-  // };
-  // onClick={isClickHandler}
+  const handleClose = () => setStatusModal(false);
+  const handleShow = () => setStatusModal(true);
 
   if (counter > 0) {
     return (
       <div className="timer">
-        <div className="progress-bar">
-          <CircularProgressbar maxValue={20} value={counter} text={`${counter}`}>
+        <div className="timer__progress">
+          <CircularProgressbar maxValue={30} value={counter} text={`${counter}`}>
             {counter}
           </CircularProgressbar>
         </div>
@@ -29,17 +28,9 @@ const Timer = () => {
     );
   }
   return (
-  /*  <div className="timer">
-      <div className="statistics">
-        <h2 className="statistics__title">Результаты тренировки</h2>
-        <span className="statistics__points">0 очков</span>
-        <div className="sprint__btn-wrap stat__btn-wrap">
-          <Link className="sprint-link green" to={routes.SPRINTGAME}>Начать заново</Link>
-          <Link className="sprint-link red" to={routes.LANDING}>На главную</Link>
-        </div>
-      </div>
-    </div> */
-    <h1>Game over</h1>
+    <>
+      <ResultModal score={props.score} show={modal} handleClose={handleClose} />
+    </>
   );
 };
 
