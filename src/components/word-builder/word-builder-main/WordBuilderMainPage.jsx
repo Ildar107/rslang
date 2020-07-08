@@ -7,6 +7,7 @@ import WordBuilderStatsPage from '../word-builder-stats/WordBuilderStatsPage';
 import WordBuilderGamePage from '../word-builder-game/WordBuilderGamePage';
 import EndGameModal from '../../endGameModal/endGameModal';
 import userStatsServices from '../../../services/user.statistic.services';
+import BG from '../../../assets/images/bg-green.svg';
 
 const {
   formStatistics,
@@ -95,8 +96,8 @@ const WordBuilderMainPage = () => {
       } else if (code === 'Enter' || code === 'NumpadEnter') {
         nextButtonHandler();
       } else if ((currentLetter !== key)
-      && (shuffledArray.includes(key))
-      && (!guessedLettersIndexes.includes(shuffledArray.indexOf(key)))) {
+        && (shuffledArray.includes(key))
+        && (!guessedLettersIndexes.includes(shuffledArray.indexOf(key)))) {
         currentWordObj.status = false;
       }
     };
@@ -105,6 +106,7 @@ const WordBuilderMainPage = () => {
   });
   return (
     <Container fluid className="word-builder">
+      <img className="word-builder_bg" src={BG} alt="Background" />
       <EndGameModal
         onHide={() => setShowModal(false)}
         show={isShowModal}
@@ -116,7 +118,7 @@ const WordBuilderMainPage = () => {
       </button>
 
       <div className="word-constructor-wrapper">
-        { finished
+        {finished
           ? (
             <WordBuilderStatsPage
               wordObjects={wordObjects}
