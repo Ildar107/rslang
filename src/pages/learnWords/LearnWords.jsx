@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Row, Col, Card, Button,
 } from 'react-bootstrap';
@@ -20,11 +20,17 @@ const LearnWords = () => {
   const translatedExplainSentense = 'Что-то что дает понимание.';
   const translatedExampleSSentense = 'Я хочу объяснить тебе как это работает.';
 
-  const [enteredWord, setEnteredWord] = useState('');
+  // const [enteredWord, setEnteredWord] = useState('');
   // const [word, setWord] = useState('');
 
-  const [isRight, setIsRight] = useState(false);
-  const [isWordEntered, setIsWordEntered] = useState(false);
+  // const [isRight, setIsRight] = useState(false);
+  // const [isWordEntered, setIsWordEntered] = useState(false);
+
+  const [typedWord, setTypedWord] = useState('');
+
+  const inputEl = useRef();
+
+  useEffect(() => { inputEl.current.focus(); }, []);
 
   // const [newWords, setNewWords] = useState([]);
 
@@ -40,22 +46,25 @@ const LearnWords = () => {
   //     }
   //   });
 
-  const onEnterWord = (e) => {
-    if (e.key === 'Enter') {
-      setIsWordEntered(true);
-      setEnteredWord(e.target.value);
-      if (e.target.value === word) {
-        setIsRight(true);
-      } else {
-        e.target.value = '';
-      }
+  const checkIsTypedWordRight = () => {
+    if (typedWord === word) {
+      console.log(inputEl.current, '+');
+    } else {
+      inputEl.current.value = '';
     }
   };
+
+  const onEnterWord = (e) => {
+    if (e.key === 'Enter') {
+      checkIsTypedWordRight();
+    }
+  };
+
   return (
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
-      <Skeleton wrapperClass="learn-words-page" title="Настройка обучения">
+      <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
         <Row className="justify-content-md-center">
           <Col md={8}>
             <Card>
@@ -74,19 +83,25 @@ const LearnWords = () => {
                   <div className="word__block">
                     <div className="unknown__word">
                       <span className="input__container">
-                        <span className="word__background">
-                          { isRight
-                            ? <span className="text-success">{word}</span>
-                            : word.split('').map((x, i) => <span key={i} className={enteredWord[i] === x ? 'text-success' : 'text-primary'}>{x}</span>)}
-                        </span>
+                        <span className="word__background" />
                         <input
+                          style={{ width: `${word.length * 14}px` }}
+                          maxLength={word.length}
+                          ref={inputEl}
                           type="text"
-                          className={`answer-input ${isWordEntered ? 'answer-input-entered' : ''} ${isRight ? 'answer-input-right' : ''}`}
-                          onClick={() => setIsWordEntered(false)}
-                          onKeyPress={onEnterWord}
+                          onChange={(e) => { setTypedWord(e.target.value); }}
+                          onKeyDown={onEnterWord}
                         />
                       </span>
                     </div>
+                    <Button
+                      onClick={checkIsTypedWordRight}
+                      variant="info"
+                      type="button"
+                      size="sm"
+                    >
+                      Дальше
+                    </Button>
                     <div className="explain__sentense">{explainSent}</div>
                     <div className="example__sentense">{exampleSent}</div>
                     <div className="translated__word">{translatedWord}</div>

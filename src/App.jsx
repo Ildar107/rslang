@@ -23,7 +23,6 @@ import LearnSettings from './pages/learnSettings/LearnSettings';
 import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
 import LearnWords from './pages/learnWords/LearnWords';
 
-
 const App = () => {
   const store = useContext(StoreContext);
   const themeContext = useContext(ThemeContext);
