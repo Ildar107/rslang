@@ -5,7 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import './timer.scss';
 
 const Timer = (props) => {
-  const [counter, setCounter] = React.useState(30);
+  const [counter, setCounter] = React.useState(25);
   const [timer, setTimer] = React.useState(true);
   const [modal, setStatusModal] = React.useState(true);
 
@@ -19,8 +19,8 @@ const Timer = (props) => {
   if (counter > 0) {
     return (
       <div className="timer">
-        <div className="timer__progress">
-          <CircularProgressbar maxValue={30} value={counter} text={`${counter}`}>
+        <div className="progress-bar">
+          <CircularProgressbar maxValue={25} value={counter} text={`${counter}`}>
             {counter}
           </CircularProgressbar>
         </div>

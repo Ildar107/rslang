@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import {
   Container, Row, Pagination, Col, ProgressBar,
 } from 'react-bootstrap';
+import { CircularProgressbar } from 'react-circular-progressbar';
 import SprintField from './SprintField';
-import Timer from './timer ';
 import './sprint-game.scss';
 import ResultModal from './resultModal';
 import Loader from '../loader/Loader';
+import 'react-circular-progressbar/dist/styles.css';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -45,12 +46,15 @@ class SprintGame extends Component {
       currentCoupleOfWords: [],
       modalStatus: false,
       propgress: 0,
-      time: 25,
       isLoaded: false,
       learnedWords: [],
       notLearnedWords: [],
       progress: 0,
       totalScore: 0,
+      progressValue: 0,
+      timer: true,
+      timerCounter: 25,
+      timerID: null,
     };
   }
 
@@ -63,6 +67,20 @@ class SprintGame extends Component {
       .then(() => {
         this.getCoupleOfWords();
       });
+    this.timerID = setInterval(() => {
+      this.startTimer();
+    }, 1000);
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.timerCounter === 1) {
+      clearInterval(this.timerID);
+      this.nextLevel();
+    }
+  }
+
+  restartTimer = () => {
+    this.setState;
   }
 
   setArrayOfWords = (arr) => {
@@ -102,13 +120,14 @@ class SprintGame extends Component {
 
   resetProgress = () => {
     this.setState({
-      progress: 0,
+      progressValue: 0,
     });
   }
 
   updateProgress = () => {
     this.setState({
       progress: this.state.progress + 11,
+      progressValue: this.state.progressValue + 1,
     });
   }
 
@@ -116,6 +135,18 @@ class SprintGame extends Component {
     this.setState({
       score: 0,
       totalScore: curentScore,
+    });
+  }
+
+  startTimer = () => {
+    this.setState({
+      timerCounter: this.state.timerCounter - 1,
+    });
+  }
+
+  resetTimer = () => {
+    this.setState({
+      timerCounter: 25,
     });
   }
 
@@ -143,7 +174,8 @@ class SprintGame extends Component {
       page: this.state.page + 1,
     });
     await this.getWords(page, this.state.group);
-    await this.resetProgress()``;
+    await this.resetProgress();
+    await this.resetTimer();
   }
 
   getTrueAnswer = () => {
@@ -163,6 +195,9 @@ class SprintGame extends Component {
     this.setState({
       modalStatus: false,
     });
+    this.timerID = setInterval(() => {
+      this.startTimer();
+    }, 1000);
   }
 
   getFalseAnswer = () => {
@@ -251,6 +286,14 @@ class SprintGame extends Component {
       return <Loader />;
     }
 
+    const stylesProgress = {
+      path: {
+        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+        strokeLinecap: 'butt',
+        transition: 'stroke-dashoffset 0.3s ease 0s',
+      },
+    };
+
     return (
       <div className="sprint__wrap">
         <Container className="sprint">
@@ -270,13 +313,15 @@ class SprintGame extends Component {
               }
               </Pagination>
             </Col>
-            <Col>
-              <Timer time={this.state.time} score={this.state.score} className="timer" />
-            </Col>
-            <Col className="savannah__score" sm>
-              Угаданные слова:
+            <Col className="sprint__score">
+              Угадано:
               {' '}
               {this.state.score}
+            </Col>
+            <Col className="sprint__progress" sm>
+              Осталось:
+              {' '}
+              {this.state.progressValue}
               /10
               <div>
                 <ProgressBar animated striped variant="danger" now={this.state.progress} />
@@ -284,6 +329,15 @@ class SprintGame extends Component {
             </Col>
             <div className="close-btn__wrap">
               <svg onClick={this.showEndGameModal} className="close-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
+            </div>
+          </Row>
+          <Row>
+            <div className="timer">
+              <div className="timer__progress">
+                <CircularProgressbar styles={stylesProgress} minValue={0} maxValue={25} value={this.state.timerCounter} text={`${this.state.timerCounter}`}>
+                  {this.state.timerCounter}
+                </CircularProgressbar>
+              </div>
             </div>
           </Row>
           <Row>

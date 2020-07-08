@@ -24,6 +24,12 @@
   color: rgb(138, 138, 138);
 }
 
-.timer{
-	margin-right: 40px;
+.timer__progress{
+  margin-top: 10px;
+  display: block;
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  top: 0;
+  left: 50px;
 }
