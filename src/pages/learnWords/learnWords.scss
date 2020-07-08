@@ -53,17 +53,27 @@
 
     .unknown__word {
         display: inline-block;
+        position: relative;
+    }
+
+    .word__mask{
+        font-family: RobotoMono;
+        font-size: 20px;
+        position: absolute;
+        top: 6px;
+        left: 5px;
     }
 
     .input__container {
         display: inline-block;
-        position: relative;
         padding: 0;
         margin: .25rem 0;
         font-size: 20px;
         font-family: RobotoMono;
         font-size: 20px;
         padding: 0;
+        background: white;
+        padding-left: 3px;
     }
 
     .answer-input {
@@ -95,6 +105,14 @@
         display: inline-block;
         padding: 0.20px 4.6px;
     }
+
+    .true{
+        color: green;
+    }
+    .false{
+        color: red;
+    }
+
 }
 
 body[data-theme=light] .learn-words-page {

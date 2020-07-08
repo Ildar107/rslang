@@ -13,7 +13,7 @@ import './learnWords.scss';
 const LearnWords = () => {
   // const context = useContext(StoreContext);
 
-  const word = 'qqqq';
+  const word = 'aaaaaaa';
   const explainSent = 'Something that give you understanding.';
   const exampleSent = 'I want explain you how it works.';
   const translatedWord = 'explain';
@@ -27,6 +27,8 @@ const LearnWords = () => {
   // const [isWordEntered, setIsWordEntered] = useState(false);
 
   const [typedWord, setTypedWord] = useState('');
+  const [checkedWord, setCheckedWord] = useState('');
+  const [showMask, setShowMask] = useState(false);
 
   const inputEl = useRef();
 
@@ -46,11 +48,18 @@ const LearnWords = () => {
   //     }
   //   });
 
+  const inputFocus = () => {
+    inputEl.current.focus();
+  };
+
   const checkIsTypedWordRight = () => {
     if (typedWord === word) {
       console.log(inputEl.current, '+');
     } else {
+      inputFocus();
+      setCheckedWord(typedWord);
       inputEl.current.value = '';
+      setShowMask(true);
     }
   };
 
@@ -58,6 +67,14 @@ const LearnWords = () => {
     if (e.key === 'Enter') {
       checkIsTypedWordRight();
     }
+  };
+
+  const getMask = () => {
+    const wordArr = checkedWord.toLowerCase().split('');
+    return wordArr.map((it, num) => {
+      const res = it === word[num] ? <span className="true">{it}</span> : <span className="false">{it}</span>;
+      return res;
+    });
   };
 
   return (
@@ -82,20 +99,32 @@ const LearnWords = () => {
                   </div>
                   <div className="word__block">
                     <div className="unknown__word">
-                      <span className="input__container">
-                        <span className="word__background" />
-                        <input
-                          style={{ width: `${word.length * 13 + 10}px` }}
-                          maxLength={word.length}
-                          ref={inputEl}
-                          type="text"
-                          onChange={(e) => { setTypedWord(e.target.value); }}
-                          onKeyDown={onEnterWord}
-                        />
+                      {showMask && (
+                      <span
+                        onClick={inputFocus}
+                        className="word__mask"
+                      >
+                        {getMask()}
                       </span>
+                      )}
+                      <input
+                        className="input__container"
+                        style={{ width: `${word.length * 13 + 11}px` }}
+                        maxLength={word.length}
+                        ref={inputEl}
+                        type="text"
+                        onChange={(e) => {
+                          setShowMask(false);
+                          setTypedWord(e.target.value);
+                        }}
+                        onKeyDown={onEnterWord}
+                      />
+
                     </div>
                     <Button
-                      onClick={checkIsTypedWordRight}
+                      onClick={() => {
+                        checkIsTypedWordRight();
+                      }}
                       variant="info"
                       type="button"
                       size="sm"
