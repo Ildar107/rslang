@@ -95,7 +95,9 @@ const LearnWords = () => {
           .filter((wordObj) => !wordObj.userWord)
           .slice(0, wordsPerDay);
 
-        const wordsToRepeat = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isRepeat);
+        const wordsToRepeat = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isRepeat
+        && wordObj.userWord?.optional?.isDelete === false);
+        console.log(wordsToRepeat);
         if (wordsPerDay + wordsToRepeat.length > cardsPerDay) {
           const difference = cardsPerDay - wordsPerDay;
           wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
@@ -181,6 +183,7 @@ const LearnWords = () => {
     if (curWord === currentWordObj?.word) {
       setReadyForNext(true);
     } else {
+      setIsRepeat(true);
       inputFocus();
     }
   };
@@ -263,7 +266,7 @@ const LearnWords = () => {
                       size="sm"
                       onClick={() => {
                         checkIsTypedWordRight(currentWordObj?.word);
-                        setIsRepeat(false);
+                        // setIsRepeat(false);
                         setIsRepeat(true);
                       }}
                     >
@@ -292,8 +295,9 @@ const LearnWords = () => {
                   <Button
                     className={isDelete ? '' : 'disabled'}
                     onClick={() => {
-                      if (!isDelete) setIsRepeat(false);
+                      // if (!isDelete) setIsRepeat(false);
                       setIsDelete(!isDelete);
+                      console.log(isDelete, isRepeat);
                     }}
                     key="del"
                     variant="primary"
