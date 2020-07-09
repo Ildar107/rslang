@@ -8,7 +8,18 @@ async function getWords(jwt, userId, count) {
   });
   return data;
 }
+async function sendWords(jwt, userId, wordObject, optional) {
+  const { _id: wordId, userWord } = wordObject;
+  const sendData = await getData({
+    url: `${serviceUrl.RESTSERVICEURL}/users/${userId}/words/${wordId}`,
+    jwt,
+    method: userWord ? 'PUT' : 'POST',
+    body: { difficulty: 'string', optional },
+  });
+  return sendData;
+}
 
 export default {
   getWords,
+  sendWords,
 };
