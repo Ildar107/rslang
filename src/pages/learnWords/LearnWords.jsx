@@ -62,14 +62,34 @@ const LearnWords = () => {
     wordsPerDay,
   } = userSettings;
 
-  const [words, setWords] = useState([]);
+  const [wordObjects, setWordsObj] = useState([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  // const [solved, setSolved] = useState(false);
+  // const [finished, setFinished] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       const [data] = await userWordsService.getWords(
         jwt, userId, 200,
       );
-      const { paginatedResults } = data;
+      let { paginatedResults } = data;
+      paginatedResults = paginatedResults.map((wordObj) => {
+        const {
+          image,
+          audio,
+          audioMeaning,
+          audioExample,
+          textMeaning,
+          textExample,
+        } = wordObj;
+        wordObj.image = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${image}`;
+        wordObj.audio = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audio}`;
+        wordObj.audioMeaning = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioMeaning}`;
+        wordObj.audioExample = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioExample}`;
+        wordObj.textMeaning = textMeaning.replace('<i>', '').replace('</i>', '');
+        wordObj.textExample = textExample.replace('<b>', '').replace('</b>', '');
+        return wordObj;
+      });
       // console.log(jwt, userId, userSettings, paginatedResults.filter((wordObj) => wordObj.userWord));
       if (!data.error) {
         let wordsArray = paginatedResults
@@ -81,7 +101,7 @@ const LearnWords = () => {
           const difference = cardsPerDay - wordsPerDay;
           wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
           const shuffled = getShuffledArr(wordsArray);
-          setWords(shuffled);
+          setWordsObj(shuffled);
           console.log('1', wordsArray);
           return;
         }
@@ -89,12 +109,12 @@ const LearnWords = () => {
 
         const restOfTheUserWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete === false
         && wordObj.userWord?.optional?.isRepeat === false);
-        // console.log(restOfTheUserWords);
+        console.log(restOfTheUserWords);
         if (wordsArray.length + restOfTheUserWords.length > cardsPerDay) {
           const difference = cardsPerDay - wordsArray.length;
           wordsArray = wordsArray.concat(restOfTheUserWords.slice(0, difference));
           const shuffled = getShuffledArr(wordsArray);
-          setWords(shuffled);
+          setWordsObj(shuffled);
           console.log('2', wordsArray);
           return;
         }
@@ -107,7 +127,7 @@ const LearnWords = () => {
         wordsArray = wordsArray.concat(newWordsToFillArray);
         const shuffled = getShuffledArr(wordsArray);
         console.log(shuffled);
-        setWords(wordsArray);
+        setWordsObj(shuffled);
 
         // const difficultWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDifficult);
         // const deletedWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete);
@@ -133,7 +153,21 @@ const LearnWords = () => {
       wordArr.push('?');
     }
     return wordArr.map((it, num) => {
-      const res = it === word[num] ? <span key={`${it}${num}`} className="true">{it}</span> : <span key={`${it}${num}`} className="false">{it}</span>;
+      const res = it === word[num] ? (
+        <span
+          key={`${it}${num}`}
+          className="true"
+        >
+          {it}
+        </span>
+      ) : (
+        <span
+          key={`${it}${num}`}
+          className="false"
+        >
+          {it}
+        </span>
+      );
       return res;
     });
   };
@@ -156,6 +190,9 @@ const LearnWords = () => {
     }
   };
 
+  const currentWordObj = wordObjects[currentWordIndex];
+  console.log(currentWordObj);
+
   return (
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
@@ -174,7 +211,7 @@ const LearnWords = () => {
               <Card.Body>
                 <div className="word__container">
                   <div className="word_img">
-                    <img alt="" src="./images/railway.jpg" />
+                    <img alt="" src={currentWordObj?.image} />
                   </div>
                   <div className="word__block">
                     <div className="unknown__word">
