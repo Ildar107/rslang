@@ -1,17 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState, useRef, useEffect, useContext,
+} from 'react';
 import {
   Row, Col, Card, Button,
 } from 'react-bootstrap';
-// import StoreContext from '../../app/store';
+import StoreContext from '../../app/store';
 import Skeleton from '../../components/skeleton/Skeleton';
 // import userSettingsService from '../../services/user.settings.services';
 // import MessageModal from '../../components/messageModal/MessageModal';
 // import ErrorModal from '../../components/errorModal/ErrorModal';
-// import userWordsService from '../../services/user.words.services';
+import userWordsService from '../../services/user.words.services';
 import './learnWords.scss';
 
+const getShuffledArr = (arr) => {
+  if (!arr) return [];
+  const newArr = arr.slice();
+  for (let i = newArr.length - 1; i > 0; i -= 1) {
+    const rand = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+  }
+  return newArr;
+};
+
 const LearnWords = () => {
-  // const context = useContext(StoreContext);
+  const context = useContext(StoreContext);
 
   const word = 'aaaaaaa';
   const explainSent = 'Something that give you understanding.';
@@ -36,22 +48,80 @@ const LearnWords = () => {
   const [isDelete, setIsDelete] = useState(false);
 
   const inputEl = useRef();
+  const { jwt, userId, userSettings } = context;
+  const {
+    cardsPerDay,
+    example,
+    explain,
+    showAnswer,
+    showDelete,
+    showHard,
+    transcription,
+    translate,
+    wordImg,
+    wordsPerDay,
+  } = userSettings;
 
+  const [words, setWords] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const [data] = await userWordsService.getWords(
+        jwt, userId, 200,
+      );
+      const { paginatedResults } = data;
+      // console.log(jwt, userId, userSettings, paginatedResults.filter((wordObj) => wordObj.userWord));
+      if (!data.error) {
+        let wordsArray = paginatedResults
+          .filter((wordObj) => !wordObj.userWord)
+          .slice(0, wordsPerDay);
+
+        const wordsToRepeat = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isRepeat);
+        if (wordsPerDay + wordsToRepeat.length > cardsPerDay) {
+          const difference = cardsPerDay - wordsPerDay;
+          wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
+          const shuffled = getShuffledArr(wordsArray);
+          setWords(shuffled);
+          console.log('1', wordsArray);
+          return;
+        }
+        wordsArray = wordsArray.concat(wordsToRepeat);
+
+        const restOfTheUserWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete === false
+        && wordObj.userWord?.optional?.isRepeat === false);
+        // console.log(restOfTheUserWords);
+        if (wordsArray.length + restOfTheUserWords.length > cardsPerDay) {
+          const difference = cardsPerDay - wordsArray.length;
+          wordsArray = wordsArray.concat(restOfTheUserWords.slice(0, difference));
+          const shuffled = getShuffledArr(wordsArray);
+          setWords(shuffled);
+          console.log('2', wordsArray);
+          return;
+        }
+        wordsArray = wordsArray.concat(restOfTheUserWords);
+        console.log(wordsArray);
+
+        const difference = cardsPerDay - wordsArray.length;
+        const newWordsToFillArray = paginatedResults.filter((wordObj) => !wordObj.userWord).slice(wordsPerDay, wordsPerDay + difference);
+        console.log(newWordsToFillArray);
+        wordsArray = wordsArray.concat(newWordsToFillArray);
+        const shuffled = getShuffledArr(wordsArray);
+        console.log(shuffled);
+        setWords(wordsArray);
+
+        // const difficultWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDifficult);
+        // const deletedWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete);
+
+        // console.log(restOfTheUserWords);
+        // setWords(wordsArray);
+      }
+    // if (words.length > 0) {
+    //   setWord(words.shift());
+    // }
+    }
+    fetchData();
+  }, []);
   useEffect(() => { inputEl.current.focus(); }, []);
-
-  // const [newWords, setNewWords] = useState([]);
-
-  //   useEffect(async () => {
-  //     const data = await userWordsService.getNewWords(
-  //       context.jwt, context.userId, context.userSettings.wordsPerDay,
-  //     );
-  //     if (!data.error) {
-  //       setNewWords(data.paginatedResults);
-  //     }
-  //     if (newWords.length > 0) {
-  //       setWord(newWords.shift());
-  //     }
-  //   });
 
   const inputFocus = () => {
     inputEl.current.focus();

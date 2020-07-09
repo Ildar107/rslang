@@ -11,7 +11,7 @@ const SAVANNAH = '/savannah';
 const LEARNSETTINGS = '/learn-settings';
 const START_GAME_PAGE = '/startGame';
 const STATISTIC_LONG_TERM = '/statisticLongTerm';
-const LEARNWORDS = '/leran-words';
+const LEARNWORDS = '/learn-words';
 
 export default {
   LANDING,
