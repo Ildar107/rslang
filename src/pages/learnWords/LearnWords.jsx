@@ -232,7 +232,7 @@ const LearnWords = () => {
                       )}
                       <input
                         className="input__container"
-                        style={{ width: `${currentWordObj?.word.length * 13 + 11}px` }}
+                        style={{ width: `${currentWordObj?.word.length * 18 + 15}px` }}
                         maxLength={currentWordObj?.word.length}
                         ref={inputEl}
                         type="text"
@@ -263,7 +263,6 @@ const LearnWords = () => {
                       size="sm"
                       onClick={() => {
                         checkIsTypedWordRight(currentWordObj?.word);
-                        setIsRepeat(false);
                         setIsRepeat(true);
                       }}
                     >
