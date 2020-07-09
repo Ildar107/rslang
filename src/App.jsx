@@ -7,7 +7,6 @@ import {
 import routes from './constants/routes';
 import MainPage from './pages/home/MainPage';
 import TeamPage from './pages/team/TeamPage';
-// import PuzzlePage from './pages/puzzle/PuzzlePage';
 import AudiocallPage from './pages/audiocall/AudiocallPage';
 import PuzzlePage from './pages/puzzle/PuzzlePage';
 import StartGamePage from './pages/startGame/startGamePage';
@@ -15,7 +14,6 @@ import WordBuilder from './pages/wordbuilder/WordBuilder';
 import Loader from './components/loader/Loader';
 import SpeakIt from './pages/speakit/SpeakIt';
 import StoreContext from './app/store';
-import Sprint from './pages/sprint/Sprint';
 import MiniGamesPage from './pages/minigames/MiniGamesPage';
 import ThemeContext from './app/theme';
 import AuthorizationPage from './pages/authorization/AuthorizationPage';
@@ -59,9 +57,6 @@ const App = () => {
             </PrivateRoute>
             <PrivateRoute path={routes.SPEAKIT} exact>
               <SpeakIt />
-            </PrivateRoute>
-            <PrivateRoute path={routes.SPRINTGAME} exact>
-              <Sprint />
             </PrivateRoute>
             <PrivateRoute path={routes.WORD_BUILDER} exact>
               <WordBuilder />

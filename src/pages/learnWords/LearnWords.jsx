@@ -42,7 +42,6 @@ const LearnWords = () => {
   const [mask, setMask] = useState(null);
   const [showMask, setShowMask] = useState(false);
   const [readyForNext, setReadyForNext] = useState(false);
-  const [difficulty, setDifficulty] = useState('easy');
   const [isDifficult, setIsDifficult] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -147,13 +146,16 @@ const LearnWords = () => {
     inputEl.current.focus();
   };
 
+  const currentWordObj = wordObjects[currentWordIndex];
+  console.log(currentWordObj);
+
   const getMask = (maskWord) => {
     const wordArr = maskWord.toLowerCase().split('');
-    while (wordArr.length < word.length) {
+    while (wordArr.length < currentWordObj?.word.length) {
       wordArr.push('?');
     }
     return wordArr.map((it, num) => {
-      const res = it === word[num] ? (
+      const res = it === currentWordObj?.word[num] ? (
         <span
           key={`${it}${num}`}
           className="true"
@@ -172,8 +174,6 @@ const LearnWords = () => {
     });
   };
 
-  const currentWordObj = wordObjects[currentWordIndex];
-  console.log(currentWordObj);
   const checkIsTypedWordRight = (curWord) => {
     setMask(getMask(curWord));
     inputEl.current.value = '';
@@ -189,6 +189,16 @@ const LearnWords = () => {
       checkIsTypedWordRight(typedWord);
       console.log('-> ', difficulty);
     }
+  };
+
+  const getRightSentence = (sent) => {
+    if (currentWordObj?.word && sent) {
+      const reg = new RegExp(`${currentWordObj?.word}`, 'gi');
+      if (!readyForNext) {
+        return sent.replace(reg, '<...>');
+      } return sent;
+    }
+    return null;
   };
 
   return (
@@ -246,23 +256,27 @@ const LearnWords = () => {
                     >
                       Проверить
                     </Button>
+                    {showAnswer && (
                     <Button
                       key="dn"
                       variant="danger"
                       type="button"
                       size="sm"
                       onClick={() => {
-                        checkIsTypedWordRight(word);
-                        // setDifficulty('hard');
+                        checkIsTypedWordRight(currentWordObj?.word);
+                        setIsRepeat(false);
+                        setIsRepeat(true);
                       }}
                     >
-                      Не знаю
+                      Показать ответ
                     </Button>
-                    <div key="expl" className="explain__sentense">{currentWordObj?.textMeaning}</div>
-                    <div key="ex" className="example__sentense">{currentWordObj?.textExample}</div>
-                    <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>
-                    <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>
-                    <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>
+                    )}
+                    {explain && <div key="expl" className="explain__sentense">{getRightSentence(currentWordObj?.textMeaning)}</div>}
+                    {explain && readyForNext && <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>}
+                    {example && <div key="ex" className="example__sentense">{getRightSentence(currentWordObj?.textExample)}</div>}
+                    {example && readyForNext && <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>}
+                    {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
+                    {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
                     <div key="cont" className="repeat__container" />
                   </div>
                 </div>
@@ -274,8 +288,8 @@ const LearnWords = () => {
           <Col md={8}>
             <Card>
               <Card.Body>
-                <p>Перед переходом к следующему слову выберите категории для текущего</p>
                 <div className="words__control">
+                  {showDelete && (
                   <Button
                     className={isDelete ? '' : 'disabled'}
                     onClick={() => {
@@ -286,20 +300,10 @@ const LearnWords = () => {
                     variant="primary"
                     type="button"
                   >
-                    Удалить
+                    Удалить слово
                   </Button>
-                  <Button
-                    className={isRepeat ? '' : 'disabled'}
-                    onClick={() => {
-                      if (!isRepeat) setIsDelete(false);
-                      setIsRepeat(!isRepeat);
-                    }}
-                    key="rep"
-                    variant="primary"
-                    type="button"
-                  >
-                    Повторять чаще
-                  </Button>
+                  )}
+                  {showHard && (
                   <Button
                     className={isDifficult ? '' : 'disabled'}
                     onClick={() => setIsDifficult(!isDifficult)}
@@ -307,8 +311,9 @@ const LearnWords = () => {
                     variant="primary"
                     type="button"
                   >
-                    Сложное
+                    Сложное слово
                   </Button>
+                  )}
                 </div>
                 <div className="next-word">
                   {readyForNext && (
