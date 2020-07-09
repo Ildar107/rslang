@@ -55,6 +55,7 @@ class SprintGame extends Component {
       timer: true,
       timerCounter: 25,
       timerID: null,
+      level: 0,
     };
   }
 
@@ -121,6 +122,7 @@ class SprintGame extends Component {
   resetProgress = () => {
     this.setState({
       progressValue: 0,
+      progress: 0,
     });
   }
 
@@ -150,9 +152,14 @@ class SprintGame extends Component {
     });
   }
 
+  nextLeveNumber = () => {
+    this.setState({
+      level: this.state.level + 1,
+    });
+  }
+
   nextWord = async () => {
     const currentWordArr = await [...this.state.words];
-    console.log(currentWordArr.length);
     if (currentWordArr.length > minLengthArray) {
       await currentWordArr.pop();
       const newShuffeledArr = await getShuffledArr(currentWordArr);
@@ -161,6 +168,7 @@ class SprintGame extends Component {
       await this.getCoupleOfWords();
       await this.updateProgress();
     } else {
+      clearInterval(this.timerID);
       await this.nextLevel();
     }
   }
@@ -176,6 +184,10 @@ class SprintGame extends Component {
     await this.getWords(page, this.state.group);
     await this.resetProgress();
     await this.resetTimer();
+    await this.nextLeveNumber();
+    await this.setWordIndex();
+    await this.setArrayOfWords(this.state.words);
+    await this.getCoupleOfWords();
   }
 
   getTrueAnswer = () => {
@@ -252,11 +264,20 @@ class SprintGame extends Component {
     });
   };
 
-  handleGroupChange = ({ target: { innerText } }) => {
-    this.getWords(this.state.activePage, Number(innerText) - 1);
-    this.setState({
-      activeGroup: Number(innerText) - 1,
-    });
+  handleGroupChange = async ({ target: { innerText } }) => {
+    if (Number(innerText)) {
+      await this.setState({
+        group: Number(innerText) - 1,
+        level: 0,
+      });
+      const page = await randomInteger(minPage, maxPage);
+      await this.getWords(page, this.state.group);
+      await this.resetProgress();
+      await this.resetTimer();
+      await this.setWordIndex();
+      await this.setArrayOfWords(this.state.words);
+      await this.getCoupleOfWords();
+    }
   };
 
   isClickHandler = () => {
@@ -304,7 +325,7 @@ class SprintGame extends Component {
                 Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
                   <Pagination.Item
                     key={x}
-                    active={x === (this.state.activeGroup + 1)}
+                    active={x === (this.state.group + 1)}
                     onClick={this.handleGroupChange}
                   >
                     {x}
@@ -314,9 +335,9 @@ class SprintGame extends Component {
               </Pagination>
             </Col>
             <Col className="sprint__score">
-              Угадано:
+              Уровень:
               {' '}
-              {this.state.score}
+              {this.state.level + 1}
             </Col>
             <Col className="sprint__progress" sm>
               Осталось:
