@@ -52,25 +52,39 @@ const LearnWords = () => {
     wordsPerDay,
   } = userSettings;
 
-  useEffect(() => { inputEl.current.focus(); }, []);
+  const [words, setWords] = useState([]);
 
-  // const [words, setWords] = useState([]);
-
-  useEffect(async () => {
-    const [data] = await userWordsService.getWords(
-      jwt, userId, 200,
-    );
-    const { paginatedResults } = data;
-    console.log(jwt, userId, userSettings, paginatedResults);
-    if (!data.error) {
-
-      // setWords(data.paginatedResults);
-
-    }
+  useEffect(() => {
+    async function fetchData() {
+      const [data] = await userWordsService.getWords(
+        jwt, userId, 200,
+      );
+      const { paginatedResults } = data;
+      // console.log(jwt, userId, userSettings, paginatedResults.filter((wordObj) => wordObj.userWord));
+      if (!data.error) {
+        let wordsArray = paginatedResults
+          .filter((wordObj) => !wordObj.userWord)
+          .slice(0, wordsPerDay);
+        const wordsToRepeat = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isRepeat);
+        if (wordsToRepeat.length + wordsPerDay > cardsPerDay) {
+          const difference = cardsPerDay - wordsPerDay;
+          wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
+          setWords(wordsArray);
+          return;
+        }
+        // const difficultWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDifficult);
+        // const deletedWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete);
+        wordsArray = wordsArray.concat(wordsToRepeat);
+        console.log(wordsArray);
+        // setWords(wordsArray);
+      }
     // if (words.length > 0) {
     //   setWord(Words.shift());
     // }
-  });
+    }
+    fetchData();
+  }, []);
+  useEffect(() => { inputEl.current.focus(); }, []);
 
   const inputFocus = () => {
     inputEl.current.focus();
