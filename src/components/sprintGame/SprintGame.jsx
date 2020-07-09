@@ -274,6 +274,7 @@ class SprintGame extends Component {
       await this.getWords(page, this.state.group);
       await this.resetProgress();
       await this.resetTimer();
+      await this.resetScore();
       await this.setWordIndex();
       await this.setArrayOfWords(this.state.words);
       await this.getCoupleOfWords();
