@@ -55,6 +55,28 @@ module.exports = {
           'file-loader',
         ],
       },
+      {
+        test: /\.(png|jp(e*)g|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[hash]-[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
+      },
     ],
   },
 

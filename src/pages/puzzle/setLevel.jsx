@@ -98,7 +98,7 @@ SetLevel.propTypes = {
   getWordsData: PropTypes.func.isRequired,
   difficulty: PropTypes.number.isRequired,
   pageNumber: PropTypes.number.isRequired,
-  setNext: PropTypes.number.isRequired,
+  setNext: PropTypes.func.isRequired,
 };
 
 export default SetLevel;

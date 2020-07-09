@@ -9,11 +9,13 @@ class GameResults extends Component {
     e.currentTarget.querySelector('.result__container audio')?.play();
   }
 
-  setNewGame = () => {
+  setNewGame = (e) => {
+    e.preventDefault();
     this.props.restart();
   }
 
-  returnToGame = () => {
+  returnToGame = (e) => {
+    e.preventDefault();
     this.props.continueGame();
   }
 
@@ -61,9 +63,9 @@ class GameResults extends Component {
         ))}
       </div>
       <div className="result__control">
-        <Link className="btn btn-outline-success btn-lg" onClick={this.returnToGame}>Return</Link>
+        <a href="" className="btn btn-outline-success btn-lg" onClick={this.returnToGame}>Return</a>
         <Link to={routes.SPEAKIT} className="btn btn-outline-success btn-lg" onClick={this.setNewGame}>New game</Link>
-        <Link to={routes.LANDING} className="btn btn-outline-success btn-lg">Main page</Link>
+        <Link to={routes.MINI_GAMES} className="btn btn-outline-success btn-lg" onClick={this.props.stopRecognition}>Main page</Link>
       </div>
     </div>
   )

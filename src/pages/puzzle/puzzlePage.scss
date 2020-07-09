@@ -37,7 +37,7 @@
 
 @font-face {
   font-family: "PragatiNarrow-Regular";
-  src: url("PragatiNarrow-Regular.ttf") format("truetype");
+  src: url("../../../src/assets/fonts/PragatiNarrow-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -48,7 +48,7 @@
   font-weight: 400;
   src: local('Material Icons'),
   local('MaterialIcons-Regular'),
-  url('MaterialIcons-Regular.ttf') format('truetype');
+  url('../../../src/assets/fonts/MaterialIcons-Regular.ttf') format('truetype');
 }
 
 .material-icons {
@@ -79,6 +79,18 @@
 .puzzle {
   padding-top: 15px;
   position: relative;
+  & .help-btn{
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    z-index: 1;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    font-size: 15px;
+    background-color: aquamarine;
+    color: blue;
+  }
 }
 
 .puzzle-set-level {

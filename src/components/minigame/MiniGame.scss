@@ -1,0 +1,59 @@
+.mini-games {
+  font-size: 20px;
+
+  .card {
+    width: 500px;
+    height: 250px;
+    margin: 15px;
+    // border-radius: 30px;
+  }
+  li {
+    list-style-type: none;
+  }
+  img {
+    height: 100%;
+    // border-radius: 30px;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-inline-start: 0;
+  }
+  .card-img-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    // border-radius: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card-title {
+    text-align: center;
+  }
+  .card-text {
+    text-align: center;
+  }
+  .card:hover {
+    cursor: pointer;
+    opacity: 75%;
+  }
+  @media (max-width: 650px) {
+    font-size: 14px;
+    .card {
+      width: 300px;
+      height: 150px;
+    }
+    h3 {
+      font-size: 18px;
+    }
+  }
+  @media (max-width: 400px) {
+    font-size: 12px;
+    .card {
+      width: 250px;
+      height: 125px;
+    }
+  }
+}

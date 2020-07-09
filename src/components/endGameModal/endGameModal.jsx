@@ -1,6 +1,8 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import routes from '../../constants/routes';
 
 function EndGameModal(props) {
   return (
@@ -23,7 +25,9 @@ function EndGameModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="success" onClick={props.onHide}>Вернуться</Button>
-        <Button href="#/">Выйти</Button>
+        <Link to={routes.MINI_GAMES} className="side-nav-link">
+          <Button>Выйти</Button>
+        </Link>
       </Modal.Footer>
     </Modal>
   );

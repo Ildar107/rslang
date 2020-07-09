@@ -1,0 +1,101 @@
+.savannah{
+  background-image: url(https://staticcdn-new.lingualeo.com/neo-static/bg-all.a3994c8c91d1d5d5d10424ea1c919f70.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  height: 100vh;
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+  max-width: 100%;
+  user-select: none;
+}
+
+.translate {
+	text-align: center;
+	animation: pulsing 5s linear infinite;
+  animation-delay: .5s;
+  color: whitesmoke;
+  font-size: 24px;
+  
+}
+
+.words-block{
+	transform: translateY(30vh);
+}
+
+.word{
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+  color: whitesmoke;
+  font-size: 20px;
+  padding-bottom: 3px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s ease;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.word:hover{
+  background-color: rgba(255, 255, 255, 0.258);
+}
+
+.row{
+  align-items: center;
+}
+
+.savannah__select{
+  width: 150px;
+}
+
+.levels__groups, .savannah__level, .savannah__score{
+  color: whitesmoke;
+
+}
+
+.levels__groups{
+  margin-top: 10px;
+}
+
+.close-btn{
+  color: whitesmoke;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  transition: color .3s ease;
+}
+
+.close-btn:hover{
+  color: rgb(138, 138, 138);
+}
+
+.col-sm {
+  min-width: auto;
+}
+
+.savannah__help{
+  width: 75px;
+  height: 75px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+@media screen and (max-width: 575px) {
+  .words-block{
+    transform: translateY(27vh);
+  }
+
+  .word{
+    margin-top: 10px;
+  }
+
+}
+

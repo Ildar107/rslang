@@ -1,0 +1,45 @@
+.learn-settings-page {
+    .card {
+        border: 0px;
+    }
+
+    .card .form-check-input {
+        border-radius: 5px;
+    }
+
+    .settings-btn {
+        margin-top: 20px;
+    }
+
+    .card .form-check {
+        margin-top: 5px;
+    }
+
+    .checkbox-group {
+        margin-top: 39px;
+    }
+}
+
+body[data-theme=light] .learn-settings-page {
+
+    .card {
+        color: #6c757d;
+        background-color: #fafbfe;
+
+    }
+
+    .card .form-check-input {
+        border-color: #e8eaef;
+    }
+    
+}
+
+
+body[data-theme=dark] .learn-settings-page  {
+
+    .card {
+       color: #8391a2;
+       background: #3a444e;
+   }
+}
+   

@@ -1,33 +1,59 @@
-// @import 'bootswatch/dist/journal/_variables';
-// @import 'bootswatch/dist/journal/_bootswatch';
+body[data-theme=light] {
+    color: #6c757d;
+    background-color: #e8eaef;
 
-// $blue: #2c8ef8;
-// $indigo: #727cf5;
-// $purple: #6b5eae;
-// $pink: #ff679b;
-// $red: #fa5c7c;
-// $orange: #fd7e14;
-// $yellow: #ffbc00;
-// $green: #0acf97;
-// $teal: #02a8b5;
-// $cyan: #39afd1;
-// $white: #fff;
-// $gray: #98a6ad;
-// $gray-dark: #343a40;
-// $primary: #727cf5;
-// $secondary: #6c757d;
-// $success: #0acf97;
-// $info: #39afd1;
-// $warning: #ffbc00;
-// $danger: #fa5c7c;
-// $light: #eef2f7;
-// $dark: #313a46;
-// $breakpoint-xs: 0;
-// $breakpoint-sm: 576px;
-// $breakpoint-md: 768px;
-// $breakpoint-lg: 992px;
-// $breakpoint-xl: 1367px;
+}
+
+body[data-theme=dark] {
+    color: #aab8c5;
+    background: #343a40;
+}
 
 #root {
     position: relative;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../assets/fonts/Nunito-Regular.woff');
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../../assets/fonts/Nunito-Bold.woff');
+}
+
+.wrapper-page {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: inherit;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+
+.content-page {
+    margin-left: 0;
+    overflow: hidden;
+    padding: 0 15px 5px 30px;
+    position: relative;
+    width: 100%;
+    font-family: "Nunito", sans-serif;
+    min-height: calc(100vh - 79px);
+}
+
+.page-title-box .page-title {
+    font-size: 18px;
+    margin: 0;
+    line-height: 75px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: inherit;
 }

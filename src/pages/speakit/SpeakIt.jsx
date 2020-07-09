@@ -6,6 +6,8 @@ import GameResults from '../../components/speakIt/gameResults/GameResults';
 import StoreContext from '../../app/store';
 import getRandomInt from '../../helper/randomValue';
 import EndGameModal from '../../components/endGameModal/endGameModal';
+import HelpModal from '../../components/HelpModal/HelpModal';
+import { SPEAKIT_HELP } from '../../constants/gamesHelp';
 import './speakIt.scss';
 
 const maxWordsItem = 10;
@@ -15,6 +17,19 @@ const SpeechRecognition = window.SpeechRecognition
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 recognition.lang = 'en-US';
+let recognizing = false;
+
+recognition.onstart = () => {
+  recognizing = true;
+};
+
+recognition.onend = () => {
+  recognizing = false;
+};
+
+recognition.onerror = () => {
+  recognizing = false;
+};
 
 class SpeakIt extends Component {
   constructor(props, context) {
@@ -98,7 +113,7 @@ class SpeakIt extends Component {
   }
 
   recognitionEndEventHandler = () => {
-    if (this.state.isSpeakMode) this.state.recognition.start();
+    if (this.state.isSpeakMode && !this.state.isShowModal) this.state.recognition.start();
   }
 
   start = () => {
@@ -135,6 +150,9 @@ class SpeakIt extends Component {
       isSpeakMode: true,
       isGameStopped: false,
     });
+    if (!recognizing) {
+      this.state.recognition.start();
+    }
   }
 
   onGetResults = () => {
@@ -154,14 +172,27 @@ class SpeakIt extends Component {
     }
   }
 
+  componentWillUnmount = () => {
+    this.state.recognition.stop();
+    this.state.recognition.abort();
+    this.setState({ isSpeakMode: true });
+  }
+
   setShowModal = () => {
+    this.state.recognition.abort();
+    this.state.recognition.stop();
     this.setState({ isShowModal: true });
   }
 
   render = () => (!this.state.isGameStopped ? (
     <Container fluid className="speak-it">
       <EndGameModal
-        onHide={() => { this.setState({ isShowModal: false }); }}
+        onHide={() => {
+          if (this.state.words.length > 0 && this.state.isSpeakMode) {
+            this.state.recognition.start();
+          }
+          this.setState({ isShowModal: false });
+        }}
         show={this.state.isShowModal}
       />
       <span className="close__game" onClick={this.setShowModal}>
@@ -239,15 +270,21 @@ class SpeakIt extends Component {
             onClick={this.pause}
             disabled={!this.state.isSpeakMode}
           >
-            Finish
+            Results
           </button>
         </div>
       </div>
+      <HelpModal messages={SPEAKIT_HELP} />
     </Container>
   )
     : (
-      <div className="results results_active">
-        <GameResults state={this.state} restart={this.restart} continueGame={this.continue} />
+      <div className="results-speak results_active">
+        <GameResults
+          state={this.state}
+          restart={this.restart}
+          continueGame={this.continue}
+          stopRecognition={this.stopRecognition}
+        />
       </div>
     ))
 }

@@ -8,6 +8,7 @@ import StoreContext from '../../app/store';
 import routes from '../../constants/routes';
 import Loader from '../../components/loader/Loader';
 import ErrorModal from '../../components/errorModal/ErrorModal';
+import userSettingsService from '../../services/user.settings.services';
 import './authorizationPage.scss';
 
 const SYMBOLS_REGEX = /[-+_@$!%*?&#.,;:[\]{}]/;
@@ -68,6 +69,13 @@ const AuthorizationPage = () => {
         if (!signInData) return;
         saveInStorage(signInData?.userId, email, signInData?.token);
         context.isAuthenticated = true;
+        const settings = await userSettingsService.getUserSettings(context.jwt, context.userId);
+        if (!settings.error) {
+          context.userSettings = settings.cardsPerDay
+            ? settings
+            : { ...context.userSettings, wordsPerDay: settings.wordsPerDay };
+          localStorage.setItem('userSettings', JSON.stringify(context.userSettings));
+        }
         redirectToMain();
       } catch (error) {
         // console.log(error);
