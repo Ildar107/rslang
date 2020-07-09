@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Row, Col, Card, Button,
 } from 'react-bootstrap';
@@ -13,18 +13,31 @@ import './learnWords.scss';
 const LearnWords = () => {
   // const context = useContext(StoreContext);
 
-  const word = 'explain';
+  const word = 'aaaaaaa';
   const explainSent = 'Something that give you understanding.';
   const exampleSent = 'I want explain you how it works.';
   const translatedWord = 'explain';
   const translatedExplainSentense = 'Что-то что дает понимание.';
   const translatedExampleSSentense = 'Я хочу объяснить тебе как это работает.';
 
-  const [enteredWord, setEnteredWord] = useState('');
+  // const [enteredWord, setEnteredWord] = useState('');
   // const [word, setWord] = useState('');
 
-  const [isRight, setIsRight] = useState(false);
-  const [isWordEntered, setIsWordEntered] = useState(false);
+  // const [isRight, setIsRight] = useState(false);
+  // const [isWordEntered, setIsWordEntered] = useState(false);
+
+  const [typedWord, setTypedWord] = useState('');
+  const [mask, setMask] = useState(null);
+  const [showMask, setShowMask] = useState(false);
+  const [readyForNext, setReadyForNext] = useState(false);
+  const [difficulty, setDifficulty] = useState('easy');
+  const [isDifficult, setIsDifficult] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+
+  const inputEl = useRef();
+
+  useEffect(() => { inputEl.current.focus(); }, []);
 
   // const [newWords, setNewWords] = useState([]);
 
@@ -40,22 +53,44 @@ const LearnWords = () => {
   //     }
   //   });
 
-  const onEnterWord = (e) => {
-    if (e.key === 'Enter') {
-      setIsWordEntered(true);
-      setEnteredWord(e.target.value);
-      if (e.target.value === word) {
-        setIsRight(true);
-      } else {
-        e.target.value = '';
-      }
+  const inputFocus = () => {
+    inputEl.current.focus();
+  };
+
+  const getMask = (maskWord) => {
+    const wordArr = maskWord.toLowerCase().split('');
+    while (wordArr.length < word.length) {
+      wordArr.push('?');
+    }
+    return wordArr.map((it, num) => {
+      const res = it === word[num] ? <span key={`${it}${num}`} className="true">{it}</span> : <span key={`${it}${num}`} className="false">{it}</span>;
+      return res;
+    });
+  };
+
+  const checkIsTypedWordRight = (curWord) => {
+    setMask(getMask(curWord));
+    inputEl.current.value = '';
+    setShowMask(true);
+    if (curWord === word) {
+      setReadyForNext(true);
+    } else {
+      inputFocus();
     }
   };
+
+  const onEnterWord = (e) => {
+    if (e.key === 'Enter') {
+      checkIsTypedWordRight(typedWord);
+      console.log('-> ', difficulty);
+    }
+  };
+
   return (
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
-      <Skeleton wrapperClass="learn-words-page" title="Настройка обучения">
+      <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
         <Row className="justify-content-md-center">
           <Col md={8}>
             <Card>
@@ -73,37 +108,57 @@ const LearnWords = () => {
                   </div>
                   <div className="word__block">
                     <div className="unknown__word">
-                      <span className="input__container">
-                        <span className="word__background">
-                          { isRight
-                            ? <span className="text-success">{word}</span>
-                            : word.split('').map((x, i) => <span key={i} className={enteredWord[i] === x ? 'text-success' : 'text-primary'}>{x}</span>)}
-                        </span>
-                        <input
-                          type="text"
-                          className={`answer-input ${isWordEntered ? 'answer-input-entered' : ''} ${isRight ? 'answer-input-right' : ''}`}
-                          onClick={() => setIsWordEntered(false)}
-                          onKeyPress={onEnterWord}
-                        />
+                      {showMask && (
+                      <span
+                        onClick={inputFocus}
+                        className="word__mask"
+                      >
+                        {mask}
                       </span>
+                      )}
+                      <input
+                        className="input__container"
+                        style={{ width: `${word.length * 13 + 11}px` }}
+                        maxLength={word.length}
+                        ref={inputEl}
+                        type="text"
+                        onChange={(e) => {
+                          setShowMask(false);
+                          setTypedWord(e.target.value);
+                        }}
+                        onKeyDown={onEnterWord}
+                      />
+
                     </div>
-                    <div className="explain__sentense">{explainSent}</div>
-                    <div className="example__sentense">{exampleSent}</div>
-                    <div className="translated__word">{translatedWord}</div>
-                    <div className="translated__explain__sentense">{translatedExplainSentense}</div>
-                    <div className="translated__example__sentense">{translatedExampleSSentense}</div>
-                    <div className="repeat__container">
-                      <Button variant="info" type="button" size="sm">
-                        <i className="uil-repeat" />
-                        Повторить
-                      </Button>
-                      <Button variant="info" type="button" size="sm">
-                        Хорошо
-                      </Button>
-                      <Button variant="info" type="button" size="sm">
-                        Легко
-                      </Button>
-                    </div>
+                    <Button
+                      key="check"
+                      onClick={() => {
+                        checkIsTypedWordRight(typedWord);
+                      }}
+                      variant="success"
+                      type="button"
+                      size="sm"
+                    >
+                      Проверить
+                    </Button>
+                    <Button
+                      key="dn"
+                      variant="danger"
+                      type="button"
+                      size="sm"
+                      onClick={() => {
+                        checkIsTypedWordRight(word);
+                        setDifficulty('hard');
+                      }}
+                    >
+                      Не знаю
+                    </Button>
+                    <div key="expl" className="explain__sentense">{explainSent}</div>
+                    <div key="ex" className="example__sentense">{exampleSent}</div>
+                    <div key="trans" className="translated__word">{translatedWord}</div>
+                    <div key="tranex" className="translated__explain__sentense">{translatedExplainSentense}</div>
+                    <div key="trexsent" className="translated__example__sentense">{translatedExampleSSentense}</div>
+                    <div key="cont" className="repeat__container" />
                   </div>
                 </div>
               </Card.Body>
@@ -114,16 +169,53 @@ const LearnWords = () => {
           <Col md={8}>
             <Card>
               <Card.Body>
+                <p>Перед переходом к следующему слову выберите категории для текущего</p>
                 <div className="words__control">
-                  <Button variant="primary" type="button">
-                    Показать слово
+                  <Button
+                    className={isDelete ? '' : 'disabled'}
+                    onClick={() => {
+                      if (!isDelete) setIsRepeat(false);
+                      setIsDelete(!isDelete);
+                    }}
+                    key="del"
+                    variant="primary"
+                    type="button"
+                  >
+                    Удалить
                   </Button>
-                  <Button variant="primary" type="button">
-                    Удалить слово
+                  <Button
+                    className={isRepeat ? '' : 'disabled'}
+                    onClick={() => {
+                      if (!isRepeat) setIsDelete(false);
+                      setIsRepeat(!isRepeat);
+                    }}
+                    key="rep"
+                    variant="primary"
+                    type="button"
+                  >
+                    Повторять чаще
                   </Button>
-                  <Button variant="primary" type="button">
-                    Сложные
+                  <Button
+                    className={isDifficult ? '' : 'disabled'}
+                    onClick={() => setIsDifficult(!isDifficult)}
+                    key="dif"
+                    variant="primary"
+                    type="button"
+                  >
+                    Сложное
                   </Button>
+                </div>
+                <div className="next-word">
+                  {readyForNext && (
+                  <Button
+                    key="next"
+                    variant="success"
+                    type="button"
+                    size="sm"
+                  >
+                    Перейти к следующему
+                  </Button>
+                  )}
                 </div>
               </Card.Body>
             </Card>
