@@ -309,7 +309,6 @@ class SprintGame extends Component {
 
     const stylesProgress = {
       path: {
-        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
         strokeLinecap: 'butt',
         transition: 'stroke-dashoffset 0.3s ease 0s',
       },
