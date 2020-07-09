@@ -1,17 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState, useRef, useEffect, useContext,
+} from 'react';
 import {
   Row, Col, Card, Button,
 } from 'react-bootstrap';
-// import StoreContext from '../../app/store';
+import StoreContext from '../../app/store';
 import Skeleton from '../../components/skeleton/Skeleton';
 // import userSettingsService from '../../services/user.settings.services';
 // import MessageModal from '../../components/messageModal/MessageModal';
 // import ErrorModal from '../../components/errorModal/ErrorModal';
-// import userWordsService from '../../services/user.words.services';
+import userWordsService from '../../services/user.words.services';
 import './learnWords.scss';
 
 const LearnWords = () => {
-  // const context = useContext(StoreContext);
+  const context = useContext(StoreContext);
 
   const word = 'aaaaaaa';
   const explainSent = 'Something that give you understanding.';
@@ -36,22 +38,39 @@ const LearnWords = () => {
   const [isDelete, setIsDelete] = useState(false);
 
   const inputEl = useRef();
+  const { jwt, userId, userSettings } = context;
+  const {
+    cardsPerDay,
+    example,
+    explain,
+    showAnswer,
+    showDelete,
+    showHard,
+    transcription,
+    translate,
+    wordImg,
+    wordsPerDay,
+  } = userSettings;
 
   useEffect(() => { inputEl.current.focus(); }, []);
 
-  // const [newWords, setNewWords] = useState([]);
+  // const [words, setWords] = useState([]);
 
-  //   useEffect(async () => {
-  //     const data = await userWordsService.getNewWords(
-  //       context.jwt, context.userId, context.userSettings.wordsPerDay,
-  //     );
-  //     if (!data.error) {
-  //       setNewWords(data.paginatedResults);
-  //     }
-  //     if (newWords.length > 0) {
-  //       setWord(newWords.shift());
-  //     }
-  //   });
+  useEffect(async () => {
+    const [data] = await userWordsService.getWords(
+      jwt, userId, 200,
+    );
+    const { paginatedResults } = data;
+    console.log(jwt, userId, userSettings, paginatedResults);
+    if (!data.error) {
+
+      // setWords(data.paginatedResults);
+
+    }
+    // if (words.length > 0) {
+    //   setWord(Words.shift());
+    // }
+  });
 
   const inputFocus = () => {
     inputEl.current.focus();
