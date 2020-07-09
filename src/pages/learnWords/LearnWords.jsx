@@ -62,14 +62,34 @@ const LearnWords = () => {
     wordsPerDay,
   } = userSettings;
 
-  const [words, setWords] = useState([]);
+  const [wordObjects, setWordsObj] = useState([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  // const [solved, setSolved] = useState(false);
+  // const [finished, setFinished] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       const [data] = await userWordsService.getWords(
         jwt, userId, 200,
       );
-      const { paginatedResults } = data;
+      let { paginatedResults } = data;
+      paginatedResults = paginatedResults.map((wordObj) => {
+        const {
+          image,
+          audio,
+          audioMeaning,
+          audioExample,
+          textMeaning,
+          textExample,
+        } = wordObj;
+        wordObj.image = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${image}`;
+        wordObj.audio = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audio}`;
+        wordObj.audioMeaning = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioMeaning}`;
+        wordObj.audioExample = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioExample}`;
+        wordObj.textMeaning = textMeaning.replace('<i>', '').replace('</i>', '');
+        wordObj.textExample = textExample.replace('<b>', '').replace('</b>', '');
+        return wordObj;
+      });
       // console.log(jwt, userId, userSettings, paginatedResults.filter((wordObj) => wordObj.userWord));
       if (!data.error) {
         let wordsArray = paginatedResults
@@ -81,7 +101,7 @@ const LearnWords = () => {
           const difference = cardsPerDay - wordsPerDay;
           wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
           const shuffled = getShuffledArr(wordsArray);
-          setWords(shuffled);
+          setWordsObj(shuffled);
           console.log('1', wordsArray);
           return;
         }
@@ -89,12 +109,12 @@ const LearnWords = () => {
 
         const restOfTheUserWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete === false
         && wordObj.userWord?.optional?.isRepeat === false);
-        // console.log(restOfTheUserWords);
+        console.log(restOfTheUserWords);
         if (wordsArray.length + restOfTheUserWords.length > cardsPerDay) {
           const difference = cardsPerDay - wordsArray.length;
           wordsArray = wordsArray.concat(restOfTheUserWords.slice(0, difference));
           const shuffled = getShuffledArr(wordsArray);
-          setWords(shuffled);
+          setWordsObj(shuffled);
           console.log('2', wordsArray);
           return;
         }
@@ -107,7 +127,7 @@ const LearnWords = () => {
         wordsArray = wordsArray.concat(newWordsToFillArray);
         const shuffled = getShuffledArr(wordsArray);
         console.log(shuffled);
-        setWords(wordsArray);
+        setWordsObj(shuffled);
 
         // const difficultWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDifficult);
         // const deletedWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete);
@@ -133,22 +153,37 @@ const LearnWords = () => {
       wordArr.push('?');
     }
     return wordArr.map((it, num) => {
-      const res = it === word[num] ? <span key={`${it}${num}`} className="true">{it}</span> : <span key={`${it}${num}`} className="false">{it}</span>;
+      const res = it === word[num] ? (
+        <span
+          key={`${it}${num}`}
+          className="true"
+        >
+          {it}
+        </span>
+      ) : (
+        <span
+          key={`${it}${num}`}
+          className="false"
+        >
+          {it}
+        </span>
+      );
       return res;
     });
   };
 
+  const currentWordObj = wordObjects[currentWordIndex];
+  console.log(currentWordObj);
   const checkIsTypedWordRight = (curWord) => {
     setMask(getMask(curWord));
     inputEl.current.value = '';
     setShowMask(true);
-    if (curWord === word) {
+    if (curWord === currentWordObj?.word) {
       setReadyForNext(true);
     } else {
       inputFocus();
     }
   };
-
   const onEnterWord = (e) => {
     if (e.key === 'Enter') {
       checkIsTypedWordRight(typedWord);
@@ -174,7 +209,7 @@ const LearnWords = () => {
               <Card.Body>
                 <div className="word__container">
                   <div className="word_img">
-                    <img alt="" src="./images/railway.jpg" />
+                    <img alt="" src={currentWordObj?.image} />
                   </div>
                   <div className="word__block">
                     <div className="unknown__word">
@@ -188,8 +223,8 @@ const LearnWords = () => {
                       )}
                       <input
                         className="input__container"
-                        style={{ width: `${word.length * 13 + 11}px` }}
-                        maxLength={word.length}
+                        style={{ width: `${currentWordObj?.word.length * 13 + 11}px` }}
+                        maxLength={currentWordObj?.word.length}
                         ref={inputEl}
                         type="text"
                         onChange={(e) => {
@@ -218,16 +253,16 @@ const LearnWords = () => {
                       size="sm"
                       onClick={() => {
                         checkIsTypedWordRight(word);
-                        setDifficulty('hard');
+                        // setDifficulty('hard');
                       }}
                     >
                       Не знаю
                     </Button>
-                    <div key="expl" className="explain__sentense">{explainSent}</div>
-                    <div key="ex" className="example__sentense">{exampleSent}</div>
-                    <div key="trans" className="translated__word">{translatedWord}</div>
-                    <div key="tranex" className="translated__explain__sentense">{translatedExplainSentense}</div>
-                    <div key="trexsent" className="translated__example__sentense">{translatedExampleSSentense}</div>
+                    <div key="expl" className="explain__sentense">{currentWordObj?.textMeaning}</div>
+                    <div key="ex" className="example__sentense">{currentWordObj?.textExample}</div>
+                    <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>
+                    <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>
+                    <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>
                     <div key="cont" className="repeat__container" />
                   </div>
                 </div>
