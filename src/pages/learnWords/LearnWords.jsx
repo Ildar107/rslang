@@ -187,7 +187,6 @@ const LearnWords = () => {
   const onEnterWord = (e) => {
     if (e.key === 'Enter') {
       checkIsTypedWordRight(typedWord);
-      console.log('-> ', difficulty);
     }
   };
 
