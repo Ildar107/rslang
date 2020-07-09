@@ -45,6 +45,7 @@ const LearnWords = () => {
   const [isDifficult, setIsDifficult] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [enableSound, setEnableSound] = useState(true);
 
   const inputEl = useRef();
   const { jwt, userId, userSettings } = context;
@@ -217,6 +218,34 @@ const LearnWords = () => {
             <Card>
               <Card.Body>
                 <div className="word__container">
+                  {enableSound ? (
+                    <Button
+                      className="sound-btn"
+                      key="dnff"
+                      variant="light"
+                      type="button"
+                      size="sm"
+                      onClick={() => {
+                        setEnableSound(!enableSound);
+                      }}
+                    >
+                      <i className="uil uil-volume-up"> </i>
+                    </Button>
+                  )
+                    : (
+                      <Button
+                        className="sound-btn"
+                        key="dnff"
+                        variant="light"
+                        type="button"
+                        size="sm"
+                        onClick={() => {
+                          setEnableSound(!enableSound);
+                        }}
+                      >
+                        <i className="uil uil-volume-mute"> </i>
+                      </Button>
+                    )}
                   <div className="word_img">
                     <img alt="" src={currentWordObj?.image} />
                   </div>

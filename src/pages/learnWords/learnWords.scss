@@ -11,9 +11,22 @@
         border: 0px;
     }
 
+
+
     .word__container {
+        position: relative;
         display: flex;
         flex-wrap: wrap;
+    }
+
+    .sound-btn{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        padding: 0;
+        & i{
+            font-size: 30px;
+        }
     }
 
     .word__block {
