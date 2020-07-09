@@ -172,26 +172,24 @@ const LearnWords = () => {
     });
   };
 
+  const currentWordObj = wordObjects[currentWordIndex];
+  console.log(currentWordObj);
   const checkIsTypedWordRight = (curWord) => {
     setMask(getMask(curWord));
     inputEl.current.value = '';
     setShowMask(true);
-    if (curWord === word) {
+    if (curWord === currentWordObj?.word) {
       setReadyForNext(true);
     } else {
       inputFocus();
     }
   };
-
   const onEnterWord = (e) => {
     if (e.key === 'Enter') {
       checkIsTypedWordRight(typedWord);
       console.log('-> ', difficulty);
     }
   };
-
-  const currentWordObj = wordObjects[currentWordIndex];
-  console.log(currentWordObj);
 
   return (
     <>
@@ -225,8 +223,8 @@ const LearnWords = () => {
                       )}
                       <input
                         className="input__container"
-                        style={{ width: `${word.length * 13 + 11}px` }}
-                        maxLength={word.length}
+                        style={{ width: `${currentWordObj?.word.length * 13 + 11}px` }}
+                        maxLength={currentWordObj?.word.length}
                         ref={inputEl}
                         type="text"
                         onChange={(e) => {
@@ -255,16 +253,16 @@ const LearnWords = () => {
                       size="sm"
                       onClick={() => {
                         checkIsTypedWordRight(word);
-                        setDifficulty('hard');
+                        // setDifficulty('hard');
                       }}
                     >
                       Не знаю
                     </Button>
-                    <div key="expl" className="explain__sentense">{explainSent}</div>
-                    <div key="ex" className="example__sentense">{exampleSent}</div>
-                    <div key="trans" className="translated__word">{translatedWord}</div>
-                    <div key="tranex" className="translated__explain__sentense">{translatedExplainSentense}</div>
-                    <div key="trexsent" className="translated__example__sentense">{translatedExampleSSentense}</div>
+                    <div key="expl" className="explain__sentense">{currentWordObj?.textMeaning}</div>
+                    <div key="ex" className="example__sentense">{currentWordObj?.textExample}</div>
+                    <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>
+                    <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>
+                    <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>
                     <div key="cont" className="repeat__container" />
                   </div>
                 </div>
