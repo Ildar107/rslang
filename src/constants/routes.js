@@ -27,4 +27,5 @@ export default {
   START_GAME_PAGE,
   STATISTIC_LONG_TERM,
   LEARNWORDS,
+  SPRINTGAME,
 };

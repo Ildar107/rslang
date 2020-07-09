@@ -60,6 +60,9 @@ const App = () => {
             <PrivateRoute path={routes.SPEAKIT} exact>
               <SpeakIt />
             </PrivateRoute>
+            <PrivateRoute path={routes.SPRINTGAME} exact>
+              <Sprint />
+            </PrivateRoute>
             <PrivateRoute path={routes.WORD_BUILDER} exact>
               <WordBuilder />
             </PrivateRoute>
