@@ -25,12 +25,12 @@ const getShuffledArr = (arr) => {
 const LearnWords = () => {
   const context = useContext(StoreContext);
 
-  const word = 'aaaaaaa';
-  const explainSent = 'Something that give you understanding.';
-  const exampleSent = 'I want explain you how it works.';
-  const translatedWord = 'explain';
-  const translatedExplainSentense = 'Что-то что дает понимание.';
-  const translatedExampleSSentense = 'Я хочу объяснить тебе как это работает.';
+  // const word = 'aaaaaaa';
+  // const explainSent = 'Something that give you understanding.';
+  // const exampleSent = 'I want explain you how it works.';
+  // const translatedWord = 'explain';
+  // const translatedExplainSentense = 'Что-то что дает понимание.';
+  // const translatedExampleSSentense = 'Я хочу объяснить тебе как это работает.';
 
   // const [enteredWord, setEnteredWord] = useState('');
   // const [word, setWord] = useState('');
@@ -57,7 +57,7 @@ const LearnWords = () => {
     showHard,
     transcription,
     translate,
-    wordImg,
+    // wordImg,
     wordsPerDay,
   } = userSettings;
 
@@ -89,13 +89,13 @@ const LearnWords = () => {
         wordObj.textExample = textExample.replace('<b>', '').replace('</b>', '');
         return wordObj;
       });
-      // console.log(jwt, userId, userSettings, paginatedResults.filter((wordObj) => wordObj.userWord));
       if (!data.error) {
         let wordsArray = paginatedResults
           .filter((wordObj) => !wordObj.userWord)
           .slice(0, wordsPerDay);
 
-        const wordsToRepeat = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isRepeat
+        const wordsToRepeat = paginatedResults
+          .filter((wordObj) => wordObj.userWord?.optional?.isRepeat
         && wordObj.userWord?.optional?.isDelete === false);
         console.log(wordsToRepeat);
         if (wordsPerDay + wordsToRepeat.length > cardsPerDay) {
@@ -108,7 +108,8 @@ const LearnWords = () => {
         }
         wordsArray = wordsArray.concat(wordsToRepeat);
 
-        const restOfTheUserWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete === false
+        const restOfTheUserWords = paginatedResults
+          .filter((wordObj) => wordObj.userWord?.optional?.isDelete === false
         && wordObj.userWord?.optional?.isRepeat === false);
         console.log(restOfTheUserWords);
         if (wordsArray.length + restOfTheUserWords.length > cardsPerDay) {
@@ -123,22 +124,15 @@ const LearnWords = () => {
         console.log(wordsArray);
 
         const difference = cardsPerDay - wordsArray.length;
-        const newWordsToFillArray = paginatedResults.filter((wordObj) => !wordObj.userWord).slice(wordsPerDay, wordsPerDay + difference);
+        const newWordsToFillArray = paginatedResults
+          .filter((wordObj) => !wordObj.userWord)
+          .slice(wordsPerDay, wordsPerDay + difference);
         console.log(newWordsToFillArray);
         wordsArray = wordsArray.concat(newWordsToFillArray);
         const shuffled = getShuffledArr(wordsArray);
         console.log(shuffled);
         setWordsObj(shuffled);
-
-        // const difficultWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDifficult);
-        // const deletedWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete);
-
-        // console.log(restOfTheUserWords);
-        // setWords(wordsArray);
       }
-    // if (words.length > 0) {
-    //   setWord(words.shift());
-    // }
     }
     fetchData();
   }, []);
@@ -325,6 +319,27 @@ const LearnWords = () => {
                     variant="success"
                     type="button"
                     size="sm"
+                    onClick={() => {
+                      userWordsService.sendWords(
+                        jwt,
+                        userId,
+                        currentWordObj,
+                        {
+                          isRepeat,
+                          isDelete,
+                          isDifficult,
+                        },
+                      );
+                      setIsRepeat(false);
+                      setIsDelete(false);
+                      setIsDifficult(false);
+                      setReadyForNext(false);
+                      setMask(null);
+                      setShowMask(false);
+                      setTypedWord('');
+                      inputEl.current.value = '';
+                      setCurrentWordIndex(currentWordIndex + 1);
+                    }}
                   >
                     Перейти к следующему
                   </Button>
