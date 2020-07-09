@@ -12,6 +12,16 @@ import Skeleton from '../../components/skeleton/Skeleton';
 import userWordsService from '../../services/user.words.services';
 import './learnWords.scss';
 
+const getShuffledArr = (arr) => {
+  if (!arr) return [];
+  const newArr = arr.slice();
+  for (let i = newArr.length - 1; i > 0; i -= 1) {
+    const rand = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+  }
+  return newArr;
+};
+
 const LearnWords = () => {
   const context = useContext(StoreContext);
 
@@ -65,21 +75,48 @@ const LearnWords = () => {
         let wordsArray = paginatedResults
           .filter((wordObj) => !wordObj.userWord)
           .slice(0, wordsPerDay);
+
         const wordsToRepeat = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isRepeat);
-        if (wordsToRepeat.length + wordsPerDay > cardsPerDay) {
+        if (wordsPerDay + wordsToRepeat.length > cardsPerDay) {
           const difference = cardsPerDay - wordsPerDay;
           wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
-          setWords(wordsArray);
+          const shuffled = getShuffledArr(wordsArray);
+          setWords(shuffled);
+          console.log('1', wordsArray);
           return;
         }
+        wordsArray = wordsArray.concat(wordsToRepeat);
+
+        const restOfTheUserWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete === false
+        && wordObj.userWord?.optional?.isRepeat === false);
+        // console.log(restOfTheUserWords);
+        if (wordsArray.length + restOfTheUserWords.length > cardsPerDay) {
+          const difference = cardsPerDay - wordsArray.length;
+          wordsArray = wordsArray.concat(restOfTheUserWords.slice(0, difference));
+          const shuffled = getShuffledArr(wordsArray);
+          setWords(shuffled);
+          console.log('2', wordsArray);
+          return;
+        }
+        wordsArray = wordsArray.concat(restOfTheUserWords);
+        console.log(wordsArray);
+
+        const difference = cardsPerDay - wordsArray.length;
+        const newWordsToFillArray = paginatedResults.filter((wordObj) => !wordObj.userWord).slice(wordsPerDay, wordsPerDay + difference);
+        console.log(newWordsToFillArray);
+        wordsArray = wordsArray.concat(newWordsToFillArray);
+        const shuffled = getShuffledArr(wordsArray);
+        console.log(shuffled);
+        setWords(wordsArray);
+
         // const difficultWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDifficult);
         // const deletedWords = paginatedResults.filter((wordObj) => wordObj.userWord?.optional?.isDelete);
-        wordsArray = wordsArray.concat(wordsToRepeat);
-        console.log(wordsArray);
+
+        // console.log(restOfTheUserWords);
         // setWords(wordsArray);
       }
     // if (words.length > 0) {
-    //   setWord(Words.shift());
+    //   setWord(words.shift());
     // }
     }
     fetchData();
