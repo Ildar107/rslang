@@ -10,8 +10,8 @@ import ResultModal from './resultModal';
 import Loader from '../loader/Loader';
 import EndGameModal from '../endGameModal/endGameModal';
 import 'react-circular-progressbar/dist/styles.css';
-
-CircularProgressbar;
+import HelpModal from '../HelpModal/HelpModal';
+import { SPRINT_HELP } from '../../constants/gamesHelp';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -42,26 +42,26 @@ class SprintGame extends Component {
     this.state = {
       page: 0,
       group: 0,
-      words: [],
-      error: null,
       score: 0,
       indexTranslate: 0,
-      currentCoupleOfWords: [],
-      modalStatus: false,
-      isLoaded: false,
-      learnedWords: [],
-      notLearnedWords: [],
       progress: 0,
       totalScore: 0,
       progressValue: 0,
-      timer: true,
+      level: 0,
       timerCounter: 25,
       maxValueTimer: 25,
-      level: 0,
-      currentMode: normalMode,
+      words: [],
+      learnedWords: [],
+      notLearnedWords: [],
+      currentCoupleOfWords: [],
+      error: null,
+      modalStatus: false,
+      isLoaded: false,
+      timer: true,
       answerFlag: false,
       animationName: '',
       endGameModal: false,
+      currentMode: normalMode,
     };
   }
 
@@ -88,7 +88,7 @@ class SprintGame extends Component {
       clearInterval(this.timerID);
     }
 
-    if (this.state.endGameModal) {
+    if (prevState.endGameModal) {
       this.timerID = setInterval(() => {
         this.startTimer();
       }, 1000);
@@ -347,7 +347,6 @@ class SprintGame extends Component {
     this.setState({
       endGameModal: false,
     });
-    this.restartAnimation();
   }
 
   showEndGameModal = () => {
@@ -422,7 +421,7 @@ class SprintGame extends Component {
 
     return (
       <div className="sprint__wrap">
-        <Container className="sprint">
+        <Container className="sprint-game">
           <Row className="sprint__header">
             <Col className="sprint-pagination" sm>
               <p>Страница:</p>
@@ -474,7 +473,10 @@ class SprintGame extends Component {
               <svg onClick={this.showEndGameModal} className="close-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="currentColor" d="M.974 0L0 .974 5.026 6 0 11.026.974 12 6 6.974 11.026 12l.974-.974L6.974 6 12 .974 11.026 0 6 5.026z" /></svg>
             </div>
           </Row>
-          <Row>
+          <Row style={{
+            justifyContent: 'center',
+          }}
+          >
             <div className="timer">
               <div className="timer__progress">
                 <CircularProgressbar styles={stylesProgress} minValue={0} maxValue={this.state.maxValueTimer} value={this.state.timerCounter} text={`${this.state.timerCounter}`}>
@@ -483,7 +485,10 @@ class SprintGame extends Component {
               </div>
             </div>
           </Row>
-          <Row>
+          <Row style={{
+            justifyContent: 'center',
+          }}
+          >
             <div className="sprint-wrap" style={styleAnimation}>
               <SprintField
                 words={this.state.words}
@@ -495,6 +500,11 @@ class SprintGame extends Component {
               />
             </div>
           </Row>
+          <div className="sprint__help">
+            <HelpModal
+              messages={SPRINT_HELP}
+            />
+          </div>
           <ResultModal
             show={this.state.modalStatus}
             score={this.state.totalScore}
