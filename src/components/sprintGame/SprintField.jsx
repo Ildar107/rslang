@@ -36,8 +36,8 @@ class SprintField extends Component {
             <div className="card__translate">{this.props.getTranslate()}</div>
           </div>
           <div className="sprint__btn-wrap">
-            <Button onClick={this.props.getAnswerByFalseBtn} className="sprint__btn red">Неверно</Button>
-            <Button onClick={this.props.getAnswerByTrueBtn} className="sprint__btn green">Верно</Button>
+            <button onClick={this.props.getAnswerByFalseBtn} className="sprint__btn red">Неверно</button>
+            <button onClick={this.props.getAnswerByTrueBtn} className="sprint__btn green">Верно</button>
           </div>
         </div>
       </Container>

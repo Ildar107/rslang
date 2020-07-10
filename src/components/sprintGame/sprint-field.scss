@@ -4,12 +4,10 @@ body {
 }
 
 body {
-  // background: url(../../assets/images/text-on-shelf.jpg) no-repeat 50% fixed;
   background-size: cover;
 }
 
 .sprint__wrap {
- /*  background-image: url(../../assets/images/sprint/bgc-sprint-main.svg); */
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-size: 100%, auto, auto;
   height: 100vh;
@@ -32,7 +30,7 @@ body {
 }
 
 .sprint__game-wrapper {
-  width: 300px;
+  width: 400px;
   height: 320px;
   border-radius: 5px;
   padding: 0 25px;
@@ -60,12 +58,11 @@ body {
   height: 50px;
 }
 
-
-
 .card__content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 22px;
 }
 
 .sprint__doubling {
@@ -87,7 +84,7 @@ body {
 }
 
 .sprint__btn {
-  width: 110px;
+  width: 150px;
   border: none;
   outline: none;
   user-select: none;
@@ -96,10 +93,11 @@ body {
   padding: 5px 0;
   margin-bottom: 10px;
   text-align: center;
+  border: none;
 }
 
 .sprint__btn:active {
-  border: none;
+  outline: none;
 }
 
 .wrapper {
@@ -109,27 +107,35 @@ body {
 }
 
 .green {
-  border: 1px solid green;
-  background-color: #ffffff;
-  color: green;
+  background-color: #ffffff00;
+  color: rgb(124, 178, 124);
+  border: 1px solid whitesmoke;
+  transition: all .25s ease;
 }
 
 .green:hover {
-  border: 1px solid green;
-  background-color: green;
-  color: #ffffff;
+  background-color: rgba(120, 248, 171, 0.53);
+  color: whitesmoke;
 }
 
 .red {
-  border: 1px solid red;
-  background-color: #ffffff;
-  color: red;
+  background-color: rgba(255, 255, 255, 0);
+  color: rgb(255, 128, 128);
+  border: 1px solid whitesmoke;
+  transition: all .25s ease;
 }
 
 .red:hover {
-  border: 1px solid red;
-  background-color: red;
-  color: #ffffff;
+  background-color: rgba(255, 135, 135, 0.53);
+  color: whitesmoke;
+}
+
+.red:focus {
+  outline: none;
+}
+
+.green:focus{
+  outline: none;
 }
 
 

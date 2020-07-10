@@ -227,7 +227,6 @@ class SprintGame extends Component {
       learnedWords: arr,
       answerFlag: true,
     });
-    await console.log(this.state.answerFlag);
     await this.startAnimation();
     await this.nextWord();
   }
@@ -240,7 +239,6 @@ class SprintGame extends Component {
       notLearnedWords: arr,
       answerFlag: false,
     });
-    await console.log(this.state.answerFlag);
     await this.startAnimation();
     await this.nextWord();
   }
@@ -360,7 +358,6 @@ class SprintGame extends Component {
     100% {border-color: rgb(147, 148, 147)}
     }`;
     await styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-    console.log('animation');
   }
 
   render() {
