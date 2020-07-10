@@ -49,7 +49,7 @@ const LearnWords = () => {
   const [isDelete, setIsDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [todayDate, setTodayDate] = useState(new Date().toLocaleDateString());
-  // console.log(todayDate);
+
   const inputEl = useRef();
   const { jwt, userId, userSettings } = context;
   const {
@@ -67,6 +67,9 @@ const LearnWords = () => {
 
   const [wordObjects, setWordsObj] = useState(JSON.parse(localStorage.getItem('wordObjects')) || []);
   const [currentWordIndex, setCurrentWordIndex] = useState(+localStorage.getItem('currentWordIndex') || 0);
+  const [rightAnswers, setRightAnswers] = useState(+localStorage.getItem('rightAnswers') || 0);
+  const [newWordsCount, setNewWordsCount] = useState(+localStorage.getItem('newWordsCount') || 0);
+  const [longestStreak, setLongestStreak] = useState(+localStorage.getItem('longestStreak') || 0);
   // const [solved, setSolved] = useState(false);
   // const [finished, setFinished] = useState(false);
   // setCurrentWordIndex();
@@ -114,6 +117,8 @@ const LearnWords = () => {
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
           localStorage.setItem('wordObjects', JSON.stringify(shuffled));
+          localStorage.setItem('newWordsCount', wordsPerDay);
+          setNewWordsCount(wordsPerDay);
           console.log('1', wordsArray);
           setIsLoading(false);
           return;
@@ -130,6 +135,8 @@ const LearnWords = () => {
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
           localStorage.setItem('wordObjects', JSON.stringify(shuffled));
+          localStorage.setItem('newWordsCount', wordsPerDay);
+          setNewWordsCount(wordsPerDay);
           console.log('2', wordsArray);
           setIsLoading(false);
           return;
@@ -147,6 +154,8 @@ const LearnWords = () => {
         console.log(shuffled);
         setWordsObj(shuffled);
         localStorage.setItem('wordObjects', JSON.stringify(shuffled));
+        localStorage.setItem('newWordsCount', wordsPerDay + newWordsToFillArray.length);
+        setNewWordsCount(wordsPerDay + newWordsToFillArray.length);
       }
       setIsLoading(false);
     }
@@ -195,6 +204,7 @@ const LearnWords = () => {
     inputEl.current.value = '';
     setShowMask(true);
     if (curWord === currentWordObj?.word) {
+      setRightAnswers(+rightAnswers + 1);
       setReadyForNext(true);
     } else {
       setIsRepeat(true);
@@ -395,20 +405,20 @@ const LearnWords = () => {
           <h2>Серия завершена</h2>
           <div className="stats-info">
             <div className="stats-item">
-              <span>Карточек завершено</span>
-              <span>ы</span>
+              <span>Карточек завершено -</span>
+              <span>{` ${cardsPerDay}`}</span>
             </div>
             <div className="stats-item">
-              <span>Правильные ответы</span>
-              <span>ы</span>
+              <span>Правильные ответы -</span>
+              <span>{` ${rightAnswers}`}</span>
             </div>
             <div className="stats-item">
-              <span>Новые слова</span>
-              <span>ы</span>
+              <span>Новые слова -</span>
+              <span>{` ${newWordsCount}`}</span>
             </div>
             <div className="stats-item">
-              <span>Самая длинная серия правильных слов</span>
-              <span>ы</span>
+              <span>Самая длинная серия правильных слов -</span>
+              <span>{` ${longestStreak}`}</span>
             </div>
           </div>
         </Skeleton>
