@@ -33,7 +33,6 @@ class SprintField extends Component {
   render() {
     return (
       <Container className="sprint">
-        <span className="sprint__point">{this.props.score}</span>
         <div className="sprint-wrapper sprint__game-wrapper">
           <div className="sprint__card-header">
             <span className="sprint__checkpoint" />

@@ -30,6 +30,8 @@ const falseTranslate = 0;
 const trueTranslate = 1;
 const minWordIndex = 0;
 const minLengthArray = 11;
+const easyMode = 'easy';
+const normalMode = 'normal';
 
 class SprintGame extends Component {
   constructor(props) {
@@ -54,8 +56,10 @@ class SprintGame extends Component {
       progressValue: 0,
       timer: true,
       timerCounter: 25,
+      maxValueTimer: 25,
       timerID: null,
       level: 0,
+      currentMode: normalMode,
     };
   }
 
@@ -78,10 +82,6 @@ class SprintGame extends Component {
       clearInterval(this.timerID);
       this.nextLevel();
     }
-  }
-
-  restartTimer = () => {
-    this.setState;
   }
 
   setArrayOfWords = (arr) => {
@@ -147,9 +147,22 @@ class SprintGame extends Component {
   }
 
   resetTimer = () => {
-    this.setState({
-      timerCounter: 25,
-    });
+    if (this.state.currentMode === easyMode) {
+      this.setState({
+        timerCounter: 30,
+        maxValueTimer: 30,
+      });
+    } else if (this.state.currentMode === normalMode) {
+      this.setState({
+        timerCounter: 25,
+        maxValueTimer: 25,
+      });
+    } else {
+      this.setState({
+        timerCounter: 15,
+        maxValueTimer: 15,
+      });
+    }
   }
 
   nextLeveNumber = () => {
@@ -162,7 +175,7 @@ class SprintGame extends Component {
     const currentWordArr = await [...this.state.words];
     if (currentWordArr.length > minLengthArray) {
       await currentWordArr.pop();
-      const newShuffeledArr = await getShuffledArr(currentWordArr);
+      const newShuffeledArr = await getShuffledArr(this.state.words);
       await this.setWordIndex();
       await this.setArrayOfWords(newShuffeledArr);
       await this.getCoupleOfWords();
@@ -190,13 +203,6 @@ class SprintGame extends Component {
     await this.getCoupleOfWords();
   }
 
-  getTrueAnswer = () => {
-    this.setState({
-      score: this.state.score + 1,
-    });
-    this.nextWord();
-  }
-
   showModal = () => {
     this.setState({
       modalStatus: true,
@@ -212,7 +218,24 @@ class SprintGame extends Component {
     }, 1000);
   }
 
+  getTrueAnswer = () => {
+    const copyCurrentWord = this.state.words[this.state.words.length - 1];
+    const arr = [...this.state.learnedWords];
+    arr.push(copyCurrentWord);
+    this.setState({
+      score: this.state.score + 1,
+      learnedWords: arr,
+    });
+    this.nextWord();
+  }
+
   getFalseAnswer = () => {
+    const copyCurrentWord = this.state.words[this.state.words.length - 1];
+    const arr = [...this.state.notLearnedWords];
+    arr.push(copyCurrentWord);
+    this.setState({
+      notLearnedWords: arr,
+    });
     this.nextWord();
   }
 
@@ -257,13 +280,6 @@ class SprintGame extends Component {
       : this.getFalseCoupleOfWords();
   }
 
-  handlePageChange = ({ target: { innerText } }) => {
-    this.getWords(Number(innerText) - 1, this.state.activeGroup);
-    this.setState({
-      activePage: Number(innerText) - 1,
-    });
-  };
-
   handleGroupChange = async ({ target: { innerText } }) => {
     if (Number(innerText)) {
       await this.setState({
@@ -274,6 +290,24 @@ class SprintGame extends Component {
       await this.getWords(page, this.state.group);
       await this.resetProgress();
       await this.resetTimer();
+      await this.resetScore();
+      await this.setWordIndex();
+      await this.setArrayOfWords(this.state.words);
+      await this.getCoupleOfWords();
+    }
+  };
+
+  handleChangeMode = async ({ target: { innerText } }) => {
+    if (innerText) {
+      await this.setState({
+        currentMode: innerText,
+        level: 0,
+      });
+      const page = await randomInteger(minPage, maxPage);
+      await this.getWords(page, this.state.group);
+      await this.resetProgress();
+      await this.resetTimer();
+      await this.resetScore();
       await this.setWordIndex();
       await this.setArrayOfWords(this.state.words);
       await this.getCoupleOfWords();
@@ -307,9 +341,14 @@ class SprintGame extends Component {
       return <Loader />;
     }
 
+    const mode = [
+      'easy',
+      'normal',
+      'hard',
+    ];
+
     const stylesProgress = {
       path: {
-        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
         strokeLinecap: 'butt',
         transition: 'stroke-dashoffset 0.3s ease 0s',
       },
@@ -320,6 +359,7 @@ class SprintGame extends Component {
         <Container className="sprint">
           <Row className="sprint__header">
             <Col className="sprint-pagination">
+              <p>Страница:</p>
               <Pagination>
                 {
                 Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
@@ -334,15 +374,31 @@ class SprintGame extends Component {
               }
               </Pagination>
             </Col>
+            <Col className="sprint-mode">
+              <p>Скорость:</p>
+              <Pagination>
+                {
+                mode.map((x) => (
+                  <Pagination.Item
+                    key={x}
+                    active={x === (this.state.currentMode)}
+                    onClick={this.handleChangeMode}
+                  >
+                    {x}
+                  </Pagination.Item>
+                ))
+              }
+              </Pagination>
+            </Col>
             <Col className="sprint__score">
               Уровень:
               {' '}
               {this.state.level + 1}
             </Col>
             <Col className="sprint__progress" sm>
-              Осталось:
+              Угадано слов:
               {' '}
-              {this.state.progressValue}
+              {this.state.score}
               /10
               <div>
                 <ProgressBar animated striped variant="danger" now={this.state.progress} />
@@ -355,7 +411,7 @@ class SprintGame extends Component {
           <Row>
             <div className="timer">
               <div className="timer__progress">
-                <CircularProgressbar styles={stylesProgress} minValue={0} maxValue={25} value={this.state.timerCounter} text={`${this.state.timerCounter}`}>
+                <CircularProgressbar styles={stylesProgress} minValue={0} maxValue={this.state.maxValueTimer} value={this.state.timerCounter} text={`${this.state.timerCounter}`}>
                   {this.state.timerCounter}
                 </CircularProgressbar>
               </div>
