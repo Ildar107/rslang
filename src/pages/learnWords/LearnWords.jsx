@@ -252,7 +252,22 @@ const LearnWords = () => {
   };
   const onEnterWord = (e) => {
     if (e.key === 'Enter') {
-      checkIsTypedWordRight(typedWord);
+      const result = checkIsTypedWordRight(typedWord);
+      if (result && !alreadyTried) {
+        localStorage.setItem('rightAnswers', +rightAnswers + 1);
+        setRightAnswers(rightAnswers + 1);
+        localStorage.setItem('currentStreak', +currentStreak + 1);
+        setCurrentStreak(currentStreak + 1);
+        if (longestStreak < currentStreak) {
+          localStorage.setItem('longestStreak', currentStreak);
+          setLongestStreak(currentStreak);
+        }
+      } else {
+        setAlreadyTried(true);
+        localStorage.setItem('currentStreak', 0);
+        setCurrentStreak(0);
+        setIsRepeat(true);
+      }
     }
   };
 
@@ -508,7 +523,7 @@ const LearnWords = () => {
             </div>
             <div className="stats-item">
               <span>Самая длинная серия правильных слов -</span>
-              <span>{` ${longestStreak}`}</span>
+              <span>{` ${longestStreak + 1}`}</span>
             </div>
           </div>
         </Skeleton>
