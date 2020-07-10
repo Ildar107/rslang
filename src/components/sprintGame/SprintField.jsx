@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
 import {
   Container, Button,
@@ -34,10 +31,6 @@ class SprintField extends Component {
     return (
       <Container className="sprint">
         <div className="sprint-wrapper sprint__game-wrapper">
-          <div className="sprint__card-header">
-            <span className="sprint__checkpoint" />
-            <span className="sprint__audio" />
-          </div>
           <div className="card__content">
             <div className="card__word">{this.props.getWord()}</div>
             <div className="card__translate">{this.props.getTranslate()}</div>

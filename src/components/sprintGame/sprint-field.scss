@@ -12,6 +12,7 @@ body {
  /*  background-image: url(../../assets/images/sprint/bgc-sprint-main.svg); */
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-size: 100%, auto, auto;
+  height: 100vh;
 }
 
 .sprint {
@@ -20,7 +21,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  padding-top: 20px;
 }
 
 .sprint__btn-wrapper {
@@ -33,7 +34,6 @@ body {
 .sprint__game-wrapper {
   width: 300px;
   height: 320px;
-  border: 3px solid gray;
   border-radius: 5px;
   padding: 0 25px;
 }

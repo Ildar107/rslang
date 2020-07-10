@@ -10,6 +10,8 @@ import ResultModal from './resultModal';
 import Loader from '../loader/Loader';
 import 'react-circular-progressbar/dist/styles.css';
 
+CircularProgressbar;
+
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
   return Math.abs(Math.round(rand));
@@ -41,13 +43,10 @@ class SprintGame extends Component {
       group: 0,
       words: [],
       error: null,
-      activePage: 0,
-      activeGroup: 0,
       score: 0,
       indexTranslate: 0,
       currentCoupleOfWords: [],
       modalStatus: false,
-      propgress: 0,
       isLoaded: false,
       learnedWords: [],
       notLearnedWords: [],
@@ -57,9 +56,10 @@ class SprintGame extends Component {
       timer: true,
       timerCounter: 25,
       maxValueTimer: 25,
-      timerID: null,
       level: 0,
       currentMode: normalMode,
+      answerFlag: false,
+      animationName: '',
     };
   }
 
@@ -175,13 +175,13 @@ class SprintGame extends Component {
     const currentWordArr = await [...this.state.words];
     if (currentWordArr.length > minLengthArray) {
       await currentWordArr.pop();
-      const newShuffeledArr = await getShuffledArr(this.state.words);
+      const newShuffeledArr = await getShuffledArr(currentWordArr);
       await this.setWordIndex();
       await this.setArrayOfWords(newShuffeledArr);
       await this.getCoupleOfWords();
       await this.updateProgress();
     } else {
-      clearInterval(this.timerID);
+      await clearInterval(this.timerID);
       await this.nextLevel();
     }
   }
@@ -218,25 +218,31 @@ class SprintGame extends Component {
     }, 1000);
   }
 
-  getTrueAnswer = () => {
-    const copyCurrentWord = this.state.words[this.state.words.length - 1];
-    const arr = [...this.state.learnedWords];
-    arr.push(copyCurrentWord);
-    this.setState({
+  getTrueAnswer = async () => {
+    const copyCurrentWord = await this.state.words[this.state.words.length - 1];
+    const arr = await [...this.state.learnedWords];
+    await arr.push(copyCurrentWord);
+    await this.setState({
       score: this.state.score + 1,
       learnedWords: arr,
+      answerFlag: true,
     });
-    this.nextWord();
+    await console.log(this.state.answerFlag);
+    await this.startAnimation();
+    await this.nextWord();
   }
 
-  getFalseAnswer = () => {
-    const copyCurrentWord = this.state.words[this.state.words.length - 1];
-    const arr = [...this.state.notLearnedWords];
-    arr.push(copyCurrentWord);
-    this.setState({
+  getFalseAnswer = async () => {
+    const copyCurrentWord = await this.state.words[this.state.words.length - 1];
+    const arr = await [...this.state.notLearnedWords];
+    await arr.push(copyCurrentWord);
+    await this.setState({
       notLearnedWords: arr,
+      answerFlag: false,
     });
-    this.nextWord();
+    await console.log(this.state.answerFlag);
+    await this.startAnimation();
+    await this.nextWord();
   }
 
   getAnswerByTrueBtn = () => {
@@ -328,6 +334,35 @@ class SprintGame extends Component {
     return currnetCouple[1];
   }
 
+  startAnimation = async () => {
+    const styleSheet = await document.styleSheets[0];
+    const animationName = await `pulsing${Math.round(Math.random() * 100)}`;
+    await this.setState({
+      animationName,
+    });
+    const keyframes = await this.state.answerFlag
+      ? `@-webkit-keyframes ${animationName} {
+      0% {border-color: rgb(84, 146, 96)}
+      20% {border-color: rgb(91, 146, 101)}
+      40% {border-color: rgb(100, 146, 109)}
+      50% {border-color: rgb(106, 146, 113)}
+      60% {border-color: rgb(118, 146, 123)}
+      80% {border-color: rgb(137, 146, 140)}
+      100% {border-color: rgb(147, 146, 147)}
+    }`
+      : `@-webkit-keyframes ${animationName} {
+    0% {border-color: rgb(148, 70, 70)}
+    20% {border-color: rgb(148, 79, 79)}
+    40% {border-color: rgb(148, 90, 90)}
+    50% {border-color: rgb(148, 95, 95)}
+    60% {border-color: rgb(148, 115, 115)}
+    80% {border-color: rgb(148, 138, 138)}
+    100% {border-color: rgb(147, 148, 147)}
+    }`;
+    await styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+    console.log('animation');
+  }
+
   render() {
     const { error, isLoaded } = this.state;
     if (error) {
@@ -354,11 +389,21 @@ class SprintGame extends Component {
       },
     };
 
+    const styleAnimation = {
+      animationName: this.state.animationName,
+      animationTimingFunction: 'linear',
+      animationDuration: '.6s',
+      animationDelay: '0.0s',
+      animationDirection: 'normal',
+      animationFillMode: 'forwards',
+      animationIterationCount: 1,
+    };
+
     return (
       <div className="sprint__wrap">
         <Container className="sprint">
           <Row className="sprint__header">
-            <Col className="sprint-pagination">
+            <Col className="sprint-pagination" sm>
               <p>Страница:</p>
               <Pagination>
                 {
@@ -374,7 +419,7 @@ class SprintGame extends Component {
               }
               </Pagination>
             </Col>
-            <Col className="sprint-mode">
+            <Col className="sprint-mode" sm>
               <p>Скорость:</p>
               <Pagination>
                 {
@@ -390,7 +435,7 @@ class SprintGame extends Component {
               }
               </Pagination>
             </Col>
-            <Col className="sprint__score">
+            <Col className="sprint__score" sm>
               Уровень:
               {' '}
               {this.state.level + 1}
@@ -418,14 +463,16 @@ class SprintGame extends Component {
             </div>
           </Row>
           <Row>
-            <SprintField
-              words={this.state.words}
-              getAnswerByTrueBtn={this.getAnswerByTrueBtn}
-              getAnswerByFalseBtn={this.getAnswerByFalseBtn}
-              getWord={this.getCurrentWord}
-              getTranslate={this.getCurrentWordTranslate}
-              score={this.state.score}
-            />
+            <div className="sprint-wrap" style={styleAnimation}>
+              <SprintField
+                words={this.state.words}
+                getAnswerByTrueBtn={this.getAnswerByTrueBtn}
+                getAnswerByFalseBtn={this.getAnswerByFalseBtn}
+                getWord={this.getCurrentWord}
+                getTranslate={this.getCurrentWordTranslate}
+                score={this.state.score}
+              />
+            </div>
           </Row>
           <ResultModal
             show={this.state.modalStatus}
