@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {
   useState, useRef, useEffect, useContext,
 } from 'react';
@@ -65,7 +66,7 @@ const LearnWords = () => {
   } = userSettings;
 
   const [wordObjects, setWordsObj] = useState(JSON.parse(localStorage.getItem('wordObjects')) || []);
-  const [currentWordIndex, setCurrentWordIndex] = useState(localStorage.getItem('currentWordIndex') || 0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(+localStorage.getItem('currentWordIndex') || 0);
   // const [solved, setSolved] = useState(false);
   // const [finished, setFinished] = useState(false);
   // setCurrentWordIndex();
@@ -153,7 +154,9 @@ const LearnWords = () => {
       fetchData();
     }
   }, []);
-  useEffect(() => { inputEl.current.focus(); }, []);
+  useEffect(() => {
+    if (currentWordIndex !== +cardsPerDay) inputEl.current.focus();
+  }, []);
 
   const inputFocus = () => {
     inputEl.current.focus();
@@ -218,7 +221,7 @@ const LearnWords = () => {
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
-      {isLoading ? <Loader /> : (
+      {isLoading ? <Loader /> : currentWordIndex !== +cardsPerDay ? (
         <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
           <div className="progress-container">
             <span>
@@ -374,7 +377,7 @@ const LearnWords = () => {
                         setShowMask(false);
                         setTypedWord('');
                         inputEl.current.value = '';
-                        localStorage.setItem('currentWordIndex', currentWordIndex + 1);
+                        localStorage.setItem('currentWordIndex', +currentWordIndex + 1);
                         setCurrentWordIndex(+currentWordIndex + 1);
                       }}
                     >
@@ -386,6 +389,28 @@ const LearnWords = () => {
               </Card>
             </Col>
           </Row>
+        </Skeleton>
+      ) : (
+        <Skeleton wrapperClass="learn-words-stats" title="Результаты дня">
+          <h2>Серия завершена</h2>
+          <div className="stats-info">
+            <div className="stats-item">
+              <span>Карточек завершено</span>
+              <span>ы</span>
+            </div>
+            <div className="stats-item">
+              <span>Правильные ответы</span>
+              <span>ы</span>
+            </div>
+            <div className="stats-item">
+              <span>Новые слова</span>
+              <span>ы</span>
+            </div>
+            <div className="stats-item">
+              <span>Самая длинная серия правильных слов</span>
+              <span>ы</span>
+            </div>
+          </div>
         </Skeleton>
       )}
     </>
