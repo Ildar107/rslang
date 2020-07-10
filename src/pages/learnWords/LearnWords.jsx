@@ -48,7 +48,7 @@ const LearnWords = () => {
   const [isDelete, setIsDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [todayDate, setTodayDate] = useState(new Date().toLocaleDateString());
-  console.log(todayDate);
+  // console.log(todayDate);
   const inputEl = useRef();
   const { jwt, userId, userSettings } = context;
   const {
@@ -64,7 +64,7 @@ const LearnWords = () => {
     wordsPerDay,
   } = userSettings;
 
-  const [wordObjects, setWordsObj] = useState([]);
+  const [wordObjects, setWordsObj] = useState(JSON.parse(localStorage.getItem('wordObjects')) || []);
   const [currentWordIndex, setCurrentWordIndex] = useState(localStorage.getItem('currentWordIndex') || 0);
   // const [solved, setSolved] = useState(false);
   // const [finished, setFinished] = useState(false);
@@ -112,6 +112,7 @@ const LearnWords = () => {
           wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
+          localStorage.setItem('wordObjects', JSON.stringify(shuffled));
           console.log('1', wordsArray);
           setIsLoading(false);
           return;
@@ -127,6 +128,7 @@ const LearnWords = () => {
           wordsArray = wordsArray.concat(restOfTheUserWords.slice(0, difference));
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
+          localStorage.setItem('wordObjects', JSON.stringify(shuffled));
           console.log('2', wordsArray);
           setIsLoading(false);
           return;
@@ -143,12 +145,13 @@ const LearnWords = () => {
         const shuffled = getShuffledArr(wordsArray);
         console.log(shuffled);
         setWordsObj(shuffled);
+        localStorage.setItem('wordObjects', JSON.stringify(shuffled));
       }
       setIsLoading(false);
     }
-    // if (todayDate !== localStorage.getItem('todayDate')) {
-    fetchData();
-    // }
+    if (todayDate !== localStorage.getItem('todayDate')) {
+      fetchData();
+    }
   }, []);
   useEffect(() => { inputEl.current.focus(); }, []);
 
@@ -372,7 +375,7 @@ const LearnWords = () => {
                         setTypedWord('');
                         inputEl.current.value = '';
                         localStorage.setItem('currentWordIndex', currentWordIndex + 1);
-                        setCurrentWordIndex(currentWordIndex + 1);
+                        setCurrentWordIndex(+currentWordIndex + 1);
                       }}
                     >
                       Перейти к следующему
