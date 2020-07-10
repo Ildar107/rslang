@@ -323,6 +323,7 @@ const LearnWords = () => {
                         />
 
                       </div>
+                      {!readyForNext && (
                       <Button
                         key="check"
                         onClick={() => {
@@ -334,7 +335,8 @@ const LearnWords = () => {
                       >
                         Проверить
                       </Button>
-                      {showAnswer && (
+                      )}
+                      {showAnswer && !readyForNext && (
                       <Button
                         key="dn"
                         variant="danger"
