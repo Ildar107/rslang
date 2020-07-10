@@ -11,6 +11,7 @@ import Skeleton from '../../components/skeleton/Skeleton';
 // import ErrorModal from '../../components/errorModal/ErrorModal';
 import userWordsService from '../../services/user.words.services';
 import './learnWords.scss';
+import Loader from '../../components/loader/Loader';
 
 const getShuffledArr = (arr) => {
   if (!arr) return [];
@@ -45,6 +46,8 @@ const LearnWords = () => {
   const [isDifficult, setIsDifficult] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [todayDate, setTodayDate] = useState('');
 
   const inputEl = useRef();
   const { jwt, userId, userSettings } = context;
@@ -68,9 +71,13 @@ const LearnWords = () => {
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       const [data] = await userWordsService.getWords(
         jwt, userId, 200,
       );
+      const date = new Date().toLocaleDateString();
+      setTodayDate(date);
+
       let { paginatedResults } = data;
       paginatedResults = paginatedResults.map((wordObj) => {
         const {
@@ -133,7 +140,9 @@ const LearnWords = () => {
         console.log(shuffled);
         setWordsObj(shuffled);
       }
+      setIsLoading(false);
     }
+
     fetchData();
   }, []);
   useEffect(() => { inputEl.current.focus(); }, []);
@@ -201,155 +210,158 @@ const LearnWords = () => {
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
-      <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
-        <Row className="justify-content-md-center">
-          <Col md={8}>
-            <Card>
-              <Card.Body />
-            </Card>
-          </Col>
-        </Row>
-        <Row className="justify-content-md-center">
-          <Col md={8}>
-            <Card>
-              <Card.Body>
-                <div className="word__container">
-                  <div className="word_img">
-                    <img alt="" src={currentWordObj?.image} />
-                  </div>
-                  <div className="word__block">
-                    <div className="unknown__word">
-                      {showMask && (
-                      <span
-                        onClick={inputFocus}
-                        className="word__mask"
-                      >
-                        {mask}
-                      </span>
-                      )}
-                      <input
-                        className="input__container"
-                        style={{ width: `${currentWordObj?.word.length * 13 + 11}px` }}
-                        maxLength={currentWordObj?.word.length}
-                        ref={inputEl}
-                        type="text"
-                        onChange={(e) => {
-                          setShowMask(false);
-                          setTypedWord(e.target.value);
-                        }}
-                        onKeyDown={onEnterWord}
-                      />
-
+      {isLoading ? <Loader /> : (
+        <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
+          {/* <Row className="justify-content-md-center">
+            <Col md={8}>
+              <Card>
+                <Card.Body />
+              </Card>
+            </Col>
+          </Row> */}
+          <Row className="justify-content-md-center">
+            <Col md={8}>
+              <Card>
+                <Card.Body>
+                  <div className="word__container">
+                    <div className="word_img">
+                      <img alt="" src={currentWordObj?.image} />
                     </div>
+                    <div className="word__block">
+                      <div className="unknown__word">
+                        {showMask && (
+                        <span
+                          onClick={inputFocus}
+                          className="word__mask"
+                        >
+                          {mask}
+                        </span>
+                        )}
+                        <input
+                          className="input__container"
+                          style={{ width: `${currentWordObj?.word.length * 13 + 11}px` }}
+                          maxLength={currentWordObj?.word.length}
+                          ref={inputEl}
+                          type="text"
+                          onChange={(e) => {
+                            setShowMask(false);
+                            setTypedWord(e.target.value);
+                          }}
+                          onKeyDown={onEnterWord}
+                        />
+
+                      </div>
+                      <Button
+                        key="check"
+                        onClick={() => {
+                          checkIsTypedWordRight(typedWord);
+                        }}
+                        variant="success"
+                        type="button"
+                        size="sm"
+                      >
+                        Проверить
+                      </Button>
+                      {showAnswer && (
+                      <Button
+                        key="dn"
+                        variant="danger"
+                        type="button"
+                        size="sm"
+                        onClick={() => {
+                          checkIsTypedWordRight(currentWordObj?.word);
+                          // setIsRepeat(false);
+                          setIsRepeat(true);
+                        }}
+                      >
+                        Показать ответ
+                      </Button>
+                      )}
+                      {explain && <div key="expl" className="explain__sentense">{getRightSentence(currentWordObj?.textMeaning)}</div>}
+                      {explain && readyForNext && <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>}
+                      {example && <div key="ex" className="example__sentense">{getRightSentence(currentWordObj?.textExample)}</div>}
+                      {example && readyForNext && <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>}
+                      {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
+                      {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
+                      <div key="cont" className="repeat__container" />
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Col md={8}>
+              <Card>
+                <Card.Body>
+                  <div className="words__control">
+                    {showDelete && (
                     <Button
-                      key="check"
+                      className={isDelete ? '' : 'disabled'}
                       onClick={() => {
-                        checkIsTypedWordRight(typedWord);
+                      // if (!isDelete) setIsRepeat(false);
+                        setIsDelete(!isDelete);
+                        console.log(isDelete, isRepeat);
                       }}
+                      key="del"
+                      variant="primary"
+                      type="button"
+                    >
+                      Удалить слово
+                    </Button>
+                    )}
+                    {showHard && (
+                    <Button
+                      className={isDifficult ? '' : 'disabled'}
+                      onClick={() => setIsDifficult(!isDifficult)}
+                      key="dif"
+                      variant="primary"
+                      type="button"
+                    >
+                      Сложное слово
+                    </Button>
+                    )}
+                  </div>
+                  <div className="next-word">
+                    {readyForNext && (
+                    <Button
+                      key="next"
                       variant="success"
                       type="button"
                       size="sm"
-                    >
-                      Проверить
-                    </Button>
-                    {showAnswer && (
-                    <Button
-                      key="dn"
-                      variant="danger"
-                      type="button"
-                      size="sm"
                       onClick={() => {
-                        checkIsTypedWordRight(currentWordObj?.word);
-                        // setIsRepeat(false);
-                        setIsRepeat(true);
+                        userWordsService.sendWords(
+                          jwt,
+                          userId,
+                          currentWordObj,
+                          {
+                            isRepeat,
+                            isDelete,
+                            isDifficult,
+                            todayDate,
+                          },
+                        );
+                        setIsRepeat(false);
+                        setIsDelete(false);
+                        setIsDifficult(false);
+                        setReadyForNext(false);
+                        setMask(null);
+                        setShowMask(false);
+                        setTypedWord('');
+                        inputEl.current.value = '';
+                        setCurrentWordIndex(currentWordIndex + 1);
                       }}
                     >
-                      Показать ответ
+                      Перейти к следующему
                     </Button>
                     )}
-                    {explain && <div key="expl" className="explain__sentense">{getRightSentence(currentWordObj?.textMeaning)}</div>}
-                    {explain && readyForNext && <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>}
-                    {example && <div key="ex" className="example__sentense">{getRightSentence(currentWordObj?.textExample)}</div>}
-                    {example && readyForNext && <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>}
-                    {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
-                    {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
-                    <div key="cont" className="repeat__container" />
                   </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <Row className="justify-content-md-center">
-          <Col md={8}>
-            <Card>
-              <Card.Body>
-                <div className="words__control">
-                  {showDelete && (
-                  <Button
-                    className={isDelete ? '' : 'disabled'}
-                    onClick={() => {
-                      // if (!isDelete) setIsRepeat(false);
-                      setIsDelete(!isDelete);
-                      console.log(isDelete, isRepeat);
-                    }}
-                    key="del"
-                    variant="primary"
-                    type="button"
-                  >
-                    Удалить слово
-                  </Button>
-                  )}
-                  {showHard && (
-                  <Button
-                    className={isDifficult ? '' : 'disabled'}
-                    onClick={() => setIsDifficult(!isDifficult)}
-                    key="dif"
-                    variant="primary"
-                    type="button"
-                  >
-                    Сложное слово
-                  </Button>
-                  )}
-                </div>
-                <div className="next-word">
-                  {readyForNext && (
-                  <Button
-                    key="next"
-                    variant="success"
-                    type="button"
-                    size="sm"
-                    onClick={() => {
-                      userWordsService.sendWords(
-                        jwt,
-                        userId,
-                        currentWordObj,
-                        {
-                          isRepeat,
-                          isDelete,
-                          isDifficult,
-                        },
-                      );
-                      setIsRepeat(false);
-                      setIsDelete(false);
-                      setIsDifficult(false);
-                      setReadyForNext(false);
-                      setMask(null);
-                      setShowMask(false);
-                      setTypedWord('');
-                      inputEl.current.value = '';
-                      setCurrentWordIndex(currentWordIndex + 1);
-                    }}
-                  >
-                    Перейти к следующему
-                  </Button>
-                  )}
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Skeleton>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Skeleton>
+      )}
     </>
   );
 };
