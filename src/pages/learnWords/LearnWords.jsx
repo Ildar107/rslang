@@ -65,9 +65,10 @@ const LearnWords = () => {
   } = userSettings;
 
   const [wordObjects, setWordsObj] = useState([]);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(localStorage.getItem('currentWordIndex') || 0);
   // const [solved, setSolved] = useState(false);
   // const [finished, setFinished] = useState(false);
+  // setCurrentWordIndex();
 
   useEffect(() => {
     async function fetchData() {
@@ -77,6 +78,7 @@ const LearnWords = () => {
       );
       const date = new Date().toLocaleDateString();
       setTodayDate(date);
+      localStorage.setItem('todayDate', date);
 
       let { paginatedResults } = data;
       paginatedResults = paginatedResults.map((wordObj) => {
@@ -368,6 +370,7 @@ const LearnWords = () => {
                         setShowMask(false);
                         setTypedWord('');
                         inputEl.current.value = '';
+                        localStorage.setItem('currentWordIndex', currentWordIndex + 1);
                         setCurrentWordIndex(currentWordIndex + 1);
                       }}
                     >
