@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Container, Button,
+  Container,
 } from 'react-bootstrap';
 // import SprintCard from './sprint-card';
 import './sprint-field.scss';

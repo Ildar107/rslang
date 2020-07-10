@@ -8,6 +8,7 @@ import SprintField from './SprintField';
 import './sprint-game.scss';
 import ResultModal from './resultModal';
 import Loader from '../loader/Loader';
+import EndGameModal from '../endGameModal/endGameModal';
 import 'react-circular-progressbar/dist/styles.css';
 
 CircularProgressbar;
@@ -60,6 +61,7 @@ class SprintGame extends Component {
       currentMode: normalMode,
       answerFlag: false,
       animationName: '',
+      endGameModal: false,
     };
   }
 
@@ -81,6 +83,15 @@ class SprintGame extends Component {
     if (prevState.timerCounter === 1) {
       clearInterval(this.timerID);
       this.nextLevel();
+    }
+    if (this.state.endGameModal) {
+      clearInterval(this.timerID);
+    }
+
+    if (this.state.endGameModal) {
+      this.timerID = setInterval(() => {
+        this.startTimer();
+      }, 1000);
     }
   }
 
@@ -332,6 +343,19 @@ class SprintGame extends Component {
     return currnetCouple[1];
   }
 
+  onHideEngGame = () => {
+    this.setState({
+      endGameModal: false,
+    });
+    this.restartAnimation();
+  }
+
+  showEndGameModal = () => {
+    this.setState({
+      endGameModal: true,
+    });
+  }
+
   startAnimation = async () => {
     const styleSheet = await document.styleSheets[0];
     const animationName = await `pulsing${Math.round(Math.random() * 100)}`;
@@ -343,10 +367,10 @@ class SprintGame extends Component {
       0% {border-color: rgb(84, 146, 96)}
       20% {border-color: rgb(91, 146, 101)}
       40% {border-color: rgb(100, 146, 109)}
-      50% {border-color: rgb(106, 146, 113)}
-      60% {border-color: rgb(118, 146, 123)}
-      80% {border-color: rgb(137, 146, 140)}
-      100% {border-color: rgb(147, 146, 147)}
+      50% {border-color: rgb(116, 146, 116)}
+      60% {border-color: rgb(127, 146, 127)}
+      80% {border-color: rgb(138, 146, 138)}
+      100% {border-color: rgb(147, 148, 147)}
     }`
       : `@-webkit-keyframes ${animationName} {
     0% {border-color: rgb(148, 70, 70)}
@@ -476,7 +500,7 @@ class SprintGame extends Component {
             score={this.state.totalScore}
             onHide={this.hideModal}
           />
-
+          <EndGameModal onHide={this.onHideEngGame} show={this.state.endGameModal} />
         </Container>
       </div>
     );
