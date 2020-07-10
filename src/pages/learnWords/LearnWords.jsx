@@ -171,7 +171,8 @@ const LearnWords = () => {
       }
       setIsLoading(false);
     }
-    if (todayDate !== localStorage.getItem('todayDate') || wordObjects.length !== cardsPerDay) {
+    if (todayDate !== localStorage.getItem('todayDate') || wordObjects.length !== +cardsPerDay) {
+      // console.log(wordObjects.length, cardsPerDay);
       fetchData();
     }
   }, []);
