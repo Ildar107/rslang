@@ -212,6 +212,23 @@ const LearnWords = () => {
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
       {isLoading ? <Loader /> : (
         <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
+          <div className="progress-container">
+            <span>
+              Score
+              {' '}
+              {`${currentWordIndex} / ${cardsPerDay}`}
+            </span>
+            <div className="progress">
+              <div
+                className="progress-bar"
+                role="progressbar"
+                style={{ width: `${currentWordIndex * (100 / cardsPerDay)}%` }}
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              />
+            </div>
+          </div>
           {/* <Row className="justify-content-md-center">
             <Col md={8}>
               <Card>
