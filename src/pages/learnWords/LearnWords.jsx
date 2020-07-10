@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {
   useState, useRef, useEffect, useContext,
 } from 'react';
@@ -49,7 +50,7 @@ const LearnWords = () => {
   const [enableSound, setEnableSound] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [todayDate, setTodayDate] = useState(new Date().toLocaleDateString());
-  // console.log(todayDate);
+
   const inputEl = useRef();
   const { jwt, userId, userSettings } = context;
   const {
@@ -66,7 +67,11 @@ const LearnWords = () => {
   } = userSettings;
 
   const [wordObjects, setWordsObj] = useState(JSON.parse(localStorage.getItem('wordObjects')) || []);
-  const [currentWordIndex, setCurrentWordIndex] = useState(localStorage.getItem('currentWordIndex') || 0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(+localStorage.getItem('currentWordIndex') || 0);
+  const [rightAnswers, setRightAnswers] = useState(+localStorage.getItem('rightAnswers') || 0);
+  const [newWordsCount, setNewWordsCount] = useState(+localStorage.getItem('newWordsCount') || 0);
+  const [longestStreak, setLongestStreak] = useState(+localStorage.getItem('longestStreak') || 0);
+  const [currentStreak, setCurrentStreak] = useState(+localStorage.getItem('currentStreak') || 0);
   // const [solved, setSolved] = useState(false);
   // const [finished, setFinished] = useState(false);
   // setCurrentWordIndex();
@@ -74,6 +79,14 @@ const LearnWords = () => {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
+      setCurrentWordIndex(0);
+      localStorage.setItem('currentWordIndex', 0);
+      setRightAnswers(0);
+      localStorage.setItem('rightAnswers', 0);
+      setLongestStreak(0);
+      localStorage.setItem('longestStreak', 0);
+      setCurrentStreak(0);
+      localStorage.setItem('currentStreak', 0);
       const [data] = await userWordsService.getWords(
         jwt, userId, 200,
       );
@@ -90,6 +103,7 @@ const LearnWords = () => {
           audioExample,
           textMeaning,
           textExample,
+          word,
         } = wordObj;
         wordObj.image = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${image}`;
         wordObj.audio = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audio}`;
@@ -97,6 +111,7 @@ const LearnWords = () => {
         wordObj.audioExample = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioExample}`;
         wordObj.textMeaning = textMeaning.replace('<i>', '').replace('</i>', '');
         wordObj.textExample = textExample.replace('<b>', '').replace('</b>', '');
+        wordObj.word = word.toLowerCase();
         return wordObj;
       });
       if (!data.error) {
@@ -114,6 +129,8 @@ const LearnWords = () => {
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
           localStorage.setItem('wordObjects', JSON.stringify(shuffled));
+          localStorage.setItem('newWordsCount', wordsPerDay);
+          setNewWordsCount(wordsPerDay);
           console.log('1', wordsArray);
           setIsLoading(false);
           return;
@@ -130,6 +147,8 @@ const LearnWords = () => {
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
           localStorage.setItem('wordObjects', JSON.stringify(shuffled));
+          localStorage.setItem('newWordsCount', wordsPerDay);
+          setNewWordsCount(wordsPerDay);
           console.log('2', wordsArray);
           setIsLoading(false);
           return;
@@ -147,6 +166,8 @@ const LearnWords = () => {
         console.log(shuffled);
         setWordsObj(shuffled);
         localStorage.setItem('wordObjects', JSON.stringify(shuffled));
+        localStorage.setItem('newWordsCount', wordsPerDay + newWordsToFillArray.length);
+        setNewWordsCount(wordsPerDay + newWordsToFillArray.length);
       }
       setIsLoading(false);
     }
@@ -154,7 +175,9 @@ const LearnWords = () => {
       fetchData();
     }
   }, []);
-  useEffect(() => { inputEl.current.focus(); }, []);
+  useEffect(() => {
+    if (currentWordIndex !== +cardsPerDay) inputEl.current.focus();
+  }, []);
 
   const inputFocus = () => {
     inputEl.current.focus();
@@ -210,9 +233,22 @@ const LearnWords = () => {
     inputEl.current.value = '';
     setShowMask(true);
     if (curWord === currentWordObj?.word) {
+      localStorage.setItem('rightAnswers', +rightAnswers + 1);
+      setRightAnswers(rightAnswers + 1);
+      localStorage.setItem('currentStreak', +currentStreak + 1);
+      setCurrentStreak(currentStreak + 1);
+      if (longestStreak <= currentStreak) {
+        localStorage.setItem('longestStreak', +currentStreak);
+        setLongestStreak(currentStreak);
+      }
       audioPlay();
       setReadyForNext(true);
     } else {
+      // if (longestStreak < currentStreak) {
+      //   setLongestStreak(currentStreak);
+      // }
+      localStorage.setItem('currentStreak', 0);
+      setCurrentStreak(0);
       setIsRepeat(true);
       inputFocus();
     }
@@ -237,7 +273,7 @@ const LearnWords = () => {
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
-      {isLoading ? <Loader /> : (
+      {isLoading ? <Loader /> : currentWordIndex !== +cardsPerDay ? (
         <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
           <div className="progress-container">
             <span>
@@ -343,6 +379,10 @@ const LearnWords = () => {
                         onClick={() => {
                           checkIsTypedWordRight(currentWordObj?.word);
                           // setIsRepeat(false);
+                          // localStorage.setItem('rightAnswers', +rightAnswers - 1);
+                          // setRightAnswers(+rightAnswers - 1);
+                          localStorage.setItem('currentStreak', 0);
+                          setCurrentStreak(0);
                           setIsRepeat(true);
                         }}
                       >
@@ -421,7 +461,7 @@ const LearnWords = () => {
                         setShowMask(false);
                         setTypedWord('');
                         inputEl.current.value = '';
-                        localStorage.setItem('currentWordIndex', currentWordIndex + 1);
+                        localStorage.setItem('currentWordIndex', +currentWordIndex + 1);
                         setCurrentWordIndex(+currentWordIndex + 1);
                         inputFocus();
                       }}
@@ -434,6 +474,28 @@ const LearnWords = () => {
               </Card>
             </Col>
           </Row>
+        </Skeleton>
+      ) : (
+        <Skeleton wrapperClass="learn-words-stats" title="Результаты дня">
+          <h2>Серия завершена</h2>
+          <div className="stats-info">
+            <div className="stats-item">
+              <span>Карточек завершено -</span>
+              <span>{` ${cardsPerDay}`}</span>
+            </div>
+            <div className="stats-item">
+              <span>Правильные ответы -</span>
+              <span>{` ${rightAnswers}`}</span>
+            </div>
+            <div className="stats-item">
+              <span>Новые слова -</span>
+              <span>{` ${newWordsCount}`}</span>
+            </div>
+            <div className="stats-item">
+              <span>Самая длинная серия правильных слов -</span>
+              <span>{` ${longestStreak}`}</span>
+            </div>
+          </div>
         </Skeleton>
       )}
     </>
