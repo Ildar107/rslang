@@ -107,7 +107,9 @@ const LearnSettings = () => {
                     <Form.Check label={'Отображение кнопки "Показать ответ"'} type="checkbox" id="answer" defaultChecked={context.userSettings.showAnswer} />
                     <Form.Check label={'Отображение кнопки "Удалить слово"'} type="checkbox" id="delete" defaultChecked={context.userSettings.showDelete} />
                     <Form.Check
-                      label={'Отображение кнопки "Сложные" (добавляет слово в группу сложных слов)'}
+                      label={'Отображение кнопки "Сложное слово" (добавляет'
+                      + ' слово в'
+                      + ' группу сложных слов)'}
                       type="checkbox"
                       id="hard"
                       defaultChecked={context.userSettings.showHard}
