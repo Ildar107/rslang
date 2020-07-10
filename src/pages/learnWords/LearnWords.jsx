@@ -212,6 +212,10 @@ const LearnWords = () => {
     });
   };
 
+  const [aud1, setAud1] = useState(new Audio());
+  const [aud2, setAud2] = useState(new Audio());
+  const [aud3, setAud3] = useState(new Audio());
+
   function audioPlay() {
     if (enableSound) {
       let fileExplain;
@@ -222,6 +226,10 @@ const LearnWords = () => {
       const audio1 = new Audio(fileWord);
       const audio3 = new Audio(fileExample);
       const audio2 = new Audio(fileExplain);
+
+      setAud1(audio1);
+      setAud2(audio2);
+      setAud3(audio3);
 
       audio1.play();
       audio1.onended = () => audio2.play();
@@ -360,6 +368,7 @@ const LearnWords = () => {
                         />
 
                       </div>
+                      {!readyForNext && (
                       <Button
                         key="check"
                         onClick={() => {
@@ -371,7 +380,8 @@ const LearnWords = () => {
                       >
                         Проверить
                       </Button>
-                      {showAnswer && (
+                      )}
+                      {showAnswer && !readyForNext && (
                       <Button
                         key="dn"
                         variant="danger"
@@ -465,6 +475,9 @@ const LearnWords = () => {
                         localStorage.setItem('currentWordIndex', +currentWordIndex + 1);
                         setCurrentWordIndex(+currentWordIndex + 1);
                         inputFocus();
+                        aud1.pause();
+                        aud2.pause();
+                        aud3.pause();
                       }}
                     >
                       Перейти к следующему
