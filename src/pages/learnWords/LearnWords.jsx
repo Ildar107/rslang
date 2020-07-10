@@ -111,6 +111,7 @@ const LearnWords = () => {
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
           console.log('1', wordsArray);
+          setIsLoading(false);
           return;
         }
         wordsArray = wordsArray.concat(wordsToRepeat);
@@ -125,6 +126,7 @@ const LearnWords = () => {
           const shuffled = getShuffledArr(wordsArray);
           setWordsObj(shuffled);
           console.log('2', wordsArray);
+          setIsLoading(false);
           return;
         }
         wordsArray = wordsArray.concat(restOfTheUserWords);
