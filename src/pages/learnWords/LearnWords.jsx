@@ -47,8 +47,8 @@ const LearnWords = () => {
   const [isRepeat, setIsRepeat] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [todayDate, setTodayDate] = useState('');
-
+  const [todayDate, setTodayDate] = useState(new Date().toLocaleDateString());
+  console.log(todayDate);
   const inputEl = useRef();
   const { jwt, userId, userSettings } = context;
   const {
@@ -146,8 +146,9 @@ const LearnWords = () => {
       }
       setIsLoading(false);
     }
-
+    // if (todayDate !== localStorage.getItem('todayDate')) {
     fetchData();
+    // }
   }, []);
   useEffect(() => { inputEl.current.focus(); }, []);
 
