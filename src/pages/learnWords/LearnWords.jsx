@@ -50,6 +50,7 @@ const LearnWords = () => {
   const [enableSound, setEnableSound] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [todayDate, setTodayDate] = useState(new Date().toLocaleDateString());
+  const [alreadyTried, setAlreadyTried] = useState(false);
 
   const inputEl = useRef();
   const { jwt, userId, userSettings } = context;
@@ -177,7 +178,7 @@ const LearnWords = () => {
     }
   }, []);
   useEffect(() => {
-    if (currentWordIndex <= +cardsPerDay) inputEl.current.focus();
+    if (currentWordIndex < +cardsPerDay) inputEl.current.focus();
   }, []);
 
   const inputFocus = () => {
@@ -242,25 +243,12 @@ const LearnWords = () => {
     inputEl.current.value = '';
     setShowMask(true);
     if (curWord === currentWordObj?.word) {
-      localStorage.setItem('rightAnswers', +rightAnswers + 1);
-      setRightAnswers(rightAnswers + 1);
-      localStorage.setItem('currentStreak', +currentStreak + 1);
-      setCurrentStreak(currentStreak + 1);
-      if (longestStreak <= currentStreak) {
-        localStorage.setItem('longestStreak', +currentStreak);
-        setLongestStreak(currentStreak);
-      }
       audioPlay();
       setReadyForNext(true);
-    } else {
-      // if (longestStreak < currentStreak) {
-      //   setLongestStreak(currentStreak);
-      // }
-      localStorage.setItem('currentStreak', 0);
-      setCurrentStreak(0);
-      setIsRepeat(true);
-      inputFocus();
+      return true;
     }
+    inputFocus();
+    return false;
   };
   const onEnterWord = (e) => {
     if (e.key === 'Enter') {
@@ -282,7 +270,7 @@ const LearnWords = () => {
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
-      {isLoading ? <Loader /> : currentWordIndex <= +cardsPerDay ? (
+      {isLoading ? <Loader /> : currentWordIndex < +cardsPerDay ? (
         <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
           <div className="progress-container">
             <span>
@@ -372,7 +360,22 @@ const LearnWords = () => {
                       <Button
                         key="check"
                         onClick={() => {
-                          checkIsTypedWordRight(typedWord);
+                          const result = checkIsTypedWordRight(typedWord);
+                          if (result && !alreadyTried) {
+                            localStorage.setItem('rightAnswers', +rightAnswers + 1);
+                            setRightAnswers(rightAnswers + 1);
+                            localStorage.setItem('currentStreak', +currentStreak + 1);
+                            setCurrentStreak(currentStreak + 1);
+                            if (longestStreak < currentStreak) {
+                              localStorage.setItem('longestStreak', currentStreak);
+                              setLongestStreak(currentStreak);
+                            }
+                          } else {
+                            setAlreadyTried(true);
+                            localStorage.setItem('currentStreak', 0);
+                            setCurrentStreak(0);
+                            setIsRepeat(true);
+                          }
                         }}
                         variant="success"
                         type="button"
@@ -389,9 +392,6 @@ const LearnWords = () => {
                         size="sm"
                         onClick={() => {
                           checkIsTypedWordRight(currentWordObj?.word);
-                          // setIsRepeat(false);
-                          // localStorage.setItem('rightAnswers', +rightAnswers - 1);
-                          // setRightAnswers(+rightAnswers - 1);
                           localStorage.setItem('currentStreak', 0);
                           setCurrentStreak(0);
                           setIsRepeat(true);
@@ -468,6 +468,7 @@ const LearnWords = () => {
                         setIsDelete(false);
                         setIsDifficult(false);
                         setReadyForNext(false);
+                        setAlreadyTried(false);
                         setMask(null);
                         setShowMask(false);
                         setTypedWord('');
