@@ -251,7 +251,7 @@ const LearnWords = () => {
     return false;
   };
   const onEnterWord = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !readyForNext) {
       const result = checkIsTypedWordRight(typedWord);
       if (result && !alreadyTried) {
         localStorage.setItem('rightAnswers', +rightAnswers + 1);
@@ -324,7 +324,10 @@ const LearnWords = () => {
                         type="button"
                         size="sm"
                         onClick={() => {
-                          setEnableSound(!enableSound);
+                          setEnableSound(false);
+                          aud1.pause();
+                          aud2.pause();
+                          aud3.pause();
                         }}
                       >
                         <i className="uil uil-volume-up"> </i>
@@ -338,7 +341,7 @@ const LearnWords = () => {
                           type="button"
                           size="sm"
                           onClick={() => {
-                            setEnableSound(!enableSound);
+                            setEnableSound(true);
                           }}
                         >
                           <i className="uil uil-volume-mute"> </i>
@@ -351,7 +354,7 @@ const LearnWords = () => {
                       <div className="unknown__word">
                         {showMask && (
                         <span
-                          onClick={inputFocus}
+                          onClick={() => { if (!readyForNext)inputFocus(); }}
                           className="word__mask"
                         >
                           {mask}
@@ -361,6 +364,7 @@ const LearnWords = () => {
                           className="input__container"
                           style={{ width: `${currentWordObj?.word.length * 18 + 15}px` }}
                           maxLength={currentWordObj?.word.length}
+                          disabled={!!readyForNext}
                           ref={inputEl}
                           type="text"
                           onChange={(e) => {
