@@ -269,20 +269,6 @@ const LearnWords = () => {
                 <Card.Body>
                   <div className="word__container">
                     {enableSound ? (
-                    <Button
-                      className="sound-btn"
-                      key="dnff"
-                      variant="light"
-                      type="button"
-                      size="sm"
-                      onClick={() => {
-                        setEnableSound(!enableSound);
-                      }}
-                    >
-                      <i className="uil uil-volume-up"> </i>
-                    </Button>
-                  )
-                    : (
                       <Button
                         className="sound-btn"
                         key="dnff"
@@ -293,9 +279,23 @@ const LearnWords = () => {
                           setEnableSound(!enableSound);
                         }}
                       >
-                        <i className="uil uil-volume-mute"> </i>
+                        <i className="uil uil-volume-up"> </i>
                       </Button>
-                    )}
+                    )
+                      : (
+                        <Button
+                          className="sound-btn"
+                          key="dnff"
+                          variant="light"
+                          type="button"
+                          size="sm"
+                          onClick={() => {
+                            setEnableSound(!enableSound);
+                          }}
+                        >
+                          <i className="uil uil-volume-mute"> </i>
+                        </Button>
+                      )}
                     <div className="word_img">
                       <img alt="" src={currentWordObj?.image} />
                     </div>
@@ -349,13 +349,13 @@ const LearnWords = () => {
                         Показать ответ
                       </Button>
                       )}
-                    {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
-                    {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
-                    {explain && <div key="expl" className="explain__sentense">{getRightSentence(currentWordObj?.textMeaning)}</div>}
-                    {explain && readyForNext && <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>}
-                    {example && <div key="ex" className="example__sentense">{getRightSentence(currentWordObj?.textExample)}</div>}
-                    {example && readyForNext && <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>}
-                    <div key="cont" className="repeat__container" />
+                      {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
+                      {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
+                      {explain && <div key="expl" className="explain__sentense">{getRightSentence(currentWordObj?.textMeaning)}</div>}
+                      {explain && readyForNext && <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>}
+                      {example && <div key="ex" className="example__sentense">{getRightSentence(currentWordObj?.textExample)}</div>}
+                      {example && readyForNext && <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>}
+                      <div key="cont" className="repeat__container" />
                     </div>
                   </div>
                 </Card.Body>
@@ -423,6 +423,7 @@ const LearnWords = () => {
                         inputEl.current.value = '';
                         localStorage.setItem('currentWordIndex', currentWordIndex + 1);
                         setCurrentWordIndex(+currentWordIndex + 1);
+                        inputFocus();
                       }}
                     >
                       Перейти к следующему
