@@ -171,12 +171,12 @@ const LearnWords = () => {
       }
       setIsLoading(false);
     }
-    if (todayDate !== localStorage.getItem('todayDate')) {
+    if (todayDate !== localStorage.getItem('todayDate') || wordObjects.length !== cardsPerDay) {
       fetchData();
     }
   }, []);
   useEffect(() => {
-    if (currentWordIndex !== +cardsPerDay) inputEl.current.focus();
+    if (currentWordIndex <= +cardsPerDay) inputEl.current.focus();
   }, []);
 
   const inputFocus = () => {
@@ -273,7 +273,7 @@ const LearnWords = () => {
     <>
       {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
         <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
-      {isLoading ? <Loader /> : currentWordIndex !== +cardsPerDay ? (
+      {isLoading ? <Loader /> : currentWordIndex <= +cardsPerDay ? (
         <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
           <div className="progress-container">
             <span>
