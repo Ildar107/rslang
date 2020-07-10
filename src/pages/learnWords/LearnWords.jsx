@@ -70,6 +70,7 @@ const LearnWords = () => {
   const [rightAnswers, setRightAnswers] = useState(+localStorage.getItem('rightAnswers') || 0);
   const [newWordsCount, setNewWordsCount] = useState(+localStorage.getItem('newWordsCount') || 0);
   const [longestStreak, setLongestStreak] = useState(+localStorage.getItem('longestStreak') || 0);
+  const [currentStreak, setCurrentStreak] = useState(+localStorage.getItem('currentStreak') || 0);
   // const [solved, setSolved] = useState(false);
   // const [finished, setFinished] = useState(false);
   // setCurrentWordIndex();
@@ -77,6 +78,14 @@ const LearnWords = () => {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
+      setCurrentWordIndex(0);
+      localStorage.setItem('currentWordIndex', 0);
+      setRightAnswers(0);
+      localStorage.setItem('rightAnswers', 0);
+      setLongestStreak(0);
+      localStorage.setItem('longestStreak', 0);
+      setCurrentStreak(0);
+      localStorage.setItem('currentStreak', 0);
       const [data] = await userWordsService.getWords(
         jwt, userId, 200,
       );
@@ -93,6 +102,7 @@ const LearnWords = () => {
           audioExample,
           textMeaning,
           textExample,
+          word,
         } = wordObj;
         wordObj.image = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${image}`;
         wordObj.audio = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audio}`;
@@ -100,6 +110,7 @@ const LearnWords = () => {
         wordObj.audioExample = `https://raw.githubusercontent.com/alexgabrielov/rslang-data/master/${audioExample}`;
         wordObj.textMeaning = textMeaning.replace('<i>', '').replace('</i>', '');
         wordObj.textExample = textExample.replace('<b>', '').replace('</b>', '');
+        wordObj.word = word.toLowerCase();
         return wordObj;
       });
       if (!data.error) {
@@ -204,9 +215,21 @@ const LearnWords = () => {
     inputEl.current.value = '';
     setShowMask(true);
     if (curWord === currentWordObj?.word) {
-      setRightAnswers(+rightAnswers + 1);
+      localStorage.setItem('rightAnswers', +rightAnswers + 1);
+      setRightAnswers(rightAnswers + 1);
+      localStorage.setItem('currentStreak', +currentStreak + 1);
+      setCurrentStreak(currentStreak + 1);
+      if (longestStreak <= currentStreak) {
+        localStorage.setItem('longestStreak', +currentStreak);
+        setLongestStreak(currentStreak);
+      }
       setReadyForNext(true);
     } else {
+      // if (longestStreak < currentStreak) {
+      //   setLongestStreak(currentStreak);
+      // }
+      localStorage.setItem('currentStreak', 0);
+      setCurrentStreak(0);
       setIsRepeat(true);
       inputFocus();
     }
@@ -309,6 +332,10 @@ const LearnWords = () => {
                         onClick={() => {
                           checkIsTypedWordRight(currentWordObj?.word);
                           // setIsRepeat(false);
+                          // localStorage.setItem('rightAnswers', +rightAnswers - 1);
+                          // setRightAnswers(+rightAnswers - 1);
+                          localStorage.setItem('currentStreak', 0);
+                          setCurrentStreak(0);
                           setIsRepeat(true);
                         }}
                       >
