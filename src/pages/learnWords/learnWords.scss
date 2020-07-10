@@ -11,9 +11,22 @@
         border: 0px;
     }
 
+
+
     .word__container {
+        position: relative;
         display: flex;
         flex-wrap: wrap;
+    }
+
+    .sound-btn{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        padding: 0;
+        & i{
+            font-size: 30px;
+        }
     }
 
     .word__block {
@@ -58,7 +71,7 @@
 
     .word__mask{
         font-family: RobotoMono;
-        font-size: 20px;
+        font-size: 30px;
         position: absolute;
         top: 6px;
         left: 5px;
@@ -68,9 +81,8 @@
         display: inline-block;
         padding: 0;
         margin: .25rem 0;
-        font-size: 20px;
         font-family: RobotoMono;
-        font-size: 20px;
+        font-size: 30px;
         padding: 0;
         background: white;
         padding-left: 3px;

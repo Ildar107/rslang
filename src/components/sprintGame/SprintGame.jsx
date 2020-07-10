@@ -32,7 +32,6 @@ const minWordIndex = 0;
 const minLengthArray = 11;
 const easyMode = 'easy';
 const normalMode = 'normal';
-const hardMode = 'hard';
 
 class SprintGame extends Component {
   constructor(props) {
@@ -176,7 +175,7 @@ class SprintGame extends Component {
     const currentWordArr = await [...this.state.words];
     if (currentWordArr.length > minLengthArray) {
       await currentWordArr.pop();
-      const newShuffeledArr = await getShuffledArr(currentWordArr);
+      const newShuffeledArr = await getShuffledArr(this.state.words);
       await this.setWordIndex();
       await this.setArrayOfWords(newShuffeledArr);
       await this.getCoupleOfWords();
@@ -204,13 +203,6 @@ class SprintGame extends Component {
     await this.getCoupleOfWords();
   }
 
-  getTrueAnswer = () => {
-    this.setState({
-      score: this.state.score + 1,
-    });
-    this.nextWord();
-  }
-
   showModal = () => {
     this.setState({
       modalStatus: true,
@@ -226,7 +218,24 @@ class SprintGame extends Component {
     }, 1000);
   }
 
+  getTrueAnswer = () => {
+    const copyCurrentWord = this.state.words[this.state.words.length - 1];
+    const arr = [...this.state.learnedWords];
+    arr.push(copyCurrentWord);
+    this.setState({
+      score: this.state.score + 1,
+      learnedWords: arr,
+    });
+    this.nextWord();
+  }
+
   getFalseAnswer = () => {
+    const copyCurrentWord = this.state.words[this.state.words.length - 1];
+    const arr = [...this.state.notLearnedWords];
+    arr.push(copyCurrentWord);
+    this.setState({
+      notLearnedWords: arr,
+    });
     this.nextWord();
   }
 

@@ -47,6 +47,7 @@ const LearnWords = () => {
   const [isDifficult, setIsDifficult] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [enableSound, setEnableSound] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [todayDate, setTodayDate] = useState(new Date().toLocaleDateString());
 
@@ -210,6 +211,23 @@ const LearnWords = () => {
     });
   };
 
+  function audioPlay() {
+    if (enableSound) {
+      let fileExplain;
+      let fileExample;
+      const fileWord = currentWordObj?.audio;
+      example ? fileExample = currentWordObj?.audioExample : null;
+      explain ? fileExplain = currentWordObj?.audioMeaning : null;
+      const audio1 = new Audio(fileWord);
+      const audio3 = new Audio(fileExample);
+      const audio2 = new Audio(fileExplain);
+
+      audio1.play();
+      audio1.onended = () => audio2.play();
+      audio2.onended = () => audio3.play();
+    }
+  }
+
   const checkIsTypedWordRight = (curWord) => {
     setMask(getMask(curWord));
     inputEl.current.value = '';
@@ -223,6 +241,7 @@ const LearnWords = () => {
         localStorage.setItem('longestStreak', +currentStreak);
         setLongestStreak(currentStreak);
       }
+      audioPlay();
       setReadyForNext(true);
     } else {
       // if (longestStreak < currentStreak) {
@@ -285,6 +304,34 @@ const LearnWords = () => {
               <Card>
                 <Card.Body>
                   <div className="word__container">
+                    {enableSound ? (
+                      <Button
+                        className="sound-btn"
+                        key="dnff"
+                        variant="light"
+                        type="button"
+                        size="sm"
+                        onClick={() => {
+                          setEnableSound(!enableSound);
+                        }}
+                      >
+                        <i className="uil uil-volume-up"> </i>
+                      </Button>
+                    )
+                      : (
+                        <Button
+                          className="sound-btn"
+                          key="dnff"
+                          variant="light"
+                          type="button"
+                          size="sm"
+                          onClick={() => {
+                            setEnableSound(!enableSound);
+                          }}
+                        >
+                          <i className="uil uil-volume-mute"> </i>
+                        </Button>
+                      )}
                     <div className="word_img">
                       <img alt="" src={currentWordObj?.image} />
                     </div>
@@ -300,7 +347,7 @@ const LearnWords = () => {
                         )}
                         <input
                           className="input__container"
-                          style={{ width: `${currentWordObj?.word.length * 13 + 11}px` }}
+                          style={{ width: `${currentWordObj?.word.length * 18 + 15}px` }}
                           maxLength={currentWordObj?.word.length}
                           ref={inputEl}
                           type="text"
@@ -342,12 +389,12 @@ const LearnWords = () => {
                         Показать ответ
                       </Button>
                       )}
+                      {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
+                      {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
                       {explain && <div key="expl" className="explain__sentense">{getRightSentence(currentWordObj?.textMeaning)}</div>}
                       {explain && readyForNext && <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>}
                       {example && <div key="ex" className="example__sentense">{getRightSentence(currentWordObj?.textExample)}</div>}
                       {example && readyForNext && <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>}
-                      {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
-                      {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
                       <div key="cont" className="repeat__container" />
                     </div>
                   </div>
@@ -416,6 +463,7 @@ const LearnWords = () => {
                         inputEl.current.value = '';
                         localStorage.setItem('currentWordIndex', +currentWordIndex + 1);
                         setCurrentWordIndex(+currentWordIndex + 1);
+                        inputFocus();
                       }}
                     >
                       Перейти к следующему
