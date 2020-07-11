@@ -162,6 +162,10 @@ const LearnWords = () => {
     if (currentWordIndex < +cardsPerDay) inputEl.current.focus();
   }, []);
 
+  useEffect(() => {
+    inputEl.current.focus();
+  }, [readyForNext]);
+
   const inputFocus = () => {
     inputEl.current.focus();
   };
@@ -284,7 +288,7 @@ const LearnWords = () => {
             </div>
           </div>
           <Row className="justify-content-md-center">
-            <Col md={8}>
+            <Col xl={8}>
               <Card>
                 <Card.Body>
                   <div className="word__container">
@@ -292,7 +296,7 @@ const LearnWords = () => {
                       <Button
                         className="sound-btn"
                         key="dnff"
-                        variant="light"
+                        variant="link"
                         type="button"
                         size="sm"
                         onClick={() => {
@@ -309,7 +313,7 @@ const LearnWords = () => {
                         <Button
                           className="sound-btn"
                           key="dnff"
-                          variant="light"
+                          variant="link"
                           type="button"
                           size="sm"
                           onClick={() => {
@@ -349,6 +353,7 @@ const LearnWords = () => {
                       </div>
                       {!readyForNext && (
                       <Button
+                        className="check-btn"
                         key="check"
                         onClick={() => {
                           const result = checkIsTypedWordRight(typedWord);
@@ -377,6 +382,7 @@ const LearnWords = () => {
                       )}
                       {showAnswer && !readyForNext && (
                       <Button
+                        className="show-btn"
                         key="dn"
                         variant="danger"
                         type="button"
@@ -391,13 +397,12 @@ const LearnWords = () => {
                         Показать ответ
                       </Button>
                       )}
-                      {translate && <div key="trans" className="translated__word">{currentWordObj?.wordTranslate}</div>}
-                      {transcription && <div key="transkrip" className="translated__word">{currentWordObj?.transcription}</div>}
-                      {explain && <div key="expl" className="explain__sentense">{getRightSentence(currentWordObj?.textMeaning)}</div>}
+                      {translate && <div key="trans" className="translated__word line">{currentWordObj?.wordTranslate}</div>}
+                      {transcription && <div key="transkrip" className="translated__word line">{currentWordObj?.transcription}</div>}
+                      {explain && <div key="expl" className="explain__sentense line">{getRightSentence(currentWordObj?.textMeaning)}</div>}
                       {explain && readyForNext && <div key="tranex" className="translated__explain__sentense">{currentWordObj?.textMeaningTranslate}</div>}
-                      {example && <div key="ex" className="example__sentense">{getRightSentence(currentWordObj?.textExample)}</div>}
+                      {example && <div key="ex" className="example__sentense line">{getRightSentence(currentWordObj?.textExample)}</div>}
                       {example && readyForNext && <div key="trexsent" className="translated__example__sentense">{currentWordObj?.textExampleTranslate}</div>}
-                      <div key="cont" className="repeat__container" />
                     </div>
                   </div>
                 </Card.Body>
@@ -405,7 +410,8 @@ const LearnWords = () => {
             </Col>
           </Row>
           <Row className="justify-content-md-center">
-            <Col md={8}>
+            <Col xl={8}>
+              { readyForNext && (
               <Card>
                 <Card.Body>
                   <div className="words__control">
@@ -465,10 +471,10 @@ const LearnWords = () => {
                         inputEl.current.value = '';
                         localStorage.setItem('currentWordIndex', +currentWordIndex + 1);
                         setCurrentWordIndex(+currentWordIndex + 1);
-                        inputFocus();
                         aud1.pause();
                         aud2.pause();
                         aud3.pause();
+                        inputFocus();
                       }}
                     >
                       Перейти к следующему
@@ -477,6 +483,7 @@ const LearnWords = () => {
                   </div>
                 </Card.Body>
               </Card>
+              )}
             </Col>
           </Row>
         </Skeleton>
