@@ -53,7 +53,7 @@ const WordBuilderMainPage = () => {
       setSolved(true);
     } else if (solved && (currentWordIndex === wordObjects.length - 1)) {
       setFinished(true);
-      const stats = formStatistics(nameOfTheGame, difficulty, wordObjects);
+      const stats = formStatistics(nameOfTheGame, difficulty + 1, wordObjects);
       sendStatistics(stats);
     }
   };
