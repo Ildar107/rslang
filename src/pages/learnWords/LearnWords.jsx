@@ -63,7 +63,7 @@ const LearnWords = () => {
     showHard,
     transcription,
     translate,
-    // wordImg,
+    wordImg,
     wordsPerDay,
   } = userSettings;
 
@@ -348,7 +348,7 @@ const LearnWords = () => {
                         </Button>
                       )}
                     <div className="word_img">
-                      <img alt="" src={currentWordObj?.image} />
+                      {wordImg && <img alt="" src={currentWordObj?.image} />}
                     </div>
                     <div className="word__block">
                       <div className="unknown__word">
@@ -437,7 +437,7 @@ const LearnWords = () => {
               <Card>
                 <Card.Body>
                   <div className="words__control">
-                    {showDelete && (
+                    {showDelete && readyForNext && (
                     <Button
                       className={isDelete ? '' : 'disabled'}
                       onClick={() => {
@@ -452,7 +452,7 @@ const LearnWords = () => {
                       Удалить слово
                     </Button>
                     )}
-                    {showHard && (
+                    {showHard && readyForNext && (
                     <Button
                       className={isDifficult ? '' : 'disabled'}
                       onClick={() => setIsDifficult(!isDifficult)}
