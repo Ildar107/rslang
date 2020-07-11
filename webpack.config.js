@@ -35,22 +35,11 @@ module.exports = {
         },
       },
       {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: 'svg-url-loader',
-            options: {
-              limit: 10000,
-            },
-          },
-        ],
-      },
-      {
         test: /\.(css|scss)$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf|jpg|png|svg)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|jpg|png)$/,
         use: [
           'file-loader',
         ],
