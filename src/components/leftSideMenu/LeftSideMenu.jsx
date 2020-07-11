@@ -74,7 +74,7 @@ const LeftSideMenu = () => {
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.LANDING} className="side-nav-link">
+          <Link to={routes.PROMO_PAGE} className="side-nav-link">
             <i className="uil-presentation-plus" />
             <span> Промо </span>
           </Link>

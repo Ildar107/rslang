@@ -12,6 +12,7 @@ const LEARNSETTINGS = '/learn-settings';
 const START_GAME_PAGE = '/startGame';
 const STATISTIC_LONG_TERM = '/statisticLongTerm';
 const LEARNWORDS = '/learn-words';
+const PROMO_PAGE = '/promo-page';
 
 export default {
   LANDING,
@@ -28,4 +29,5 @@ export default {
   STATISTIC_LONG_TERM,
   LEARNWORDS,
   SPRINTGAME,
+  PROMO_PAGE,
 };
