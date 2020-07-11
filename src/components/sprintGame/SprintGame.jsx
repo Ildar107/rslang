@@ -13,6 +13,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import HelpModal from '../HelpModal/HelpModal';
 import { SPRINT_HELP } from '../../constants/gamesHelp';
 import BG from '../../assets/images/bg-orange.svg';
+import userStatsServices from '../../services/user.statistic.services';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -124,6 +125,16 @@ class SprintGame extends Component {
     await this.loadIsDone();
   };
 
+  sendStats = () => {
+    const stats = userStatsServices.formStatistics(
+      'Sprint',
+      this.state.level + 1,
+      null, 10 - this.state.notLearnedWords.length,
+      this.state.notLearnedWords.length,
+    );
+    userStatsServices.sendStatistics(stats);
+  };
+
   setWordIndex = () => {
     const currentIndexTranslate = randomInteger(falseTranslate, trueTranslate);
     this.setState({
@@ -201,6 +212,7 @@ class SprintGame extends Component {
   nextLevel = async () => {
     const page = randomInteger(minPage, maxPage);
     const { score } = this.state;
+    await this.sendStats();
     await this.resetScore(score);
     await this.showModal();
     await this.setState({
