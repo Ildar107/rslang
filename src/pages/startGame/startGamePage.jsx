@@ -45,7 +45,10 @@ function StartGamePage() {
   const game = qs.parse(useLocation().search).q;
   const path = routes[game];
   return (
-    <Container fluid>
+    <Container
+      fluid
+      className="start-game-wrapper"
+    >
       <div className="start-game">
         <Button
           className="start-game-close"
