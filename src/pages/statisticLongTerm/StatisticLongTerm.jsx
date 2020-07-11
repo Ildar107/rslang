@@ -8,40 +8,57 @@ import userWordsService from '../../services/user.words.services';
 const { getUserWords } = userWordsService;
 
 const StatisticLongTerm = () => {
-  const [userWordDates, setUserWordDates] = useState([]);
+  // const [userWordDates, setUserWordDates] = useState([]);
+  const [realData, setRealData] = useState([]);
 
   useEffect(() => {
     async function fetchUserWords() {
       const { userId, JWT: jwt } = localStorage;
       const data = await getUserWords(jwt, userId);
-      const dates = data.map(({ optional }) => optional?.todayDate);
-      console.log(dates);
-      setUserWordDates(dates);
+      const dates = data.map(({ optional }) => optional?.todayDate).filter((date) => date);
+      const uniqueDates = [...new Set(dates)];
+      uniqueDates.sort((date1, date2) => {
+        const res = new Date(date1) - new Date(date2);
+        // console.log(res);
+        return res;
+      });
+      const dataObjects = [];
+      uniqueDates.forEach((uniqueDate) => {
+        const words = dates.filter((date) => date === uniqueDate).length;
+        dataObjects.push({ date: uniqueDate, words });
+        // console.log(words);
+      });
+      // dates = dates.filter((date) => date);
+      // console.log(uniqueDates);
+      // console.log(dates);
+      console.log(dataObjects);
+      setRealData(dataObjects);
+      // setUserWordDates(dates);
     }
     fetchUserWords();
   }, []);
 
-  const testDATA = [
-    { date: '1/6/2020', words: 6 },
-    { date: '2/6/2020', words: 3 },
-    { date: '3/6/2020', words: 1 },
-    { date: '4/6/2020', words: 16 },
-    { date: '5/6/2020', words: 10 },
-    { date: '6/6/2020', words: 8 },
-    { date: '7/6/2020', words: 3 },
-    { date: '8/6/2020', words: 12 },
-    { date: '9/6/2020', words: 14 },
-    { date: '10/6/2020', words: 16 },
-    { date: '11/6/2020', words: 5 },
-  ];
+  // const testDATA = [
+  //   { date: '1/6/2020', words: 6 },
+  //   { date: '2/6/2020', words: 3 },
+  //   { date: '3/6/2020', words: 1 },
+  //   { date: '4/6/2020', words: 16 },
+  //   { date: '5/6/2020', words: 10 },
+  //   { date: '6/6/2020', words: 8 },
+  //   { date: '7/6/2020', words: 3 },
+  //   { date: '8/6/2020', words: 12 },
+  //   { date: '9/6/2020', words: 14 },
+  //   { date: '10/6/2020', words: 16 },
+  //   { date: '11/6/2020', words: 5 },
+  // ];
 
-  const dates = testDATA.map((item) => item.date);
-  const numOfWords = testDATA.map((item) => item.words);
+  const dates = realData.map((item) => item.date);
+  const numOfWords = realData.map((item) => item.words);
   const sumOfWords = [];
   const sum = numOfWords.reduce((acc, item) => {
     sumOfWords.push(acc + item);
     return (acc + item);
-  });
+  }, 0);
   sumOfWords.push(sum);
   const left = sumOfWords.map((it) => 3600 - it);
   const percent = sumOfWords.map((it) => ((100 * it) / 3600).toFixed(1));
