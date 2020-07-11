@@ -5,3 +5,19 @@
 .promo__h3{
 	margin-bottom: 0;
 }
+
+.promo__img{
+	width: 40%;
+}
+
+.promo__body{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+	.promo__description_l{
+		width: 50%;
+		text-align: justify;
+		padding: 40px 40px 20px 20px;
+	}
