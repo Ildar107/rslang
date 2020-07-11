@@ -12,6 +12,7 @@ import EndGameModal from '../endGameModal/endGameModal';
 import 'react-circular-progressbar/dist/styles.css';
 import HelpModal from '../HelpModal/HelpModal';
 import { SPRINT_HELP } from '../../constants/gamesHelp';
+import BG from '../../assets/images/bg-orange.svg';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -421,38 +422,39 @@ class SprintGame extends Component {
 
     return (
       <div className="sprint__wrap">
+        <img className="sprint_bg" src={BG} alt="Background" />
         <Container className="sprint-game">
           <Row className="sprint__header">
             <Col className="sprint-pagination" sm>
               <p>Страница:</p>
               <Pagination>
                 {
-                Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
-                  <Pagination.Item
-                    key={x}
-                    active={x === (this.state.group + 1)}
-                    onClick={this.handleGroupChange}
-                  >
-                    {x}
-                  </Pagination.Item>
-                ))
-              }
+                  Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
+                    <Pagination.Item
+                      key={x}
+                      active={x === (this.state.group + 1)}
+                      onClick={this.handleGroupChange}
+                    >
+                      {x}
+                    </Pagination.Item>
+                  ))
+                }
               </Pagination>
             </Col>
             <Col className="sprint-mode" sm>
               <p>Скорость:</p>
               <Pagination>
                 {
-                mode.map((x) => (
-                  <Pagination.Item
-                    key={x}
-                    active={x === (this.state.currentMode)}
-                    onClick={this.handleChangeMode}
-                  >
-                    {x}
-                  </Pagination.Item>
-                ))
-              }
+                  mode.map((x) => (
+                    <Pagination.Item
+                      key={x}
+                      active={x === (this.state.currentMode)}
+                      onClick={this.handleChangeMode}
+                    >
+                      {x}
+                    </Pagination.Item>
+                  ))
+                }
               </Pagination>
             </Col>
             <Col className="sprint__score" sm>
@@ -465,7 +467,7 @@ class SprintGame extends Component {
               {' '}
               {this.state.score}
               /10
-              <div>
+              <div style={{ marginTop: '20px' }}>
                 <ProgressBar animated striped variant="danger" now={this.state.progress} />
               </div>
             </Col>

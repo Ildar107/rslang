@@ -11,6 +11,7 @@ body {
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-size: 100%, auto, auto;
   height: 100vh;
+
 }
 
 .sprint {
@@ -20,6 +21,8 @@ body {
   justify-content: center;
   align-items: center;
   padding-top: 20px;
+  background: #eb686433;
+  font-weight: bold;
 }
 
 .sprint__btn-wrapper {
@@ -63,6 +66,7 @@ body {
   flex-direction: column;
   align-items: center;
   font-size: 22px;
+  color: white;
 }
 
 .sprint__doubling {
@@ -71,6 +75,8 @@ body {
 
 .card__word {
   margin: 5px 0;
+  padding: 0 20px 15px;
+  border-bottom: 3px solid white;
 }
 
 .card__translate {
@@ -108,9 +114,14 @@ body {
 
 .green {
   background-color: #ffffff00;
-  color: rgb(124, 178, 124);
-  border: 1px solid whitesmoke;
+  color: rgb(0, 255, 0);
+  border: 3px solid white;
   transition: all .25s ease;
+  font-weight: bold;
+}
+
+.modal-content {
+  color: gray;
 }
 
 .green:hover {
@@ -120,9 +131,10 @@ body {
 
 .red {
   background-color: rgba(255, 255, 255, 0);
-  color: rgb(255, 128, 128);
-  border: 1px solid whitesmoke;
+  color: red;
+  border: 3px solid white;
   transition: all .25s ease;
+  font-weight: bold;
 }
 
 .red:hover {
@@ -134,7 +146,7 @@ body {
   outline: none;
 }
 
-.green:focus{
+.green:focus {
   outline: none;
 }
 
