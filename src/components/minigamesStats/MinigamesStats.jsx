@@ -11,9 +11,11 @@ const MinigamesStats = () => {
       const { userId, JWT: jwt } = localStorage;
       const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`;
       const data = await getStatistics(jwt, url);
-      const { optional } = data;
+      let { optional } = data;
+      if (!optional) return;
       // console.log(optional);
-      setStats(Object.values(optional));
+      optional = Object.values(optional).reverse();
+      setStats(optional);
     }
     fetchStats();
   }, []);

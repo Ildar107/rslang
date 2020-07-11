@@ -33,6 +33,10 @@ const description = {
     name: 'Конструкток слов',
     info: 'Составь слово из букв, зная перевод',
   },
+  SPRINTGAME: {
+    name: 'SPRINT',
+    info: 'Угадай верный или не верный перевод',
+  },
 };
 
 function StartGamePage() {

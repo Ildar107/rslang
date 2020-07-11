@@ -22,6 +22,7 @@ import Savannah from './pages/savannah/Savannah';
 import LearnSettings from './pages/learnSettings/LearnSettings';
 import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
 import LearnWords from './pages/learnWords/LearnWords';
+import SprintGame from './components/sprintGame/SprintGame';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -66,6 +67,9 @@ const App = () => {
             </PrivateRoute>
             <PrivateRoute path={routes.AUDIOCALL} exact>
               <AudiocallPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.SPRINTGAME} exact>
+              <SprintGame />
             </PrivateRoute>
             <PrivateRoute path={routes.MINI_GAMES} exact>
               <MiniGamesPage />

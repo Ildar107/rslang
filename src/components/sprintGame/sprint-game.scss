@@ -1,0 +1,51 @@
+.sprint-game{
+	margin-right: 0;
+	margin-left: 0;
+	width: 100%;
+  max-width: 100%;
+  height: 100vh;
+}
+
+.sprint__header{
+	width: 100%;
+	padding-top: 20px;
+}
+
+.close-btn{
+  color: whitesmoke;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  transition: color .3s ease;
+}
+
+.close-btn:hover{
+  color: rgb(138, 138, 138);
+}
+
+.timer__progress{
+  margin-top: 10px;
+  display: block;
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  top: 0;
+  left: 50px;
+}
+
+.sprint-wrap{
+  border: 3px solid rgb(116, 116, 116);
+  margin-top: 40px;
+  animation: pulsing .4s linear 1;
+  border-radius: 5px;
+}
+
+.sprint__help{
+  width: 75px;
+  height: 75px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

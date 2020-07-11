@@ -32,7 +32,7 @@ const miniGamesData = [{
   name: 'Спринт',
   description: 'Учит быстро переводить с английского на русский язык',
   imageSrc: '/images/mini-igri-images/sprint.jpg',
-  linkToGame: '',
+  linkToGame: 'SPRINTGAME',
 }, {
   name: 'Конструктор Слов',
   description: 'Формирует навыки обратного перевода и написания английских слов',
