@@ -391,6 +391,7 @@ class PuzzlePage extends React.Component {
               setNext={this.setNext}
               setStatisticModalShow={this.setStatisticModalShow}
               arrayOfMistakes={this.state.arrayOfMistakes}
+              difficulty={this.state.difficulty}
             />
           </Col>
         </Row>
