@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Col, Row } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton/Skeleton';
@@ -8,6 +8,19 @@ import userWordsService from '../../services/user.words.services';
 const { getUserWords } = userWordsService;
 
 const StatisticLongTerm = () => {
+  const [userWordDates, setUserWordDates] = useState([]);
+
+  useEffect(() => {
+    async function fetchUserWords() {
+      const { userId, JWT: jwt } = localStorage;
+      const data = await getUserWords(jwt, userId);
+      const dates = data.map(({ optional }) => optional?.todayDate);
+      console.log(dates);
+      setUserWordDates(dates);
+    }
+    fetchUserWords();
+  }, []);
+
   const testDATA = [
     { date: '1/6/2020', words: 6 },
     { date: '2/6/2020', words: 3 },
@@ -141,8 +154,8 @@ const StatisticLongTerm = () => {
     ],
   };
 
-  const { userId, JWT: jwt } = localStorage;
-  const userWords = getUserWords(jwt, userId).then((res) => console.log(res));
+  // const { userId, JWT: jwt } = localStorage;
+  // const userWords = getUserWords(jwt, userId).then((res) => console.log(res));
   // console.log(userWords);
 
   return (
