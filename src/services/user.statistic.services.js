@@ -47,7 +47,8 @@ const sendStatistics = async (stats) => {
   //   body: { optional: { 0: stats } },
   // });
 
-  const { optional } = data;
+  let { optional } = data;
+  optional = optional || {};
   const lengthOfOptional = Object.keys(optional).length;
   if (lengthOfOptional < 20) {
     const sentStats = await getData({
