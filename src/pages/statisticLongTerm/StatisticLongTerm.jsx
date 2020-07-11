@@ -55,11 +55,10 @@ const StatisticLongTerm = () => {
   const dates = realData.map((item) => item.date);
   const numOfWords = realData.map((item) => item.words);
   const sumOfWords = [];
-  const sum = numOfWords.reduce((acc, item) => {
+  numOfWords.reduce((acc, item) => {
     sumOfWords.push(acc + item);
     return (acc + item);
   }, 0);
-  sumOfWords.push(sum);
   const left = sumOfWords.map((it) => 3600 - it);
   const percent = sumOfWords.map((it) => ((100 * it) / 3600).toFixed(1));
 
