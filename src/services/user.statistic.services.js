@@ -8,8 +8,8 @@ const formStatistics = (game, level, wordObjs, rightNumber, wrongNumber) => {
     g: game,
     d: date,
     l: level,
-    r: right || rightNumber,
-    w: wrong || wrongNumber,
+    r: right ?? rightNumber,
+    w: wrong ?? wrongNumber,
   };
   return stats;
 };
