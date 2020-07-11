@@ -16,7 +16,7 @@ const TeamModal = (props) => (
     </Modal.Header>
     <Modal.Body>
       <ListGroup variant="flush">
-        {props.works.map((item) => <ListGroup.Item>{item}</ListGroup.Item>)}
+        {props.works.map((item, index) => <ListGroup.Item key={`${item}${index}`}>{item}</ListGroup.Item>)}
       </ListGroup>
     </Modal.Body>
     <Modal.Footer>
