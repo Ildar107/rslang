@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 import { Col, Row } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton/Skeleton';
 import './statisticLongTerm.scss';
+import userWordsService from '../../services/user.words.services';
 
 const testDATA = [
   { date: '1/6/2020', words: 6 },
