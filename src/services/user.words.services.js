@@ -18,8 +18,16 @@ async function sendWords(jwt, userId, wordObject, optional) {
   });
   return sendData;
 }
+async function getUserWords(jwt, userId) {
+  const data = await getData({
+    url: `${serviceUrl.RESTSERVICEURL}/users/${userId}/words`,
+    jwt,
+  });
+  return data;
+}
 
 export default {
   getWords,
   sendWords,
+  getUserWords,
 };
