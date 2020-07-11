@@ -1,6 +1,6 @@
 .results-speak {
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #8120ff42;
   color: #6c757d;
 }
 
@@ -8,6 +8,7 @@
   height: 100vh;
   position: relative;
   color: white;
+  background-color: #20dcff42;
 
   .speak-it_bg {
     position: absolute;
@@ -83,14 +84,14 @@
   .progress__container label {
     font-size: 1.25rem;
     line-height: 1.5;
-    color: #626562;
+    color: white;
     margin-bottom: 1.2vw;
   }
 
   .game__level p {
     font-size: 1.25rem;
     line-height: 1.5;
-    color: #626562;
+    color: white;
     margin-bottom: 0.5vw;
   }
 
@@ -252,7 +253,7 @@
     right: 27px;
     top: 22px;
     width: 20px;
-    color: #8b8e8b;
+    color: white;
     cursor: pointer;
     transition: scale 0.5s ease;
   }
@@ -280,6 +281,9 @@
   }
 
   .btn-outline-info {
+    background: rgba(255, 255, 255, 0.5);
+    border-width: 3px;
+    border-radius: 8px;
     color: #626562;
     border-color: #46e09a;
   }
@@ -298,9 +302,10 @@
     border-color: #46e09a;
   }
 
-
-
   .btn-outline-success {
+    background: rgba(255, 255, 255, .85);
+    border-width: 3px;
+    border-radius: 8px;
     color: #626562;
     border-color: #46e09a;
   }
