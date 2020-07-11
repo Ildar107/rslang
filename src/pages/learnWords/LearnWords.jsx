@@ -7,9 +7,6 @@ import {
 } from 'react-bootstrap';
 import StoreContext from '../../app/store';
 import Skeleton from '../../components/skeleton/Skeleton';
-// import userSettingsService from '../../services/user.settings.services';
-// import MessageModal from '../../components/messageModal/MessageModal';
-// import ErrorModal from '../../components/errorModal/ErrorModal';
 import userWordsService from '../../services/user.words.services';
 import './learnWords.scss';
 import Loader from '../../components/loader/Loader';
@@ -26,19 +23,6 @@ const getShuffledArr = (arr) => {
 
 const LearnWords = () => {
   const context = useContext(StoreContext);
-
-  // const word = 'aaaaaaa';
-  // const explainSent = 'Something that give you understanding.';
-  // const exampleSent = 'I want explain you how it works.';
-  // const translatedWord = 'explain';
-  // const translatedExplainSentense = 'Что-то что дает понимание.';
-  // const translatedExampleSSentense = 'Я хочу объяснить тебе как это работает.';
-
-  // const [enteredWord, setEnteredWord] = useState('');
-  // const [word, setWord] = useState('');
-
-  // const [isRight, setIsRight] = useState(false);
-  // const [isWordEntered, setIsWordEntered] = useState(false);
 
   const [typedWord, setTypedWord] = useState('');
   const [mask, setMask] = useState(null);
@@ -73,9 +57,6 @@ const LearnWords = () => {
   const [newWordsCount, setNewWordsCount] = useState(+localStorage.getItem('newWordsCount') || 0);
   const [longestStreak, setLongestStreak] = useState(+localStorage.getItem('longestStreak') || 0);
   const [currentStreak, setCurrentStreak] = useState(+localStorage.getItem('currentStreak') || 0);
-  // const [solved, setSolved] = useState(false);
-  // const [finished, setFinished] = useState(false);
-  // setCurrentWordIndex();
 
   useEffect(() => {
     async function fetchData() {
@@ -283,8 +264,6 @@ const LearnWords = () => {
 
   return (
     <>
-      {/* <ErrorModal show={isShowError} onHide={hideErorr} errorMessage={errorMessage} />
-        <MessageModal show={isShowMessage} onHide={hideMessage} message={message} /> */}
       {isLoading ? <Loader /> : currentWordIndex < +cardsPerDay ? (
         <Skeleton wrapperClass="learn-words-page" title="Изучение слов">
           <div className="progress-container">
@@ -304,13 +283,6 @@ const LearnWords = () => {
               />
             </div>
           </div>
-          {/* <Row className="justify-content-md-center">
-            <Col md={8}>
-              <Card>
-                <Card.Body />
-              </Card>
-            </Col>
-          </Row> */}
           <Row className="justify-content-md-center">
             <Col md={8}>
               <Card>
@@ -441,7 +413,6 @@ const LearnWords = () => {
                     <Button
                       className={isDelete ? '' : 'disabled'}
                       onClick={() => {
-                      // if (!isDelete) setIsRepeat(false);
                         setIsDelete(!isDelete);
                         console.log(isDelete, isRepeat);
                       }}
