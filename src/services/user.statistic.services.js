@@ -1,16 +1,15 @@
 import getData from '../helper/fetchData';
 
-const formStatistics = (game, level, wordObjs) => {
+const formStatistics = (game, level, wordObjs, rightNumber, wrongNumber) => {
   const date = new Date().toLocaleDateString();
-  const right = wordObjs.filter(({ status }) => status).length;
-  const wrong = wordObjs.filter(({ status }) => !status).length;
-
+  const right = wordObjs?.filter(({ status }) => status).length;
+  const wrong = wordObjs?.filter(({ status }) => !status).length;
   const stats = {
     g: game,
     d: date,
     l: level,
-    r: right,
-    w: wrong,
+    r: right || rightNumber,
+    w: wrong || wrongNumber,
   };
   return stats;
 };
