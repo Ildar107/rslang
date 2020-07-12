@@ -42,7 +42,7 @@ const MainPage = () => (
       <Col lg={6}>
         <Tilebox
           title="Лучшая серия"
-          value={localStorage.getItem('longestStreak') ? +localStorage.getItem('longestStreak') + 1 : 0}
+          value={+localStorage.getItem('longestStreak') ? +localStorage.getItem('longestStreak') + 1 : 0}
           updateValue="-2"
           icon="uil-medal"
         />
