@@ -7,6 +7,7 @@ class DifficultTable extends React.Component {
       <MDBDataTable
         striped
         bordered
+        responsive
         sortable
         data={this.props.data}
       />
