@@ -16,6 +16,15 @@ body[data-theme=dark] {
     table {
         td {
             vertical-align: middle;
+            text-align: center;
+
+            .repeat_voice {
+                cursor: pointer;
+            }
+
+            .meaning_image {
+                max-width: 200px;
+            }
 
             button {
                 background: #eb6864 !important;

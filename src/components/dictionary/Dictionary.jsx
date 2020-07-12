@@ -5,72 +5,15 @@ import {
 import {
   Container,
   Spinner,
+  Image,
 } from 'react-bootstrap';
 import LearnTable from './LearnTable/LearnTable';
 import DeleteTable from './DeleteTable/DeleteTeble';
 import DifficultTable from './DifficultTable/DifficultTable';
 import './dictionary.scss';
+import Voice from '../../assets/images/voice.svg';
 
-const learnDataColumns = [
-  {
-    label: 'Word',
-    field: 'word',
-    sort: 'asc',
-    width: 200,
-  },
-  {
-    label: 'Translate',
-    field: 'wordTranslate',
-    sort: 'asc',
-    width: 270,
-  },
-  {
-    label: 'Text Example',
-    field: 'textExample',
-    sort: 'asc',
-    width: 350,
-  },
-  {
-    label: 'Difficult',
-    field: 'difficultWord',
-    sort: 'disabled',
-    width: 250,
-  },
-  {
-    label: 'Delete',
-    field: 'deleteWord',
-    sort: 'disabled',
-    width: 250,
-  },
-];
-
-const diffDataColumns = [
-  {
-    label: 'Word',
-    field: 'word',
-    sort: 'asc',
-    width: 200,
-  },
-  {
-    label: 'Translate',
-    field: 'wordTranslate',
-    sort: 'asc',
-    width: 270,
-  },
-  {
-    label: 'Text Example',
-    field: 'textExample',
-    sort: 'asc',
-    width: 400,
-  },
-  {
-    label: 'Restore',
-    field: 'restoreWord',
-    sort: 'disabled',
-    width: 250,
-  },
-];
-
+const mediaUrl = 'https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/master/';
 class Dictionary extends Component {
   constructor(props) {
     super(props);
@@ -80,7 +23,126 @@ class Dictionary extends Component {
     };
   }
 
+  static learnDataColumns;
+
+  static diffDataColumns;
+
   componentDidMount() {
+    const userSettings = JSON.parse(localStorage.getItem('userSettings'));
+    const {
+      example, transcription, translate, wordImg, explain,
+    } = userSettings;
+    this.learnDataColumns = [
+      {
+        label: 'Audio',
+        field: 'audio',
+        sort: 'disabled',
+        width: 30,
+      },
+      wordImg ? {
+        label: 'Image',
+        field: 'image',
+        sort: 'disabled',
+        width: 150,
+      } : '',
+      {
+        label: 'Word',
+        field: 'word',
+        sort: 'asc',
+        width: 200,
+      },
+      translate ? {
+        label: 'Translate',
+        field: 'wordTranslate',
+        sort: 'asc',
+        width: 200,
+      } : '',
+      transcription ? {
+        label: 'Transcript',
+        field: 'transcription',
+        sort: 'asc',
+        width: 250,
+      } : '',
+      explain ? {
+        label: 'Meaning',
+        field: 'textMeaning',
+        sort: 'asc',
+        width: 400,
+      } : '',
+      example ? {
+        label: 'Example',
+        field: 'textExample',
+        sort: 'asc',
+        width: 400,
+      } : '',
+      {
+        label: 'Difficult',
+        field: 'difficultWord',
+        sort: 'disabled',
+        width: 150,
+      },
+      {
+        label: 'Delete',
+        field: 'deleteWord',
+        sort: 'disabled',
+        width: 150,
+      },
+    ];
+
+    this.diffDataColumns = [
+      {
+        label: 'Audio',
+        field: 'audio',
+        sort: 'disabled',
+        width: 30,
+      },
+      wordImg ? {
+        label: 'Image',
+        field: 'image',
+        sort: 'disabled',
+        width: 150,
+      } : '',
+      {
+        label: 'Word',
+        field: 'word',
+        sort: 'asc',
+        width: 200,
+      },
+      translate ? {
+        label: 'Translate',
+        field: 'wordTranslate',
+        sort: 'asc',
+        width: 200,
+      } : '',
+      transcription ? {
+        label: 'Transcript',
+        field: 'transcription',
+        sort: 'asc',
+        width: 250,
+      } : '',
+      explain ? {
+        label: 'Meaning',
+        field: 'textMeaning',
+        sort: 'asc',
+        width: 400,
+      } : '',
+      example ? {
+        label: 'Example',
+        field: 'textExample',
+        sort: 'asc',
+        width: 400,
+      } : '',
+      {
+        label: 'Restore',
+        field: 'restoreWord',
+        sort: 'disabled',
+        width: 150,
+      },
+    ];
+
+    this.learnDataColumns = this.learnDataColumns.filter((c) => c !== '');
+    this.diffDataColumns = this.diffDataColumns.filter((c) => c !== '');
+
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('JWT');
     fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=3600&filter=%7B%22%24or%22%3A%5B%7B%22userWord.optional.isRepeat%22%3Afalse%7D%2C%7B%22userWord.optional.isRepeat%22%3Atrue%7D%5D%7D`, {
@@ -220,22 +282,32 @@ class Dictionary extends Component {
     });
   }
 
+  onPlay = (e) => {
+    const audio = new Audio(e.target.alt);
+    audio.play();
+  }
+
   generateLearnData = (words) => {
     const learnWords = words.map((w) => {
       const {
-        word, wordTranslate, textExample,
+        word, wordTranslate, textExample, transcription, textMeaning, audio, image,
       } = w;
-      const clearText = textExample.replace(/<\/?[^>]+(>|$)/g, '');
+      const clearExample = textExample.replace(/<\/?[^>]+(>|$)/g, '');
+      const clearMeaning = textMeaning.replace(/<\/?[^>]+(>|$)/g, '');
       return {
+        audio: <Image width={30} onClick={this.onPlay} src={Voice} alt={mediaUrl + audio} className="repeat_voice" />,
+        image: <Image src={mediaUrl + image} alt={word} className="meaning_image" />,
         word,
         wordTranslate,
-        textExample: clearText,
+        transcription,
+        textExample: clearExample,
+        textMeaning: clearMeaning,
         difficultWord: <MDBBtn color="purple" id={`dif_${w._id}`} onClick={this.onDifficult} size="sm">Difficult</MDBBtn>,
         deleteWord: <MDBBtn color="purple" id={`del_${w._id}`} onClick={this.onDelete} size="sm">Delete</MDBBtn>,
       };
     });
     return {
-      columns: learnDataColumns,
+      columns: this.learnDataColumns,
       rows: learnWords,
     };
   }
@@ -243,18 +315,23 @@ class Dictionary extends Component {
   generateOtherData = (words) => {
     const otherWords = words.map((w) => {
       const {
-        word, wordTranslate, textExample,
+        word, wordTranslate, textExample, transcription, textMeaning, audio, image,
       } = w;
-      const clearText = textExample.replace(/<\/?[^>]+(>|$)/g, '');
+      const clearExample = textExample.replace(/<\/?[^>]+(>|$)/g, '');
+      const clearMeaning = textMeaning.replace(/<\/?[^>]+(>|$)/g, '');
       return {
+        audio: <Image width={30} onClick={this.onPlay} src={Voice} alt={mediaUrl + audio} className="repeat_voice" />,
+        image: <Image src={mediaUrl + image} alt={word} className="meaning_image" />,
         word,
         wordTranslate,
-        textExample: clearText,
+        transcription,
+        textExample: clearExample,
+        textMeaning: clearMeaning,
         restoreWord: <MDBBtn color="purple" id={`${w.userWord.optional.isDelete ? 'delete' : 'difficult'}_${w._id}`} onClick={this.onRestore} size="sm">Restore</MDBBtn>,
       };
     });
     return {
-      columns: diffDataColumns,
+      columns: this.diffDataColumns,
       rows: otherWords,
     };
   }
