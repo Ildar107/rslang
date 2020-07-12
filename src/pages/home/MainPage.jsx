@@ -35,11 +35,18 @@ const MainPage = () => {
     console.log(currentWordIndex, longestStreak);
 
     return () => {
-      localStorage.setItem('prevWordsPerDay', wordsPerDay);
-      localStorage.setItem('prevCardsPerDay', cardsPerDay);
-      localStorage.setItem('prevCurrentWordIndex', currentWordIndex);
-      localStorage.setItem('prevLongestStreak', longestStreak);
-      console.log('unmounted');
+      if (
+        +localStorage.getItem('prevWordsPerDay') === wordsPerDay
+      || +localStorage.getItem('prevCardsPerDay') === cardsPerDay
+      || +localStorage.getItem('prevCurrentWordIndex') === currentWordIndex
+      || +localStorage.getItem('prevLongestStreak') === longestStreak
+      ) {
+        localStorage.setItem('prevWordsPerDay', wordsPerDay);
+        localStorage.setItem('prevCardsPerDay', cardsPerDay);
+        localStorage.setItem('prevCurrentWordIndex', currentWordIndex);
+        localStorage.setItem('prevLongestStreak', longestStreak);
+        console.log('unmounted');
+      }
     };
   }, []);
 
