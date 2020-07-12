@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "bootswatch": "^4.5.0",
+    "chart.js": "^2.9.3",
     "classnames": "^2.2.6",
     "materialize-css": "^1.0.0",
     "mdbreact": "^4.27.0",
@@ -59,6 +60,8 @@
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-bootstrap": "^1.0.1",
+    "react-circular-progressbar": "^2.0.3",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.7.2",
     "react-hot-loader": "^4.12.21",

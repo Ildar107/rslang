@@ -7,13 +7,14 @@ import StoreContext from '../../app/store';
 import getRandomInt from '../../helper/randomValue';
 import EndGameModal from '../../components/endGameModal/endGameModal';
 import HelpModal from '../../components/HelpModal/HelpModal';
+import BG from '../../assets/images/bg-red.svg';
 import { SPEAKIT_HELP } from '../../constants/gamesHelp';
 import './speakIt.scss';
 
 const maxWordsItem = 10;
 const maxPagesCount = 30;
 const SpeechRecognition = window.SpeechRecognition
-    || window.webkitSpeechRecognition;
+  || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 recognition.lang = 'en-US';
@@ -65,17 +66,17 @@ class SpeakIt extends Component {
     const res = await fetch(url);
     const json = await res.json();
     this.setState({ currentTranslate: json.text[0] });
-    console.log(JSON.stringify(json));
+    // console.log(JSON.stringify(json));
   }
 
-  onTrainingClick= (e) => {
+  onTrainingClick = (e) => {
     if (!this.state.isSpeakMode) {
-        e.currentTarget.querySelector('audio')?.play();
-        if (this.state.words[e.currentTarget.dataset.index]
-          && this.state.words[e.currentTarget.dataset.index].word) {
-          this.getTranslate(this.state.words[e.currentTarget.dataset.index].word);
-        }
-        this.setState({ currentImage: this.state.words[e.currentTarget.dataset.index]?.image });
+      e.currentTarget.querySelector('audio')?.play();
+      if (this.state.words[e.currentTarget.dataset.index]
+        && this.state.words[e.currentTarget.dataset.index].word) {
+        this.getTranslate(this.state.words[e.currentTarget.dataset.index].word);
+      }
+      this.setState({ currentImage: this.state.words[e.currentTarget.dataset.index]?.image });
     }
   }
 
@@ -91,7 +92,7 @@ class SpeakIt extends Component {
       .map((result) => result.transcript)
       .join('')
       .toLowerCase();
-    console.log(transcript);
+    // console.log(transcript);
     const wordMatch = this.state.words.find((x) => x.word.toLowerCase() === transcript
       && !this.state.knownWords.includes(x));
     if (wordMatch) {
@@ -186,6 +187,7 @@ class SpeakIt extends Component {
 
   render = () => (!this.state.isGameStopped ? (
     <Container fluid className="speak-it">
+      <img className="speak-it_bg" src={BG} alt="Background" />
       <EndGameModal
         onHide={() => {
           if (this.state.words.length > 0 && this.state.isSpeakMode) {
@@ -204,21 +206,22 @@ class SpeakIt extends Component {
             <p>Level</p>
             <Pagination>
               {
-                    Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
-                      <Pagination.Item
-                        key={x}
-                        active={x === (this.state.activeGroup + 1)}
-                        onClick={this.handleGroupChange}
-                      >
-                        {x}
-                      </Pagination.Item>
-                    ))
-                }
+                Array.from({ length: 6 }, (x, i) => i + 1).map((x) => (
+                  <Pagination.Item
+                    key={x}
+                    active={x === (this.state.activeGroup + 1)}
+                    onClick={this.handleGroupChange}
+                  >
+                    {x}
+                  </Pagination.Item>
+                ))
+              }
             </Pagination>
           </div>
           <div className="progress__container">
             <label>
               Score
+              {' '}
               {this.state.knownWords.length}
               /10
             </label>

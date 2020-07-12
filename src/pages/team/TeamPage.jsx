@@ -9,7 +9,7 @@ const TeamPage = () => (
   <Skeleton wrapperClass="main-page">
     <h1 className="team__header">Над приложением работали:</h1>
     <Row className="team__wrap">
-      {personsInfo.map((item, i) => <Col key={i}><TeamItem info={item} /></Col>)}
+      {personsInfo.map((item, i) => <Col key={`${i + 1}${item}`}><TeamItem info={item} /></Col>)}
     </Row>
   </Skeleton>
 );

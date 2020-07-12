@@ -15,6 +15,8 @@ const LearnSettings = () => {
   const [isShowError, setIsShowError] = useState(false);
   const [message, setMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [wordsPerDay, setWordsPerDay] = useState(context.userSettings.wordsPerDay);
+  const [cardsPerDay, setCardsPerDay] = useState(context.userSettings.cardsPerDay);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
@@ -68,14 +70,26 @@ const LearnSettings = () => {
                 <Form onSubmit={onSubmitForm}>
                   <Form.Group>
                     <Form.Label>Количество новых слов</Form.Label>
-                    <Form.Control type="number" placeholder="Введите число" id="words" required defaultValue={context.userSettings.wordsPerDay} />
+                    <Form.Control type="number" placeholder="Введите число" id="words" required value={wordsPerDay} disabled />
+                    <Form.Control
+                      type="range"
+                      defaultValue={wordsPerDay}
+                      min={10}
+                      max={50}
+                      step={10}
+                      onChange={(e) => {
+                        setWordsPerDay(e.target.value);
+                        setCardsPerDay(e.target.value * 2 + 10);
+                      }}
+                    />
                     <Form.Text className="text-muted">
                       Новые слова которые вы хотите выучить за день
                     </Form.Text>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Количество карточек в день</Form.Label>
-                    <Form.Control type="number" placeholder="Введите число" id="cards" required defaultValue={context.userSettings.cardsPerDay} />
+                    <Form.Control type="number" placeholder="Введите число" id="cards" required value={cardsPerDay} disabled />
+                    <Form.Control type="range" defaultValue={cardsPerDay} min={wordsPerDay * 2 + Math.floor(wordsPerDay / 2)} max={120} step={10} onChange={(e) => setCardsPerDay(e.target.value)} />
                     <Form.Text className="text-muted">
                       Количество карточек которые планируете изучать за 1 день
                     </Form.Text>
@@ -93,7 +107,9 @@ const LearnSettings = () => {
                     <Form.Check label={'Отображение кнопки "Показать ответ"'} type="checkbox" id="answer" defaultChecked={context.userSettings.showAnswer} />
                     <Form.Check label={'Отображение кнопки "Удалить слово"'} type="checkbox" id="delete" defaultChecked={context.userSettings.showDelete} />
                     <Form.Check
-                      label={'Отображение кнопки "Сложные" (добавляет слово в группу сложных слов)'}
+                      label={'Отображение кнопки "Сложное слово" (добавляет'
+                      + ' слово в'
+                      + ' группу сложных слов)'}
                       type="checkbox"
                       id="hard"
                       defaultChecked={context.userSettings.showHard}

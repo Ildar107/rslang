@@ -11,7 +11,7 @@ const StoreContext = createContext({
   statistics: [],
   async isValidToken() {
     const user = await userServices.getUser(this.jwt, this.userId);
-    console.log(`user: ${JSON.stringify(user)}`);
+    // console.log(`user: ${JSON.stringify(user)}`);
     return !!user?.id;
   },
   clearAuthParams() {
@@ -27,6 +27,7 @@ const StoreContext = createContext({
   userId,
   userEmail,
   userSettings: userSettings ? JSON.parse(userSettings) : USERSETTINGS,
+  isExistNewWords: false,
   speakItGameState: {
     currentTranslate: '',
     currentTranscript: '',

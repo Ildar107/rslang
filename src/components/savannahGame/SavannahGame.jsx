@@ -6,6 +6,9 @@ import {
 import ResultModal from './savannahResult/ResultModal';
 import EndGameModal from '../endGameModal/endGameModal';
 import Loader from '../loader/Loader';
+import HelpModal from '../HelpModal/HelpModal';
+import { SAVANNAH_HELP } from '../../constants/gamesHelp';
+import userStatsServices from '../../services/user.statistic.services';
 
 const randomInteger = (min, max) => {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -122,6 +125,7 @@ class SavannahGame extends Component {
   nextLevel = async () => {
     const page = randomInteger(minPage, maxPage);
     const { score } = this.state;
+    await this.sendStats();
     await this.resetScore(score);
     await this.showModal();
     await this.setState({
@@ -150,6 +154,17 @@ class SavannahGame extends Component {
       this.nextLevel();
     }
   }
+
+  sendStats = () => {
+    const stats = userStatsServices.formStatistics(
+      'Savannah',
+      this.state.page + 1,
+      null,
+      10 - this.state.notLearnedWords.length,
+      this.state.notLearnedWords.length,
+    );
+    userStatsServices.sendStatistics(stats);
+  };
 
   wordIsLearned = () => {
     const copyCurrentWord = this.state.currentWord;
@@ -318,6 +333,12 @@ class SavannahGame extends Component {
             this.getCurrentWords()
           }
         </Row>
+        <div className="savannah__help">
+          <HelpModal
+            messages={SAVANNAH_HELP}
+          />
+        </div>
+
         <ResultModal
           onHide={this.onHide}
           show={this.state.modalShow}

@@ -82,7 +82,7 @@ const StatsModal = (props) => {
           }
         </Modal.Body>
         <Modal.Footer className="stats-footer">
-          {NavLink(routes.LANDING, 'In menu')}
+          {NavLink(routes.MINI_GAMES, 'In menu')}
           <Button variant="primary" onClick={restart} width={80}>
             Restart
           </Button>

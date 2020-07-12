@@ -21,7 +21,9 @@ import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
 import LearnSettings from './pages/learnSettings/LearnSettings';
 import DictionaryPage from './pages/dictionary/DictionaryPage';
-
+import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
+import LearnWords from './pages/learnWords/LearnWords';
+import SprintGame from './components/sprintGame/SprintGame';
 const App = () => {
   const store = useContext(StoreContext);
   const themeContext = useContext(ThemeContext);
@@ -51,6 +53,9 @@ const App = () => {
             <PrivateRoute path={routes.PUZZLE} exact>
               <PuzzlePage />
             </PrivateRoute>
+            <PrivateRoute path={routes.STATISTIC_LONG_TERM} exact>
+              <StatisticLongTerm />
+            </PrivateRoute>
             <PrivateRoute path={routes.START_GAME_PAGE} exact>
               <StartGamePage />
             </PrivateRoute>
@@ -66,11 +71,17 @@ const App = () => {
             <PrivateRoute path={routes.AUDIOCALL} exact>
               <AudiocallPage />
             </PrivateRoute>
+            <PrivateRoute path={routes.SPRINTGAME} exact>
+              <SprintGame />
+            </PrivateRoute>
             <PrivateRoute path={routes.MINI_GAMES} exact>
               <MiniGamesPage />
             </PrivateRoute>
             <PrivateRoute path={routes.LEARNSETTINGS} exact>
               <LearnSettings />
+            </PrivateRoute>
+            <PrivateRoute path={routes.LEARNWORDS} exact>
+              <LearnWords />
             </PrivateRoute>
             <Route>
               <Redirect to={routes.MainPage} />

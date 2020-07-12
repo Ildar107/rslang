@@ -10,28 +10,32 @@ import routes from '../../constants/routes';
 
 const description = {
   PUZZLE: {
-    name: 'PUZZLE',
+    name: 'English Puzzle',
     info: 'Собирай предложения из слов, используй'
-        + ' подсказки, сложи паззл из предложений.',
+      + ' подсказки, сложи паззл из предложений.',
   },
   SPEAKIT: {
-    name: 'SPEAK IT',
+    name: 'Speak It',
     info: 'Слушай'
-        + ' слова, читай транскрипцию, добейся'
-        + ' правильного произношения.',
+      + ' слова, читай транскрипцию, добейся'
+      + ' правильного произношения.',
   },
   SAVANNAH: {
-    name: 'SAVANNAH',
+    name: 'Саванна',
     info: 'Тренировка Саванна развивает словарный запас.'
-        + 'Чем больше слов ты знаешь, тем больше очков опыта получишь.',
+      + 'Чем больше слов ты знаешь, тем больше очков опыта получишь.',
   },
   AUDIOCALL: {
-    name: 'AUDIOCALL',
-    info: 'бла бла бла',
+    name: 'Аудиовызов',
+    info: 'Тренировка Аудиовызов улучшает восприятие английской речи на слух.',
   },
   WORD_BUILDER: {
-    name: 'WORD BUILDER',
+    name: 'Конструкток слов',
     info: 'Составь слово из букв, зная перевод',
+  },
+  SPRINTGAME: {
+    name: 'SPRINT',
+    info: 'Угадай верный или не верный перевод',
   },
 };
 
@@ -41,7 +45,10 @@ function StartGamePage() {
   const game = qs.parse(useLocation().search).q;
   const path = routes[game];
   return (
-    <Container fluid>
+    <Container
+      fluid
+      className="start-game-wrapper"
+    >
       <div className="start-game">
         <Button
           className="start-game-close"

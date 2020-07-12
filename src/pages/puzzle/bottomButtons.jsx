@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import userStatsServices from '../../services/user.statistic.services';
 
-const BottomButtons = (props) => (
-  <div>
-    {props.allInSelected && !props.win && props.buttons && !props.next
+const BottomButtons = (props) => {
+  const sendStats = () => {
+    const stats = userStatsServices.formStatistics('Puzzle', props.difficulty + 1, null, 10 - props.arrayOfMistakes?.length, props.arrayOfMistakes?.length);
+    userStatsServices.sendStatistics(stats);
+  };
+  return (
+    <div>
+      {props.allInSelected && !props.win && props.buttons && !props.next
           && (
           <Button
             size="sm"
@@ -15,7 +21,7 @@ const BottomButtons = (props) => (
           </Button>
           )}
 
-    {!props.win && props.buttons && !props.next
+      {!props.win && props.buttons && !props.next
           && (
           <Button
             size="sm"
@@ -28,7 +34,7 @@ const BottomButtons = (props) => (
             I DONT KNOW
           </Button>
           )}
-    {props.win && props.buttons && !props.next
+      {props.win && props.buttons && !props.next
           && (
           <Button
             size="sm"
@@ -42,7 +48,7 @@ const BottomButtons = (props) => (
             CONTINUE
           </Button>
           )}
-    {props.next
+      {props.next
           && (
           <>
             <Button
@@ -50,6 +56,7 @@ const BottomButtons = (props) => (
               className="puzzle-pink-btn"
               onClick={() => {
                 props.setNext(false);
+                sendStats();
               }}
             >
               CONTINUE
@@ -63,9 +70,10 @@ const BottomButtons = (props) => (
             </Button>
           </>
           )}
-  </div>
+    </div>
 
-);
+  );
+};
 
 BottomButtons.propTypes = {
   allInSelected: PropTypes.bool,
@@ -76,6 +84,8 @@ BottomButtons.propTypes = {
   buttons: PropTypes.bool,
   setNext: PropTypes.func,
   next: PropTypes.bool,
+  difficulty: PropTypes.number,
+  arrayOfMistakes: PropTypes.PropTypes.arrayOf(PropTypes.any),
 };
 
 BottomButtons.defaultProps = {
@@ -87,6 +97,8 @@ BottomButtons.defaultProps = {
   buttons: false,
   setNext: () => {},
   next: false,
+  difficulty: 0,
+  arrayOfMistakes: null,
 };
 
 export default BottomButtons;
