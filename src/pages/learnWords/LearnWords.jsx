@@ -69,6 +69,7 @@ const LearnWords = () => {
       localStorage.setItem('longestStreak', 0);
       setCurrentStreak(0);
       localStorage.setItem('currentStreak', 0);
+      localStorage.setItem('currentUserId', userId);
       const [data] = await userWordsService.getWords(
         jwt, userId, 200,
       );
@@ -153,7 +154,9 @@ const LearnWords = () => {
       }
       setIsLoading(false);
     }
-    if (todayDate !== localStorage.getItem('todayDate') || wordObjects.length !== +cardsPerDay) {
+    if (todayDate !== localStorage.getItem('todayDate')
+        || wordObjects.length !== +cardsPerDay
+        || userId !== localStorage.getItem('currentUserId')) {
       // console.log(wordObjects.length, cardsPerDay);
       fetchData();
     }
