@@ -13,7 +13,6 @@ const MinigamesStats = () => {
       const data = await getStatistics(jwt, url);
       let { optional } = data;
       if (!optional) return;
-      // console.log(optional);
       optional = Object.values(optional).reverse();
       setStats(optional);
     }

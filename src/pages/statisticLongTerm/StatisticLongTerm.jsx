@@ -31,7 +31,6 @@ const StatisticLongTerm = () => {
       // dates = dates.filter((date) => date);
       // console.log(uniqueDates);
       // console.log(dates);
-      console.log(dataObjects);
       setRealData(dataObjects);
       // setUserWordDates(dates);
     }

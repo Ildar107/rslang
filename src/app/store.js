@@ -11,7 +11,6 @@ const StoreContext = createContext({
   statistics: [],
   async isValidToken() {
     const user = await userServices.getUser(this.jwt, this.userId);
-    // console.log(`user: ${JSON.stringify(user)}`);
     return !!user?.id;
   },
   clearAuthParams() {

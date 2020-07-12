@@ -153,13 +153,13 @@ const AuthorizationPage = () => {
           />
         )
         : ''}
-      { isLoading ? <Loader /> : '' }
+      {isLoading ? <Loader /> : ''}
       <div className="authorize__container">
         <Container>
           <Row className="justify-content-center">
             <h1>RsLang</h1>
           </Row>
-          { !isRegistration ? (
+          {!isRegistration ? (
             <>
               <Row className="justify-content-center">
                 <Col lg={5}>

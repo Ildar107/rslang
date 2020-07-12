@@ -104,8 +104,7 @@ const LearnWords = () => {
         localStorage.setItem('wordsPerDayCurrent', wordsPerDay);
         const wordsToRepeat = paginatedResults
           .filter((wordObj) => wordObj.userWord?.optional?.isRepeat
-        && wordObj.userWord?.optional?.isDelete === false);
-        console.log(wordsToRepeat);
+            && wordObj.userWord?.optional?.isDelete === false);
         if (wordsPerDay + wordsToRepeat.length > cardsPerDay) {
           const difference = cardsPerDay - wordsPerDay;
           wordsArray = wordsArray.concat(wordsToRepeat.slice(0, difference));
@@ -114,7 +113,6 @@ const LearnWords = () => {
           localStorage.setItem('wordObjects', JSON.stringify(shuffled));
           localStorage.setItem('newWordsCount', wordsPerDay);
           setNewWordsCount(wordsPerDay);
-          console.log('1', wordsArray);
           setIsLoading(false);
           return;
         }
@@ -122,8 +120,7 @@ const LearnWords = () => {
 
         const restOfTheUserWords = paginatedResults
           .filter((wordObj) => wordObj.userWord?.optional?.isDelete === false
-        && wordObj.userWord?.optional?.isRepeat === false);
-        console.log(restOfTheUserWords);
+            && wordObj.userWord?.optional?.isRepeat === false);
         if (wordsArray.length + restOfTheUserWords.length > cardsPerDay) {
           const difference = cardsPerDay - wordsArray.length;
           wordsArray = wordsArray.concat(restOfTheUserWords.slice(0, difference));
@@ -132,21 +129,17 @@ const LearnWords = () => {
           localStorage.setItem('wordObjects', JSON.stringify(shuffled));
           localStorage.setItem('newWordsCount', wordsPerDay);
           setNewWordsCount(wordsPerDay);
-          console.log('2', wordsArray);
           setIsLoading(false);
           return;
         }
         wordsArray = wordsArray.concat(restOfTheUserWords);
-        console.log(wordsArray);
 
         const difference = cardsPerDay - wordsArray.length;
         const newWordsToFillArray = paginatedResults
           .filter((wordObj) => !wordObj.userWord)
           .slice(wordsPerDay, wordsPerDay + difference);
-        console.log(newWordsToFillArray);
         wordsArray = wordsArray.concat(newWordsToFillArray);
         const shuffled = getShuffledArr(wordsArray);
-        console.log(shuffled);
         setWordsObj(shuffled);
         localStorage.setItem('wordObjects', JSON.stringify(shuffled));
         localStorage.setItem('newWordsCount', wordsPerDay + newWordsToFillArray.length);
@@ -155,9 +148,9 @@ const LearnWords = () => {
       setIsLoading(false);
     }
     if (todayDate !== localStorage.getItem('todayDate')
-        || wordObjects.length !== +cardsPerDay
-        || userId !== localStorage.getItem('currentUserId')
-        || wordsPerDay !== +localStorage.getItem('wordsPerDayCurrent')) {
+      || wordObjects.length !== +cardsPerDay
+      || userId !== localStorage.getItem('currentUserId')
+      || wordsPerDay !== +localStorage.getItem('wordsPerDayCurrent')) {
       // console.log(wordObjects.length, cardsPerDay);
       fetchData();
     }
@@ -175,7 +168,6 @@ const LearnWords = () => {
   };
 
   const currentWordObj = wordObjects[currentWordIndex];
-  console.log(currentWordObj);
 
   const getMask = (maskWord) => {
     const wordArr = maskWord.toLowerCase().split('');
@@ -333,12 +325,12 @@ const LearnWords = () => {
                     <div className="word__block">
                       <div className="unknown__word">
                         {showMask && (
-                        <span
-                          onClick={() => { if (!readyForNext)inputFocus(); }}
-                          className="word__mask"
-                        >
-                          {mask}
-                        </span>
+                          <span
+                            onClick={() => { if (!readyForNext) inputFocus(); }}
+                            className="word__mask"
+                          >
+                            {mask}
+                          </span>
                         )}
                         <input
                           className="input__container"
@@ -356,50 +348,50 @@ const LearnWords = () => {
 
                       </div>
                       {!readyForNext && (
-                      <Button
-                        className="check-btn"
-                        key="check"
-                        onClick={() => {
-                          const result = checkIsTypedWordRight(typedWord);
-                          if (result && !alreadyTried) {
-                            localStorage.setItem('rightAnswers', +rightAnswers + 1);
-                            setRightAnswers(rightAnswers + 1);
-                            localStorage.setItem('currentStreak', +currentStreak + 1);
-                            setCurrentStreak(currentStreak + 1);
-                            if (longestStreak < currentStreak) {
-                              localStorage.setItem('longestStreak', currentStreak);
-                              setLongestStreak(currentStreak);
+                        <Button
+                          className="check-btn"
+                          key="check"
+                          onClick={() => {
+                            const result = checkIsTypedWordRight(typedWord);
+                            if (result && !alreadyTried) {
+                              localStorage.setItem('rightAnswers', +rightAnswers + 1);
+                              setRightAnswers(rightAnswers + 1);
+                              localStorage.setItem('currentStreak', +currentStreak + 1);
+                              setCurrentStreak(currentStreak + 1);
+                              if (longestStreak < currentStreak) {
+                                localStorage.setItem('longestStreak', currentStreak);
+                                setLongestStreak(currentStreak);
+                              }
+                            } else {
+                              setAlreadyTried(true);
+                              localStorage.setItem('currentStreak', 0);
+                              setCurrentStreak(0);
+                              setIsRepeat(true);
                             }
-                          } else {
-                            setAlreadyTried(true);
+                          }}
+                          variant="success"
+                          type="button"
+                          size="sm"
+                        >
+                          Проверить
+                        </Button>
+                      )}
+                      {showAnswer && !readyForNext && (
+                        <Button
+                          className="show-btn"
+                          key="dn"
+                          variant="danger"
+                          type="button"
+                          size="sm"
+                          onClick={() => {
+                            checkIsTypedWordRight(currentWordObj?.word);
                             localStorage.setItem('currentStreak', 0);
                             setCurrentStreak(0);
                             setIsRepeat(true);
-                          }
-                        }}
-                        variant="success"
-                        type="button"
-                        size="sm"
-                      >
-                        Проверить
-                      </Button>
-                      )}
-                      {showAnswer && !readyForNext && (
-                      <Button
-                        className="show-btn"
-                        key="dn"
-                        variant="danger"
-                        type="button"
-                        size="sm"
-                        onClick={() => {
-                          checkIsTypedWordRight(currentWordObj?.word);
-                          localStorage.setItem('currentStreak', 0);
-                          setCurrentStreak(0);
-                          setIsRepeat(true);
-                        }}
-                      >
-                        Показать ответ
-                      </Button>
+                          }}
+                        >
+                          Показать ответ
+                        </Button>
                       )}
                       {translate && <div key="trans" className="translated__word line">{currentWordObj?.wordTranslate}</div>}
                       {transcription && <div key="transkrip" className="translated__word line">{currentWordObj?.transcription}</div>}
@@ -415,78 +407,77 @@ const LearnWords = () => {
           </Row>
           <Row className="justify-content-md-center">
             <Col xl={8}>
-              { readyForNext && (
-              <Card>
-                <Card.Body>
-                  <div className="words__control">
-                    {showDelete && readyForNext && (
-                    <Button
-                      className={isDelete ? '' : 'disabled'}
-                      onClick={() => {
-                        setIsDelete(!isDelete);
-                        console.log(isDelete, isRepeat);
-                      }}
-                      key="del"
-                      variant="primary"
-                      type="button"
-                    >
-                      Удалить слово
-                    </Button>
-                    )}
-                    {showHard && readyForNext && (
-                    <Button
-                      className={isDifficult ? '' : 'disabled'}
-                      onClick={() => setIsDifficult(!isDifficult)}
-                      key="dif"
-                      variant="primary"
-                      type="button"
-                    >
-                      Сложное слово
-                    </Button>
-                    )}
-                  </div>
-                  <div className="next-word">
-                    {readyForNext && (
-                    <Button
-                      key="next"
-                      variant="success"
-                      type="button"
-                      size="sm"
-                      onClick={() => {
-                        userWordsService.sendWords(
-                          jwt,
-                          userId,
-                          currentWordObj,
-                          {
-                            isRepeat,
-                            isDelete,
-                            isDifficult,
-                            todayDate,
-                          },
-                        );
-                        setIsRepeat(false);
-                        setIsDelete(false);
-                        setIsDifficult(false);
-                        setReadyForNext(false);
-                        setAlreadyTried(false);
-                        setMask(null);
-                        setShowMask(false);
-                        setTypedWord('');
-                        inputEl.current.value = '';
-                        localStorage.setItem('currentWordIndex', +currentWordIndex + 1);
-                        setCurrentWordIndex(+currentWordIndex + 1);
-                        aud1.pause();
-                        aud2.pause();
-                        aud3.pause();
-                        inputFocus();
-                      }}
-                    >
-                      Перейти к следующему
-                    </Button>
-                    )}
-                  </div>
-                </Card.Body>
-              </Card>
+              {readyForNext && (
+                <Card>
+                  <Card.Body>
+                    <div className="words__control">
+                      {showDelete && readyForNext && (
+                        <Button
+                          className={isDelete ? '' : 'disabled'}
+                          onClick={() => {
+                            setIsDelete(!isDelete);
+                          }}
+                          key="del"
+                          variant="primary"
+                          type="button"
+                        >
+                          Удалить слово
+                        </Button>
+                      )}
+                      {showHard && readyForNext && (
+                        <Button
+                          className={isDifficult ? '' : 'disabled'}
+                          onClick={() => setIsDifficult(!isDifficult)}
+                          key="dif"
+                          variant="primary"
+                          type="button"
+                        >
+                          Сложное слово
+                        </Button>
+                      )}
+                    </div>
+                    <div className="next-word">
+                      {readyForNext && (
+                        <Button
+                          key="next"
+                          variant="success"
+                          type="button"
+                          size="sm"
+                          onClick={() => {
+                            userWordsService.sendWords(
+                              jwt,
+                              userId,
+                              currentWordObj,
+                              {
+                                isRepeat,
+                                isDelete,
+                                isDifficult,
+                                todayDate,
+                              },
+                            );
+                            setIsRepeat(false);
+                            setIsDelete(false);
+                            setIsDifficult(false);
+                            setReadyForNext(false);
+                            setAlreadyTried(false);
+                            setMask(null);
+                            setShowMask(false);
+                            setTypedWord('');
+                            inputEl.current.value = '';
+                            localStorage.setItem('currentWordIndex', +currentWordIndex + 1);
+                            setCurrentWordIndex(+currentWordIndex + 1);
+                            aud1.pause();
+                            aud2.pause();
+                            aud3.pause();
+                            inputFocus();
+                          }}
+                        >
+                          Перейти к следующему
+                        </Button>
+                      )}
+                    </div>
+                  </Card.Body>
+                </Card>
               )}
             </Col>
           </Row>

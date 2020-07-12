@@ -9,3 +9,21 @@ body[data-theme=dark] {
         }
     }
 }
+
+.dictionary-page {
+    table {
+        td {
+            vertical-align: middle;
+
+            button {
+                background: #eb6864 !important;
+                color: white;
+            }
+        }
+    }
+
+    .page-link:hover {
+        color: white !important;
+        cursor: pointer;
+    }
+}

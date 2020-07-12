@@ -161,9 +161,7 @@ const generateStages = (words) => {
 
 const generateRounds = (words) => {
   const stages = generateStages(words);
-  // return chunk(stages, 10);
-  console.log(stages);
-  console.log(JSON.stringify(stages));
+  return chunk(stages, 10);
 };
 
 const compareWordsDetails = (word, details) => {

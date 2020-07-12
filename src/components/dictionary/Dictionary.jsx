@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  MDBContainer, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBIcon,
+  MDBContainer, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBBtn,
 } from 'mdbreact';
 import {
   Container,
@@ -11,13 +11,72 @@ import DeleteTable from './DeleteTable/DeleteTeble';
 import DifficultTable from './DifficultTable/DifficultTable';
 import './dictionary.scss';
 
+const learnDataColumns = [
+  {
+    label: 'Word',
+    field: 'word',
+    sort: 'asc',
+    width: 200,
+  },
+  {
+    label: 'Translate',
+    field: 'wordTranslate',
+    sort: 'asc',
+    width: 270,
+  },
+  {
+    label: 'Text Example',
+    field: 'textExample',
+    sort: 'asc',
+    width: 350,
+  },
+  {
+    label: 'Difficult',
+    field: 'difficultWord',
+    sort: 'disabled',
+    width: 250,
+  },
+  {
+    label: 'Delete',
+    field: 'deleteWord',
+    sort: 'disabled',
+    width: 250,
+  },
+];
+
+const diffDataColumns = [
+  {
+    label: 'Word',
+    field: 'word',
+    sort: 'asc',
+    width: 200,
+  },
+  {
+    label: 'Translate',
+    field: 'wordTranslate',
+    sort: 'asc',
+    width: 270,
+  },
+  {
+    label: 'Text Example',
+    field: 'textExample',
+    sort: 'asc',
+    width: 400,
+  },
+  {
+    label: 'Restore',
+    field: 'restoreWord',
+    sort: 'disabled',
+    width: 250,
+  },
+];
+
 class Dictionary extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       activeItemJustified: '1',
-      update: false,
     };
   }
 
@@ -36,17 +95,32 @@ class Dictionary extends Component {
       });
   }
 
+  toggleJustified = (tab) => () => {
+    if (this.state.activeItemJustified !== tab) {
+      this.setState({
+        activeItemJustified: tab,
+      });
+    }
+  };
+
   processedWords = (words) => {
     const learnWords = words?.filter(
       (w) => w.userWord.optional.isDelete !== true && w.userWord.optional.isDifficult !== true,
     );
-    const deletedWords = words.filter((w) => w.userWord.optional.isDelete === true);
-    const difficultWords = words.filter((w) => w.userWord.optional.isDifficult === true);
+    const learnData = this.generateLearnData(learnWords);
 
-    this.setState({ deletedWords, difficultWords, learnWords });
+    const deleteWords = words.filter((w) => w.userWord.optional.isDelete === true);
+    const deleteData = this.generateOtherData(deleteWords);
+
+    const difficultWords = words.filter((w) => w.userWord.optional.isDifficult === true);
+    const diffData = this.generateOtherData(difficultWords);
+
+    this.setState({
+      deleteWords, deleteData, diffData, learnWords, difficultWords, learnData,
+    });
   }
 
-  sendUpdateWord = (word, action) => {
+  updateWord = (word, action) => {
     const { userWord } = word;
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('JWT');
@@ -74,50 +148,143 @@ class Dictionary extends Component {
         optional: { ...newOptional },
       }),
     });
+    return newOptional;
   }
 
+  // eslint-disable-next-line consistent-return
   restoreWord = (word) => {
-    if (word.userWord.optional.isDelete) {
+    if (word?.userWord.optional.isDelete) {
       const { learnWords, deleteWords } = this.state;
+
       const newDeleteWords = deleteWords.filter((w) => w._id !== word._id);
-      const newLearnWords = [...learnWords, word];
-      this.setState({ learnWords: newLearnWords, deleteWords: newDeleteWords });
-    } else if (word.userWord.optional.isDifficult) {
+      const deleteData = this.generateOtherData(newDeleteWords);
+
+      const newOptional = this.updateWord(word);
+      const newLearnWords = [
+        { ...word, userWord: { ...word.userWord, optional: { ...newOptional } } }, ...learnWords,
+      ];
+      const learnData = this.generateLearnData(newLearnWords);
+
+      this.setState({
+        learnWords: newLearnWords, deleteWords: newDeleteWords, learnData, deleteData,
+      });
+    } else if (word?.userWord.optional.isDifficult) {
       const { learnWords, difficultWords } = this.state;
+
       const newDifficultWords = difficultWords.filter((w) => w._id !== word._id);
-      const newLearnWords = [...learnWords, word];
-      this.setState({ learnWords: newLearnWords, difficultWords: newDifficultWords });
+      const diffData = this.generateOtherData(newDifficultWords);
+
+      const newOptional = this.updateWord(word);
+      const newLearnWords = [
+        { ...word, userWord: { ...word.userWord, optional: { ...newOptional } } }, ...learnWords,
+      ];
+      const learnData = this.generateLearnData(newLearnWords);
+
+      this.setState({
+        learnWords: newLearnWords, difficultWords: newDifficultWords, learnData, diffData,
+      });
     }
   }
 
   deleteWord = (word) => {
     const { learnWords, deleteWords } = this.state;
+
     const newLearnWords = learnWords.filter((w) => w._id !== word._id);
-    const newDeleteWords = [...deleteWords, word];
-    this.setState({ learnWords: newLearnWords, deleteWords: newDeleteWords });
+    const learnData = this.generateLearnData(newLearnWords);
+
+    const newOptional = this.updateWord(word, 'delete');
+    const newDeleteWords = [
+      { ...word, userWord: { ...word.userWord, optional: { ...newOptional } } }, ...deleteWords,
+    ];
+    const deleteData = this.generateOtherData(newDeleteWords);
+
+    this.setState({
+      learnWords: newLearnWords, deleteWords: newDeleteWords, learnData, deleteData,
+    });
   }
 
   difficultWord = (word) => {
     const { learnWords, difficultWords } = this.state;
-    const newLearnWords = JSON.parse(JSON.stringify(learnWords.filter((w) => w._id !== word._id)));
-    const newDifficultWords = [...difficultWords, word];
-    this.setState({ learnWords: newLearnWords, difficultWords: newDifficultWords, update: true });
-    this.sendUpdateWord(word, 'difficult');
-    return newLearnWords;
+
+    const newLearnWords = learnWords.filter((w) => w._id !== word._id);
+    const learnData = this.generateLearnData(newLearnWords);
+
+    const newOptional = this.updateWord(word, 'difficult');
+    const newDifficultWords = [
+      { ...word, userWord: { ...word.userWord, optional: { ...newOptional } } }, ...difficultWords,
+    ];
+    const diffData = this.generateOtherData(newDifficultWords);
+
+    this.setState({
+      learnWords: newLearnWords, difficultWords: newDifficultWords, learnData, diffData,
+    });
   }
 
-  toggleJustified = (tab) => () => {
-    if (this.state.activeItemJustified !== tab) {
-      this.setState({
-        activeItemJustified: tab,
-      });
-    }
-  };
+  generateLearnData = (words) => {
+    const learnWords = words.map((w) => {
+      const {
+        word, wordTranslate, textExample,
+      } = w;
+      const clearText = textExample.replace(/<\/?[^>]+(>|$)/g, '');
+      return {
+        word,
+        wordTranslate,
+        textExample: clearText,
+        difficultWord: <MDBBtn color="purple" id={`dif_${w._id}`} onClick={this.onDifficult} size="sm">Difficult</MDBBtn>,
+        deleteWord: <MDBBtn color="purple" id={`del_${w._id}`} onClick={this.onDelete} size="sm">Delete</MDBBtn>,
+      };
+    });
+    return {
+      columns: learnDataColumns,
+      rows: learnWords,
+    };
+  }
 
-  isUpdated = () => this.setState({ update: false });
+  generateOtherData = (words) => {
+    const otherWords = words.map((w) => {
+      const {
+        word, wordTranslate, textExample,
+      } = w;
+      const clearText = textExample.replace(/<\/?[^>]+(>|$)/g, '');
+      return {
+        word,
+        wordTranslate,
+        textExample: clearText,
+        restoreWord: <MDBBtn color="purple" id={`${w.userWord.optional.isDelete ? 'delete' : 'difficult'}_${w._id}`} onClick={this.onRestore} size="sm">Restore</MDBBtn>,
+      };
+    });
+    return {
+      columns: diffDataColumns,
+      rows: otherWords,
+    };
+  }
+
+  onRestore = (e) => {
+    const restoreFrom = e.target.id.split('_')[0];
+    const wordId = e.target.id.split('_')[1];
+    if (restoreFrom === 'difficult') {
+      const word = this.state.difficultWords.find((w) => w._id === wordId);
+      this.restoreWord(word);
+    } else {
+      const word = this.state.deleteWords.find((w) => w._id === wordId);
+      this.restoreWord(word);
+    }
+  }
+
+  onDifficult = (e) => {
+    const wordId = e.target.id.split('_')[1];
+    const word = this.state.learnWords.find((w) => w._id === wordId);
+    this.difficultWord(word);
+  }
+
+  onDelete = (e) => {
+    const wordId = e.target.id.split('_')[1];
+    const word = this.state.learnWords.find((w) => w._id === wordId);
+    this.deleteWord(word);
+  }
 
   render() {
-    return this.state.learnWords && this.state.deletedWords && this.state.difficultWords ? (
+    return this.state.diffData ? (
       <MDBContainer className="dictionary-page">
         <MDBNav tabs className="nav-justified" color="indigo">
           <MDBNavItem>
@@ -148,20 +315,18 @@ class Dictionary extends Component {
         >
           <MDBTabPane tabId="1" role="tabpanel">
             <LearnTable
-              words={this.state.learnWords}
-              deleteWord={this.deleteWord}
-              difficultWord={this.difficultWord}
+              data={this.state.learnData}
             />
           </MDBTabPane>
           <MDBTabPane tabId="2" role="tabpanel">
             <DifficultTable
-              words={this.state.difficultWords}
-              update={this.state.update}
-              isUpdated={this.isUpdated}
+              data={this.state.diffData}
             />
           </MDBTabPane>
           <MDBTabPane tabId="3" role="tabpanel">
-            <DeleteTable words={this.state.deletedWords} />
+            <DeleteTable
+              data={this.state.deleteData}
+            />
           </MDBTabPane>
         </MDBTabContent>
       </MDBContainer>
