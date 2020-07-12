@@ -101,7 +101,7 @@ const LearnWords = () => {
         let wordsArray = paginatedResults
           .filter((wordObj) => !wordObj.userWord)
           .slice(0, wordsPerDay);
-
+        localStorage.setItem('wordsPerDayCurrent', wordsPerDay);
         const wordsToRepeat = paginatedResults
           .filter((wordObj) => wordObj.userWord?.optional?.isRepeat
         && wordObj.userWord?.optional?.isDelete === false);
@@ -156,7 +156,8 @@ const LearnWords = () => {
     }
     if (todayDate !== localStorage.getItem('todayDate')
         || wordObjects.length !== +cardsPerDay
-        || userId !== localStorage.getItem('currentUserId')) {
+        || userId !== localStorage.getItem('currentUserId')
+        || wordsPerDay !== +localStorage.getItem('wordsPerDayCurrent')) {
       // console.log(wordObjects.length, cardsPerDay);
       fetchData();
     }
