@@ -23,6 +23,7 @@ import LearnSettings from './pages/learnSettings/LearnSettings';
 import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
 import LearnWords from './pages/learnWords/LearnWords';
 import SprintGame from './components/sprintGame/SprintGame';
+import PromoPage from './pages/promoPage/PromoPage';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -79,6 +80,9 @@ const App = () => {
             </PrivateRoute>
             <PrivateRoute path={routes.LEARNWORDS} exact>
               <LearnWords />
+            </PrivateRoute>
+            <PrivateRoute path={routes.PROMO_PAGE} exact>
+              <PromoPage />
             </PrivateRoute>
             <Route>
               <Redirect to={routes.MainPage} />

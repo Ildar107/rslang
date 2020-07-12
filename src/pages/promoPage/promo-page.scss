@@ -1,0 +1,30 @@
+.promo__sescription{
+	font-family: "Nunito", sans-serif;
+}
+
+.promo__h3{
+	margin-bottom: 0;
+}
+
+.img-wrap{
+	width: 50%;
+}
+
+.promo__img{
+	border-radius: 5px;
+	width: 100%;
+	height: auto;
+}
+
+.promo__body{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+	.promo__description_l{
+		width: 50%;
+		text-align: justify;
+		padding: 10px 40px 20px 20px;
+		font-size: 20px;
+	}
