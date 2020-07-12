@@ -103,6 +103,27 @@ const PromoPage = () => {
               <Accordion.Toggle
                 style={styleCursor}
                 as={Card.Header}
+                eventKey="10"
+              >
+                <h3 className="promo__h3">{statisticPageDescription.header}</h3>
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="10">
+                <Card.Body>
+                  <div className="promo__body">
+                    <div className="img-wrap">
+                      <img className="promo__img" src="./images/promo-images/stats.jpg" alt="main page" />
+                    </div>
+                    <p className="promo__description_l">
+                      {statisticPageDescription.description}
+                    </p>
+                  </div>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+            <Card style={styleBorder}>
+              <Accordion.Toggle
+                style={styleCursor}
+                as={Card.Header}
                 eventKey="3"
               >
                 <h3 className="promo__h3">{miniGamesDescription.header}</h3>

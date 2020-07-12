@@ -36,7 +36,9 @@ const learnWordsDescription = {
 
 const statisticPageDescription = {
   header: 'Статистика изученных слов',
-  description: 'some description',
+  description: `Изучая новые слова, каждый может узнать свои результаты. Статистика позволяет
+                отслеживать ваши резуьтаты изучения карточек, Количество изученных слов, процент
+                изученных слов и слова, которые вам еще предстоит изучить.`,
 };
 
 const miniGamesDescription = {
