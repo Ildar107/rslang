@@ -65,7 +65,7 @@ const MainPage = () => (
                 <div
                   className="progress-bar"
                   role="progressbar"
-                  style={{ width: `${+localStorage.getItem('currentWordIndex') / 3600}%` }}
+                  style={{ width: `${+localStorage.getItem('currentWordIndex') / 36}%` }}
                   aria-valuenow="25"
                   aria-valuemin="0"
                   aria-valuemax="100"
