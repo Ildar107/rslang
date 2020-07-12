@@ -166,7 +166,7 @@ const LearnWords = () => {
   }, []);
 
   useEffect(() => {
-    inputEl.current.focus();
+    if (currentWordIndex < +cardsPerDay) inputEl.current.focus();
   }, [readyForNext]);
 
   const inputFocus = () => {
