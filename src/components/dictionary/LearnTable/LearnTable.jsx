@@ -22,7 +22,7 @@ const dataColumns = {
       width: 400,
     },
   ],
-  rows: [],
+  rows: null,
 };
 
 class LearnTable extends React.Component {

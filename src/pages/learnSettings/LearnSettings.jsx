@@ -98,7 +98,7 @@ const LearnSettings = () => {
                       max={50}
                       step={10}
                       onChange={(e) => {
-                        if ((wordsPerDay + 10) < e.target.value) {
+                        if ((wordsPerDay + 10) <= e.target.value) {
                           setCardsPerDay(e.target.value);
                         }
                       }}

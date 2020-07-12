@@ -1,0 +1,11 @@
+body[data-theme=dark] {
+    .dictionary-page {
+        table {
+            color: white;
+        }
+
+        .nav-link.active {
+            background-color: #3a444e;
+        }
+    }
+}

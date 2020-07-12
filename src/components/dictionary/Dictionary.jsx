@@ -7,6 +7,8 @@ import {
   Spinner,
 } from 'react-bootstrap';
 import LearnTable from './LearnTable/LearnTable';
+import DeleteTable from './DeleteTable/DeleteTeble';
+import DifficultTable from './DifficultTable/DifficultTable';
 import './dictionary.scss';
 
 class Dictionary extends Component {
@@ -34,15 +36,66 @@ class Dictionary extends Component {
   }
 
   processedWords = (words) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const learnWords = words?.filter(
-      (w) => w.userWord.optional.isDelete !== true || w.userWord.optional.isDifficult !== true,
+      (w) => w.userWord.optional.isDelete !== true && w.userWord.optional.isDifficult !== true,
     );
     const deletedWords = words.filter((w) => w.userWord.optional.isDelete === true);
     const difficultWords = words.filter((w) => w.userWord.optional.isDifficult === true);
 
     this.setState({ deletedWords, difficultWords, learnWords });
+  }
+
+  sendUpdateWord = (word, action) => {
+    const actionWord = word;
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('JWT');
+    switch (action) {
+      case 'delete':
+        actionWord.userWord.optional.isDelete = true;
+        break;
+      case 'difficult':
+        actionWord.userWord.optional.isDifficult = true;
+        break;
+      default:
+        actionWord.userWord.optional.isDelete = false;
+        actionWord.userWord.optional.isDifficult = false;
+        break;
+    }
+    fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${actionWord._id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    });
+  }
+
+  restoreWord = (word) => {
+    if (word.userWord.optional.isDelete) {
+      const { learnWords, deleteWords } = this.state;
+      const newDeleteWords = deleteWords.filter((w) => w._id !== word._id);
+      const newLearnWords = learnWords.push(word);
+      this.setState({ learnWords: newLearnWords, deleteWords: newDeleteWords });
+    } else if (word.userWord.optional.isDifficult) {
+      const { learnWords, difficultWords } = this.state;
+      const newDifficultWords = difficultWords.filter((w) => w._id !== word._id);
+      const newLearnWords = learnWords.push(word);
+      this.setState({ learnWords: newLearnWords, difficultWords: newDifficultWords });
+    }
+  }
+
+  deleteWord = (word) => {
+    const { learnWords, deleteWords } = this.state;
+    const newLearnWords = learnWords.filter((w) => w._id !== word._id);
+    const newDeleteWords = deleteWords.push(word);
+    this.setState({ learnWords: newLearnWords, deleteWords: newDeleteWords });
+  }
+
+  difficultWord = (word) => {
+    const { learnWords, difficultWords } = this.state;
+    const newLearnWords = learnWords.filter((w) => w._id !== word._id);
+    const newDifficultWords = difficultWords.push(word);
+    this.setState({ learnWords: newLearnWords, difficultWords: newDifficultWords });
   }
 
   toggleJustified = (tab) => () => {
@@ -87,10 +140,10 @@ class Dictionary extends Component {
             <LearnTable words={this.state.learnWords} />
           </MDBTabPane>
           <MDBTabPane tabId="2" role="tabpanel">
-            <LearnTable words={this.state.difficultWords} />
+            <DifficultTable words={this.state.difficultWords} />
           </MDBTabPane>
           <MDBTabPane tabId="3" role="tabpanel">
-            <LearnTable words={this.state.deletedWords} />
+            <DeleteTable words={this.state.deletedWords} />
           </MDBTabPane>
         </MDBTabContent>
       </MDBContainer>
