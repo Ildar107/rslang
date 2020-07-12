@@ -53,15 +53,32 @@ const MainPage = () => (
         <Card>
           <Card.Body>
             <h3>
-              Еженедельный прогресс
+              Общий Прогресс
             </h3>
-            <WeekProgress day="Понедельник" value={30} />
+            <div className="progress-container">
+              <span>
+                Score
+                {' '}
+                {`${localStorage.getItem('currentWordIndex')} / 3600`}
+              </span>
+              <div className="progress">
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  style={{ width: `${+localStorage.getItem('currentWordIndex') / 3600}%` }}
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                />
+              </div>
+            </div>
+            {/* <WeekProgress day="Понедельник" value={30} />
             <WeekProgress day="Вторник" value={100} />
             <WeekProgress day="Среда" value={60} />
             <WeekProgress day="Четверг" value={90} />
             <WeekProgress day="Пятница" value={20} />
             <WeekProgress day="Суббота" value={100} />
-            <WeekProgress day="Воскресенье" value={100} />
+            <WeekProgress day="Воскресенье" value={100} /> */}
           </Card.Body>
         </Card>
       </Col>
