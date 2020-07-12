@@ -115,6 +115,13 @@ class SprintGame extends Component {
     });
   }
 
+  resetCompleteWords = () => {
+    this.setState = ({
+      learnedWords: [],
+      notLearnedWords: [],
+    });
+  }
+
   getWords = async (page, group) => {
     await this.isLoad();
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
@@ -236,6 +243,8 @@ class SprintGame extends Component {
   hideModal = () => {
     this.setState({
       modalStatus: false,
+      learnedWords: [],
+      notLearnedWords: [],
     });
     this.timerID = setInterval(() => {
       this.startTimer();
