@@ -1,58 +1,54 @@
 import React from 'react';
 import { MDBDataTable } from 'mdbreact';
 
-const data = {
+const dataColumns = {
   columns: [
     {
-      label: 'Name',
-      field: 'name',
-      sort: 'asc',
-      width: 150,
-    },
-    {
-      label: 'Position',
-      field: 'position',
-      sort: 'asc',
-      width: 270,
-    },
-    {
-      label: 'Office',
-      field: 'office',
+      label: 'Word',
+      field: 'word',
       sort: 'asc',
       width: 200,
     },
     {
-      label: 'Age',
-      field: 'age',
+      label: 'Translate',
+      field: 'wordTranslate',
       sort: 'asc',
-      width: 100,
+      width: 270,
     },
     {
-      label: 'Start date',
-      field: 'date',
+      label: 'Text Example',
+      field: 'textExample',
       sort: 'asc',
-      width: 150,
-    },
-    {
-      label: 'Salary',
-      field: 'salary',
-      sort: 'asc',
-      width: 100,
+      width: 400,
     },
   ],
+  rows: [],
 };
 
 class LearnTable extends React.Component {
   constructor(props) {
     super(props);
 
+    this.generatedData(this.props.words);
+
     this.state = {
-      learnWords: this.props.words,
+      data: dataColumns,
     };
   }
 
   generatedData = (words) => {
-
+    const learnWords = words.map((w) => {
+      const {
+        word, wordTranslate, textExample,
+      } = w;
+      return {
+        word, wordTranslate, textExample,
+      };
+    });
+    if (learnWords && learnWords.length > 0) {
+      dataColumns.rows = learnWords;
+      this.setState({ data: dataColumns });
+    }
   }
 
   render() {
@@ -61,7 +57,7 @@ class LearnTable extends React.Component {
         striped
         bordered
         sortable
-        data={this.state.learnWords}
+        data={this.state.data}
       />
     );
   }

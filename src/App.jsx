@@ -24,6 +24,7 @@ import DictionaryPage from './pages/dictionary/DictionaryPage';
 import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
 import LearnWords from './pages/learnWords/LearnWords';
 import SprintGame from './components/sprintGame/SprintGame';
+
 const App = () => {
   const store = useContext(StoreContext);
   const themeContext = useContext(ThemeContext);

@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import {
   MDBContainer, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBIcon,
 } from 'mdbreact';
+import {
+  Container,
+  Spinner,
+} from 'react-bootstrap';
 import LearnTable from './LearnTable/LearnTable';
 import './dictionary.scss';
 
@@ -11,23 +15,34 @@ class Dictionary extends Component {
 
     this.state = {
       activeItemJustified: '1',
-      allWords: [],
     };
   }
 
   componentDidMount() {
-    fetch('https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/groups/data/group1.json')
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('JWT');
+    fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=3600&filter=%7B%22%24or%22%3A%5B%7B%22userWord.optional.isRepeat%22%3Afalse%7D%2C%7B%22userWord.optional.isRepeat%22%3Atrue%7D%5D%7D`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        this.processedWords(data);
+        this.processedWords(data[0].paginatedResults);
       });
   }
 
   processedWords = (words) => {
-    const deletedWords = words.filter((w) => w.isDelete === true);
-    const difficultWords = words.filter((w) => w.isDifficult === true);
+    // eslint-disable-next-line no-debugger
+    debugger;
+    const learnWords = words?.filter(
+      (w) => w.userWord.optional.isDelete !== true || w.userWord.optional.isDifficult !== true,
+    );
+    const deletedWords = words.filter((w) => w.userWord.optional.isDelete === true);
+    const difficultWords = words.filter((w) => w.userWord.optional.isDifficult === true);
 
-    this.setState({ deletedWords, difficultWords, allWords: words });
+    this.setState({ deletedWords, difficultWords, learnWords });
   }
 
   toggleJustified = (tab) => () => {
@@ -39,7 +54,7 @@ class Dictionary extends Component {
   };
 
   render() {
-    return (
+    return this.state.learnWords ? (
       <MDBContainer className="dictionary-page">
         <MDBNav tabs className="nav-justified" color="indigo">
           <MDBNavItem>
@@ -69,7 +84,7 @@ class Dictionary extends Component {
           activeItem={this.state.activeItemJustified}
         >
           <MDBTabPane tabId="1" role="tabpanel">
-            <LearnTable words={this.state.allWords} />
+            <LearnTable words={this.state.learnWords} />
           </MDBTabPane>
           <MDBTabPane tabId="2" role="tabpanel">
             <LearnTable words={this.state.difficultWords} />
@@ -79,6 +94,10 @@ class Dictionary extends Component {
           </MDBTabPane>
         </MDBTabContent>
       </MDBContainer>
+    ) : (
+      <Container fluid className="audiocall_wrap">
+        <Spinner animation="border" variant="primary" />
+      </Container>
     );
   }
 }
