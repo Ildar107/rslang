@@ -122,10 +122,18 @@ class SavannahGame extends Component {
     });
   }
 
+  resetCompleteWords = () => {
+    this.setState = ({
+      learnedWords: [],
+      notLearnedWords: [],
+    });
+  }
+
   nextLevel = async () => {
     const page = randomInteger(minPage, maxPage);
     const { score } = this.state;
     await this.sendStats();
+    await this.resetCompleteWords();
     await this.resetScore(score);
     await this.showModal();
     await this.setState({
