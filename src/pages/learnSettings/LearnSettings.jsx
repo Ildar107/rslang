@@ -75,11 +75,13 @@ const LearnSettings = () => {
                       type="range"
                       defaultValue={wordsPerDay}
                       min={10}
-                      max={50}
+                      max={40}
                       step={10}
                       onChange={(e) => {
                         setWordsPerDay(e.target.value);
-                        setCardsPerDay(e.target.value * 2 + 10);
+                        if (cardsPerDay <= e.target.value) {
+                          setCardsPerDay(Number(e.target.value) + 10);
+                        }
                       }}
                     />
                     <Form.Text className="text-muted">
@@ -89,7 +91,18 @@ const LearnSettings = () => {
                   <Form.Group>
                     <Form.Label>Количество карточек в день</Form.Label>
                     <Form.Control type="number" placeholder="Введите число" id="cards" required value={cardsPerDay} disabled />
-                    <Form.Control type="range" defaultValue={cardsPerDay} min={wordsPerDay * 2 + Math.floor(wordsPerDay / 2)} max={120} step={10} onChange={(e) => setCardsPerDay(e.target.value)} />
+                    <Form.Control
+                      type="range"
+                      value={cardsPerDay}
+                      min={20}
+                      max={50}
+                      step={10}
+                      onChange={(e) => {
+                        if ((wordsPerDay + 10) < e.target.value) {
+                          setCardsPerDay(e.target.value);
+                        }
+                      }}
+                    />
                     <Form.Text className="text-muted">
                       Количество карточек которые планируете изучать за 1 день
                     </Form.Text>
@@ -108,8 +121,8 @@ const LearnSettings = () => {
                     <Form.Check label={'Отображение кнопки "Удалить слово"'} type="checkbox" id="delete" defaultChecked={context.userSettings.showDelete} />
                     <Form.Check
                       label={'Отображение кнопки "Сложное слово" (добавляет'
-                      + ' слово в'
-                      + ' группу сложных слов)'}
+                        + ' слово в'
+                        + ' группу сложных слов)'}
                       type="checkbox"
                       id="hard"
                       defaultChecked={context.userSettings.showHard}

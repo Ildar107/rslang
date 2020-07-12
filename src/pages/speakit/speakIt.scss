@@ -5,13 +5,14 @@
 }
 
 .speak-it {
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   position: relative;
   color: white;
   background-color: #20dcff42;
 
   .speak-it_bg {
-    position: absolute;
+    position: fixed;
     z-index: -1;
     left: 0;
     height: 100vh;
