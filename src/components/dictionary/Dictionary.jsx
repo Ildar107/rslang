@@ -17,6 +17,7 @@ class Dictionary extends Component {
 
     this.state = {
       activeItemJustified: '1',
+      update: false,
     };
   }
 
@@ -46,27 +47,32 @@ class Dictionary extends Component {
   }
 
   sendUpdateWord = (word, action) => {
-    const actionWord = word;
+    const { userWord } = word;
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('JWT');
+    let newOptional;
     switch (action) {
       case 'delete':
-        actionWord.userWord.optional.isDelete = true;
+        newOptional = { ...userWord.optional, isDelete: true };
         break;
       case 'difficult':
-        actionWord.userWord.optional.isDifficult = true;
+        newOptional = { ...userWord.optional, isDifficult: true };
         break;
       default:
-        actionWord.userWord.optional.isDelete = false;
-        actionWord.userWord.optional.isDifficult = false;
+        newOptional = { ...userWord.optional, isDifficult: false, isDelete: false };
         break;
     }
-    fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${actionWord._id}`, {
+    fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${word._id}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        difficulty: 'string',
+        optional: { ...newOptional },
+      }),
     });
   }
 
@@ -74,12 +80,12 @@ class Dictionary extends Component {
     if (word.userWord.optional.isDelete) {
       const { learnWords, deleteWords } = this.state;
       const newDeleteWords = deleteWords.filter((w) => w._id !== word._id);
-      const newLearnWords = learnWords.push(word);
+      const newLearnWords = [...learnWords, word];
       this.setState({ learnWords: newLearnWords, deleteWords: newDeleteWords });
     } else if (word.userWord.optional.isDifficult) {
       const { learnWords, difficultWords } = this.state;
       const newDifficultWords = difficultWords.filter((w) => w._id !== word._id);
-      const newLearnWords = learnWords.push(word);
+      const newLearnWords = [...learnWords, word];
       this.setState({ learnWords: newLearnWords, difficultWords: newDifficultWords });
     }
   }
@@ -87,15 +93,17 @@ class Dictionary extends Component {
   deleteWord = (word) => {
     const { learnWords, deleteWords } = this.state;
     const newLearnWords = learnWords.filter((w) => w._id !== word._id);
-    const newDeleteWords = deleteWords.push(word);
+    const newDeleteWords = [...deleteWords, word];
     this.setState({ learnWords: newLearnWords, deleteWords: newDeleteWords });
   }
 
   difficultWord = (word) => {
     const { learnWords, difficultWords } = this.state;
-    const newLearnWords = learnWords.filter((w) => w._id !== word._id);
-    const newDifficultWords = difficultWords.push(word);
-    this.setState({ learnWords: newLearnWords, difficultWords: newDifficultWords });
+    const newLearnWords = JSON.parse(JSON.stringify(learnWords.filter((w) => w._id !== word._id)));
+    const newDifficultWords = [...difficultWords, word];
+    this.setState({ learnWords: newLearnWords, difficultWords: newDifficultWords, update: true });
+    this.sendUpdateWord(word, 'difficult');
+    return newLearnWords;
   }
 
   toggleJustified = (tab) => () => {
@@ -106,8 +114,10 @@ class Dictionary extends Component {
     }
   };
 
+  isUpdated = () => this.setState({ update: false });
+
   render() {
-    return this.state.learnWords ? (
+    return this.state.learnWords && this.state.deletedWords && this.state.difficultWords ? (
       <MDBContainer className="dictionary-page">
         <MDBNav tabs className="nav-justified" color="indigo">
           <MDBNavItem>
@@ -137,10 +147,18 @@ class Dictionary extends Component {
           activeItem={this.state.activeItemJustified}
         >
           <MDBTabPane tabId="1" role="tabpanel">
-            <LearnTable words={this.state.learnWords} />
+            <LearnTable
+              words={this.state.learnWords}
+              deleteWord={this.deleteWord}
+              difficultWord={this.difficultWord}
+            />
           </MDBTabPane>
           <MDBTabPane tabId="2" role="tabpanel">
-            <DifficultTable words={this.state.difficultWords} />
+            <DifficultTable
+              words={this.state.difficultWords}
+              update={this.state.update}
+              isUpdated={this.isUpdated}
+            />
           </MDBTabPane>
           <MDBTabPane tabId="3" role="tabpanel">
             <DeleteTable words={this.state.deletedWords} />

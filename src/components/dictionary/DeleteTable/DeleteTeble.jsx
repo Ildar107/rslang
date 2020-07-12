@@ -1,5 +1,9 @@
 import React from 'react';
 import { MDBDataTable } from 'mdbreact';
+import {
+  Container,
+  Spinner,
+} from 'react-bootstrap';
 
 const dataColumns = {
   columns: [
@@ -29,11 +33,14 @@ class DeleteTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.generatedData(this.props.words);
-
     this.state = {
       data: dataColumns,
+      isGenerated: false,
     };
+  }
+
+  componentDidMount() {
+    this.generatedData(this.props.words);
   }
 
   generatedData = (words) => {
@@ -49,16 +56,21 @@ class DeleteTable extends React.Component {
       dataColumns.rows = deleteWords;
       this.setState({ data: dataColumns });
     }
+    this.setState({ isGenerated: true });
   }
 
   render() {
-    return (
+    return this.state.isGenerated ? (
       <MDBDataTable
         striped
         bordered
         sortable
         data={this.state.data}
       />
+    ) : (
+      <Container fluid className="audiocall_wrap">
+        <Spinner animation="border" variant="primary" />
+      </Container>
     );
   }
 }
