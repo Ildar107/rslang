@@ -122,6 +122,13 @@ class SavannahGame extends Component {
     });
   }
 
+  resetCompleteWords = () => {
+    this.setState = ({
+      learnedWords: [],
+      notLearnedWords: [],
+    });
+  }
+
   nextLevel = async () => {
     const page = randomInteger(minPage, maxPage);
     const { score } = this.state;
@@ -236,6 +243,7 @@ class SavannahGame extends Component {
       modalShow: false,
     });
     this.restartAnimation();
+    this.resetCompleteWords();
   }
 
   onHideEngGame = () => {

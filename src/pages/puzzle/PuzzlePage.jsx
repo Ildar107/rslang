@@ -76,12 +76,14 @@ class PuzzlePage extends React.Component {
       this.state.playingAudio.pause();
       this.state.playingAudio.currentTime = 0;
     }
+
     const [, fileName] = this.state.wordsData[this.state.numOfSentence].audioExample.split('/');
     const audio = new Audio(`https://raw.githubusercontent.com/evshipilo/rslang-data/master/data/${fileName}`);
     this.setState({ playingAudio: audio });
     audio.play();
     audio.onplaying = () => this.setState({ audioStart: true });
-    audio.onended = () => this.setState({ audioStart: false });
+    // audio.onpause = () => this.setState({ audioStart: false });
+    // audio.onended = () => this.setState({ audioStart: false });
   }
 
   async getWordsData(difficulty, pageNumber) {
@@ -309,7 +311,6 @@ class PuzzlePage extends React.Component {
             />
           </>
           <StatisticModal
-            className="puzzle-statistic-modal"
             next={this.state.next}
             wordsData={this.state.wordsData}
             arrayOfMistakes={this.state.arrayOfMistakes}
