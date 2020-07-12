@@ -133,7 +133,6 @@ class SavannahGame extends Component {
     const page = randomInteger(minPage, maxPage);
     const { score } = this.state;
     await this.sendStats();
-    await this.resetCompleteWords();
     await this.resetScore(score);
     await this.showModal();
     await this.setState({
@@ -244,6 +243,7 @@ class SavannahGame extends Component {
       modalShow: false,
     });
     this.restartAnimation();
+    this.resetCompleteWords();
   }
 
   onHideEngGame = () => {

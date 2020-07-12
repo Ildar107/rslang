@@ -220,7 +220,6 @@ class SprintGame extends Component {
     const page = randomInteger(minPage, maxPage);
     const { score } = this.state;
     await this.sendStats();
-    await this.resetCompleteWords();
     await this.resetScore(score);
     await this.showModal();
     await this.setState({
@@ -244,6 +243,8 @@ class SprintGame extends Component {
   hideModal = () => {
     this.setState({
       modalStatus: false,
+      learnedWords: [],
+      notLearnedWords: [],
     });
     this.timerID = setInterval(() => {
       this.startTimer();
