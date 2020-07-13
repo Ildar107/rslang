@@ -29,7 +29,11 @@ const MainPage = () => {
     fetchWords();
   }, []);
   useEffect(() => {
-    const { wordsPerDay, cardsPerDay } = JSON.parse(localStorage.getItem('userSettings'));
+    console.log('kek', localStorage.getItem('userSettings'));
+    const { wordsPerDay, cardsPerDay } = localStorage.getItem('userSettings')
+      ? JSON.parse(localStorage.getItem('userSettings'))
+      : { wordsPerDay: 0, cardsPerDay: 0 };
+    //  && JSON.stringify({ wordsPerDay: 0, cardsPerDay: 0 });
     const { currentWordIndex, longestStreak } = localStorage;
 
     console.log(currentWordIndex, longestStreak);
@@ -50,8 +54,8 @@ const MainPage = () => {
     };
   }, []);
 
-  const wordCountDifference = JSON.parse(localStorage.getItem('userSettings')).wordsPerDay - prevWordsPerDay;
-  const cardCountDifference = JSON.parse(localStorage.getItem('userSettings')).cardsPerDay - prevCardsPerDay;
+  const wordCountDifference = JSON.parse(localStorage.getItem('userSettings'))?.wordsPerDay - prevWordsPerDay;
+  const cardCountDifference = JSON.parse(localStorage.getItem('userSettings'))?.cardsPerDay - prevCardsPerDay;
   const indexDifference = localStorage.getItem('currentWordIndex') - prevCurrentWordIndex;
   const longestStreakDifference = localStorage.getItem('longestStreak') - prevLongestStreak;
 
@@ -61,8 +65,8 @@ const MainPage = () => {
         <Col lg={6}>
           <Tilebox
             title="Новые слова"
-            value={JSON.parse(localStorage.getItem('userSettings')).wordsPerDay}
-            updateValue={wordCountDifference}
+            value={JSON.parse(localStorage.getItem('userSettings'))?.wordsPerDay || 0}
+            updateValue={wordCountDifference || 0}
             isUp={wordCountDifference >= 0}
             icon="uil-search"
           />
@@ -70,8 +74,8 @@ const MainPage = () => {
         <Col lg={6}>
           <Tilebox
             title="Слова для практики"
-            value={JSON.parse(localStorage.getItem('userSettings')).cardsPerDay}
-            updateValue={cardCountDifference}
+            value={JSON.parse(localStorage.getItem('userSettings'))?.cardsPerDay || 0}
+            updateValue={cardCountDifference || 0}
             isUp={cardCountDifference >= 0}
             icon="uil-history-alt"
           />
