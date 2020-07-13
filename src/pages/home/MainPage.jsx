@@ -7,10 +7,13 @@ import Tilebox from '../../components/mainPage/Tilebox';
 // import WeekProgress from '../../components/mainPage/WeekProgress';
 import './mainPage.scss';
 import userWordsService from '../../services/user.words.services';
+// import StoreContext from '../../app/store';
+import USERSETTINGS from '../../constants/userSettings';
 
 const { getUserWords } = userWordsService;
 
 const MainPage = () => {
+  // const { userSettings } = useContext(StoreContext);
   const [wordCount, setWordCount] = useState([]);
   const [prevWordsPerDay] = useState(+localStorage.getItem('prevWordsPerDay') || 0);
   const [prevCardsPerDay] = useState(+localStorage.getItem('prevCardsPerDay') || 0);
@@ -30,9 +33,13 @@ const MainPage = () => {
   }, []);
   useEffect(() => {
     console.log('kek', localStorage.getItem('userSettings'));
-    const { wordsPerDay, cardsPerDay } = localStorage.getItem('userSettings')
-      ? JSON.parse(localStorage.getItem('userSettings'))
-      : { wordsPerDay: 0, cardsPerDay: 0 };
+    if (!localStorage.getItem('userSettings')) {
+      localStorage.setItem('userSettings', JSON.stringify(USERSETTINGS));
+    }
+
+    const { wordsPerDay, cardsPerDay } = localStorage.getItem('userSettings');
+    // ? JSON.parse(localStorage.getItem('userSettings'))
+    // : { wordsPerDay: 0, cardsPerDay: 0 };
     //  && JSON.stringify({ wordsPerDay: 0, cardsPerDay: 0 });
     const { currentWordIndex, longestStreak } = localStorage;
 
@@ -58,6 +65,9 @@ const MainPage = () => {
   const cardCountDifference = JSON.parse(localStorage.getItem('userSettings'))?.cardsPerDay - prevCardsPerDay;
   const indexDifference = localStorage.getItem('currentWordIndex') - prevCurrentWordIndex;
   const longestStreakDifference = localStorage.getItem('longestStreak') - prevLongestStreak;
+
+  console.log(prevWordsPerDay, prevCardsPerDay, wordCountDifference,
+    cardCountDifference, indexDifference, longestStreakDifference);
 
   return (
     <Skeleton wrapperClass="main-page" title="Главная">
