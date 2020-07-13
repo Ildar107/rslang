@@ -14,6 +14,7 @@ const START_GAME_PAGE = '/startGame';
 const STATISTIC_LONG_TERM = '/statisticLongTerm';
 const LEARNWORDS = '/learn-words';
 const PROMO_PAGE = '/promo-page';
+const MAIN_PAGE = '/home';
 
 export default {
   LANDING,
@@ -32,4 +33,5 @@ export default {
   LEARNWORDS,
   SPRINTGAME,
   PROMO_PAGE,
+  MAIN_PAGE,
 };

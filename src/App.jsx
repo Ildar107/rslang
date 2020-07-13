@@ -89,7 +89,7 @@ const App = () => {
               <PromoPage />
             </PrivateRoute>
             <Route>
-              <Redirect to={routes.MainPage} />
+              <Redirect to={routes.MAIN_PAGE} />
             </Route>
           </Switch>
         </StoreContext.Provider>
