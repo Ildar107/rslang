@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+/* eslint-disable react/static-property-placement */
+import React, { Component, useContext } from 'react';
 import {
   MDBContainer, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBBtn,
 } from 'mdbreact';
@@ -12,8 +13,10 @@ import DeleteTable from './DeleteTable/DeleteTeble';
 import DifficultTable from './DifficultTable/DifficultTable';
 import './dictionary.scss';
 import Voice from '../../assets/images/voice.svg';
+import StoreContext from '../../app/store';
 
 const mediaUrl = 'https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/master/';
+
 class Dictionary extends Component {
   constructor(props) {
     super(props);
@@ -27,8 +30,13 @@ class Dictionary extends Component {
 
   static diffDataColumns;
 
+  static contextType = StoreContext;
+
   componentDidMount() {
-    const userSettings = JSON.parse(localStorage.getItem('userSettings'));
+    // const context = useContext(StoreContext);
+    const { userSettings } = this.context;
+    console.log(userSettings);
+    // const userSettings = JSON.parse(localStorage.getItem('userSettings'));
     const {
       example, transcription, translate, wordImg, explain,
     } = userSettings;
