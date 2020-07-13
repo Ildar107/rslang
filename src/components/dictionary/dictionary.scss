@@ -1,40 +1,46 @@
 body[data-theme=dark] {
-    .dictionary-page {
-        table {
-            color: white;
-        }
-
-        .nav-link.active {
-            background-color: #3a444e;
-        }
+  .dictionary-page {
+    table {
+      color: white;
     }
+
+    .nav-link.active {
+      background-color: #3a444e;
+    }
+  }
 }
 
 .dictionary-page {
-    max-width: 1400px;
+  max-width: 1400px;
 
-    table {
-        td {
-            vertical-align: middle;
-            text-align: center;
+  table {
 
-            .repeat_voice {
-                cursor: pointer;
-            }
-
-            .meaning_image {
-                max-width: 200px;
-            }
-
-            button {
-                background: #eb6864 !important;
-                color: white;
-            }
-        }
+    th.sorting::after, th.sorting_asc::after, th.sorting_desc::after {
+      right: 1px !important;
     }
 
-    .page-link:hover {
-        color: white !important;
+
+    td {
+      vertical-align: middle;
+      text-align: center;
+
+      .repeat_voice {
         cursor: pointer;
+      }
+
+      .meaning_image {
+        max-width: 200px;
+      }
+
+      button {
+        background: #eb6864 !important;
+        color: white;
+      }
     }
+  }
+
+  .page-link:hover {
+    color: white !important;
+    cursor: pointer;
+  }
 }

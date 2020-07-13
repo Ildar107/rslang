@@ -6,8 +6,8 @@ import './dictionaryPage.scss';
 class DictionaryPage extends Component {
   render() {
     return (
-      <Skeleton wrapperClass="main-page">
-        <h1 className="team__header">Словарь</h1>
+      <Skeleton wrapperClass="dictionary-page" title="Изучение слов">
+        {/* <h1 className="team__header">Словарь</h1> */}
         <Dictionary />
       </Skeleton>
     );
