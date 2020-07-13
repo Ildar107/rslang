@@ -415,6 +415,7 @@ const LearnWords = () => {
                         <Button
                           className={isDelete ? '' : 'disabled'}
                           onClick={() => {
+                            if (isDifficult && !isDelete) setIsDifficult(false);
                             setIsDelete(!isDelete);
                           }}
                           key="del"
@@ -427,7 +428,10 @@ const LearnWords = () => {
                       {showHard && readyForNext && (
                         <Button
                           className={isDifficult ? '' : 'disabled'}
-                          onClick={() => setIsDifficult(!isDifficult)}
+                          onClick={() => {
+                            if (!isDifficult && isDelete) setIsDelete(false);
+                            setIsDifficult(!isDifficult);
+                          }}
                           key="dif"
                           variant="primary"
                           type="button"
