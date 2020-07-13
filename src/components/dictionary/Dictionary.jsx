@@ -1,5 +1,5 @@
 /* eslint-disable react/static-property-placement */
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import {
   MDBContainer, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBBtn,
 } from 'mdbreact';
