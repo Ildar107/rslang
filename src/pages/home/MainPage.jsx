@@ -20,19 +20,14 @@ const MainPage = () => {
   const [prevCurrentWordIndex] = useState(+localStorage.getItem('prevCurrentWordIndex') || 0);
   const [prevLongestStreak] = useState(+localStorage.getItem('prevLongestStreak') || 0);
 
-  // console.log(prevWordsPerDay);
-  // console.log(JSON.parse(localStorage.getItem('userSettings')).wordsPerDay);
-
   useEffect(() => {
     async function fetchWords() {
       const data = await getUserWords(localStorage.getItem('JWT'), localStorage.getItem('userId'));
-      console.log(data);
       setWordCount(data.length);
     }
     fetchWords();
   }, []);
   useEffect(() => {
-    console.log('kek', localStorage.getItem('userSettings'));
     if (!localStorage.getItem('userSettings')) {
       localStorage.setItem('userSettings', JSON.stringify(USERSETTINGS));
     }
@@ -42,8 +37,6 @@ const MainPage = () => {
     // : { wordsPerDay: 0, cardsPerDay: 0 };
     //  && JSON.stringify({ wordsPerDay: 0, cardsPerDay: 0 });
     const { currentWordIndex, longestStreak } = localStorage;
-
-    console.log(currentWordIndex, longestStreak);
 
     return () => {
       if (
@@ -56,7 +49,6 @@ const MainPage = () => {
         localStorage.setItem('prevCardsPerDay', cardsPerDay);
         localStorage.setItem('prevCurrentWordIndex', currentWordIndex);
         localStorage.setItem('prevLongestStreak', longestStreak);
-        console.log('unmounted');
       }
     };
   }, []);
@@ -65,9 +57,6 @@ const MainPage = () => {
   const cardCountDifference = JSON.parse(localStorage.getItem('userSettings'))?.cardsPerDay - prevCardsPerDay;
   const indexDifference = localStorage.getItem('currentWordIndex') - prevCurrentWordIndex;
   const longestStreakDifference = localStorage.getItem('longestStreak') - prevLongestStreak;
-
-  console.log(prevWordsPerDay, prevCardsPerDay, wordCountDifference,
-    cardCountDifference, indexDifference, longestStreakDifference);
 
   return (
     <Skeleton wrapperClass="main-page" title="Главная">

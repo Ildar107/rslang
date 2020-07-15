@@ -151,7 +151,6 @@ const LearnWords = () => {
       || wordObjects.length !== +cardsPerDay
       || userId !== localStorage.getItem('currentUserId')
       || wordsPerDay !== +localStorage.getItem('wordsPerDayCurrent')) {
-      // console.log(wordObjects.length, cardsPerDay);
       fetchData();
     }
   }, []);

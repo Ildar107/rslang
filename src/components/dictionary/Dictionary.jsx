@@ -33,10 +33,7 @@ class Dictionary extends Component {
   static contextType = StoreContext;
 
   componentDidMount() {
-    // const context = useContext(StoreContext);
     const { userSettings } = this.context;
-    console.log(userSettings);
-    // const userSettings = JSON.parse(localStorage.getItem('userSettings'));
     const {
       example, transcription, translate, wordImg, explain,
     } = userSettings;

@@ -169,10 +169,6 @@ const StatisticLongTerm = () => {
     ],
   };
 
-  // const { userId, JWT: jwt } = localStorage;
-  // const userWords = getUserWords(jwt, userId).then((res) => console.log(res));
-  // console.log(userWords);
-
   return (
     <Skeleton wrapperClass="statistic-long-term-page" title="Статистика">
       <Row>

@@ -51,25 +51,23 @@ const sendStatistics = async (stats) => {
   optional = optional || {};
   const lengthOfOptional = Object.keys(optional).length;
   if (lengthOfOptional < 20) {
-    const sentStats = await getData({
+    await getData({
       url,
       jwt,
       method: 'PUT',
       body: { optional: { ...optional, [lengthOfOptional]: stats } },
     });
-    console.log('sentStats if length < 20', sentStats, 'length', lengthOfOptional);
     return;
   }
   if (lengthOfOptional >= 20) {
     const propToDelete = Object.keys(optional)[0];
     delete optional[propToDelete];
-    const sentStats = await getData({
+    await getData({
       url,
       jwt,
       method: 'PUT',
       body: { optional: { ...optional, [`${Number(propToDelete) + 20}`]: stats } },
     });
-    console.log('sentstats if length >= 20', sentStats, 'length', lengthOfOptional);
   }
 };
 export default {
