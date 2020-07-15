@@ -24,7 +24,7 @@ const PrivateRoute = ({ children, ...rest }) => {
           setState('rendering');
         }
       } catch (e) {
-        console.error(e);
+        // console.error(e);
         setState('rendering');
       }
     })();

@@ -1,16 +1,15 @@
 import getData from '../helper/fetchData';
 
-const formStatistics = (game, level, wordObjs) => {
+const formStatistics = (game, level, wordObjs, rightNumber, wrongNumber) => {
   const date = new Date().toLocaleDateString();
-  const right = wordObjs.filter(({ status }) => status).length;
-  const wrong = wordObjs.filter(({ status }) => !status).length;
-
+  const right = wordObjs?.filter(({ status }) => status).length;
+  const wrong = wordObjs?.filter(({ status }) => !status).length;
   const stats = {
     g: game,
     d: date,
     l: level,
-    r: right,
-    w: wrong,
+    r: right ?? rightNumber,
+    w: wrong ?? wrongNumber,
   };
   return stats;
 };
@@ -48,28 +47,27 @@ const sendStatistics = async (stats) => {
   //   body: { optional: { 0: stats } },
   // });
 
-  const { optional } = data;
+  let { optional } = data;
+  optional = optional || {};
   const lengthOfOptional = Object.keys(optional).length;
   if (lengthOfOptional < 20) {
-    const sentStats = await getData({
+    await getData({
       url,
       jwt,
       method: 'PUT',
       body: { optional: { ...optional, [lengthOfOptional]: stats } },
     });
-    console.log('sentStats if length < 20', sentStats, 'length', lengthOfOptional);
     return;
   }
   if (lengthOfOptional >= 20) {
     const propToDelete = Object.keys(optional)[0];
     delete optional[propToDelete];
-    const sentStats = await getData({
+    await getData({
       url,
       jwt,
       method: 'PUT',
       body: { optional: { ...optional, [`${Number(propToDelete) + 20}`]: stats } },
     });
-    console.log('sentstats if length >= 20', sentStats, 'length', lengthOfOptional);
   }
 };
 export default {

@@ -34,7 +34,7 @@ const ResultModal = (props) => (
     </Modal.Body>
     <Modal.Footer>
       <Button onClick={props.onHide}>Продолжить тренировку</Button>
-      <Link to={routes.LANDING} className="btn btn-outline-success btn-lg btn-result">К списку тренировок</Link>
+      <Link to={routes.MINI_GAMES} className="btn btn-outline-success btn-lg btn-result">К списку тренировок</Link>
     </Modal.Footer>
   </Modal>
 );

@@ -36,7 +36,7 @@ function StatisticModal(props) {
     }
 
     rightSentenses = right.map((item) => (
-      <>
+      <div key={item}>
         <div className="puzzle-modal-sentence">
           <i
             onClick={() => audioPlay(item)}
@@ -49,10 +49,10 @@ function StatisticModal(props) {
         <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
-      </>
+      </div>
     ));
     mistakeSentenses = mistakes.map((item) => (
-      <>
+      <div key={item}>
         <div className="puzzle-modal-sentence">
           <i
             onClick={() => audioPlay(item)}
@@ -65,10 +65,10 @@ function StatisticModal(props) {
         <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
-      </>
+      </div>
     ));
     dontKnowSentenses = dontKnow.map((item) => (
-      <>
+      <div key={item}>
         <div className="puzzle-modal-sentence">
           <i
             onClick={() => audioPlay(item)}
@@ -81,13 +81,14 @@ function StatisticModal(props) {
         <div className="puzzle-modal-sentence-translate">
           <p>{props.wordsData[item].textExampleTranslate}</p>
         </div>
-      </>
+      </div>
     ));
   }
 
   return (
     <Modal
-      {...props}
+      className="puzzle-statistic-modal"
+      show={props.show}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered

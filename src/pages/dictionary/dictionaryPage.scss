@@ -1,0 +1,63 @@
+.dictionary-page {
+    .md-tabs {
+        .nav-link.active {
+            background-color: #fafbfe;
+            border-radius: 0.25rem 0.25rem 0 0;
+        }
+    }
+
+    .tab-content {
+        padding: 20px;
+
+        .bs-select select {
+            margin: 0 !important;
+        }
+
+        thead {
+
+            th {
+                position: relative;
+                cursor: pointer;
+            }
+
+            th.sorting {
+                &::after {
+                    content: '↕';
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    font-size: 24px;
+                    transform: translateY(-55%);
+                }
+            }
+
+            th.sorting_asc {
+                color: #eb6864 !important;
+
+                &::after {
+                    content: '↓';
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    font-size: 24px;
+                    transform: translateY(-55%);
+                    font-weight: bold;
+                }
+            }
+
+            th.sorting_desc {
+                color: #eb6864 !important;
+
+                &::after {
+                    content: '↑';
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    font-size: 24px;
+                    transform: translateY(-55%);
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

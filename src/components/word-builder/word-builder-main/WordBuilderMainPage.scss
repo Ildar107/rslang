@@ -1,4 +1,16 @@
 .word-builder {
+  padding: 0;
+  color: white;
+
+  &_bg {
+    position: fixed;
+    z-index: -1;
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    background-color: #00ff54;
+  }
+
   .word-constructor-wrapper {
     font-size: 24px;
     width: 90%;
@@ -12,6 +24,7 @@
     overflow: auto;
     margin: 0 auto;
   }
+
   .letter-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -32,12 +45,16 @@
 
   .progress-container {
     width: 25%;
-    color: #eb6864;
     margin-right: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    span {
+      padding-bottom: 5px;
+    }
   }
+
   .empty-letter {
     display: flex;
     justify-content: center;
@@ -47,16 +64,19 @@
     pointer-events: none;
     margin-top: 10px;
   }
+
   /* .empty-letter + .empty-letter {
   margin-left: 20px;
 } */
   .removed {
     display: none;
   }
+
   .hidden {
     opacity: 0;
     pointer-events: none;
   }
+
   /*.stats-wrapper {
   height: 100%;
 }*/
@@ -67,6 +87,7 @@
     width: 46px;
     height: 43px;
   }
+
   .svg-audio {
     overflow: hidden;
     vertical-align: middle;
@@ -75,9 +96,11 @@
     left: -12px;
     top: -1px;
   }
+
   .svg-cross {
     width: 20px;
   }
+
   /* .btn-secondary {
   width: auto !important;
   border-radius: 5px;
@@ -87,6 +110,7 @@
     width: auto !important;
     border-radius: 5px;
   }
+
   li {
     list-style: none;
   }
@@ -94,30 +118,39 @@
   .pagination {
     justify-content: center;
   }
+
   .word-builder-nav {
     width: 100%;
     display: flex;
     justify-content: space-between;
   }
+
   .difficulty-wrapper {
     margin-left: 40px;
   }
+
   .audio-button-stats {
     margin-right: 20px;
   }
+
   .h3-choose-difficulty {
-    color: #eb6864;
+    font-weight: 500;
+    padding-bottom: 5px;
   }
+
   .rules-span {
     font-style: italic;
     font-size: 16px;
   }
+
   .eng-word {
     font-size: 40px;
   }
+
   .next-letter {
     border: 4px solid rgb(0, 162, 255) !important;
   }
+
   .close-button {
     width: auto;
     position: absolute;
@@ -127,34 +160,42 @@
     color: white;
     border-color: white;
   }
+
   .close-button:focus {
     box-shadow: none;
   }
+
   .incorrect-wrapper {
     margin-top: 10px;
   }
+
   .text-example-span {
     width: 80%;
     text-align: center;
   }
+
   h4 {
     text-align: center;
   }
+
   .button-container-stats {
     display: flex;
     justify-content: center;
   }
+
   .help-btn:hover {
     color: #fff;
     background-color: #eb6864;
     border-color: #fff;
   }
+
   .help-btn:focus {
     color: #fff;
     border-color: #fff;
     box-shadow: none;
     background-color: transparent;
   }
+
   .help-btn:active {
     background-color: #eb6864 !important;
     border-color: #eb6864 !important;
@@ -166,35 +207,42 @@
     .word-constructor-wrapper {
       font-size: 16px;
     }
+
     /* .btn */
     .word-builder-btn {
       width: 40px;
       height: 40px;
     }
+
     .svg-audio {
       left: -14px;
       top: -4px;
       width: 35px;
     }
+
     .h3-choose-difficulty {
       font-size: 18px;
     }
+
     .svg-cross {
       position: relative;
       left: -6px;
       top: -1px;
     }
+
     .restart-button,
     .return-button {
       font-size: 12px;
     }
   }
 }
+
 @media (max-width: 620px) {
   .word-builder {
     .word-constructor-wrapper {
       width: 100%;
     }
+
     .eng-word {
       font-size: 30px;
     }
@@ -203,12 +251,15 @@
       margin-right: 0;
       width: 200px;
     }
+
     .difficulty-wrapper {
       margin-left: 0;
     }
+
     .close-button {
       right: 3%;
     }
+
     .word-builder-nav {
       flex-direction: column;
       align-items: center;
@@ -221,21 +272,26 @@
     .word-constructor-wrapper {
       font-size: 12px;
     }
+
     .progress-container {
       margin-right: 0;
       width: 190px;
     }
+
     .eng-word {
       font-size: 20px;
     }
+
     .rules-span {
       font-size: 12px;
     }
+
     .help-btn {
       width: 50px;
       height: 50px;
       font-size: 35px;
     }
+
     /*  .restart-button,
   .return-button {
     width: 50% !important;

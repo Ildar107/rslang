@@ -27,7 +27,6 @@ async function setUserSettings(jwt, userId, settingObj) {
 async function getUserSettings(jwt, userId) {
   const data = await getData({ url: `${serviceUrl.RESTSERVICEURL}/users/${userId}/settings`, jwt });
   if (!data.error) {
-    console.log(data);
     return { wordsPerDay: data.wordsPerDay, ...data.optional };
   }
   return data;

@@ -1,107 +1,181 @@
+@font-face {
+  font-family: "RobotoMono";
+  src: url("../../../src/assets/fonts/RobotoMono-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin media-700 {
+  @media (max-width: 700px) {
+    @content;
+  }
+}
+
 .learn-words-page {
-    .card {
-        margin-top: 20px;
-        border: 0px;
+  .card {
+    border: 0px;
+    max-width: 1000px;
+    margin: 20px auto 0 auto;
+  }
+
+  .word__container {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    @include media-700 {
+      flex-direction: column;
     }
 
-    .word__container {
-        display: flex;
-        flex-wrap: wrap;
-    }
+  }
 
-    .word__block {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-    }
+  .sound-btn {
+    position: absolute;
+    top: -33px;
+    right: -20px;
+    padding: 0;
+    outline: none;
+    border: none;
+    box-shadow: none;
 
-    .word_img {
-        margin-right: 55px;
+    & i {
+      font-size: 30px;
     }
+  }
 
-    .word_img img {
-        width: 350px;
-        height: 250px;
-    }
+  .word__block {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 
-    .words__control {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
+  .word_img {
+    margin-right: 30px;
+      @include media-700 {
+          margin-right: 0px;
+          margin-bottom: 10px;
+      }
+  }
 
-    .words__control button {
-        margin: 0px 10px;
-    }
+  .line{
+    border-top: 1px solid rgba(108, 117, 125, 0.27);
+  }
 
-    .repeat__container button{
-        margin: 10px 10px;
-        margin-top: 20px;
-    }
+  .word_img img {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: auto;
+  }
 
-    .repeat__container button i{
-        padding-right: 5px;
-    }
+  .words__control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-    .unknown__word {
-        display: inline-block;
-    }
+  .words__control button {
+    margin: 0 10px 10px 0;
+  }
 
-    .input__container {
-        display: inline-block;
-        position: relative;
-        padding: 0;
-        margin: .25rem 0;
-        font-size: 20px;
-    }
+  .unknown__word {
+    display: inline-block;
+    position: relative;
+  }
 
-    .answer-input {
-        display: inline;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        color: #338c99;
-        margin: 0;
-        padding: 0 .25em;
-        border: 0;
-    }
+  .word__mask {
+    font-family: RobotoMono;
+    font-size: 30px;
+    position: absolute;
+    top: 6px;
+    left: 5px;
+  }
 
-    .answer-input-entered {
-        background: transparent;
-        color: transparent;
-    }
+  .input__container {
+    display: inline-block;
+    padding: 0;
+    margin: .25rem 0;
+    font-family: RobotoMono;
+    font-size: 30px;
+    padding: 0;
+    background: white;
+    padding-left: 3px;
+    border-radius: 5px;
+  }
 
-    .answer-input-right {
-        display: none;
-    }
+  .check-btn {
+    width: 150px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
 
-    .answer-input:focus {
-        outline: 0;
-    }
+  .show-btn {
+    width: 150px;
+    margin-bottom: 10px;
+  }
 
-    .word__background {
-        display: inline-block;
-        padding: 0.20px 4.6px;
-    }
+  .next-word {
+    text-align: center;
+  }
+
+  .answer-input {
+    display: inline;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    color: #338c99;
+    margin: 0;
+    padding: 0 .25em;
+    border: 0;
+  }
+
+  .answer-input-entered {
+    background: transparent;
+    color: transparent;
+  }
+
+  .answer-input-right {
+    display: none;
+  }
+
+  .answer-input:focus {
+    outline: 0;
+  }
+
+  .word__background {
+    display: inline-block;
+    padding: 0.20px 4.6px;
+  }
+
+  .true {
+    color: green;
+  }
+
+  .false {
+    color: red;
+  }
+
+  .disabled {
+    opacity: 0.5;
+  }
+
 }
 
 body[data-theme=light] .learn-words-page {
 
-    .card {
-        color: #6c757d;
-        background-color: #fafbfe;
+  .card {
+    color: #6c757d;
+    background-color: #fafbfe;
 
-    }
+  }
 }
 
 
 body[data-theme=dark] .learn-words-page {
 
-    .card {
-        color: #aab8c5;
-        background: #3a444e;
-    }
+  .card {
+    color: #aab8c5;
+    background: #3a444e;
+  }
 }
 

@@ -20,7 +20,11 @@ import AuthorizationPage from './pages/authorization/AuthorizationPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import Savannah from './pages/savannah/Savannah';
 import LearnSettings from './pages/learnSettings/LearnSettings';
+import DictionaryPage from './pages/dictionary/DictionaryPage';
+import StatisticLongTerm from './pages/statisticLongTerm/StatisticLongTerm';
 import LearnWords from './pages/learnWords/LearnWords';
+import SprintGame from './components/sprintGame/SprintGame';
+import PromoPage from './pages/promoPage/PromoPage';
 
 const App = () => {
   const store = useContext(StoreContext);
@@ -45,8 +49,14 @@ const App = () => {
             <Route path={routes.TEAM} exact>
               <TeamPage />
             </Route>
+            <PrivateRoute path={routes.DICTIONARY} exact>
+              <DictionaryPage />
+            </PrivateRoute>
             <PrivateRoute path={routes.PUZZLE} exact>
               <PuzzlePage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.STATISTIC_LONG_TERM} exact>
+              <StatisticLongTerm />
             </PrivateRoute>
             <PrivateRoute path={routes.START_GAME_PAGE} exact>
               <StartGamePage />
@@ -63,6 +73,9 @@ const App = () => {
             <PrivateRoute path={routes.AUDIOCALL} exact>
               <AudiocallPage />
             </PrivateRoute>
+            <PrivateRoute path={routes.SPRINTGAME} exact>
+              <SprintGame />
+            </PrivateRoute>
             <PrivateRoute path={routes.MINI_GAMES} exact>
               <MiniGamesPage />
             </PrivateRoute>
@@ -72,8 +85,11 @@ const App = () => {
             <PrivateRoute path={routes.LEARNWORDS} exact>
               <LearnWords />
             </PrivateRoute>
+            <PrivateRoute path={routes.PROMO_PAGE} exact>
+              <PromoPage />
+            </PrivateRoute>
             <Route>
-              <Redirect to={routes.MainPage} />
+              <Redirect to={routes.MAIN_PAGE} />
             </Route>
           </Switch>
         </StoreContext.Provider>

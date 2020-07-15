@@ -1,0 +1,67 @@
+.promo__sescription{
+	font-family: "Nunito", sans-serif;
+}
+
+.promo__h3{
+	margin-bottom: 0;
+}
+
+.img-wrap{
+	width: 50%;
+}
+
+.promo__img{
+	border-radius: 5px;
+	width: 100%;
+	height: auto;
+}
+
+.promo__body{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+	.promo__description_l{
+		width: 50%;
+		text-align: justify;
+		padding: 10px 40px 20px 20px;
+		font-size: 20px;
+	}
+
+	@media screen and (max-width: 1020px){
+		.promo__body{
+			flex-direction: column;
+			align-items: center;
+		}
+		.promo__description_l{
+			width: 80%;
+			text-align: justify;
+			padding: 10px 40px 20px 20px;
+			font-size: 20px;
+		}
+		.img-wrap{
+			width: 80%;
+		}
+		.promo__description_l{
+			padding: 20px 20px 20px 20px;
+		}
+	}
+	@media screen and (max-width: 760px){
+		.promo{
+			padding: 0;
+		}
+		.promo__body{
+			flex-direction: column;
+			align-items: center;
+		}
+		.promo__description_l{
+			width: 98%;
+		}
+		.img-wrap{
+			width: 98%;
+		}
+		.promo__description_l{
+			padding: 10px 10px 10px 10px;
+		}
+	}

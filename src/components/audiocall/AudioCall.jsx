@@ -17,8 +17,16 @@ import BG from '../../assets/images/audiocall-bg.svg';
 import { chunk } from './GameLogic/processedWords';
 import { AUDIOCALL_HELP } from '../../constants/gamesHelp';
 import './audiocall.scss';
+import userStatsServices from '../../services/user.statistic.services';
+
+const {
+  formStatistics,
+  sendStatistics,
+} = userStatsServices;
 
 const mediaUrl = 'https://raw.githubusercontent.com/DenyingTheTruth/rslang-data/master/';
+
+const nameOfTheGame = 'Аудиовызов';
 
 class AudioCall extends Component {
   constructor(props) {
@@ -127,7 +135,12 @@ class AudioCall extends Component {
 
     if (newProgress === 100) {
       const newStats = this.state.stats;
+      const difficulty = this.state.level;
       this.setState({ isUpdateCards: true });
+      const sendStats = formStatistics(
+        nameOfTheGame, difficulty, null, newStats.score, 10 - newStats.score,
+      );
+      sendStatistics(sendStats);
       this.setState({ stats: { ...newStats, showStats: true } });
     } else {
       setTimeout(() => this.playAudio(), 600);
@@ -156,6 +169,7 @@ class AudioCall extends Component {
         curCard: 0,
         isUpdateCards: false,
       });
+
       setTimeout(() => this.playAudio(), 600);
     }, 600);
   }

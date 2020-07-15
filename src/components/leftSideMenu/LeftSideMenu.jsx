@@ -60,21 +60,21 @@ const LeftSideMenu = () => {
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.LANDING} className="side-nav-link">
+          <Link to={routes.DICTIONARY} className="side-nav-link">
             <i className="uil-book-alt" />
             <span> Словарь </span>
           </Link>
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.LANDING} className="side-nav-link">
+          <Link to={routes.STATISTIC_LONG_TERM} className="side-nav-link">
             <i className="uil-chart" />
             <span> Статистика </span>
           </Link>
         </li>
 
         <li className="side-nav-item">
-          <Link to={routes.LANDING} className="side-nav-link">
+          <Link to={routes.PROMO_PAGE} className="side-nav-link">
             <i className="uil-presentation-plus" />
             <span> Промо </span>
           </Link>

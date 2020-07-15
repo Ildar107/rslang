@@ -12,6 +12,9 @@ import PromptButtons from './promptButtons';
 import Paintings from './paintings';
 import StatisticModal from './statisticModal';
 import EndGameModal from '../../components/endGameModal/endGameModal';
+import HelpModal from '../../components/HelpModal/HelpModal';
+import { PUZZLE_HELP } from '../../constants/gamesHelp';
+import BG from '../../assets/images/bg-blue.svg';
 
 class PuzzlePage extends React.Component {
   constructor(props) {
@@ -73,12 +76,14 @@ class PuzzlePage extends React.Component {
       this.state.playingAudio.pause();
       this.state.playingAudio.currentTime = 0;
     }
+
     const [, fileName] = this.state.wordsData[this.state.numOfSentence].audioExample.split('/');
     const audio = new Audio(`https://raw.githubusercontent.com/evshipilo/rslang-data/master/data/${fileName}`);
     this.setState({ playingAudio: audio });
     audio.play();
     audio.onplaying = () => this.setState({ audioStart: true });
-    audio.onended = () => this.setState({ audioStart: false });
+    // audio.onpause = () => this.setState({ audioStart: false });
+    // audio.onended = () => this.setState({ audioStart: false });
   }
 
   async getWordsData(difficulty, pageNumber) {
@@ -104,7 +109,7 @@ class PuzzlePage extends React.Component {
       this.setState({ wordsData: null });
       this.setState({
         translation: 'cant fetch data, select level &'
-            + ' page and click GO!',
+          + ' page and click GO!',
       });
     }
   }
@@ -233,7 +238,7 @@ class PuzzlePage extends React.Component {
     }
     if (prevState.wordsData && this.state.translationPrompt) {
       if (this.state.wordsData[this.state.numOfSentence].id
-          !== prevState.wordsData[prevState.numOfSentence].id) {
+        !== prevState.wordsData[prevState.numOfSentence].id) {
         this.setState({
           translation: this.state.wordsData[this.state.numOfSentence].textExampleTranslate,
         });
@@ -245,11 +250,11 @@ class PuzzlePage extends React.Component {
       });
     }
     if (prevState.wordsData && this.state.autoListeningPrompt
-        && this.state.wordsData[this.state.numOfSentence].id
-        !== prevState.wordsData[prevState.numOfSentence].id
-        && prevState.numOfSentence !== 9) this.audioPlay();
+      && this.state.wordsData[this.state.numOfSentence].id
+      !== prevState.wordsData[prevState.numOfSentence].id
+      && prevState.numOfSentence !== 9) this.audioPlay();
     if (!prevState.wordsData && this.state.wordsData
-        && this.state.autoListeningPrompt) {
+      && this.state.autoListeningPrompt) {
       this.audioPlay();
     }
   }
@@ -287,108 +292,115 @@ class PuzzlePage extends React.Component {
     }
 
     return (
-      <Container className="puzzle">
-        <>
-          <Button
-            className="puzzle-close"
-            onClick={() => this.setModalShow(true)}
-          >
-            <i className="material-icons">close</i>
-          </Button>
-          <EndGameModal
-            show={this.state.modalShow}
-            onHide={() => this.setModalShow(false)}
-          />
-        </>
-        <StatisticModal
-          className="puzzle-statistic-modal"
-          next={this.state.next}
-          wordsData={this.state.wordsData}
-          arrayOfMistakes={this.state.arrayOfMistakes}
-          show={this.state.statisticModalShow}
-          onHide={() => this.setStatisticModalShow(false)}
-        />
-        <Row>
-          <Col xs={12} lg={6} className="puzzle-set-level">
-            <SetLevel
-              setDifficulty={this.setDifficulty}
-              setPageNumber={this.setPageNumber}
-              difficulty={this.state.difficulty}
-              pageNumber={this.state.pageNumber}
-              getWordsData={this.getWordsData}
-              setNext={this.setNext}
+      <>
+        <img className="puzzle_bg" src={BG} alt="Background" />
+        <Container className="puzzle">
+          <>
+            <Button
+              className="puzzle-close"
+              onClick={() => this.setModalShow(true)}
+            >
+              <i className="material-icons">close</i>
+            </Button>
+            <EndGameModal
+              show={this.state.modalShow}
+              onHide={() => this.setModalShow(false)}
             />
-          </Col>
-          <Col xs={12} lg={6} className="puzzle-set-prompt">
-            <PromptButtons
-              translationPrompt={this.state.translationPrompt}
-              listeningPrompt={this.state.listeningPrompt}
-              autoListeningPrompt={this.state.autoListeningPrompt}
-              backgroundPrompt={this.state.backgroundPrompt}
-              setTranslationPrompt={this.setTranslationPrompt}
-              setListeningPrompt={this.setListeningPrompt}
-              setAutoListeningPrompt={this.setAutoListeningPrompt}
-              setBackgroundPrompt={this.setBackgroundPrompt}
+            <HelpModal
+              messages={PUZZLE_HELP}
             />
-          </Col>
-
-        </Row>
-        <Row>
-          <Col xs={12} className="puzzle-audio">
-            {audio}
-          </Col>
-          <Col xs={12} className="puzzle-translation">
-            <Translation
-              translation={this.state.translation}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <GameField
-            wordsData={this.state.wordsData}
-            numOfSentence={this.state.numOfSentence}
-            continuer={this.state.continuer}
+          </>
+          <StatisticModal
             next={this.state.next}
-            backgroundPrompt={this.state.backgroundPrompt}
-          >
-            <DragNdrop
+            wordsData={this.state.wordsData}
+            arrayOfMistakes={this.state.arrayOfMistakes}
+            show={this.state.statisticModalShow}
+            onHide={() => this.setStatisticModalShow(false)}
+          />
+          <Row>
+            <Col xs={12} lg={6} className="puzzle-set-level">
+              <SetLevel
+                setDifficulty={this.setDifficulty}
+                setPageNumber={this.setPageNumber}
+                difficulty={this.state.difficulty}
+                pageNumber={this.state.pageNumber}
+                getWordsData={this.getWordsData}
+                setNext={this.setNext}
+              />
+            </Col>
+            <Col xs={12} lg={6} className="puzzle-set-prompt">
+              <PromptButtons
+                translationPrompt={this.state.translationPrompt}
+                listeningPrompt={this.state.listeningPrompt}
+                autoListeningPrompt={this.state.autoListeningPrompt}
+                backgroundPrompt={this.state.backgroundPrompt}
+                setTranslationPrompt={this.setTranslationPrompt}
+                setListeningPrompt={this.setListeningPrompt}
+                setAutoListeningPrompt={this.setAutoListeningPrompt}
+                setBackgroundPrompt={this.setBackgroundPrompt}
+              />
+            </Col>
+
+          </Row>
+          <Row>
+            <Col xs={12} className="puzzle-audio">
+              {audio}
+            </Col>
+            <Col xs={12} className="puzzle-translation">
+              <Translation
+                translation={this.state.translation}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <GameField
               wordsData={this.state.wordsData}
-              setAllInSelected={this.setAllInSelected}
-              allInSelected={this.state.allInSelected}
-              setCheck={this.setCheck}
-              check={this.state.check}
-              win={this.state.win}
-              setWin={this.setWin}
-              dontKnow={this.state.dontKnow}
+              numOfSentence={this.state.numOfSentence}
               continuer={this.state.continuer}
-              setContinue={this.setContinue}
-              setNumOfSentence={this.setNumOfSentence}
-              setButtons={this.setButtons}
-              nextPage={this.nextPage}
               next={this.state.next}
-              setNext={this.setNext}
               backgroundPrompt={this.state.backgroundPrompt}
-              arrayOfMistakes={this.state.arrayOfMistakes}
-              setArrayOfMistakes={this.setArrayOfMistakes}
-            />
-          </GameField>
-        </Row>
-        <Row>
-          <Col className="puzzle-bottom-buttons">
-            <BottomButtons
-              allInSelected={this.state.allInSelected}
-              setCheck={this.setCheck}
-              setDontKnow={this.setDontKnow}
-              win={this.state.win}
-              setContinue={this.setContinue}
-              buttons={this.state.buttons}
-              next={this.state.next}
-              setNext={this.setNext}
-              setStatisticModalShow={this.setStatisticModalShow}
-            />
-          </Col>
-        </Row>
-      </Container>
+            >
+              <DragNdrop
+                wordsData={this.state.wordsData}
+                setAllInSelected={this.setAllInSelected}
+                allInSelected={this.state.allInSelected}
+                setCheck={this.setCheck}
+                check={this.state.check}
+                win={this.state.win}
+                setWin={this.setWin}
+                dontKnow={this.state.dontKnow}
+                continuer={this.state.continuer}
+                setContinue={this.setContinue}
+                setNumOfSentence={this.setNumOfSentence}
+                setButtons={this.setButtons}
+                nextPage={this.nextPage}
+                next={this.state.next}
+                setNext={this.setNext}
+                backgroundPrompt={this.state.backgroundPrompt}
+                arrayOfMistakes={this.state.arrayOfMistakes}
+                setArrayOfMistakes={this.setArrayOfMistakes}
+              />
+            </GameField>
+          </Row>
+          <Row>
+            <Col className="puzzle-bottom-buttons">
+              <BottomButtons
+                allInSelected={this.state.allInSelected}
+                setCheck={this.setCheck}
+                setDontKnow={this.setDontKnow}
+                win={this.state.win}
+                setContinue={this.setContinue}
+                buttons={this.state.buttons}
+                next={this.state.next}
+                setNext={this.setNext}
+                setStatisticModalShow={this.setStatisticModalShow}
+                arrayOfMistakes={this.state.arrayOfMistakes}
+                difficulty={this.state.difficulty}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </>
     );
   }
 }

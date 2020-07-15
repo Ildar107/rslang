@@ -1,10 +1,9 @@
 import React from 'react';
-// import { Container } from 'react-bootstrap';
-// import Header from '../../components/header/Header';
+
 import MiniGame from '../../components/minigame/MiniGame';
 import Skeleton from '../../components/skeleton/Skeleton';
 import routes from '../../constants/routes';
-
+import MinigamesStats from '../../components/minigamesStats/MinigamesStats';
 // const {
 //   START_GAME_PAGE,
 // } = routes;
@@ -33,7 +32,7 @@ const miniGamesData = [{
   name: 'Спринт',
   description: 'Учит быстро переводить с английского на русский язык',
   imageSrc: '/images/mini-igri-images/sprint.jpg',
-  linkToGame: '',
+  linkToGame: 'SPRINTGAME',
 }, {
   name: 'Конструктор Слов',
   description: 'Формирует навыки обратного перевода и написания английских слов',
@@ -43,9 +42,7 @@ const miniGamesData = [{
 
 const MiniGamesPage = () => (
   <Skeleton wrapperClass="mini-games" title="Мини-игры">
-    {/* <> */}
-    {/* <Header /> */}
-    {/* <Container fluid className="mini-games">  */}
+
     <ul>
       {miniGamesData.map(({
         name, description, imageSrc, linkToGame,
@@ -60,9 +57,7 @@ const MiniGamesPage = () => (
         </li>
       ))}
     </ul>
-    {/* </Container> */}
-    {/* </> */}
-
+    <MinigamesStats />
   </Skeleton>
 );
 
