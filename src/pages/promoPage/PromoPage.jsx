@@ -267,6 +267,23 @@ const PromoPage = () => {
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
+
+            <Card style={styleBorder}>
+              <Accordion.Toggle
+                style={styleCursor}
+                as={Card.Header}
+                eventKey="69"
+              >
+                <h3 className="promo__h3">Ссылка на репозиторий</h3>
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="69">
+                <Card.Body>
+                  <div className="promo__body">
+                    <a href="https://github.com/AlexGabrielov/rslang">https://github.com/AlexGabrielov/rslang</a>
+                  </div>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
           </Accordion>
         </Container>
 
