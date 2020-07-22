@@ -1,4 +1,4 @@
-# Used Libriries
+# Used libraries
 * React
 * React bootstrap
 * Materialize
