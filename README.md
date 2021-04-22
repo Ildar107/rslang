@@ -6,4 +6,4 @@
 * PropTypes
 
 # Demo
-(here)[https://our-rs-lang.netlify.app/]
+[here](https://our-rs-lang.netlify.app/)
